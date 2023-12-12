@@ -8,6 +8,10 @@
     z-index: 3;
 }
 
+.header_2 {
+    height: 100px;
+}
+
 .header_container {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;

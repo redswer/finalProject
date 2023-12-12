@@ -4,22 +4,15 @@
     margin: auto;
 }
 
-.bi-person-fill-add {
-    color: rgb(119, 175, 107);
-}
-
-.join_membership_main_text {
-    margin: 50px 0;
-    align-items: center;
-}
-
-.join_membership_main_text h1 {
-    margin-left: 15px;
+.joinMembership_logo_container {
+    justify-content: center;
+    margin-bottom: 50px;
 }
 
 .join_membership_form {
     width: 100%;
     margin: auto;
+    margin-bottom: 100px;
 }
 
 .join_membership_fieldset {
@@ -225,6 +218,7 @@
     line-height: 50px;
     font-weight: bold;
     color: white;
+    margin-top: 20px;
 
     /* 로그인 버튼 비활성화 */
     &:disabled {
