@@ -1,0 +1,72 @@
+.PaymentPageOrderProduct {
+    margin: auto;
+    margin-bottom: 80px;
+    width: 90%;
+}
+
+.order_name_box {
+    /* background-color: rgb(224, 255, 197); */
+    width: 100%;
+    text-align: left;
+}
+
+.order_name_deco {
+    font-size: 20px;
+}
+
+.order_list_box {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.order_list_tb {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.order_list_tb th {
+    background-color: rgb(244, 244, 244);
+    border: 1px solid rgb(184, 184, 184);
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.order_list_tb td {
+    border: 1px solid rgb(184, 184, 184);
+    border-left: 0;
+    border-right: 0;
+}
+
+.order_list_tb td:nth-child(2) {
+    text-align: left;
+}
+
+.order_list_cg_01 {
+    width: 10%;
+}
+
+.order_list_cg_02 {
+    width: 45%;
+}
+
+.order_list_cg_03 {
+    width: 15%;
+}
+
+.order_list_cg_04 {
+    width: 15%;
+}
+
+.order_list_cg_05 {
+    width: 15%;
+}
+
+.order_book_img {
+    width: 70px;
+    border: 1px solid lightgrey;
+    margin-top: 5px;
+}

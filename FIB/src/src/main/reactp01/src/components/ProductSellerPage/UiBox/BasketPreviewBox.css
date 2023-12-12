@@ -1,0 +1,49 @@
+.basket_preview_box_detail_container {
+  border: 1px solid black;
+  width: 240px;
+  height: 600px;
+  overflow: auto;
+  background-color: rgb(245, 245, 245);
+}
+
+
+.from_preview_go_basket_btn {
+  display: block;
+  text-align: center;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.from_preview_go_basket_btn:hover {
+  background-color: rgb(93, 92, 92);
+}
+
+.basket_preview_total_psa {
+  background-color: rgb(193, 193, 193);
+}
+
+.basket_preview_total_price,
+.basket_preview_total_amount,
+.basket_preview_total_salePrice {
+  margin-left: 8px;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+
+.basket_preview_total_salePrice_num {
+  color: red;
+  font-weight: bold;
+}
+
+.you_buy_20000_free {
+  text-align: center;
+  font-size: 9px;
+  color: red;
+  height: 30px;
+}

@@ -1,0 +1,118 @@
+.basket_top_level_container {
+  margin: 40px auto;
+  width: 1100px;
+}
+
+
+.basketlist_list_container {
+  width: 1100px;
+  margin: 40px auto;
+  padding: 0;
+}
+
+.basketlist_head {
+  display: flex;
+  font-size: 18px;
+}
+
+.col-product_title {
+  background-color: rgb(195, 195, 195);
+  width: 310px;
+  border: 1px solid black;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+}
+
+
+
+.col-product_price {
+  background-color: rgb(195, 195, 195);
+  width: 200px;
+  border: 1px solid black;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+}
+
+.col-product_amount {
+  background-color: rgb(195, 195, 195);
+  width: 150px;
+  border: 1px solid black;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+}
+
+.col-product_del-info {
+  background-color: rgb(195, 195, 195);
+  width: 250px;
+  border: 1px solid black;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+}
+
+.col-product_btn {
+  background-color: rgb(195, 195, 195);
+  width: 180px;
+  border: 1px solid black;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+}
+
+.basket_total_sum_figure {
+  margin: 0;
+}
+
+.basket_total_sum_table {
+  box-sizing: border-box;
+  width: 500px;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.basket_total_sum_table td {
+  padding-left: 12px;
+  height: 35px;
+}
+
+.basket_final_payment_price {
+  color: rgb(255, 88, 88);
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 55px;
+}
+
+.trLine_basket td {
+  border-bottom: 1px dashed gray;
+}
+
+.basket_final_product_order_btn_box {
+  display: flex;
+  margin: 30px auto;
+  /* background-color: aqua; */
+  width: 1100px;
+  justify-content: space-evenly;
+}
+
+.basket_final_product_order_btn_1,
+.basket_final_product_order_btn_2 {
+  display: inline-block;
+  width: 200px;
+  height: 50px;
+  border: none;
+  border-radius: 5px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.basket_final_product_order_btn_2 {
+  color: white;
+  background-color: red;
+}
+
+.basket_figure_flex_box {
+  display: flex;
+}

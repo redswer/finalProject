@@ -1,0 +1,125 @@
+.LogIn {
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    margin: calc((100vh - 159px - 167px - 517px)/2) auto;
+    width: 1240px;
+}
+
+.log_in_form {
+    margin: auto;
+    width: 80%;
+    border: 1px solid #d8d8d8;
+    border-radius: 10px;
+    background-color: honeydew;
+    text-align: center;
+}
+
+.log_in_field {
+    border: none;
+    height: 500px;
+}
+
+.log_in_field>div {
+    width: 50%;
+    margin: auto;
+}
+
+.log_in_id,
+.log_in_pw {
+    font-size: 20px;
+    width: 80%;
+    height: 45px;
+    line-height: 45px;
+    cursor: pointer;
+    margin: 10px 20px;
+}
+
+.log_in_checkbox {
+    margin: 15px 5px;
+    display: inline-block;
+}
+
+#log_in_checkbox_saveId {
+    margin-left: 15px;
+}
+
+.log_in_checkbox label {
+    color: #666;
+}
+
+#log_in_button {
+    width: calc(80% + 10px);
+    margin: 10px 20px;
+    height: 50px;
+    line-height: 50px;
+    border: none;
+    background-color: rgb(119, 175, 107);
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 20px;
+    text-decoration: none;
+    color: white;
+
+    /* 로그인 버튼 비활성화 */
+    &:disabled {
+        background-color: #666
+    }
+}
+
+.log_in_find_container {
+    margin: 10px;
+}
+
+.log_in_find_id {
+    margin-right: 10px;
+}
+
+.log_in_find_pw {
+    margin-left: 10px;
+}
+
+.log_in_find_container a {
+    color: black;
+    text-decoration: none;
+}
+
+.log_in_error_message {
+    color: red;
+    font-size: 70%;
+    margin-left: 45px;
+    text-align: left;
+
+}
+
+/* ========================== */
+.button_container {
+    margin-top: 50px;
+}
+
+.linked_button {
+    display: inline-block;
+    width: calc((80% + 10px)/2 - 10px);
+    margin: 10px auto;
+    height: 50px;
+    line-height: 50px;
+    border: 1px solid #d8d8d8;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 20px;
+    text-decoration: none;
+    color: #666;
+}
+
+.linked_button:hover {
+    color: green;
+    border: 1px solid green;
+    font-weight: bold;
+}
+
+.join {
+    margin-right: 10px;
+}
+
+.non_member {
+    margin-left: 10px;
+}

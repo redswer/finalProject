@@ -1,0 +1,18 @@
+.PaymentPage {
+    margin: 50px auto;
+    width: 1240px;
+    font-size: 14px;
+    /* background-color: antiquewhite; */
+}
+
+/* 소제목 : 주문 상품, 배송지 정보, 쿠폰/포인트, 총 결제금액, 결제방법 */
+.order_name_icon {
+    margin-right: 5px;
+    width: 18px;
+    height: 18px;
+}
+
+.order_name_design {
+    font-size: 18px;
+    font-weight: bold;
+}

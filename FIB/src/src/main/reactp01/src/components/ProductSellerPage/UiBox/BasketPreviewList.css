@@ -1,0 +1,26 @@
+.basket_preview_item_container {
+    width: 180px;
+    margin: 10px auto;
+    border-radius: 5px;
+    background-color: rgb(203, 202, 202);
+    font-size: 12px;
+}
+
+.basket_preview_item_title {
+    font-size: 12px;
+    text-align: center;
+    height: 20px;
+    line-height: 22px;
+}
+
+.basket_preview_item_price {
+    margin-left: 5px;
+}
+
+.basket_preview_item_amount {
+    text-align: center;
+}
+
+.basket_preview_item_amount button {
+    margin: 3px 5px;
+}

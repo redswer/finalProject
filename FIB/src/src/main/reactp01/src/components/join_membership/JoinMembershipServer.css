@@ -1,0 +1,23 @@
+.JoinMembershipServer {
+    flex-direction: column;
+    text-align: center;
+    margin: calc((100vh - 159px - 144px - 383px)/2) auto;
+}
+
+.JoinMembershipServer>div * {
+    margin: 20px auto;
+}
+
+.JoinMembershipServer button {
+    background-color: rgb(119, 175, 107);
+    width: 300px;
+    line-height: 50px;
+    border: 1px solid #666;
+    border-radius: 10px;
+    color: white;
+    margin: 20px auto;
+}
+
+.JoinMembershipServer button a {
+    color: white;
+}

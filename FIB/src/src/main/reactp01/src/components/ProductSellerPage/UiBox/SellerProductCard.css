@@ -1,0 +1,163 @@
+.seller_product_card_container {
+  display: flex;
+  border: 1px solid red;
+  width: 100%;
+  height: 180px;
+  justify-content: space-between;
+  /* margin-bottom: 70px; */
+}
+
+.seller_product_division_hr {
+  width: 100%;
+  margin: 41px 0;
+}
+
+
+.seller_product_card_container img {
+  width: 130px;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid gray;
+}
+
+.seller_product_infomation {
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 530px;
+  height: 88%;
+  font-size: 11px;
+}
+
+.seller_product_rank {
+  display: inline-block;
+  border: 1px solid black;
+  padding: 3px;
+  width: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  margin-right: 4px;
+  /* border-radius: 15% 45% 15%; */
+}
+
+.seller_product_title {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin-right: 13px;
+}
+
+.seller_product_domestic,
+.seller_product_category,
+.seller_product_type {
+  margin-left: 7px;
+  border: none;
+  display: inline-block;
+  text-align: center;
+  color: white;
+  border-radius: 4px;
+  width: 100px;
+  height: 25px;
+  line-height: 20px;
+  background-color: rgb(119, 175, 107);
+}
+
+
+.seller_product_type {
+  width: 85px;
+}
+
+.seller_product_domestic:hover,
+.seller_product_category:hover,
+.seller_product_type:hover {
+  background-color: rgb(0, 78, 0);
+}
+
+
+.seller_product_writer {
+  margin-bottom: 10px;
+  margin-right: 8px;
+  font-size: 13px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: gray;
+
+}
+
+.seller_compiler_name {
+  color: gray;
+  font-size: 9px;
+}
+
+.seller_product_explain {
+  margin-top: 17px;
+  width: 470px;
+  height: 100px;
+  line-height: 15px;
+  font-family: 'Gowun Dodum', sans-serif;
+  font-size: 13px;
+  word-break: break-all;
+  text-align: justify;
+  overflow: hidden;
+}
+
+.seller_publisher_name {
+  margin-right: 12px;
+  font-size: 12px;
+}
+
+.seller_publisher_date {
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+.seller_product_price {
+  font-size: 22px;
+  font-weight: bold;
+  color:red;
+}
+
+.seller_product_saleperbox {
+  font-size: 15px;
+  margin-top: 5px;
+}
+
+.seller_product_saleper {
+  color: red;
+  font-weight: bold;
+}
+
+
+.product_sales_rate {
+  font-size: 17px;
+  transition: font-size 0.8s ease-in-out;
+  /* 숫자 크기에 대한 트랜지션 효과 설정 */
+  font-weight: bold;
+  color: blueviolet;
+}
+
+.product_sales_rate_1 {
+  font-size: 14px;
+}
+
+.product_sales_rate_3 {
+  color: gray;
+  font-size: 12px;
+}
+
+.seller_product_sales_rate_box {
+  margin-top: -6px;
+  margin-bottom: -2px;
+}
+
+.seller_product_card_container img:hover {
+  transform: translateY(-20px) translateX(-10px);
+  transition: transform 0.7s;
+  box-shadow: 0 5px 20px rgba(119, 175, 107, 1);
+}
+
+.seller_product_title:hover,
+.seller_product_explain:hover {
+  text-decoration: underline;
+}
