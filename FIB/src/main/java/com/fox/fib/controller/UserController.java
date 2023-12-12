@@ -25,6 +25,7 @@ import lombok.AllArgsConstructor;
 public class UserController {
 	UserService service;
 	PasswordEncoder passwordEncoder;
+	
 //	------------------------------
 //	// ** 로그인
 	
@@ -122,7 +123,6 @@ public class UserController {
 		} else {
 			return new ResponseEntity<String> ("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_GATEWAY);
 		}
-		
 	}
 	
 }
