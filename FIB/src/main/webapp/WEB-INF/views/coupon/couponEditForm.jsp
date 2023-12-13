@@ -15,10 +15,10 @@
 <body>
 	<h2>쿠폰정보 수정</h2>	
 	<form action="couponEditForm" method="post" enctype="multipart/form-data" id="couponEditForm">
-		<table border="1">
+		<table class="couponEditFormTable" border="1">
 			<c:if test="${not empty requestScope.couponList}">
 				<tr height="40">
-					<th bgcolor="aqua">쿠폰 코드</th>
+					<th>쿠폰 코드</th>
 					<td>
 						<input type="text" name="coupon_code" id="coupon_code" placeholder="쿠폰 코드" size="30" value="${requestScope.couponList.coupon_code}" readonly/>
 						<br>
@@ -26,7 +26,7 @@
 					</td>
 				</tr>
 				<tr height="40">
-					<th bgcolor="aqua">쿠폰 이름</th>
+					<th>쿠폰 이름</th>
 					<td>
 						<input type="text" name="title" id="title" placeholder="쿠폰 이름" size="30" value="${requestScope.couponList.title}"/>
 						<br>
@@ -34,7 +34,7 @@
 					</td>
 				</tr>
 				<tr height="40">
-					<th bgcolor="aqua">할인율</th>
+					<th>할인율</th>
 					<td>
 						<input type="text" name="discount_rate" id="discount_rate" placeholder="할인율" size="10" value="${requestScope.couponList.discount_rate}"/>
 						<br>
@@ -42,7 +42,7 @@
 					</td>
 				</tr>
 				<tr height="40">
-					<th bgcolor="aqua">최대 할인금액</th>
+					<th>최대 할인금액</th>
 					<td>
 						<input type="text" name="max" id="max" placeholder="최대 할인금액" size="10" value="${requestScope.couponList.max}"/>
 						<br>
@@ -50,7 +50,7 @@
 					</td>
 				</tr>
 				<tr height="40">
-					<th bgcolor="aqua">이미지</th>
+					<th>이미지</th>
 					<td>
 						<img alt="${requestScope.couponList.title}" src="${requestScope.couponList.image}" class="select_img"><br>
 						<input type="hidden" name="image" value="${requestScope.couponList.image}" />
@@ -71,7 +71,7 @@
 	   				};
 				</script>   
 				<tr height="40">
-					<th bgcolor="aqua">쿠폰 시작일</th>
+					<th>쿠폰 시작일</th>
 					<td>
 	 					<input type="datetime" name="start" id="start" size="20" value="${requestScope.couponList.start}"/> 
 						<br>
@@ -79,7 +79,7 @@
 					</td>
 				</tr>
 				<tr height="40">
-					<th bgcolor="aqua">쿠폰 종료일</th>
+					<th>쿠폰 종료일</th>
 					<td>
 						<input type="datetime" name="end" id="end" size="20" value="${requestScope.couponList.end}"/>
 						<br>

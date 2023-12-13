@@ -14,9 +14,9 @@
 <body>
 	<h2>FAQ 등록</h2>	
 	<form action="faqRegister" method="post" enctype="multipart/form-data" id="faqform">
-		<table border="1" style="width: 800px;">
+		<table class="faqRegisterTable" border="1" style="width: 800px;">
 			<tr height="40">
-				<th bgcolor="aqua">분류</th>
+				<th>분류</th>
 				<td>
 					<select name="category">
 						<option value="일반">일반</option>
@@ -34,7 +34,7 @@
 				</td>
 			</tr>
 			<tr height="40">
-				<th bgcolor="aqua">제목</th>
+				<th>제목</th>
 				<td>
 					<input type="text" name="title" id="faq_title" placeholder="FAQ 제목" size="50"/>
 					<br>
@@ -42,7 +42,7 @@
 				</td>
 			</tr>
 			<tr height="40">
-				<th bgcolor="aqua">내용</th>
+				<th>내용</th>
 				<td>
 					<textarea class="form-control" name="content" style="width:100%; height: 300px; resize: none;" placeholder="내용을 입력해 주세요."></textarea>
 					<br>

@@ -18,13 +18,13 @@
 			<input type="checkbox">시작일</input>
 			<input type="checkbox">할인율</input>
 			<input type="checkbox">최대 할인금액</input>
-			<input type="text"></input>
-			<button>검색</button>
+			<input class="coupon_search_input" type="text"></input>
+			<button class="searchBtn" type="button">검색</button>
 		</div>
 	</div>
-	<br>
-	<table border="1">
-		<tr bgcolor="Lime">		
+	<div class="underline"></div>
+	<table class="couponTable" id="couponTable" border="1">
+		<tr>		
 			<th style="width: 2%;">쿠폰 CODE</th>
 			<th style="width: 20%;">쿠폰 이름</th>
 			<th style="width: 7%;">할인율</th>

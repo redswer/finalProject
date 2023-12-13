@@ -64,7 +64,6 @@ function noticeUpload() {
 	}).then (response => { 
 		alert("공지사항 등록에 성공했습니다.");
 		noticeRegister();
-	
 	}).catch(err => {
 			if(err.response.status=='502') alert("입력 오류!! 다시 시도하세요");
 			else alert("시스템 오류, 잠시 후 다시하세요 =>" + err.message);
@@ -99,6 +98,7 @@ function noticeEditFinish() {
 			   {headers:{"Content-Type" : "multipart/form-data"}
 	}).then (response => {
 			alert("공지사항을 수정했습니다.");
+			noticeManagement();
 	}).catch(err => {
 			if(err.response.status=='502') alert("입력 오류!! 다시 시도하세요");
 			else alert("시스템 오류, 잠시 후 다시하세요 =>" + err.message);

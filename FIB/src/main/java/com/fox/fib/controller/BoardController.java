@@ -99,7 +99,8 @@ public class BoardController {
 	@PostMapping("/noticeEditForm")
 	public String noticeEditForm(HttpSession session, Notice entity, Model model) throws IOException {
 		// 수정 성공 -> noticeList를 받아와야함 (selectList()) -> 그후 출력 요청해야함
-		model.addAttribute("list", entity);
+		model.addAttribute("noticeList", notice_service.selectList());
+//		model.addAttribute("list", entity);
 		String uri="board/noticeListAdmin";
 			
 		MultipartFile uploadfilef = entity.getUploadfilef(); 
@@ -179,7 +180,8 @@ public class BoardController {
 	@PostMapping("/faqEditForm")
 	public String faqEditForm(HttpSession session, Faq entity, Model model) throws IOException {
 		// 수정 성공 -> noticeList를 받아와야함 (selectList()) -> 그후 출력 요청해야함
-		model.addAttribute("list", entity);
+		model.addAttribute("faqList", faq_service.selectList());
+//		model.addAttribute("list", entity);
 			
 		return "board/faqListAdmin";
 	}

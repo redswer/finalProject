@@ -15,22 +15,22 @@
 <body>
 	<h2>1:1문의 답변</h2>
 	<form action="inquiryAnswerForm" method="post" enctype="multipart/form-data" id="inquiryAnswerForm">
-		<table border="1" style="width: 800px;">
+		<table class="inquiryAnswerFormTable" border="1" style="width: 800px;">
 			<c:if test="${not empty requestScope.inquiryList}">
 				<tr height="40">
-					<th bgcolor="aqua">회원ID</th>
+					<th>회원ID</th>
 					<td>
 						<input type="text" name="id" value="${requestScope.inquiryList.id}" readonly/> 
 					</td>
 				</tr>
 				<tr height="40">
-					<th bgcolor="aqua">1:1문의 코드</th>
+					<th>1:1문의 코드</th>
 					<td>
 						<input type="text" name="inquiry_code" id="inquiry_code" size="10" value="${requestScope.inquiryList.inquiry_code}" readonly/> 
 					</td>
 				</tr>
 				<tr>
-					<th bgcolor="aqua">분류</th>
+					<th>분류</th>
 					<td>
 						<c:choose>
 						   <c:when test="${requestScope.inquiryList.category eq '일반'}">
@@ -55,7 +55,7 @@
 					</td>
 				</tr>
 				<tr height="40">
-					<th bgcolor="aqua">제목</th>
+					<th>제목</th>
 					<td >
 						<input type="text" name="title" id="title" placeholder="문의 제목" size="45" value="${requestScope.inquiryList.title}" readonly/>						
 						<br>
@@ -63,7 +63,7 @@
 					</td>
 				</tr>
 				<tr height="40">
-					<th bgcolor="aqua">내용</th>
+					<th>내용</th>
 					<td colspan="4">
 						<textarea class="form-control" name="content" style="width:100%; height: 300px; resize: none;" readonly>${requestScope.inquiryList.content}</textarea>
 						<br>
@@ -78,7 +78,7 @@
 					<td colspan="4">&nbsp;</td>
 				</tr>
 				<tr height="40">
-					<th bgcolor="aqua">답변 내용</th>
+					<th>답변 내용</th>
 					<td colspan="4">
 						<textarea class="form-control" name="answer" id="answer" style="width: 100%; height: 300px; resize: none;" placeholder="내용을 입력해 주세요.">${requestScope.inquiryList.answer}</textarea>
 						<br>

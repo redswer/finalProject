@@ -53,7 +53,7 @@
                            <li class="listGroupItem" onclick="productManagement()">제품</li>
                            <li class="listGroupItem" onclick="memberPaymentList()">주문내역</li>
                            <li class="listGroupItem" onclick="noticeManagement()">공지사항</li>
-                           <li class="listGroupItem" onclick="fAQManagement()">FAQ</li>
+                           <li class="listGroupItem" onclick="faqManagement()">FAQ</li>
                            <li class="listGroupItem" onclick="inquiryManagement()">1:1 문의</li>
                            <li class="listGroupItem" onclick="eventManagement()">이벤트</li>
                            <li class="listGroupItem" onclick="couponManagement()">쿠폰</li>
@@ -62,9 +62,9 @@
                 </div>
             </div>
             <div class="resultArea">
-                <div>
-                    <div id="managementArea" />
-                </div>
+				<div id="managementArea">
+					<h2>관리자 페이지입니다</h2>
+				</div>
             </div>
         </div>
     </div>

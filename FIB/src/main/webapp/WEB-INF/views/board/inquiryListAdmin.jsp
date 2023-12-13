@@ -27,9 +27,9 @@
 			</select>
 		</div>
 	</div>
-	<br>
+	<div class="underline"></div>
 	<table class="inquiryTable" id="inquiryTable" border="1">
-		<tr bgcolor="Lime">		
+		<tr>		
 			<th style="width: 2%;">CODE</th>
 			<th style="width: 8%;">아이디</th>
 			<th style="width: 7%;">분류</th>

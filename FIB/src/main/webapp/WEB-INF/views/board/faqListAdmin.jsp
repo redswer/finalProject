@@ -26,13 +26,13 @@
 				<option value="이벤트">이벤트</option>
 				<option value="쿠폰">쿠폰</option>
 			</select> 
-			<input type="text"></input>
-			<button>검색</button>
+			<input class="faq_search_input" type="text"></input>
+			<button class="searchBtn" type="button">검색</button>
 		</div>
 	</div>
-	<br>
+	<div class="underline"></div>
 	<table class="faqTable" id="faqTable"  border="1">
-		<tr bgcolor="Lime">		
+		<tr>		
 			<th style="width: 2%;">FAQ CODE</th>
 			<th style="width: 5%;">분류</th>
 			<th style="width: 25%;">제목</th>

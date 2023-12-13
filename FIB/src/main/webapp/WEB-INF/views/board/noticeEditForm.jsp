@@ -15,10 +15,18 @@
 <body>
 	<h2>공지사항 수정</h2>
 	<form action="noticeEditForm" method="post"	enctype="multipart/form-data" id="noticeEditForm">
-		<table border="1" style="width: 800px;">
+		<table class="noticeEditFormTable" border="1" style="width: 800px;">
 			<c:if test="${not empty requestScope.noticeList}">
 				<tr height="40">
-					<th bgcolor="aqua">분류</th>
+					<th>공지사항 코드</th>
+					<td>
+						<input type="text" name="notice_code" id="notice_code" size="30" value="${requestScope.noticeList.notice_code}" readonly/>
+						<br>
+						<span id="tMessage" class="eMessage"></span>
+					</td>
+				</tr>
+				<tr height="40">
+					<th>분류</th>
 					<td>
 						<select name="category">
 							<option value="일반" ${requestScope.noticeList.category=='일반' ? 'selected' : '' }>일반</option>
@@ -33,7 +41,7 @@
 					</td>
 				</tr>
 				<tr height="40">
-					<th bgcolor="aqua">제목</th>
+					<th>제목</th>
 					<td>
 						<input type="text" name="title" id="notice_title" placeholder="공지사항 제목" size="50" value="${requestScope.noticeList.title}" /> 
 						<br> 
@@ -42,7 +50,7 @@
 						
 				</tr>
 				<tr height="40">
-					<th bgcolor="aqua">내용</th>
+					<th>내용</th>
 					<td>
 						<textarea class="form-control" name="content" style="width: 100%; height: 300px; resize: none;"	placeholder="내용을 입력해 주세요.">${requestScope.noticeList.content}</textarea>
 						<br>
@@ -50,7 +58,7 @@
 					</td>
 				</tr>
 				<tr height="40">
-					<th bgcolor="aqua">이미지</th>
+					<th>이미지</th>
 					<td>
 						<img src="" class="select_img" />
 						<br> 

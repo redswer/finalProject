@@ -14,9 +14,9 @@
 <body>
 	<h2>쿠폰 등록</h2>	
 	<form action="couponRegister" method="post" enctype="multipart/form-data" id="myform">
-		<table border="1">
+		<table class="couponRegisterTable" border="1">
 			<tr height="40">
-				<th bgcolor="aqua">쿠폰 이름</th>
+				<th>쿠폰 이름</th>
 				<td>
 					<input type="text" name="title" id="title" placeholder="쿠폰 이름" size="30"/>
 					<button type="button" id="titleDup" onclick="titleDupCheck()">쿠폰 중복 확인</button>
@@ -25,7 +25,7 @@
 				</td>
 			</tr>
 			<tr height="40">
-				<th bgcolor="aqua">할인율</th>
+				<th>할인율</th>
 				<td>
 					<input type="text" name="discount_rate" id="discount_rate" placeholder="할인율" size="10"/>
 					<br>
@@ -33,7 +33,7 @@
 				</td>
 			</tr>
 			<tr height="40">
-				<th bgcolor="aqua">최대 할인금액</th>
+				<th>최대 할인금액</th>
 				<td>
 					<input type="text" name="max" id="max" placeholder="최대 할인금액" size="10"/>
 					<br>
@@ -41,7 +41,7 @@
 				</td>
 			</tr>
 			<tr height="40">
-				<th bgcolor="aqua">이미지</th>
+				<th>이미지</th>
 				<td>
 					<img src="" class="select_img"><br>
 					<input type="file" name="uploadfilef" id="uploadfilef" size="20"/>
@@ -60,7 +60,7 @@
 	   			};
 			</script>   
 			<tr height="40">
-				<th bgcolor="aqua">쿠폰 시작일</th>
+				<th>쿠폰 시작일</th>
 				<td>
 					<input type="date" name="start" id="start" size="20"/>
 					<br>
@@ -68,7 +68,7 @@
 				</td>
 			</tr>
 			<tr height="40">
-				<th bgcolor="aqua">쿠폰 종료일</th>
+				<th>쿠폰 종료일</th>
 				<td>
 					<input type="date" name="end" id="end" size="20"/>
 					<br>
