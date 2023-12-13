@@ -1,0 +1,42 @@
+.UserAddress {
+    margin-bottom: 200px;
+}
+
+.insert_address_button {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.insert_address_button button {
+    width: 100px;
+    line-height: 40px;
+    background-color: rgb(119, 175, 107);
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.user_address_table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user_address_table fieldset {
+    border-top: 1px solid black;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    margin: 0;
+    padding: 0;
+}
+
+.user_address_index_column {
+    border-bottom: 1px solid #bbbaba;
+}
+
+.user_address_column {
+    display: grid;
+    grid-template-columns: 2fr 2fr 7fr 3fr 2fr 2fr;
+    text-align: center;
+    line-height: 50px;
+}

@@ -5,6 +5,11 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaCheckCircle } from "react-icons/fa";
 import axios from 'axios';
+import Use from './terms_of_service/Use';
+import UseCommunity from './terms_of_service/UseCommunity';
+import UsePersonalInfo from './terms_of_service/UsePersonalInfo';
+import EMail from './terms_of_service/EMail';
+import SMS from './terms_of_service/SMS';
 
 function JoinMembership() {
     const navigate = useNavigate();
@@ -111,13 +116,46 @@ function JoinMembership() {
     // ============================================
     // ** 체크박스 선택
 
-    const checkboxData = [
-        { id: 'join_membership_agree_use', title: '이용약관', link: '/Use' },
-        { id: 'join_membership_agree_community', title: '커뮤니티 이용약관', link: '/Community' },
-        { id: 'join_membership_agree_privacy', title: '개인정보 수집 및 이용', link: '/Privacy' },
-        { id: 'email', title: '이메일', link: '/Mail' },
-        { id: 'sms', title: '문자/카카오톡', link: '/TextMessage' }
-    ]
+    const [isUseOpen, setUseOpen] = useState(false);
+    const [isUseCommunityOpen, setUseCommunityOpen] = useState(false);
+    const [isUsePersonalInfoOpen, setUsePersonalInfoOpen] = useState(false);
+    const [isEMailOpen, setEMailOpen] = useState(false);
+    const [isSMSOpen, setSMSOpen] = useState(false);
+
+    const openUse = (id) => {
+        setUseOpen(true);
+    };
+    const closeUse = () => {
+        setUseOpen(false);
+    };
+
+    const openUseCommunity = (id) => {
+        setUseCommunityOpen(true);
+    };
+    const closeUseCommunity = () => {
+        setUseCommunityOpen(false);
+    };
+
+    const openUsePersonalInfo = (id) => {
+        setUsePersonalInfoOpen(true);
+    };
+    const closeUsePersonalInfo = () => {
+        setUsePersonalInfoOpen(false);
+    };
+
+    const openEMail = (id) => {
+        setEMailOpen(true);
+    };
+    const closeEMail = () => {
+        setEMailOpen(false);
+    };
+
+    const openSMS = (id) => {
+        setSMSOpen(true);
+    };
+    const closeSMS = () => {
+        setSMSOpen(false);
+    };
 
     // 필수 약관 동의
     const requiredCheckboxes = [
@@ -149,6 +187,39 @@ function JoinMembership() {
 
         changeButton();
     }
+
+    const checkboxData = [
+        {
+            id: 'join_membership_agree_use',
+            title: '이용약관',
+            open: openUse,
+            tag: <Use isOpen={isUseOpen} onClose={closeUse} handleSingleCheck={handleSingleCheck} checkboxId={'join_membership_agree_use'} />
+        },
+        {
+            id: 'join_membership_agree_community',
+            title: '커뮤니티 이용약관',
+            open: openUseCommunity,
+            tag: <UseCommunity isOpen={isUseCommunityOpen} onClose={closeUseCommunity} handleSingleCheck={handleSingleCheck} checkboxId={'join_membership_agree_community'} />
+        },
+        {
+            id: 'join_membership_agree_privacy',
+            title: '개인정보 수집 및 이용',
+            open: openUsePersonalInfo,
+            tag: <UsePersonalInfo isOpen={isUsePersonalInfoOpen} onClose={closeUsePersonalInfo} handleSingleCheck={handleSingleCheck} checkboxId={'join_membership_agree_privacy'} />
+        },
+        {
+            id: 'email',
+            title: '이메일',
+            open: openEMail,
+            tag: <EMail isOpen={isEMailOpen} onClose={closeEMail} handleSingleCheck={handleSingleCheck} checkboxId={'email'} />
+        },
+        {
+            id: 'sms',
+            title: '문자/카카오톡',
+            open: openSMS,
+            tag: <SMS isOpen={isSMSOpen} onClose={closeSMS} handleSingleCheck={handleSingleCheck} checkboxId={'sms'} />
+        }
+    ]
 
     // 체크박스 전체 선택
     const handleAllCheck = (checked) => {
@@ -584,9 +655,11 @@ function JoinMembership() {
                                         <label htmlFor={checkboxData.id}>{checkboxData.title}
                                             {requiredCheckboxes.includes(checkboxData.id) && <span className="required-indicator">&nbsp;*</span>}
                                         </label>
-                                        <Link to={checkboxData.link}
-                                            className='join_membership_termsOfService_detail'>자세히 보기
-                                        </Link>
+                                        <span className='join_membership_termsOfService_detail'
+                                            onClick={checkboxData.open}>
+                                            자세히 보기
+                                        </span>
+                                        {checkboxData.tag}
                                     </div>
                                 ))}
                             </div>

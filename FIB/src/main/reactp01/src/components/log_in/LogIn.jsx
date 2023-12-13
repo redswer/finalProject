@@ -7,6 +7,7 @@ import axios from 'axios';
 function LogIn() {
     const navigate = useNavigate();
 
+    // ** 아이디 저장
     const [rememberID, setRememberID] = useState(false);
 
     useEffect(() => {
@@ -16,6 +17,7 @@ function LogIn() {
             setRememberID(true);
         }
     }, []);
+    // ==============================================
 
     // ** 유효성 검사
     const [id, setId] = useState('');
