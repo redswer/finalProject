@@ -226,7 +226,7 @@ function UserUpdate() {
                         <tr className='d-flex'>
                             <th scope='col'>닉네임</th>
                             <td>
-                                <label htmlFor="user_update_id"></label>
+                                <label htmlFor="nickname"></label>
                                 <input id='nickname' name='nickname'
                                     className='userUpdate_input'
                                     value={nickname}

@@ -1,7 +1,7 @@
 .MyPage {
     flex-flow: column nowrap;
     justify-content: space-between;
-    margin: calc((100vh - 159px - 166px - 200px*2 - 30px)/2) auto;
+    margin: calc((100vh - 159px - 166px - 200px*2 - 30px - 1px)/2) auto;
     width: 1240px;
 }
 

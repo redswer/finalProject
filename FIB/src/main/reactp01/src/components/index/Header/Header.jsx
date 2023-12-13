@@ -10,7 +10,11 @@ function Header() {
     const location = useLocation();
 
     if (location.pathname === '/LogIn' || location.pathname === '/JoinMembership' || location.pathname === '/FindUserInfo') {
-        return null;
+        return (
+            <div className='header_2'>
+
+            </div>
+        );
     } else {
         return (
             <div className='header'>

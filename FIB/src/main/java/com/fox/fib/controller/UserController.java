@@ -67,10 +67,10 @@ public class UserController {
             @RequestParam("password") String password,
             @ModelAttribute User user
     ) throws IOException {
-		String realPath = "D:\\JinHyuk_Ahn\\project_3rd\\FIB\\src\\main\\webapp\\resources\\uploadImages\\";
+		String realPath = "D:\\JinHyuk_Ahn\\finalProject\\FIB\\src\\main\\webapp\\resources\\uploadImages\\";
 		String file1, file2="resources/uploadImages/basicman4.png";
 		// => new Image 를 선택한 경우에만 처리하면 됨 
-		if ( uploadfilef!=null && !uploadfilef.isEmpty() ) {
+		if ( uploadfilef != null && !uploadfilef.isEmpty() ) {
 			
 			// => 물리적위치에 저장 (file1)
 			file1 = realPath + uploadfilef.getOriginalFilename(); //저장경로 완성
@@ -123,5 +123,4 @@ public class UserController {
 			return new ResponseEntity<String> ("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_GATEWAY);
 		}
 	}
-	
 }

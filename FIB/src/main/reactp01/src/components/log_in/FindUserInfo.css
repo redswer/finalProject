@@ -7,8 +7,9 @@
 
 .findUserInfo_logo_container {
     text-align: center;
-    margin: 20px auto;
     align-items: center;
+    margin: auto;
+    margin-bottom: 50px;
 }
 
 .find_userInfo_logo {
