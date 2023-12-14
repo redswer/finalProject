@@ -3,8 +3,18 @@
 }
 
 .insert_address_button {
-    text-align: right;
+    justify-content: space-between;
     margin-bottom: 20px;
+}
+
+.refresh_container {
+    align-items: center;
+}
+
+.address_refresh {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
 }
 
 .insert_address_button button {
@@ -19,9 +29,6 @@
 .user_address_table {
     width: 100%;
     border-collapse: collapse;
-}
-
-.user_address_table fieldset {
     border-top: 1px solid black;
     border-left: none;
     border-right: none;
@@ -31,12 +38,36 @@
 }
 
 .user_address_index_column {
+    line-height: 50px;
     border-bottom: 1px solid #bbbaba;
 }
 
 .user_address_column {
     display: grid;
-    grid-template-columns: 2fr 2fr 7fr 3fr 2fr 2fr;
+    grid-template-columns: 1fr 2fr 7fr 3fr 2fr 1fr;
     text-align: center;
-    line-height: 50px;
+    align-items: center;
+    padding: 15px;
+}
+
+.basic_address {
+    color: rgb(119, 175, 107);
+    font-weight: bold;
+}
+
+.user_address_column button {
+    width: 80%;
+    line-height: 30px;
+    border-radius: 5px;
+}
+
+.full_address {
+    text-align: left;
+    margin-left: 20px;
+}
+
+.basic_address_icon {
+    color: green;
+    width: 30px;
+    height: 30px;
 }

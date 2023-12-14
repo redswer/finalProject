@@ -56,4 +56,5 @@ public class UserServiceImpl implements UserService {
     public User updateUserPoint(int pointParam, String userId) {
        return repository.updateUserPoint(pointParam, userId);
     }
+	
 }

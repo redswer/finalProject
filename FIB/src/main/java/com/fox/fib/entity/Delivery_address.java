@@ -26,4 +26,6 @@ public class Delivery_address {
 	private String address;
 	private String address_detail;
 	private String address_as;
+	private Boolean basic_address;
+	private String phone_number;
 }
