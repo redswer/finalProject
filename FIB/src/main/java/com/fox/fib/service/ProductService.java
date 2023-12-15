@@ -16,21 +16,19 @@ public interface ProductService {
 
 	// [2] 페이지네이션 React.==================================================================================
 
-	PageResultDTO<Product> selectListSortOfTitle(PageRequestDTO requestDTO, String domestic, String category, String genre);
+	public List<Product> selectListSortOfTitle(String domestic, String category, String genre);
 
-	PageResultDTO<Product> selectListSortOfPriceAsc(PageRequestDTO requestDTO, String domestic, String category, String genre);
+	public List<Product> selectListSortOfPriceAsc(String domestic, String category, String genre);
 
-	PageResultDTO<Product> selectListSortOfPriceDesc(PageRequestDTO requestDTO, String domestic, String category, String genre);
+	public List<Product> selectListSortOfPriceDesc(String domestic, String category, String genre);
 
+	public List<Product> selectListLimitedPrice(String domestic, String category, String genre, int minprice, int maxprice);
 
-	PageResultDTO<Product> selectListLimitedPrice(PageRequestDTO requestDTO, String domestic, String category, String genre, int minprice,
-		int maxprice);
-
-	PageResultDTO<Product> selectListBestSeller(PageRequestDTO requestDTO);
+	public List<Product> selectListBestSeller();
 
 
 	// ============================================================================================
-	public List<Product> showListFromKeywords22(String domestic, String category, String genre);
+//	public List<Product> showListFromKeywords22(String domestic, String category, String genre);
 
 	// public List<Product> orderedByPriceAsc(String domestic, String category, String genre);
 

@@ -157,7 +157,7 @@ function saveOnCartSelecedItems () {
       onSelectAllItems={handleAllSelectBookmarkLists}
       isAllChecked={isAllChecked}
     />
-  )); 
+  ));
 
   
   

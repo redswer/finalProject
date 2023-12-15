@@ -1,14 +1,14 @@
-import './UiBox/SellerPageCommonCSS.css';
+import './ProductListPage.css';
 import { useState, useEffect } from 'react';
 import SideButton from '../SideButton';
-import SellerProductCard from './UiBox/SellerProductCard';
-import BasketPreviewBox from './UiBox/BasketPreviewBox';
-import ProductSellerCategoryBar from './UiBox/ProductSellerCategoryBar';
+import ProductListItem from './ProductListItem';
+import RecentSideBar from './UiBox/RecentSideBar';
+import KeywordSideBar from './UiBox/KeywordSideBar';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import ProductPagination from './ProductPagination';
 const ProductListPage = () => {
   // =================================================================================================================
   const [scrollY, setScrollY] = useState(0);
@@ -26,62 +26,52 @@ const ProductListPage = () => {
   const urlNavigate = useNavigate();
   const urlParams = new URLSearchParams(urlString.search);
   
-  const [urlDomesticValue , setUrlDomesticValue] = useState(0);
-  const [urlCategoryValue , setUrlCategoryValue] = useState(0);
-  const [urlGenreValue , setUrlGenreValue] = useState(0);
+  // const [urlDomesticValue , setUrlDomesticValue] = useState(0);
+  // const [urlCategoryValue , setUrlCategoryValue] = useState(0);
+  // const [urlGenreValue , setUrlGenreValue] = useState(0);
 
   // const [requestURL , setRequestURL] = useState();
   const [productData, setProductData] = useState([]);
-   const [pageThemeDomestic , setPageThemeDomestic] = useState();
-  const [pageThemeCategory , setPageThemeCategory] = useState();
-  const [pageThemeGenre , setPageThemeGenre] = useState();
+  //  const [pageThemeDomestic , setPageThemeDomestic] = useState();
+  // const [pageThemeCategory , setPageThemeCategory] = useState();
+  // const [pageThemeGenre , setPageThemeGenre] = useState();
   const [limitedMinPrice , setLimitedMinPrice] = useState(0);
   const [limitedMaxPrice , setLimitedMaxPrice] = useState(0);
-  const [titleWord , setTitleWord] = useState();
-  const [resultDTO , setResultDTO] = useState({});
+  // const [titleWord , setTitleWord] = useState();
   const [getMapping , setGetMapping] = useState('productSelectedList2');
 
-  const [nowPage,setNowPage] =useState(1);
-  const [nowSize , setNowSize] = useState(3);
-
   const [valueOfLimitedPrice,setValueOfLimitedPrice] = useState(0);
-  const [selectedPage, setSelectedPage] = useState(1);
+
+  const [visiblePageCount, setVisiblePageCount] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [nowSize, setNowSize] = useState(3);
 
   //==========================================================================================================================
   const requestToServer = (initRequestURL) => {
-    
-
     axios
       .get(`${initRequestURL}`)
       .then((response) => {
         const prevSearchParams = new URLSearchParams(urlString.search);
-        console.log(`response 성공 :`, response);
-        // console.log(`fetchData-response.data[0] : `, response.data[0]);
-        console.log('========================================');
-        if (response.data && response.data.entityList.length > 0) {
+        console.log(`response 성공 :`, response.data);
 
-          setResultDTO(response.data);
-          setProductData(response.data.entityList);
-          // alert(`setResultDTO 성공 : `,response.data.entityList);
-          console.log(`setResultDTO 성공 : `,response.data.entityList);
-  
+        if (response.data && response.data.length > 0) {
+          setProductData(response.data);
 
         } else {
         console.log(`requestToServer : 조건에 해당하는 도서가 없습니다.`);
         console.log(`resposne data : `, response.data);
-
         alert(`requestToServer : 조건에 해당하는 도서가 없습니다.`);
 
-        // const prevSearchParams = new URLSearchParams(urlString.search);
+        // // const prevSearchParams = new URLSearchParams(urlString.search);
 
-        const newURL = `/ProductListPage?${prevSearchParams.toString()}`;
+        // const newURL = `/ProductListPage?${prevSearchParams.toString()}`;
 
-        // if (urlString.search !== `?${prevSearchParams.toString()}`) {
-          // urlNavigate(newURL);
-        // }
-        urlNavigate(newURL);
+        // // if (urlString.search !== `?${prevSearchParams.toString()}`) {
+        //   // urlNavigate(newURL);
+        // // }
+        // urlNavigate(newURL);
 
-        //==============================
+        // //==============================
 
         }
       })
@@ -93,17 +83,16 @@ const ProductListPage = () => {
   useEffect(()=> {
     
     urlNavigate
-    (`/ProductListPage?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&page=${nowPage}&size=${nowSize}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`);
+    (`/ProductListPage?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`);
 
     requestToServer
-    (`/product/${getMapping}?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&page=${nowPage}&size=${nowSize}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`)
+    (`/product/${getMapping}?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`)
+    // console.log(`mount 성공`);
+    // axios
+    //   .get(`/product/productReviewOne?`)
 
   },[])
 
-
-  console.log(`setResultDTO : ` , resultDTO);
-
-  
 //===========================================================================================================================
 
 const [selectedOptions, setSelectedOptions] = useState(
@@ -250,153 +239,38 @@ const searchTextWord = () => {
   
 }
 //============================================================================================================================
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
+  const handleSizeChange = (size) => {
+    setNowSize(size);
+  };
 
-const movePage = (page) => {
-  const lastPage = resultDTO.pageList ? resultDTO.pageList[resultDTO.pageList.length - 1] : 1;
-
-  const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
-
-  if (page > 0 && page <= lastPage) {
-    setSelectedPage(page);
-
-    const nowParams = new URLSearchParams(urlString.search);
-
-
-    if (isOptionSelected) {
-      requestToServer
-      (`/product/${getMapping}?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&page=${page}&size=${nowSize}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`);
-
-      urlNavigate
-      (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&page=${page}&size=${nowSize}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`);
-
-    } else {
-
-      urlNavigate
-      (`/ProductListPage?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&page=${page}&size=${nowSize}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`);
-
-      requestToServer
-      (`/product/${getMapping}?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&page=${page}&size=${nowSize}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`)
-
-      console.log(`nomParam : ` ,nowParams.get('domestic') , nowParams.get('category') , nowParams.get('genre'))
-      alert(`페이지 이동해유 ^~^`);
-    }
-  }
-
-  // window.location.reload();
-};
-
-const moveToPreviousPage = () => {
-  movePage(selectedPage - 1);
-};
-
-const moveToNextPage = () => {
-  movePage(selectedPage + 1);
-};
-
-const moveToFirstPage = () => {
-  movePage(1);
-};
-
-const moveToLastPage = () => {
-  const lastPage = resultDTO.pageList ? resultDTO.pageList[resultDTO.pageList.length - 1] : 1;
-  movePage(lastPage);
-};
-
-
-
-
-//============================================================================================================================
-
-const handleSelectChange = (event) => {
-  const newSize = parseInt(event.target.value, 10); // 선택된 option의 값을 정수로 변환
-  setNowSize(newSize); // nowSize를 새로운 값으로 업데이트
-};
-
-useEffect(()=> {
-  const nowParams = new URLSearchParams(urlString.search);
-
-  const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
-
-  if (isOptionSelected) {
-    requestToServer
-    (`/product/${getMapping}?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&page=1&size=${nowSize}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`);
-
-    urlNavigate
-    (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&page=1&size=${nowSize}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`);
-
-  } else {
-
-    urlNavigate
-    (`/ProductListPage?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&page=1&size=${nowSize}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`);
-
-    requestToServer
-    (`/product/${getMapping}?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&page=1&size=${nowSize}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`)
-
-    console.log(`nomParam : ` ,nowParams.get('domestic') , nowParams.get('category') , nowParams.get('genre'))
-    // alert(`사이즈변경으로 리로링 ^~^`);
-  }
-
-  // window.location.reload();
-},[nowSize])
-
-//============================================================================================================================
-
-const pageNavigation = resultDTO.pageList ? resultDTO.pageList.map((data, i) => (
-  <button
-    key={i}
-    onClick={() => movePage(data)}
-    className={`productList_pageNationButton_${selectedPage === data ? 'selected' : ''}`}
-  >
-    {data}
-  </button>
-)) : null;
-
-
-
-//============================================================================================================================
-const bookList = productData.map((d, i) => (
-  <SellerProductCard
-    key={i}
-    product_code={d.product_code}
-    domestic={d.domestic}
-    protype={d.protype}
-    writer={d.writer_code}
-    title={d.title}
-    translator={d.translator}
-    publisher={d.publisher}
-    publish_date={d.publish_date}
-    category={d.category}
-    genre={d.genre}
-    summary={d.summary}
-    image={d.image}
-    intro_image={d.intro_image}
-    content={d.content}
-    price={d.price}
-    sellcount={d.sellcount}
-    urlNavigate={urlNavigate}
-  />
-)); 
-
+  // PaginationComponent에서 사용할 데이터 범위를 계산합니다.
+  const startIdx = (currentPage - 1) * nowSize;
+  const endIdx = startIdx + nowSize;
+  const visibleProducts = productData.slice(startIdx, endIdx);
 
 //============================================================================================================================
 
   return (
     <div className='seller_page_container'>
       <div className='product_seller_categorybar_container' style={{ transform: `translateY(${scrollY}px)` }}>
-        <ProductSellerCategoryBar requestFromBarToServer={requestToServer} />
+        <KeywordSideBar requestFromBarToServer={requestToServer} />
       </div>
 
       <div className='basket_preview_box_container' style={{ transform: `translateY(${scrollY}px)` }}>
-        <BasketPreviewBox />
+        <RecentSideBar />
       </div>
+
 
       <div className='seller_product_List_container'>
         <div className='seller_product_page_titlebox'>
           <div className='ProductListPage_Checkbox_container'>
              <h3>키워드 선택</h3>
 
-              <select onChange={handleSelectChange} value={nowSize}>
+              <select>
                 <option value="2">2개씩 보기</option>
                 <option value="3">3개씩 보기</option>
                 <option value="5">5개씩 보기</option>
@@ -466,7 +340,7 @@ const bookList = productData.map((d, i) => (
           <hr />
 
           <div className='ProductListPage_SortOption'>
-            <button onClick={keywordSortTitle}>기본순</button>&nbsp;&nbsp;
+            <button onClick={keywordSortTitle}>제목순</button>&nbsp;&nbsp;
             <button onClick={keywordSortPriceAsc}>최저가순</button>&nbsp;&nbsp;
             <button onClick={keywordSortPriceDesc}>최고가순</button>&nbsp;&nbsp;
             <button onClick={keywordLimitedPrice}>판매량순</button>&nbsp;&nbsp;
@@ -491,15 +365,41 @@ const bookList = productData.map((d, i) => (
         <hr className='seller_product_page_titlebox_hr'/>
 
         <div className='seller_product_bookList'>
-          {bookList}
+           {/* PaginationComponent에서 보여지는 범위의 데이터만 출력합니다. */}
+           {productData.map((d, i) => (
+            <ProductListItem
+            key={i}
+            product_code={d.product_code}
+            domestic={d.domestic}
+            protype={d.protype}
+            writer={d.writer_code}
+            title={d.title}
+            translator={d.translator}
+            publisher={d.publisher}
+            publish_date={d.publish_date}
+            category={d.category}
+            genre={d.genre}
+            summary={d.summary}
+            image={d.image}
+            intro_image={d.intro_image}
+            content={d.content}
+            price={d.price}
+            sellcount={d.sellcount}
+            urlNavigate={urlNavigate}
+          />
+          ))}
         </div>
 
         <div className='productListPage_pageNationButton'>
-        <button onClick={moveToFirstPage}>처음으로</button>&nbsp;&nbsp;&nbsp;&nbsp;
-        <button onClick={moveToPreviousPage}>이전 페이지</button>
-        <span>{pageNavigation}</span>
-        <button onClick={moveToNextPage}>다음 페이지</button>
-        &nbsp;&nbsp;&nbsp;&nbsp;<button onClick={moveToLastPage}>끝으로</button>
+        <ProductPagination
+          // totalPages={Math.ceil(productData.length / nowSize)}
+          totalPages={Math.ceil(productData.length / nowSize)}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          onSizeChange={handleSizeChange}
+          pageSizeOptions={[2, 3, 5, 7, 10, 20]}
+          visiblePageCount={visiblePageCount}
+        />
         </div>
 
         <hr />

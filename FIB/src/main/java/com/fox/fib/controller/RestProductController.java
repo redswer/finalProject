@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fox.fib.domain.PageRequestDTO;
-import com.fox.fib.domain.PageResultDTO;
 import com.fox.fib.entity.Product;
 import com.fox.fib.entity.RecentView;
+import com.fox.fib.entity.Review;
 import com.fox.fib.service.ProductService;
 import com.fox.fib.service.RecentViewService;
+import com.fox.fib.service.ReviewService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -27,6 +27,7 @@ public class RestProductController {
 
 	ProductService productservice;
 	RecentViewService recentviewservice;
+	ReviewService reviewservice;
 
 	// ==========================================================================================
 
@@ -38,30 +39,40 @@ public class RestProductController {
 		return entity;
 	}
 
+	// ==========================================================================================
+
+	@GetMapping("/productReviewList")
+	public ResponseEntity<?> productReviewList(@RequestParam(name = "pcode") String product_code, Review rentity) {
+		try {
+			log.info(product_code);
+			int pcode = Integer.parseInt(product_code);
+			List<Review> resultReviewList = reviewservice.selectProductReviewList(pcode);
+
+			return ResponseEntity.ok(resultList);
+		} catch (Exception e) {
+			log.info(" 삭제 실패 : " + e.toString());
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("checkedListOfDefault 오류");
+
+		}
+	}
 
 	// ==========================================================================================
 
 	@GetMapping("/productSelectedList2")
 	public ResponseEntity<?> productSelectedList2(@RequestParam(name = "domestic") String domestic,
-		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre,
-		@RequestParam(name = "page") String page, @RequestParam(name = "size") String size) {
+		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
 		try {
-			log.info("productSelectedList2인자 정보 : " + domestic + category + genre + page + size);
+			log.info("productSelectedList2인자 정보 : " + domestic + category + genre);
 
-			int pageNum = Integer.parseInt(page);
-			int sizeNum = Integer.parseInt(size);
+			List<Product> resultList = productservice.selectListSortOfTitle(domestic, category, genre);
 
-			PageRequestDTO requestDTO = PageRequestDTO.builder().page(pageNum).size(sizeNum).build();
+			log.info("[59]productSelectedList2 확인 : " + resultList.toString());
 
-			PageResultDTO<Product> resultDTO = productservice.selectListSortOfTitle(requestDTO, domestic, category, genre);
-
-			log.info("[59]checkedListOfDefault 확인 : " + resultDTO.toString());
-
-			return ResponseEntity.ok(resultDTO);
+			return ResponseEntity.ok(resultList);
 
 		} catch (Exception e) {
 			log.info(" 삭제 실패 : " + e.toString());
-			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("checkedListOfDefault 오류");
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("productSelectedList2 오류");
 
 		}
 	}
@@ -70,25 +81,19 @@ public class RestProductController {
 
 	@GetMapping("/productAscendingList")
 	public ResponseEntity<?> productAscendingList(@RequestParam(name = "domestic") String domestic,
-		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre,
-		@RequestParam(name = "page") String page, @RequestParam(name = "size") String size) {
+		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
 		try {
-			log.info("productAscendingList인자 정보 : " + domestic + category + genre + page + size);
+			log.info("productAscendingList인자 정보 : " + domestic + category + genre);
 
-			int pageNum = Integer.parseInt(page);
-			int sizeNum = Integer.parseInt(size);
+			List<Product> resultList = productservice.selectListSortOfPriceAsc(domestic, category, genre);
 
-			PageRequestDTO requestDTO = PageRequestDTO.builder().page(pageNum).size(sizeNum).build();
+			log.info("[59]productAscendingList 확인 : " + resultList.toString());
 
-			PageResultDTO<Product> resultDTO = productservice.selectListSortOfPriceAsc(requestDTO, domestic, category, genre);
-
-			log.info("[59]checkedListOfDefault 확인 : " + resultDTO.toString());
-
-			return ResponseEntity.ok(resultDTO);
+			return ResponseEntity.ok(resultList);
 
 		} catch (Exception e) {
 			log.info(" 삭제 실패 : " + e.toString());
-			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("checkedListOfDefault 오류");
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("productAscendingList 오류");
 
 		}
 	}
@@ -97,25 +102,19 @@ public class RestProductController {
 
 	@GetMapping("/productDescendingList")
 	public ResponseEntity<?> productDescendingList(@RequestParam(name = "domestic") String domestic,
-		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre,
-		@RequestParam(name = "page") String page, @RequestParam(name = "size") String size) {
+		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
 		try {
-			log.info("productDescendingList인자 정보 : " + domestic + category + genre + page + size);
+			log.info("productDescendingList인자 정보 : " + domestic + category + genre);
 
-			int pageNum = Integer.parseInt(page);
-			int sizeNum = Integer.parseInt(size);
+			List<Product> resultList = productservice.selectListSortOfPriceDesc(domestic, category, genre);
 
-			PageRequestDTO requestDTO = PageRequestDTO.builder().page(pageNum).size(sizeNum).build();
+			log.info("[113]productDescendingList 확인 : " + resultList.toString());
 
-			PageResultDTO<Product> resultDTO = productservice.selectListSortOfPriceDesc(requestDTO, domestic, category, genre);
-
-			log.info("[113]productDescendingList 확인 : " + resultDTO.toString());
-
-			return ResponseEntity.ok(resultDTO);
+			return ResponseEntity.ok(resultList);
 
 		} catch (Exception e) {
 			log.info(" 삭제 실패 : " + e.toString());
-			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("checkedListOfDefault 오류");
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("productDescendingList 오류");
 
 		}
 	}
@@ -125,44 +124,42 @@ public class RestProductController {
 	@GetMapping("/productLimitedPriceList")
 	public ResponseEntity<?> productLimitedPriceList(@RequestParam(name = "domestic") String domestic,
 		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre,
-		@RequestParam(name = "page") String page, @RequestParam(name = "size") String size, @RequestParam(name = "minprice") int minprice,
-		@RequestParam(name = "maxprice") int maxprice) {
+		@RequestParam(name = "minprice") int minprice, @RequestParam(name = "maxprice") int maxprice) {
 
 		try {
-			log.info("productLimitedPriceList인자 정보 : " + domestic + category + genre + page + size + " & price & " + minprice + maxprice);
+			log.info("productLimitedPriceList인자 정보 : " + domestic + category + genre + " & price & " + minprice + maxprice);
 
-			int pageNum = Integer.parseInt(page);
-			int sizeNum = Integer.parseInt(size);
+			List<Product> resultList = productservice.selectListLimitedPrice(domestic, category, genre, minprice, maxprice);
 
-			PageRequestDTO requestDTO = PageRequestDTO.builder().page(pageNum).size(sizeNum).build();
-			PageResultDTO<Product> resultDTO = productservice.selectListLimitedPrice(requestDTO, domestic, category, genre, minprice,
-				maxprice);
+			log.info("[134] 1차 productLimitedPriceList의 resultList 확인 : " + resultList.toString());
 
-			log.info("[141] 1차 productLimitedPriceList의 resultDTO 확인 : " + resultDTO.toString());
-
-			// minprice와 maxprice 사이의 값만 필터링
-
-			// log.info("[145] resultDTO.getEntityList가 가능한지 확인 : " + resultDTO.toString());
-			//
-			// List<Product> filteredProducts = resultDTO.getEntityList().stream()
-			// .filter(product -> product.getPrice() >= minprice && product.getPrice() <= maxprice).collect(Collectors.toList());
-			//
-			// resultDTO.setEntityList(filteredProducts);
-			//
-			// log.info("[150] 찐찐 최종의 productLimitedPriceList 확인 : " + resultDTO.toString());
-
-			return ResponseEntity.ok(resultDTO);
+			return ResponseEntity.ok(resultList);
 
 		} catch (Exception e) {
 			log.info(" 삭제 실패 : " + e.toString());
-			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("checkedListOfDefault 오류");
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("productLimitedPriceList 오류");
 
 		}
 	}
 
-	// ======================================================================================================
+	// ==========================================================================================
 
+	@GetMapping("/bestSeller")
+	public ResponseEntity<?> bestSeller() {
 
+		try {
+			List<Product> resultList = productservice.selectListBestSeller();
+
+			log.info("[141] 1차 bestSeller의 resultDTO 확인 : " + resultList.toString());
+
+			return ResponseEntity.ok(resultList);
+
+		} catch (Exception e) {
+			log.info(" 삭제 실패 : " + e.toString());
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("bestSeller 오류");
+
+		}
+	}
 
 	// ======================================================================================================
 
@@ -212,88 +209,46 @@ public class RestProductController {
 
 	// ==========================================================================================
 
-	@GetMapping("/bestSeller")
-	public ResponseEntity<?> bestSeller(@RequestParam(name = "page") String page, @RequestParam(name = "size") String size) {
-
-		try {
-			log.info("bestSeller인자 정보 : " + page + " & & " + size);
-
-			int pageNum = Integer.parseInt(page);
-			int sizeNum = Integer.parseInt(size);
-
-			PageRequestDTO requestDTO = PageRequestDTO.builder().page(pageNum).size(sizeNum).build();
-			PageResultDTO<Product> resultDTO = productservice.selectListBestSeller(requestDTO);
-
-			log.info("[141] 1차 bestSeller의 resultDTO 확인 : " + resultDTO.toString());
-
-			return ResponseEntity.ok(resultDTO);
-
-		} catch (Exception e) {
-			log.info(" 삭제 실패 : " + e.toString());
-			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("checkedListOfDefault 오류");
-
-		}
-	}
-
-
-	// ==========================================================================================
-
-	@GetMapping("/searchTextWord")
-	public ResponseEntity<?> searchTextWord(@RequestParam(name = "domestic") String domestic,
-		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre,
-		@RequestParam(name = "page") String page, @RequestParam(name = "size") String size, @RequestParam(name = "minprice") int minprice,
-		@RequestParam(name = "maxprice") int maxprice, @RequestParam(name = "textword") String textword) {
-
-		try {
-			log.info("productLimitedPriceList인자 정보 : " + domestic + category + genre + page + size + " & price & " + minprice + maxprice
-				+ textword);
-
-			int pageNum = Integer.parseInt(page);
-			int sizeNum = Integer.parseInt(size);
-
-			PageRequestDTO requestDTO = PageRequestDTO.builder().page(pageNum).size(sizeNum).build();
-			PageResultDTO<Product> resultDTO = productservice.selectListLimitedPrice(requestDTO, domestic, category, genre, minprice,
-				maxprice);
-
-			log.info("[141] 1차 productLimitedPriceList의 resultDTO 확인 : " + resultDTO.toString());
-
-			// minprice와 maxprice 사이의 값만 필터링
-
-			// log.info("[145] resultDTO.getEntityList가 가능한지 확인 : " + resultDTO.toString());
-			//
-			// List<Product> filteredProducts = resultDTO.getEntityList().stream()
-			// .filter(product -> product.getPrice() >= minprice && product.getPrice() <= maxprice).collect(Collectors.toList());
-			//
-			// resultDTO.setEntityList(filteredProducts);
-			//
-			// log.info("[150] 찐찐 최종의 productLimitedPriceList 확인 : " + resultDTO.toString());
-
-			return ResponseEntity.ok(resultDTO);
-
-		} catch (Exception e) {
-			log.info(" 삭제 실패 : " + e.toString());
-			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("checkedListOfDefault 오류");
-
-		}
-	}
-
-	// @GetMapping("/productSelectedList")
-	// public List<Product> productSelectedList(@RequestParam(name = "domestic") String domestic,
-	// @RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
-	// try {
-	// log.info("selectedKeyword 정보 : " + domestic + category + genre);
-	//
-	// List<Product> selectedList = productservice.showListFromKeywords(domestic, category, genre);
-	//
-	// log.info("selectedList 확인 : " + selectedList.toString());
-	//
-	// return selectedList;
-	// } catch (Exception e) {
-	// log.info(" 삭제 실패 : " + e.toString());
-	//
-	// }
-	// return null;
-	// }
+//	@GetMapping("/searchTextWord")
+//	public ResponseEntity<?> searchTextWord(@RequestParam(name = "domestic") String domestic,
+//		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre,
+//		@RequestParam(name = "minprice") int minprice, @RequestParam(name = "maxprice") int maxprice,
+//		@RequestParam(name = "textword") String textword) {
+//
+//		try {
+//			log.info("productLimitedPriceList인자 정보 : " + domestic + category + genre + " & price & " + minprice + maxprice + textword);
+//
+//			List<Product> resultList = productservice.selectListLimitedPrice(resultList, domestic, category, genre, minprice, maxprice);
+//
+//			log.info("[141] 1차 productLimitedPriceList의 resultDTO 확인 : " + resultList.toString());
+//
+//
+//			return ResponseEntity.ok(resultList);
+//
+//		} catch (Exception e) {
+//			log.info(" 삭제 실패 : " + e.toString());
+//			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("checkedListOfDefault 오류");
+//
+//		}
+//	}
+//
+//	@GetMapping("/productSelectedList")
+//	public List<Product> productSelectedList(@RequestParam(name = "domestic") String domestic,
+//		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
+//		try {
+//			log.info("selectedKeyword 정보 : " + domestic + category + genre);
+//
+//			List<Product> selectedList = productservice.showListFromKeywords(domestic, category, genre);
+//
+//			log.info("selectedList 확인 : " + selectedList.toString());
+//
+//			return selectedList;
+//		} catch (Exception e) {
+//			log.info(" 삭제 실패 : " + e.toString());
+//
+//		}
+//		return null;
+//	}
 
 	// @GetMapping("/productLimitedPriceList22222222")
 	// public List<Product> productLimitedPriceList22222222(@RequestParam(name = "domestic") String domestic,

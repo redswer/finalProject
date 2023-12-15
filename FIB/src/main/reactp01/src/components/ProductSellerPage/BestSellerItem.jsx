@@ -6,25 +6,25 @@ import { useNavigate } from 'react-router-dom';
 
 const BestSellerItem = (props) => {
   // =================================================================================================================
-  const [sell_countRate, setCount] = useState(0);
-  const targetNumber = props.sellcount; // 최종 도달 숫자
-  const animationDuration = 2000; // 애니메이션 시간 (밀리초)
-  const increment = targetNumber / (animationDuration / 10); // 10ms마다 증가할 숫자
+  // const [sell_countRate, setCount] = useState(0);
+  // const targetNumber = props.sellcount; // 최종 도달 숫자
+  // const animationDuration = 2000; // 애니메이션 시간 (밀리초)
+  // const increment = targetNumber / (animationDuration / 10); // 10ms마다 증가할 숫자
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    const startTime = Date.now();
-    const interval = setInterval(() => {
-      const elapsedTime = Date.now() - startTime;
-      const progress = Math.min(elapsedTime / animationDuration, 1);
-      const newValue = Math.floor(progress * targetNumber);
-      setCount(newValue);
-      if (progress >= 1) {
-        clearInterval(interval);
-      }
-    }, 10);
-    return () => clearInterval(interval);
-  }, []);
+  //   const startTime = Date.now();
+  //   const interval = setInterval(() => {
+  //     const elapsedTime = Date.now() - startTime;
+  //     const progress = Math.min(elapsedTime / animationDuration, 1);
+  //     const newValue = Math.floor(progress * targetNumber);
+  //     setCount(newValue);
+  //     if (progress >= 1) {
+  //       clearInterval(interval);
+  //     }
+  //   }, 10);
+  //   return () => clearInterval(interval);
+  // }, []);
 // =================================================================================================================
 
 const [proamount ,setProamount] = useState(1);
@@ -44,9 +44,6 @@ useEffect(()=> {
 		      // alert(`담기 실패!! ${err.message}`);
     });
 },[])
-
-
-
 
 function saveOnCart () {
   const savedDataOnCart = {
@@ -198,7 +195,7 @@ const dataToPayment = [{
           <div className='seller_product_sales_rate_box'>
             <span className='product_sales_rate_1'>누적 판매량</span>
             <span className='product_sales_rate_1'> : </span>
-            <span className='product_sales_rate'>{sell_countRate}</span>
+            <span className='product_sales_rate'>{props.sellcount}</span>
             <span className='product_sales_rate_3'> 권</span>
           </div>
 

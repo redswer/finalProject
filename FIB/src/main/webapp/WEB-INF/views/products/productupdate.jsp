@@ -125,7 +125,7 @@
     </tr>
     <tr>
          <th bgcolor="deeppink">17. sell_count</th>
-         <td><input type="number" name="sellcount" id="sellcount"  size="40" value="${requestScope.pcode.sell_count}"></td>
+         <td><input type="number" name="sellcount" id="sellcount"  size="40" value="${requestScope.pcode.sellcount}"></td>
          <td>현재 상품 누적 판매량. not null.</td>
     </tr>
     <tr>

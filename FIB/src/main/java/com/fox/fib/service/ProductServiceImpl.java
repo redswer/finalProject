@@ -37,64 +37,32 @@ public class ProductServiceImpl implements ProductService {
 		return new PageResultDTO<>(result);
 	}
 
+	// [2] 필요시에 쓰는 커스텀 메소드.==============================================================================
 
-	// [2] 페이지네이션 React.==================================================================================
 	@Override
-	public PageResultDTO<Product> selectListSortOfTitle(PageRequestDTO requestDTO, String domestic, String category, String genre) {
-		Pageable pageable = requestDTO.getPageable(Sort.by("title").ascending());
-		Page<Product> result = repository.showListFromKeywords(pageable, domestic, category, genre);
-		return new PageResultDTO<>(result);
+	public List<Product> selectListSortOfTitle(String domestic, String category, String genre) {
+		return repository.selectListSortOfTitle(domestic, category, genre);
 	}
 
 	@Override
-	public PageResultDTO<Product> selectListSortOfPriceAsc(PageRequestDTO requestDTO, String domestic, String category, String genre) {
-		Pageable pageable = requestDTO.getPageable(Sort.by("price").ascending());
-		Page<Product> result = repository.findOrderedPriceAsc(pageable, domestic, category, genre);
-		return new PageResultDTO<>(result);
+	public List<Product> selectListSortOfPriceAsc(String domestic, String category, String genre) {
+		return repository.selectListSortOfPriceAsc(domestic, category, genre);
 	}
 
 	@Override
-	public PageResultDTO<Product> selectListSortOfPriceDesc(PageRequestDTO requestDTO, String domestic, String category, String genre) {
-		Pageable pageable = requestDTO.getPageable(Sort.by("price").descending());
-		Page<Product> result = repository.findOrderedPriceDesc(pageable, domestic, category, genre);
-		return new PageResultDTO<>(result);
+	public List<Product> selectListSortOfPriceDesc(String domestic, String category, String genre) {
+		return repository.selectListSortOfPriceDesc(domestic, category, genre);
 	}
-
 
 	@Override
-	public PageResultDTO<Product> selectListLimitedPrice(PageRequestDTO requestDTO, String domestic, String category, String genre,
-		int minprice, int maxprice) {
-		Pageable pageable = requestDTO.getPageable(Sort.by("price").ascending());
-		Page<Product> result = repository.selectListLimitedPrice(pageable, domestic, category, genre, minprice, maxprice);
-		return new PageResultDTO<>(result);
+	public List<Product> selectListLimitedPrice(String domestic, String category, String genre, int minprice, int maxprice) {
+		return repository.selectListLimitedPrice(domestic, category, genre, minprice, maxprice);
 	}
-
 
 	@Override
-	public PageResultDTO<Product> selectListBestSeller(PageRequestDTO requestDTO) {
-		Pageable pageable = requestDTO.getPageable(Sort.by("sellcount").descending());
-
-		Page<Product> result = repository.selectListBestSeller(pageable);
-
-		return new PageResultDTO<>(result);
+	public List<Product> selectListBestSeller() {
+		return repository.selectListBestSeller();
 	}
-
-
-	// [3] 필요시에 쓰는 커스텀 메소드.==============================================================================
-	@Override
-	public List<Product> showListFromKeywords22(String domestic, String category, String genre) {
-		return repository.showListFromKeywords22(domestic, category, genre);
-	}
-
-	// @Override
-	// public List<Product> orderedByPriceAsc(String domestic, String category, String genre) {
-	// return repository.findOrderedPriceAsc(domestic, category, genre);
-	// }
-
-	// @Override
-	// public List<Product> orderedByPriceDesc(String domestic, String category, String genre) {
-	// return repository.findOrderedPriceDesc(domestic, category, genre);
-	// }
 
 	// [4] 기본 내장 메소드.=============================================================================================
 
@@ -118,6 +86,8 @@ public class ProductServiceImpl implements ProductService {
 		repository.deleteById(product_code);
 		return product_code;
 	}
+
+
 
 
 	// =============================================================================================끝

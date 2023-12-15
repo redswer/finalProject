@@ -11,37 +11,37 @@ import org.springframework.data.repository.query.Param;
 import com.fox.fib.entity.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-
-	@Query("SELECT p FROM Product p WHERE (:domestic = '0' OR p.domestic = :domestic)" + "AND (:category = '0' OR p.category = :category) "
-		+ "AND (:genre = '0' OR p.genre = :genre)")
-	Page<Product> showListFromKeywords(Pageable pageable, @Param("domestic") String domestic, @Param("category") String category,
-		@Param("genre") String genre);
-
-	// ORDER BY p.price ASC
-	@Query("SELECT p FROM Product p WHERE (:domestic = '0' OR p.domestic = :domestic) " + "AND (:category = '0' OR p.category = :category) "
-		+ "AND (:genre = '0' OR p.genre = :genre) ORDER BY p.price ASC")
-	Page<Product> findOrderedPriceAsc(Pageable pageable, @Param("domestic") String domestic, @Param("category") String category,
-		@Param("genre") String genre);
-
-	// ORDER BY p.price desc
-	@Query("SELECT p FROM Product p WHERE (:domestic = '0' OR p.domestic = :domestic) " + "AND (:category = '0' OR p.category = :category) "
-		+ "AND (:genre = '0' OR p.genre = :genre) ")
-	Page<Product> findOrderedPriceDesc(Pageable pageable, @Param("domestic") String domestic, @Param("category") String category,
-		@Param("genre") String genre);
-
-
-	@Query("SELECT p FROM Product p WHERE (:domestic = '0' OR p.domestic = :domestic) " + "AND (:category = '0' OR p.category = :category) "
-		+ "AND (:genre = '0' OR p.genre = :genre) and (p.price between :minprice and :maxprice)")
-	Page<Product> selectListLimitedPrice(Pageable pageable, String domestic, String category, String genre, int minprice, int maxprice);
-
-
-	@Query("SELECT p FROM Product p ORDER BY p.sellcount DESC")
-	Page<Product> selectListBestSeller(Pageable pageable);
-
-
-
 	@Override
 	Page<Product> findAll(Pageable pageable);
+
+	// ============================================================================================================================
+
+	@Query("SELECT p FROM Product p WHERE (:domestic = '0' OR p.domestic = :domestic)" + "AND (:category = '0' OR p.category = :category) "
+		+ "AND (:genre = '0' OR p.genre = :genre) order by p.title asc")
+	List<Product> selectListSortOfTitle(@Param("domestic") String domestic, @Param("category") String category,
+		@Param("genre") String genre);
+
+
+	@Query("SELECT p FROM Product p WHERE (:domestic = '0' OR p.domestic = :domestic) " + "AND (:category = '0' OR p.category = :category) "
+		+ "AND (:genre = '0' OR p.genre = :genre) ORDER BY p.price ASC")
+	List<Product> selectListSortOfPriceAsc(@Param("domestic") String domestic, @Param("category") String category,
+		@Param("genre") String genre);
+
+
+	@Query("SELECT p FROM Product p WHERE (:domestic = '0' OR p.domestic = :domestic) " + "AND (:category = '0' OR p.category = :category) "
+		+ "AND (:genre = '0' OR p.genre = :genre) order by p.price desc")
+	List<Product> selectListSortOfPriceDesc(@Param("domestic") String domestic, @Param("category") String category,
+		@Param("genre") String genre);
+
+
+	@Query("SELECT p FROM Product p WHERE (:domestic = '0' OR p.domestic = :domestic) " + "AND (:category = '0' OR p.category = :category) "
+		+ "AND (:genre = '0' OR p.genre = :genre) and (p.price between :minprice and :maxprice) order by p.price asc")
+	List<Product> selectListLimitedPrice(String domestic, String category, String genre, int minprice, int maxprice);
+
+
+	@Query(nativeQuery = true, value = "SELECT * FROM product p ORDER BY p.sellcount DESC")
+	List<Product> selectListBestSeller();
+
 
 	// ============================================================================================================================
 

@@ -1,9 +1,9 @@
 import './BestSellerPage.css';
 import { useState, useEffect } from 'react';
 import SideButton from '../SideButton';
-import SellerProductCard from './UiBox/SellerProductCard';
-import BasketPreviewBox from './UiBox/BasketPreviewBox';
-import ProductSellerCategoryBar from './UiBox/ProductSellerCategoryBar';
+import BestSellerItem from './BestSellerItem';
+import BasketPreviewBox from './UiBox/RecentSideBar';
+import ProductSellerCategoryBar from './UiBox/KeywordSideBar';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -39,7 +39,6 @@ const BestSellerPage = () => {
     axios
       .get(`${initRequestURL}`)
       .then((response) => {
-        const prevSearchParams = new URLSearchParams(urlString.search);
         console.log(`response 성공 :`, response);
         console.log('========================================');
         if (response.data && response.data.entityList.length > 0) {
@@ -86,7 +85,7 @@ const movePage = (page) => {
       (`/BestSellerPage?&page=${page}&size=${nowSize}`);
 
       requestToServer
-      (`/product/bestSeller?&page=${page}&size=${nowSize}`)
+      (`/product/bestSeller?&page=${page}&size=${nowSize}`);
 
       alert(`페이지 이동해유 ^~^`);
   }
@@ -124,7 +123,7 @@ useEffect(()=> {
   requestToServer
   (`/product/bestSeller?&page=1&size=${nowSize}`);
 
-  alert(`사이즈변경으로 리로링 ^~^`);
+  // alert(`사이즈변경으로 리로링 ^~^`);
 
 },[nowSize]);
 
@@ -143,7 +142,7 @@ const pageNavigation = resultDTO.pageList ? resultDTO.pageList.map((data, i) => 
 
 //============================================================================================================================
 const bookList = productData.map((d, i) => (
-  <SellerProductCard
+  <BestSellerItem
     key={i}
     product_code={d.product_code}
     domestic={d.domestic}

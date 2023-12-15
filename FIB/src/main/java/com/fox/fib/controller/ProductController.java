@@ -105,7 +105,6 @@ public class ProductController {
 			model.addAttribute("pcode", entity);
 		} catch (Exception e) {
 			log.info("** update Exception => " + e.toString());
-			model.addAttribute("pcode", e.toString());
 		}
 
 	}

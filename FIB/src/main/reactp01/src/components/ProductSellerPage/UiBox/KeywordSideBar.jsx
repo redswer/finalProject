@@ -1,11 +1,11 @@
-import './ProductSellerCategoryBar.css';
+import './KeywordSideBar.css';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-function ProductSellerCategoryBar(props) {
+function KeywordSideBar(props) {
     const [domesticParam, setDomesticParam] = useState(0);
     const urlNavigate = useNavigate();
 
@@ -142,4 +142,4 @@ const sf = selectOptions(0, 0, 'sf');
         </div>
     );
 }
-export default ProductSellerCategoryBar;
+export default KeywordSideBar;

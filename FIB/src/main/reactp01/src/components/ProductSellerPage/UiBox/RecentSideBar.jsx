@@ -1,11 +1,11 @@
-import './BasketPreviewBox.css';
+import './RecentSideBar.css';
 import { Link } from 'react-router-dom'
-import BasketPreviewList from './BasketPreviewList';
+import RecentSideBarItem from './RecentSideBarItem';
 import { useEffect , useState } from 'react';
 import axios from 'axios';
 
 
-const BasketPreviewBox = () => {
+const RecentSideBar = () => {
 
   const loginID = sessionStorage.getItem("loginID");
 
@@ -67,4 +67,4 @@ const [bookData,setBookData] = useState([]);
   );
 };
 
-export default BasketPreviewBox;
+export default RecentSideBar;

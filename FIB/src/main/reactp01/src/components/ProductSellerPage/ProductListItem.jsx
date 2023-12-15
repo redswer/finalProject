@@ -1,37 +1,65 @@
-import './SellerProductCard.css';
+import './ProductListItem.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const SellerProductCard = (props) => {
+const ProductListItem = (props) => {
   // =================================================================================================================
-  const [sell_countRate, setCount] = useState(0);
-  const targetNumber = props.sellcount; // 최종 도달 숫자
-  const animationDuration = 2000; // 애니메이션 시간 (밀리초)
-  const increment = targetNumber / (animationDuration / 10); // 10ms마다 증가할 숫자
+  // const [sell_countRate, setCount] = useState(0);
+  // const targetNumber = props.sellcount; // 최종 도달 숫자
+  // const animationDuration = 2000; // 애니메이션 시간 (밀리초)
+  // const increment = targetNumber / (animationDuration / 10); // 10ms마다 증가할 숫자
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    const startTime = Date.now();
-    const interval = setInterval(() => {
-      const elapsedTime = Date.now() - startTime;
-      const progress = Math.min(elapsedTime / animationDuration, 1);
-      const newValue = Math.floor(progress * targetNumber);
-      setCount(newValue);
-      if (progress >= 1) {
-        clearInterval(interval);
-      }
-    }, 10);
-    return () => clearInterval(interval);
-  }, []);
+  //   const startTime = Date.now();
+  //   const interval = setInterval(() => {
+  //     const elapsedTime = Date.now() - startTime;
+  //     const progress = Math.min(elapsedTime / animationDuration, 1);
+  //     const newValue = Math.floor(progress * targetNumber);
+  //     setCount(newValue);
+  //     if (progress >= 1) {
+  //       clearInterval(interval);
+  //     }
+  //   }, 10);
+  //   return () => clearInterval(interval);
+  // }, []);
 // =================================================================================================================
-
-// const [protype ,setProtype] = useState();
 
 const [proamount ,setProamount] = useState(1);
 
 const loginID = sessionStorage.getItem("loginID");
+
+const [reviewData,setReviewData] =useState();
+
+//====================================================================================================================
+
+useEffect(() => {
+
+  console.log(`review의 product_code : ` , props.product_code);
+
+  axios
+    .get(`/product/productReviewOne?pcode=${props.product_code}`)
+    .then((response) => {
+      console.log(`리뷰 불러오기 성공 ^-^ :`, response);
+      console.log('========================================');
+      
+      setReviewData(response.data);
+      
+      }).catch((err) => {
+        alert(`리뷰불러오기실패!!!!! => ${err.message}`);
+  });
+},[]);
+
+console.log(`reviewData : `,reviewData);
+//====================================================================================================================
+
+const starCountSum = reviewData ? reviewData.reduce((sum, review) => sum + review.star_count, 0) : 0;
+const reviewCount = reviewData ? reviewData.length : 0;
+const starCountAverage = reviewCount > 0 ? starCountSum / reviewCount : 0;
+
+//====================================================================================================================
 
 function saveOnCart () {
   const savedDataOnCart = {
@@ -60,6 +88,8 @@ const domesticLink = () => {
   props.urlNavigate(`/ProductListPage?domestic=${props.domestic}&category=${0}&genre=${0}`);
 }
 
+//====================================================================================================================
+
 function saveOnBookmark () {
   const savedDataOnBookmark = {
     product_code: props.product_code,
@@ -87,6 +117,12 @@ const dataToPayment = [{
   price : props.price,
   proamount : proamount
 }]
+
+
+
+
+
+//====================================================================================================================
 
 
   return (
@@ -183,7 +219,14 @@ const dataToPayment = [{
           <div className='seller_product_sales_rate_box'>
             <span className='product_sales_rate_1'>누적 판매량</span>
             <span className='product_sales_rate_1'> : </span>
-            <span className='product_sales_rate'>{sell_countRate}</span>
+            <span className='product_sales_rate'>{props.sellcount}</span>
+            <span className='product_sales_rate_3'> 권</span>
+          </div>
+
+          <div className='seller_product_sales_rate_box'>
+            <span className='product_sales_rate_1'>평균별점</span>
+            <span className='product_sales_rate_1'> : </span>
+            <span className='product_sales_rate'>{starCountAverage}</span>
             <span className='product_sales_rate_3'> 권</span>
           </div>
 
@@ -225,4 +268,4 @@ const dataToPayment = [{
   );
 };
 
-export default SellerProductCard;
+export default ProductListItem;
