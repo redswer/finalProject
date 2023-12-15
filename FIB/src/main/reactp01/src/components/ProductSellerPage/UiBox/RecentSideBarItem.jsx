@@ -1,7 +1,7 @@
-import './BasketPreviewList.css'
+import './RecentSideBarItem.css'
 import { useEffect ,useState} from 'react';
 import axios from 'axios';
-const BasketPreviewList = (props) => {
+const RecentSideBarItem = (props) => {
 
     return (
         <div className='basket_preview_item_container'>
@@ -9,9 +9,9 @@ const BasketPreviewList = (props) => {
             pcode : {props.product_code}
             </div>
 
-            <div>
+            {/* <div>
             아이디 : {props.id}
-            </div>
+            </div> */}
 
             <div className='basket_preview_item_price'>
             제목 : {props.title}
@@ -28,4 +28,4 @@ const BasketPreviewList = (props) => {
     );
 };
 
-export default BasketPreviewList;
+export default RecentSideBarItem;

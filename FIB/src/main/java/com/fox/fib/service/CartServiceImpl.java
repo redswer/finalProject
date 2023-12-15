@@ -43,7 +43,15 @@ public class CartServiceImpl implements CartService {
 		return cart_code;
 	}
 
+	// =========================================================================
 
+	// 결제 후 장바구니 내역 삭제
+	@Override
+	public int deleteCartAfterOrder(String userId, int product_code) {
+		return repository.deleteCartAfterOrder(userId, product_code);
+	}
+
+	// =========================================================================
 
 	@Override
 	public Cart selectOne(int cart_code) {

@@ -13,7 +13,12 @@ public interface CartService {
 
 	public int updateProamount(int cart_code, int proamount);
 
-	//============================================================================================
+	// ============================================================================================
+
+	// 결제 후 장바구니 내역 삭제
+	public int deleteCartAfterOrder(String userId, int product_code);
+
+	// ============================================================================================
 
 	public Cart selectOne(int cart_code);
 
