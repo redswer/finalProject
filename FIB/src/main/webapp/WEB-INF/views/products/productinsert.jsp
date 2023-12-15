@@ -117,7 +117,7 @@
     </tr>
     <tr>
          <th bgcolor="Greenyellow">17. sell_count</th>
-         <td><input type="number" name="sell_count" id="sell_count"  size="40" value="0"></td>
+         <td><input type="number" name="sellcount" id="sellcount"  size="40" value="0"></td>
          <td>현재 상품 누적 판매량. not null.</td>
     </tr>
     <tr>

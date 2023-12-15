@@ -1,8 +1,14 @@
 .LogIn {
     flex-flow: column nowrap;
     justify-content: space-between;
-    margin: calc((100vh - 159px - 167px - 517px)/2) auto;
     width: 1240px;
+    margin: auto;
+    margin-bottom: 100px;
+}
+
+.log_in_logo_container {
+    justify-content: center;
+    margin-bottom: 50px;
 }
 
 .log_in_form {

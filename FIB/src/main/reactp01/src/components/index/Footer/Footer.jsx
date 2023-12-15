@@ -12,7 +12,10 @@ function Footer() {
     if (location.pathname === '/LogIn' || location.pathname === '/JoinMembership' || location.pathname === '/FindUserInfo') {
         return (
             <div className='footer_container_2'>
-                <div><AiOutlineCopyrightCircle />Fox In Books</div>
+                <div className='footer_2_text_container d-flex'>
+                    <AiOutlineCopyrightCircle />
+                    <span className='footer_2_text'>Fox In Books</span>
+                </div>
             </div>
         );
     } else {

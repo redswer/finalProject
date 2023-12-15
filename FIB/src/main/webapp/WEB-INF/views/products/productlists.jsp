@@ -57,7 +57,7 @@
                <td>${s.content}</td>
                <td>${s.price}</td>
                <td>${s.stack}</td>
-               <td>${s.sell_count}</td>
+               <td>${s.sellcount}</td>
                
                <td><a href="productupdate?product_code=${s.product_code}">정보 수정</a></td>
                

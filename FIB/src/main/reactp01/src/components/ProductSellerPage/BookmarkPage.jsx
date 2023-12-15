@@ -157,24 +157,24 @@ function saveOnCartSelecedItems () {
       onSelectAllItems={handleAllSelectBookmarkLists}
       isAllChecked={isAllChecked}
     />
-  )); 
+  ));
 
   
   
   //=====================================================================================================================
   return (
     <div className='basket_top_level_container'>
-      <h1>나의 찜목록!!!</h1>
-      <span>찜찜찜 아구찜은 별론데 갈비찜은 존맛탱구리 예스예스베이비 컴온 컴온. : </span>
+      <h1>나의 찜목록</h1>
+      {/* <span>찜찜찜 아구찜은 별론데 갈비찜은 존맛탱구리 예스예스베이비 컴온 컴온. : </span> */}
      
-      <button onClick={handleDeleteSelected}>선택목록 삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <button onClick={saveOnCartSelecedItems}>선택목록장바구니 담기</button>&nbsp;&nbsp;&nbsp;
+      {/* <button onClick={handleDeleteSelected}>선택목록 삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
+      {/* <button onClick={saveOnCartSelecedItems}>선택목록장바구니 담기</button>&nbsp;&nbsp;&nbsp; */}
 
 
-      <input type='checkbox' style={{width:'50px', height:'50px'}} checked={isAllChecked}
-       onChange={(e) => {handleAllSelectBookmarkLists(e.target.checked)}} />전체 선택&nbsp;&nbsp;&nbsp;
+      {/* <input type='checkbox' style={{width:'50px', height:'50px'}} checked={isAllChecked} */}
+       {/* onChange={(e) => {handleAllSelectBookmarkLists(e.target.checked)}} />전체 선택&nbsp;&nbsp;&nbsp; */}
 
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Link to={`/BasketPage`}>장바구니 ㄱㄱ</Link>
+      {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Link to={`/CartPage`}>장바구니 ㄱㄱ</Link> */}
 
       <div className='basketlist_list_container'>
 
@@ -202,11 +202,7 @@ function saveOnCartSelecedItems () {
           <Link to='/'><button className='basket_final_product_order_btn_1'>계속 쇼핑하기</button></Link>
 
           <div className='basket_final_product_order_btn_2'>
-          <Link to={`/BasketPage`}
-                            className='buynowletsgo'>
-                            장바구니바로가기
-                        </Link>
-
+          <Link to={`/CartPage`}>장바구니바로가기</Link>
           </div>
           
 

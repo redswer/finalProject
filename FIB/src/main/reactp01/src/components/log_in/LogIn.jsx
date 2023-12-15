@@ -102,6 +102,12 @@ function LogIn() {
 
     return (
         <div className='LogIn'>
+            <div className="log_in_logo_container d-flex">
+                <Link to={'/'} className="log_in_logo_link">
+                    <img src="img/fox_logo.png" alt="findUserInfo_logo" className="find_userInfo_logo" />
+                </Link>
+                <span><h1>로그인</h1></span>
+            </div>
             <form className='log_in_form'>
                 <fieldset className="log_in_field d-flex">
                     <div>

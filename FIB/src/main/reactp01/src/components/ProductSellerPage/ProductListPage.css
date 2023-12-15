@@ -74,3 +74,21 @@
 .seller_product_bookList {
   margin: 0 auto;
 }
+.productList_pageNationButton_selected,
+.productList_pageNationButton_ {
+  display: inline-block;
+  margin:3px 20px;
+  border: 1px solid black;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
+
+.productList_pageNationButton_selected {
+  background-color: red;
+}
+
+.productListPage_pageNationButton {
+  text-align: center;
+}

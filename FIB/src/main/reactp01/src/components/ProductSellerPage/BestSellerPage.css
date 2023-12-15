@@ -1,0 +1,94 @@
+.pMLP {
+    border:3px solid red;
+    padding:0;
+  }
+  
+  .seller_page_container {
+    margin: 0 auto;
+    /* border: 1px solid brown; */
+    margin-top: 30px;
+  }
+  
+  .ProductListPage_Checkbox_container input {
+    display: inline-block;
+    width:40px;
+    height:40px;
+  }
+  
+  .ProductListPage_SortOption button {
+    display: inline-block;
+    border:1px solid green;
+    border-radius: 10px;
+    width:100px;
+    height:40px;
+    font-size:17px;
+    margin-right: 17px;
+    background-color: rgb(127, 183, 164);
+  }
+  
+  .ProductListPage_SortOption button:hover {
+    background-color: rgb(111, 132, 125);
+  }
+  
+  .seller_product_List_container {
+    /* border: 5px solid green; */
+    width: 900px;
+    margin: 0 auto;
+  }
+  
+  .seller_product_page_title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 10px;
+    /* border:3px solid green; */
+  }
+  
+  .seller_product_page_sub_title {
+    font-size: 11px;
+  }
+  
+  .seller_product_page_titlebox_hr {
+    margin-top: 15px;
+    margin-bottom: 40px;
+  }
+  
+  .product_seller_categorybar_container {
+    /* margin-left: 240px; */
+    margin-left: 290px;
+    margin-top: 30px;
+    width: 250px;
+    transition: transform 0.9s ease;
+    position: absolute;
+  
+  }
+  
+  .basket_preview_box_container {
+    /* margin-left: 1350px; */
+    margin-left: 1530px;
+    margin-top: 30px;
+    width: 300px;
+    transition: transform 0.9s ease;
+    position: absolute;
+  }
+  
+  .seller_product_bookList {
+    margin: 0 auto;
+  }
+  .productList_pageNationButton_selected,
+  .productList_pageNationButton_ {
+    display: inline-block;
+    margin:3px 20px;
+    border: 1px solid black;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+  }
+  
+  .productList_pageNationButton_selected {
+    background-color: red;
+  }
+  
+  .productListPage_pageNationButton {
+    text-align: center;
+  }

@@ -1,9 +1,10 @@
 .basket_preview_item_container {
-    width: 180px;
-    margin: 10px auto;
+    width: 200px;
+    margin: 22px auto;
     border-radius: 5px;
     background-color: rgb(203, 202, 202);
-    font-size: 12px;
+    font-size: 13px;
+    /* background-color: red; */
 }
 
 .basket_preview_item_title {

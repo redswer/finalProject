@@ -30,7 +30,19 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
 	@Query("UPDATE Cart c SET c.proamount = :proamount WHERE c.cart_code = :cart_code")
 	int updateProamount(@Param("cart_code") int cart_code, @Param("proamount") int proamount);
 
+	@Modifying
+	@Transactional
+	@Query(nativeQuery = true, value = "insert into testkey VALUES (:id, :no, :name, :count)"
+		+ " ON DUPLICATE KEY UPDATE count = count+:count")
+	void dupUpdateCount(@Param("id") String id, @Param("no") int no, @Param("name") String name, @Param("count") int count);
+
+
+	// 결제 후 장바구니 내역 삭제
+	@Transactional
+	@Modifying
+	@Query(nativeQuery = true, value = "delete from cart where id = :userId and product_code = :product_code")
+	int deleteCartAfterOrder(@Param("userId") String userId, @Param("product_code") int product_code);
+
 
 
 }
-

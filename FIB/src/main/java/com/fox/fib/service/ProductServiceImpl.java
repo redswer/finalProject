@@ -24,52 +24,48 @@ public class ProductServiceImpl implements ProductService {
 
 	private final ProductRepository repository;
 
-	private final String PCODE = "product_code";
-
+	// [1] 기본 정렬.=========================================================================================
 	@Override
 	public List<Product> selectList() {
 		return repository.findAll();
 	}
 
-	//============================================================================================
-
 	@Override
 	public PageResultDTO<Product> selectListPageNation(PageRequestDTO requestDTO) {
-
-		System.out.println("1111111");
 		Pageable pageable = requestDTO.getPageable(Sort.by("title").ascending());
-
-		System.out.println("2222222222");
 		Page<Product> result = repository.findAll(pageable);
-
-
-		System.out.println("333333333333333");
 		return new PageResultDTO<>(result);
 	}
 
+	// [2] 필요시에 쓰는 커스텀 메소드.==============================================================================
+
 	@Override
-	public List<Product> showListFromKeywords(String domestic, String category, String genre) {
-		return repository.showListFromKeywords(domestic, category, genre);
+	public List<Product> selectListSortOfTitle(String domestic, String category, String genre) {
+		return repository.selectListSortOfTitle(domestic, category, genre);
 	}
 
 	@Override
-	public List<Product> orderedByPriceAsc(String domestic, String category, String genre) {
-		return repository.findOrderedPriceAsc(domestic, category, genre);
+	public List<Product> selectListSortOfPriceAsc(String domestic, String category, String genre) {
+		return repository.selectListSortOfPriceAsc(domestic, category, genre);
 	}
 
 	@Override
-	public List<Product> orderedByPriceDesc(String domestic, String category, String genre) {
-		return repository.findOrderedPriceDesc(domestic, category, genre);
+	public List<Product> selectListSortOfPriceDesc(String domestic, String category, String genre) {
+		return repository.selectListSortOfPriceDesc(domestic, category, genre);
 	}
 
 	@Override
-	public List<Product> searchLimitedPrice(String domestic, String category, String genre, int minPrice, int maxPrice) {
-		log.info("[72]searchLimtedPrice 값 들어가나 확인 : " + domestic + " & " + category + " & " + genre + " & " + minPrice + " & " + maxPrice);
-		return repository.showLimitedPrice(domestic, category, genre, minPrice, maxPrice);
+	public List<Product> selectListLimitedPrice(String domestic, String category, String genre, int minprice, int maxprice) {
+		return repository.selectListLimitedPrice(domestic, category, genre, minprice, maxprice);
 	}
 
+	@Override
+	public List<Product> selectListBestSeller() {
+		return repository.selectListBestSeller();
+	}
 
-	//========================================================================================================
+	// [4] 기본 내장 메소드.=============================================================================================
+
 	@Override
 	public Product selectOne(int product_code) {
 		Optional<Product> result = repository.findById(product_code);
@@ -91,7 +87,11 @@ public class ProductServiceImpl implements ProductService {
 		return product_code;
 	}
 
-	//========================================================================================================
+
+
+
+	// =============================================================================================끝
+
+
 
 }
-
