@@ -69,7 +69,7 @@ function UserInfo() {
                             }`}
                         onClick={userAddress}
                     >
-                        주소 관리
+                        배송지 관리
                     </li>
                     <li
                         className={`userPassword_update ${selectedTab === "userPassword_update" ? "selected" : ""

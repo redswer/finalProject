@@ -18,6 +18,18 @@ function PaymentPage() {
     const location = useLocation();
     const { product_code, cart_code } = location.state.order_data[0];
 
+    // 배송지 정보 입력 내용 지우기
+    const resetAddressInput = () => {
+        document.getElementById('order_addr_recipient').value = '';
+        document.getElementById('order_addr_address_zip').value = '';
+        document.getElementById('order_addr_address').value = '';
+        document.getElementById('order_addr_address_detail').value = '';
+        document.getElementById('order_addr_phone_number').value = '';
+        document.getElementById('order_addr_request').value = '';
+    }
+
+    // ======================================================================================================
+
     // 로그인 아이디
     const loginID = sessionStorage.getItem("loginID");
 
@@ -54,18 +66,15 @@ function PaymentPage() {
         setArrive_date(`${year}-${month}-${day + arrive_date_day}`);
     }, [location]);
 
-    // 적립 포인트
-    const [point, setPoint] = useState(0);
-
-    useEffect(() => {
-        setPoint(total_sum * 0.05);
-    }, [total_sum]);
-
     // 결제하기 버튼
     const payment_button = () => {
         const payment_formData = new FormData(document.getElementById('paymentPage_form'));
-        console.log(payment_formData);
         payment_formData.append('paymentDetailData', JSON.stringify(location.state.order_data));
+
+        // new FormData 의 value 값 확인하는 방법
+        // for (const value of payment_formData.values()) {
+        //     console.log(value);
+        // }
 
         axios.post(
             `/restmemberpayment/memberpaymentinsert`,
@@ -76,9 +85,22 @@ function PaymentPage() {
         ).then((response) => {
             console.log(response.data);
             window.location.href = `/OrderListPage`;
-        }).catch((err) => {
-            console.log(err.response.data);
-            console.log(err.message);
+        }).catch((error) => {
+            if (error.response) {
+                // 서버가 응답을 반환한 경우
+                console.error("Server responded with data:", error.response.data);
+                console.error("Status code:", error.response.status);
+                console.error("Headers:", error.response.headers);
+
+            } else if (error.request) {
+                // 서버에 요청이 전송되었지만 응답이 없는 경우
+                console.error("Login error - No response received:", error.request);
+
+            } else {
+                // 요청을 보내기 전에 오류가 발생한 경우
+                console.error("Login error - Request setup error:", error.message);
+
+            }
         });
     }
 
@@ -96,9 +118,6 @@ function PaymentPage() {
                 <input type="hidden" name="delivery_state" value="상품 준비 중" />
                 {/* 배송예정일 */}
                 <input type="hidden" name="arrive_date" value={arrive_date} />
-
-                {/* 적립 포인트 */}
-                <input type="hidden" name="point" value={point} />
 
                 <div className="PaymentPageOrderProduct">
                     <div className="order_name_box">
@@ -142,9 +161,18 @@ function PaymentPage() {
                     <div className="order_addr_name_box">
                         <Icon className="order_name_icon" />
                         <span className="order_name_design">배송지 정보</span>
+                        &nbsp;&nbsp;&nbsp;
                         <span className="order_addr_ip_box">
                             <label>
-                                <input type="checkbox" />&nbsp;기본 배송정보와 동일
+                                <input type="radio" name="order_addr_select" id="addr_userData" />&nbsp;회원정보와 동일
+                            </label>
+                            &nbsp;&nbsp;&nbsp;
+                            <label>
+                                <input type="radio" name="order_addr_select" id="addr_selectData" />&nbsp;배송지 선택
+                            </label>
+                            &nbsp;&nbsp;&nbsp;
+                            <label>
+                                <input type="radio" name="order_addr_select" id="addr_reset" onClick={resetAddressInput} />&nbsp;새로입력
                             </label>
                         </span>
                     </div>
@@ -162,43 +190,43 @@ function PaymentPage() {
                                 <tr>
                                     <th>
                                         <span className="order_addr_con_req">* </span>
-                                        <label for="order_addr_ipLabel_01">이름</label>
+                                        <label for="order_addr_recipient">이름</label>
                                     </th>
                                     <td>
-                                        <input type="text" name="recipient" className="order_addr_userName ip_hi" id="order_addr_ipLabel_01" />
+                                        <input type="text" name="recipient" className="order_addr_userName ip_hi" id="order_addr_recipient" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <th rowSpan="3"><span className="order_addr_con_req">* </span>
-                                        <label for="order_addr_ipLabel_02">주소</label>
+                                        <label for="order_addr_address_zip">주소</label>
                                     </th>
                                     <td>
-                                        <input type="text" name="address_zip" className="order_addr_01 ip_hi" id="order_addr_ipLabel_02"
+                                        <input type="text" name="address_zip" className="order_addr_01 ip_hi" id="order_addr_address_zip"
                                             placeholder="우편번호" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" name="address" className="order_addr_02 ip_hi" placeholder="주소" />
+                                        <input type="text" name="address" id="order_addr_address" className="order_addr_02 ip_hi" placeholder="주소" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" name="address_detail" className="order_addr_03 ip_hi" placeholder="상세주소" />
+                                        <input type="text" name="address_detail" id="order_addr_address_detail" className="order_addr_03 ip_hi" placeholder="상세주소" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <th><span className="order_addr_con_req">* </span>
-                                        <label for="order_addr_ipLabel_03">휴대폰번호</label>
+                                        <label for="order_addr_phone_number">휴대폰번호</label>
                                     </th>
                                     <td>
-                                        <input type="text" name="recipient_phone_number" className="order_callNumber ip_hi" id="order_addr_ipLabel_03" placeholder="'-' 제외하고 입력" />
+                                        <input type="text" name="recipient_phone_number" className="order_callNumber ip_hi" id="order_addr_phone_number" placeholder="'-' 제외하고 입력" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th><label for="order_addr_ipLabel_04">배송요청사항</label></th>
+                                    <th><label for="order_addr_request">배송요청사항</label></th>
                                     <td>
-                                        <input list="requestList" className="requestList ip_hi" id="order_addr_ipLabel_04"
+                                        <input list="requestList" className="requestList ip_hi" id="order_addr_request"
                                             placeholder="직접입력" />
                                         <datalist id="requestList">
                                             <option value="부재시 경비실에 맡겨주세요."></option>

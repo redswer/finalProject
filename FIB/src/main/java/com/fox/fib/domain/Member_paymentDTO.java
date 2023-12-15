@@ -1,9 +1,11 @@
 package com.fox.fib.domain;
 
-import com.fox.fib.entity.Cart;
-import com.fox.fib.entity.Member_payment_detail;
-import com.fox.fib.entity.Product;
+import java.util.List;
+import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonRawValue;
+import com.fox.fib.entity.Member_payment;
+import com.fox.fib.entity.Member_payment_detail;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,13 +34,6 @@ public class Member_paymentDTO {
 	private String delivery_state;
 	private String arrive_date;
 	
-	private int proamount;
+	private List<Member_payment_detail> paymentDetailData;
 
-	private Member_payment_detail member_payment_detail;
-	private Product product;
-	
-	private Cart cart;
-
-	private int point;
-	
 }

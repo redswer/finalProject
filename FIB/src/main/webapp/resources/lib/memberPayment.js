@@ -1,9 +1,9 @@
 "use strict"
 
-// 주문정보 조회
-function memberPaymentList() {
+// 주문정보 전체 조회
+function memberPaymentList(orderParam) {
 
-	axios.get("memberPayment/memberPaymentList"
+	axios.get(`memberPayment/memberPaymentList?orderParam=${orderParam}`
 	).then(response => {
 		document.getElementById('managementArea').innerHTML = response.data;
 	}).catch(err => {
@@ -14,18 +14,21 @@ function memberPaymentList() {
 }
 
 // 주문정보 취소
-function paymentCancel(member_payment_code) {
+function paymentCancel(orderParam, member_payment_code, id, product_amount, origin_price) {
 
 	if (confirm('주문내역을 취소하시겠습니까?')) {
 
-		axios.post(
-			"memberPayment/memberPaymentCancel",
-			member_payment_code,
+		axios.post(`memberPayment/memberPaymentCancel`,
 			{
-				headers: { 'content-Type': 'application/json' }
+				orderParam: orderParam,
+				member_payment_code: member_payment_code,
+				id: id,
+				product_amount: product_amount,
+				origin_price: origin_price
 			}
 		).then(response => {
-			new memberPaymentList();
+			alert(response.data);
+			memberPaymentList(orderParam);
 		}).catch(err => {
 			alert("주문내역 취소 실패 => " + err.message);
 		});

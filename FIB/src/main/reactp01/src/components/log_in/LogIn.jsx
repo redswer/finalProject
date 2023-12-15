@@ -7,6 +7,7 @@ import axios from 'axios';
 function LogIn() {
     const navigate = useNavigate();
 
+    // ** 아이디 저장
     const [rememberID, setRememberID] = useState(false);
 
     useEffect(() => {
@@ -16,6 +17,7 @@ function LogIn() {
             setRememberID(true);
         }
     }, []);
+    // ==============================================
 
     // ** 유효성 검사
     const [id, setId] = useState('');
@@ -156,10 +158,9 @@ function LogIn() {
                             <span className='log_in_find_id'>
                                 <Link to='/FindUserInfo'>아이디/비밀번호 찾기</Link>
                             </span>
-                        </div>
-                        <div className='button_container'>
-                            <Link to="/JoinMembership" className='linked_button join'>회원가입</Link>
-                            <Link to="/" className='linked_button non_member'>비회원 주문조회</Link>
+                            <span className='log_in_join_membership'>
+                                <Link to="/JoinMembership">회원가입</Link>
+                            </span>
                         </div>
                     </div>
                     <div>

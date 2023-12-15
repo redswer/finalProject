@@ -20,5 +20,5 @@ public class Member_payment_detail {
 	private Long member_payment_code;
 	private String id;
 	private int product_code;
-	private int amount;
+	private int proamount;
 }

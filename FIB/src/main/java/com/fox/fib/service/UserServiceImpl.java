@@ -39,6 +39,11 @@ public class UserServiceImpl implements UserService {
 		return repository.findId(name, birthday, phone_number);
 	}
 	
+	// ** 비밀번호 변경
+	public int passwordUpdate(String password, String id) {
+		return repository.passwordUpdate(password, id);
+	}
+	
 	// ** 관리자 (회원 리스트 출력)
 	@Override
 	public List<User> selectList() {
@@ -56,4 +61,5 @@ public class UserServiceImpl implements UserService {
     public User updateUserPoint(int pointParam, String userId) {
        return repository.updateUserPoint(pointParam, userId);
     }
+	
 }

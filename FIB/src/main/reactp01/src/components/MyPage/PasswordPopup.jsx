@@ -33,7 +33,7 @@ const PasswordPopup = ({ isOpen, onClose, onSubmit }) => {
     }
 
     return (
-        <div className="popup-container">
+        <div className="PasswordPopup">
             <div className="popup-content">
                 <h2>비밀번호 확인</h2>
                 <input type="password" placeholder="비밀번호 입력"
