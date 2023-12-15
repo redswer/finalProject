@@ -21,4 +21,5 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Transactional
 	@Query(nativeQuery = true, value = "update user set password =:password where id =:id")
 	int passwordUpdate(@Param("password") String password, @Param("id") String id);
+	
 }

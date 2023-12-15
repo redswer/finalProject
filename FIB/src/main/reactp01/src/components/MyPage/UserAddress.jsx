@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import InsertAddressPopup from "./InsertAddressPopup";
+import UpdateAddressPopup from "./UpdateAddressPopup";
 import './UserAddress.css';
 import axios from "axios";
 import { MdOutlineRefresh } from "react-icons/md";
 
-
-
 function UserAddress() {
     const [id, setId] = useState(JSON.parse(sessionStorage.user).id);
     const [addressList, setAddressList] = useState([]);
+
+    const [checkedList, setCheckedList] = useState([]);
+
     const [isSearchAddressPopupOpen, setSearchAddressPopupOpen] = useState(false);
 
-    const [checkedItems, setCheckedItems] = useState([]);
-    const [selectAll, setSelectAll] = useState(false);
 
     const openSearchAddressPopup = () => {
         setSearchAddressPopupOpen(true);
@@ -21,6 +21,7 @@ function UserAddress() {
     const closeSearchAddressPopup = () => {
         setSearchAddressPopupOpen(false);
     };
+
 
     const loadAddressList = () => {
         axios({
@@ -39,52 +40,33 @@ function UserAddress() {
 
     useEffect(() => {
         loadAddressList();
-    }, [id, selectAll, checkedItems])
+    }, [id])
 
-    // =====================================
-    // ** 체크박스 전체 선택
-    const handleSelectAllChange = () => {
-        setSelectAll((prevSelectAll) => !prevSelectAll);
-        if (!selectAll) {
-            setCheckedItems(addressList.map((addressData) => addressData.adress_code));
-        } else {
-            setCheckedItems([]);
-        }
+    const toggleCheckbox = (addressCode) => {
+        setCheckedList((prevList) => {
+            if (prevList.includes(addressCode)) {
+                return prevList.filter((code) => code !== addressCode);
+            } else {
+                return [...prevList, addressCode];
+            }
+        });
     }
+
+    console.log(checkedList);
 
     const refresh = () => {
         loadAddressList();
     }
 
-    const handleCheckboxChange = (addressCode) => {
-        setCheckedItems((prevItems) => {
-            const index = prevItems.indexOf(addressCode);
-
-            if (index === -1) {
-                return [...prevItems, addressCode];
-            } else {
-                const updatedItems = [...prevItems];
-                updatedItems.splice(index, 1);
-
-                if (selectAll) {
-                    setSelectAll(false);
-                }
-                return updatedItems;
-            }
-        });
-    }
-    console.log(checkedItems);
-
     // ========================================
     // ** 삭제
 
     const deleteSelectedAddress = () => {
-
         axios({
             url: "/address/delete",
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
-            data: checkedItems
+            data: checkedList
         }).then(() => {
             alert('삭제 완료');
             refresh();
@@ -124,7 +106,7 @@ function UserAddress() {
                 <table className="user_address_table">
                     <thead>
                         <tr className="user_address_column user_address_index_column">
-                            <th><input type="checkbox" onChange={handleSelectAllChange} checked={selectAll} /></th>
+                            <th><input type="checkbox" /></th>
                             <th>주소 명</th>
                             <th>주소</th>
                             <th>연락처</th>
@@ -138,8 +120,9 @@ function UserAddress() {
                                 <td>
                                     <input type="hidden" value={addressData.address_code} />
                                     <input type="checkbox"
-                                        onChange={() => handleCheckboxChange(addressData.address_code)}
-                                        checked={selectAll || checkedItems.includes(addressData.address_code)} />
+                                        checked={checkedList.includes(addressData.address_code)}
+                                        onChange={() => toggleCheckbox(addressData.address_code)}
+                                    />
                                 </td>
                                 <td className={addressData.basic_address ? "basic_address" : ""}>{addressData.basic_address ? '기본 배송지' : addressData.address_as}</td>
                                 <td className="full_address">

@@ -69,10 +69,11 @@ function InsertAddressPopup({ isOpen, onClose }) {
                 basic_address: basic_address
             }
         }).then((res) => {
-            alert(res.data);
+            alert("등록 완료");
+            sessionStorage.setItem('user', JSON.stringify(res.data));
             onClose();
-        }).catch((err) => {
-            alert(err.response.data)
+        }).catch(() => {
+            alert("이미 존재하는 주소입니다.");
         });
     }
 
