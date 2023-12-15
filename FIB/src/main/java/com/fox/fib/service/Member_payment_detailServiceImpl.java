@@ -23,6 +23,12 @@ public class Member_payment_detailServiceImpl implements Member_payment_detailSe
 	public List<Member_payment_detail> selectList(String id) {
 		return repository.selectList(id);
 	}
+	
+	// 특정 주문코드를 가진 주문상세 select
+	@Override
+	public List<Member_payment_detail> selectPaymentCode(Long member_payment_code) {
+		return repository.findByPaymentCode(member_payment_code);
+	}
 
 	// 주문코드 MAX 값 Select
 	@Override
@@ -38,8 +44,8 @@ public class Member_payment_detailServiceImpl implements Member_payment_detailSe
 
 	// 주문상세 등록
 	@Override
-	public int insertPaymentDetail(Long detailPayment_code, String detailId, Long detailProduct_code, Long detailProamount) {
-		return repository.insertPaymentDetail(detailPayment_code, detailId, detailProduct_code, detailProamount);
+	public int insertPaymentDetail(Long payment_code, String userId, int product_code, int proamount) {
+		return repository.insertPaymentDetail(payment_code, userId, product_code, proamount);
 	}
 	
 	// 주문상세 수정

@@ -51,7 +51,7 @@
                        	<ul class="listGroup">
                            <li class="listGroupItem" onclick="userManagement()">회원</li>
                            <li class="listGroupItem" onclick="productManagement()">제품</li>
-                           <li class="listGroupItem" onclick="memberPaymentList()">주문내역</li>
+                           <li class="listGroupItem" onclick="memberPaymentList('all')">주문내역</li>
                            <li class="listGroupItem" onclick="noticeManagement()">공지사항</li>
                            <li class="listGroupItem" onclick="fAQManagement()">FAQ</li>
                            <li class="listGroupItem" onclick="inquiryManagement()">1:1 문의</li>
