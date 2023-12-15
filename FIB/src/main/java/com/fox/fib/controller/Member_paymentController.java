@@ -81,10 +81,10 @@ public class Member_paymentController {
 			Product productOne = productService.selectOne(product_code);
 			
 			int stack = productOne.getStack() + dtoList.get(i).getProamount();
-			int sell_count = productOne.getSell_count() - dtoList.get(i).getProamount();
+			int sell_count = productOne.getSellcount() - dtoList.get(i).getProamount();
 			
 			productOne.setStack(stack);
-			productOne.setSell_count(sell_count);
+			productOne.setSellcount(sell_count);
 			
 			productService.save(productOne);
 		}
