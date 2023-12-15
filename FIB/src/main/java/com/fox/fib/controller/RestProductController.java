@@ -42,17 +42,15 @@ public class RestProductController {
 	// ==========================================================================================
 
 	@GetMapping("/productReviewList")
-	public ResponseEntity<?> productReviewList(@RequestParam(name = "pcode") String product_code, Review rentity) {
+	public ResponseEntity<?> productReviewList(Review rentity) {
 		try {
-			log.info(product_code);
-			int pcode = Integer.parseInt(product_code);
-			List<Review> resultReviewList = reviewservice.selectProductReviewList(pcode);
 
-			return ResponseEntity.ok(resultList);
+			List<Review> resultReviewList = reviewservice.findAllDesc();
+			return ResponseEntity.ok(resultReviewList);
+
 		} catch (Exception e) {
 			log.info(" 삭제 실패 : " + e.toString());
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("checkedListOfDefault 오류");
-
 		}
 	}
 

@@ -50,6 +50,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	List<Product> showListFromKeywords22(@Param("domestic") String domestic, @Param("category") String category,
 		@Param("genre") String genre);
 
+//	@Query(nativeQuery = true, value = "")
+//	List<Product> selectWithReview();
+
 
 
 }

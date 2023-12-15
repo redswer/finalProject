@@ -30,8 +30,8 @@ const ProductListPage = () => {
   // const [urlCategoryValue , setUrlCategoryValue] = useState(0);
   // const [urlGenreValue , setUrlGenreValue] = useState(0);
 
-  // const [requestURL , setRequestURL] = useState();
   const [productData, setProductData] = useState([]);
+  const [reviewData , setReviewData] = useState([]);
   //  const [pageThemeDomestic , setPageThemeDomestic] = useState();
   // const [pageThemeCategory , setPageThemeCategory] = useState();
   // const [pageThemeGenre , setPageThemeGenre] = useState();
@@ -74,8 +74,7 @@ const ProductListPage = () => {
         // //==============================
 
         }
-      })
-      .catch((err) => {
+      }).catch((err) => {
         alert(`requestToServer 서버연결 실패 => ${err.message}`);
       });
   };
@@ -88,8 +87,16 @@ const ProductListPage = () => {
     requestToServer
     (`/product/${getMapping}?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`)
     // console.log(`mount 성공`);
+
     // axios
-    //   .get(`/product/productReviewOne?`)
+    //   .get(`/product/productReviewList`)
+    //   .then((response)=> {
+    //     console.log(`리뷰불러오기 성공 : `,response.data);
+    //     setReviewData(response.data);
+
+    //   }).catch((error) => {
+    //       // alert(`리뷰 불러오기 실패 : `,error.message);
+    //   })
 
   },[])
 
@@ -254,6 +261,36 @@ const searchTextWord = () => {
 
 //============================================================================================================================
 
+// reviewData의 product_code와, productData 의 product_code가 일치하는 데이터를  intoItemData 배열에 넣고싶다.
+
+
+//============================================================================================================================
+
+const booklist = productData.map((d, i) => (
+  <ProductListItem
+  key={i}
+  product_code={d.product_code}
+  domestic={d.domestic}
+  protype={d.protype}
+  writer={d.writer_code}
+  title={d.title}
+  translator={d.translator}
+  publisher={d.publisher}
+  publish_date={d.publish_date}
+  category={d.category}
+  genre={d.genre}
+  summary={d.summary}
+  image={d.image}
+  intro_image={d.intro_image}
+  content={d.content}
+  price={d.price}
+  sellcount={d.sellcount}
+  urlNavigate={urlNavigate}
+/>
+))
+
+//============================================================================================================================
+
   return (
     <div className='seller_page_container'>
       <div className='product_seller_categorybar_container' style={{ transform: `translateY(${scrollY}px)` }}>
@@ -365,29 +402,7 @@ const searchTextWord = () => {
         <hr className='seller_product_page_titlebox_hr'/>
 
         <div className='seller_product_bookList'>
-           {/* PaginationComponent에서 보여지는 범위의 데이터만 출력합니다. */}
-           {productData.map((d, i) => (
-            <ProductListItem
-            key={i}
-            product_code={d.product_code}
-            domestic={d.domestic}
-            protype={d.protype}
-            writer={d.writer_code}
-            title={d.title}
-            translator={d.translator}
-            publisher={d.publisher}
-            publish_date={d.publish_date}
-            category={d.category}
-            genre={d.genre}
-            summary={d.summary}
-            image={d.image}
-            intro_image={d.intro_image}
-            content={d.content}
-            price={d.price}
-            sellcount={d.sellcount}
-            urlNavigate={urlNavigate}
-          />
-          ))}
+          {booklist}
         </div>
 
         <div className='productListPage_pageNationButton'>

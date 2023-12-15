@@ -35,30 +35,6 @@ const [reviewData,setReviewData] =useState();
 
 //====================================================================================================================
 
-useEffect(() => {
-
-  console.log(`review의 product_code : ` , props.product_code);
-
-  axios
-    .get(`/product/productReviewOne?pcode=${props.product_code}`)
-    .then((response) => {
-      console.log(`리뷰 불러오기 성공 ^-^ :`, response);
-      console.log('========================================');
-      
-      setReviewData(response.data);
-      
-      }).catch((err) => {
-        alert(`리뷰불러오기실패!!!!! => ${err.message}`);
-  });
-},[]);
-
-console.log(`reviewData : `,reviewData);
-//====================================================================================================================
-
-const starCountSum = reviewData ? reviewData.reduce((sum, review) => sum + review.star_count, 0) : 0;
-const reviewCount = reviewData ? reviewData.length : 0;
-const starCountAverage = reviewCount > 0 ? starCountSum / reviewCount : 0;
-
 //====================================================================================================================
 
 function saveOnCart () {
@@ -226,8 +202,8 @@ const dataToPayment = [{
           <div className='seller_product_sales_rate_box'>
             <span className='product_sales_rate_1'>평균별점</span>
             <span className='product_sales_rate_1'> : </span>
-            <span className='product_sales_rate'>{starCountAverage}</span>
-            <span className='product_sales_rate_3'> 권</span>
+            {/* <span className='product_sales_rate'>{starCountAverage}</span> */}
+            <span className='product_sales_rate_3'> 몰라요</span>
           </div>
 
         <div className='seller_product_form_container'>
