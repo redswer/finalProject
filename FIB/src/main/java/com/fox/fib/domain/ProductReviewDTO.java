@@ -37,4 +37,8 @@ public class ProductReviewDTO {
 
 	private int sellcount; // 17. 판매량 =========== 여기까지 Product Entity.
 
+	private double ratingavg; // 18. 평점평균
+
+	private int reviewcount; // 19. 리뷰 숫자
+
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fox.fib.entity.Product;
 import com.fox.fib.entity.RecentView;
-import com.fox.fib.entity.Review;
 import com.fox.fib.service.ProductService;
 import com.fox.fib.service.RecentViewService;
 import com.fox.fib.service.ReviewService;
@@ -37,21 +36,6 @@ public class RestProductController {
 		int pcode = Integer.parseInt(product_code);
 		entity = productservice.selectOne(pcode);
 		return entity;
-	}
-
-	// ==========================================================================================
-
-	@GetMapping("/productReviewList")
-	public ResponseEntity<?> productReviewList(Review rentity) {
-		try {
-
-			List<Review> resultReviewList = reviewservice.findAllDesc();
-			return ResponseEntity.ok(resultReviewList);
-
-		} catch (Exception e) {
-			log.info(" 삭제 실패 : " + e.toString());
-			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("checkedListOfDefault 오류");
-		}
 	}
 
 	// ==========================================================================================
