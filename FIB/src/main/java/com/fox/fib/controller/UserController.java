@@ -3,8 +3,11 @@ package com.fox.fib.controller;
 import java.io.File;
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fox.fib.domain.PasswordUpdateDTO;
+import com.fox.fib.entity.Delivery_address;
 import com.fox.fib.entity.User;
+import com.fox.fib.service.Delivery_addressService;
 import com.fox.fib.service.UserService;
+import com.fox.fib.util.RandomPasswordCreator;
 
 import lombok.AllArgsConstructor;
 
@@ -24,6 +31,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserController {
 	UserService service;
+	Delivery_addressService dservice;
 	PasswordEncoder passwordEncoder;
 //	------------------------------
 //	// ** 로그인
@@ -50,6 +58,22 @@ public class UserController {
 	public ResponseEntity<String> join(@RequestBody User request) {
 		
 		request.setPassword(passwordEncoder.encode(request.getPassword()));
+		
+		if ((request.getAddress_zip() != null || request.getAddress_zip() != "")
+				&& (request.getAddress() != null || request.getAddress() != "")
+				&& (request.getAddress_detail() != null || request.getAddress_detail() != "")) {
+			Delivery_address delivery = new Delivery_address();
+			delivery.setUser_id(request.getId());
+			delivery.setName(request.getName());
+			delivery.setAddress_zip(request.getAddress_zip());
+			delivery.setAddress(request.getAddress());
+			delivery.setAddress_detail(request.getAddress_detail());
+			delivery.setAddress_as("기본 배송지");
+			delivery.setBasic_address(true);
+			delivery.setPhone_number(request.getPhone_number());
+			
+			dservice.register(delivery);
+		}
 		
 		if (service.selectOne(request.getId()) == null) {
 			service.register(request);
@@ -101,9 +125,57 @@ public class UserController {
 	public ResponseEntity<String> findId(@RequestBody User request) {
 		String res = service.findId(request.getName(), request.getBirthday(), request.getPhone_number());
 		if (res != null) {
-			return new ResponseEntity<> (res, HttpStatus.OK);
+			return new ResponseEntity<> ("아이디는 "+res+" 입니다.", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<> ("회원정보 없음", HttpStatus.BAD_GATEWAY);
+		}
+	}
+	
+//	-----------------------
+	// ** 비밀번호 찾기(재설정)
+	@Autowired
+	private JavaMailSender emailSender;
+	
+	@PostMapping("findPassword")
+	public ResponseEntity<String> findPassword(@RequestBody User request) {
+		User user = service.selectOne(request.getId());
+		if (user.getId() == request.getId()
+				&& user.getName() == request.getName()
+				&& user.getBirthday() == request.getBirthday()
+				&& user.getPhone_number() == request.getPhone_number()) {
+			
+			String randomPassword = RandomPasswordCreator.generateRandomPassword(8);
+			
+	        SimpleMailMessage message = new SimpleMailMessage();
+	        message.setFrom("ajh975@naver.com");
+	        message.setTo(request.getId());
+	        message.setSubject(request.getName() + "님의 임시 비밀번호입니다.");
+	        message.setText(randomPassword);
+	        emailSender.send(message);
+	        
+	        user.setPassword(passwordEncoder.encode(randomPassword));
+	        service.register(user);
+
+	        return new ResponseEntity<>("아이디(메일)로 임시 비밀번호가 발급되었습니다.", HttpStatus.OK);
+			
+		} else {			
+	        return new ResponseEntity<>("입력하신 정보가 일치하지 않습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	    
+	}
+	
+//	----------------------
+	// ** 비밀번호 변경
+	@PostMapping("/passwordUpdate")
+	public ResponseEntity<String> passwordUpdate(@RequestBody PasswordUpdateDTO request) {
+		System.out.println(request.getId());
+		System.out.println(request.getPassword());
+		System.out.println(request.getNewPassword());
+		if (passwordEncoder.matches(request.getPassword(), service.selectOne(request.getId()).getPassword())) {
+			service.passwordUpdate(passwordEncoder.encode(request.getNewPassword()), request.getId());
+			return new ResponseEntity<> ("비밀번호가 변경되었습니다.", HttpStatus.OK);
+		} else {			
+			return new ResponseEntity<> ("비밀번호가 다릅니다.", HttpStatus.BAD_GATEWAY);
 		}
 	}
 	
@@ -115,6 +187,7 @@ public class UserController {
 		if (passwordEncoder.matches(request.getPassword(), service.selectOne(request.getId()).getPassword())) {
 			try {
 				service.delete(request.getId());
+				dservice.deleteIdAddress(request.getId());
 				return new ResponseEntity<> ("탈퇴되었습니다", HttpStatus.OK);
 			} catch (Exception e) {
 				return new ResponseEntity<> ("서버 오류", HttpStatus.UNAUTHORIZED);

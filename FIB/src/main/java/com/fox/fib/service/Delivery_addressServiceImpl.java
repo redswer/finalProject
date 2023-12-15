@@ -44,5 +44,11 @@ public class Delivery_addressServiceImpl implements Delivery_addressService {
 		repository.deleteById(address_code);
 		return address_code;
 	}
+	
+	@Override
+	public int deleteIdAddress(String id) {
+		repository.deleteIdAddress(id);
+		return 0;
+	}
 
 }

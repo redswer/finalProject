@@ -98,6 +98,18 @@ function JoinMembership() {
         }
     }
 
+    // ==========================================
+    // ** 생년월일 select 생성
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: 151 }, (_, index) => currentYear - index);
+    const month = Array.from({ length: 12 }, (_, index) => index + 1);
+    const day = Array.from({ length: 31 }, (_, index) => index + 1)
+
+    // ** 숫자가 1자리인 경우 앞에 0을 붙임
+    const formatDateNumber = (number) => {
+        return String(number).padStart(2, '0');
+    };
+
     // ===========================================
     // ** 주소 입력 여부
 
@@ -477,133 +489,27 @@ function JoinMembership() {
                                 <span className='join_membership_birth'>
                                     <label htmlFor="year_birth"></label>
                                     <select ref={yearRef} id="year_birth">
-                                        <option defaultValue="2023">2023</option>
-                                        <option defaultValue="2022">2022</option>
-                                        <option defaultValue="2021">2021</option>
-                                        <option defaultValue="2020">2020</option>
-                                        <option defaultValue="2019">2019</option>
-                                        <option defaultValue="2018">2018</option>
-                                        <option defaultValue="2017">2017</option>
-                                        <option defaultValue="2016">2016</option>
-                                        <option defaultValue="2015">2015</option>
-                                        <option defaultValue="2014">2014</option>
-                                        <option defaultValue="2013">2013</option>
-                                        <option defaultValue="2012">2012</option>
-                                        <option defaultValue="2011">2011</option>
-                                        <option defaultValue="2010">2010</option>
-                                        <option defaultValue="2009">2009</option>
-                                        <option defaultValue="2008">2008</option>
-                                        <option defaultValue="2007">2007</option>
-                                        <option defaultValue="2006">2006</option>
-                                        <option defaultValue="2005">2005</option>
-                                        <option defaultValue="2004">2004</option>
-                                        <option defaultValue="2003">2003</option>
-                                        <option defaultValue="2002">2002</option>
-                                        <option defaultValue="2001">2001</option>
-                                        <option defaultValue="2000">2000</option>
-                                        <option defaultValue="1999">1999</option>
-                                        <option defaultValue="1998">1998</option>
-                                        <option defaultValue="1997">1997</option>
-                                        <option defaultValue="1996">1996</option>
-                                        <option defaultValue="1995">1995</option>
-                                        <option defaultValue="1994">1994</option>
-                                        <option defaultValue="1993">1993</option>
-                                        <option defaultValue="1992">1992</option>
-                                        <option defaultValue="1991">1991</option>
-                                        <option defaultValue="1990">1990</option>
-                                        <option defaultValue="1989">1989</option>
-                                        <option defaultValue="1988">1988</option>
-                                        <option defaultValue="1987">1987</option>
-                                        <option defaultValue="1986">1986</option>
-                                        <option defaultValue="1985">1985</option>
-                                        <option defaultValue="1984">1984</option>
-                                        <option defaultValue="1983">1983</option>
-                                        <option defaultValue="1982">1982</option>
-                                        <option defaultValue="1981">1981</option>
-                                        <option defaultValue="1980">1980</option>
-                                        <option defaultValue="1979">1979</option>
-                                        <option defaultValue="1978">1978</option>
-                                        <option defaultValue="1977">1977</option>
-                                        <option defaultValue="1976">1976</option>
-                                        <option defaultValue="1975">1975</option>
-                                        <option defaultValue="1974">1974</option>
-                                        <option defaultValue="1973">1973</option>
-                                        <option defaultValue="1972">1972</option>
-                                        <option defaultValue="1971">1971</option>
-                                        <option defaultValue="1970">1970</option>
-                                        <option defaultValue="1969">1969</option>
-                                        <option defaultValue="1968">1968</option>
-                                        <option defaultValue="1967">1967</option>
-                                        <option defaultValue="1966">1966</option>
-                                        <option defaultValue="1965">1965</option>
-                                        <option defaultValue="1964">1964</option>
-                                        <option defaultValue="1963">1963</option>
-                                        <option defaultValue="1962">1962</option>
-                                        <option defaultValue="1961">1961</option>
-                                        <option defaultValue="1960">1960</option>
-                                        <option defaultValue="1959">1959</option>
-                                        <option defaultValue="1958">1958</option>
-                                        <option defaultValue="1957">1957</option>
-                                        <option defaultValue="1956">1956</option>
-                                        <option defaultValue="1955">1955</option>
-                                        <option defaultValue="1954">1954</option>
-                                        <option defaultValue="1953">1953</option>
-                                        <option defaultValue="1952">1952</option>
-                                        <option defaultValue="1951">1951</option>
-                                        <option defaultValue="1950">1950</option>
+                                        {years.map((year) => (
+                                            <option key={year} defaultValue={year}>
+                                                {year}
+                                            </option>
+                                        ))}
                                     </select> 년
                                 </span>
                                 <span className='join_membership_birth'>
                                     <label htmlFor="month_birth"></label>
                                     <select ref={monthRef} id="month_birth" required>
-                                        <option defaultValue="01">01</option>
-                                        <option defaultValue="02">02</option>
-                                        <option defaultValue="03">03</option>
-                                        <option defaultValue="04">04</option>
-                                        <option defaultValue="05">05</option>
-                                        <option defaultValue="06">06</option>
-                                        <option defaultValue="07">07</option>
-                                        <option defaultValue="08">08</option>
-                                        <option defaultValue="09">09</option>
-                                        <option defaultValue="10">10</option>
-                                        <option defaultValue="11">11</option>
-                                        <option defaultValue="12">12</option>
+                                        {month.map((month) => (
+                                            <option key={month} defaultValue={month}>{formatDateNumber(month)}</option>
+                                        ))}
                                     </select> 월
                                 </span>
                                 <span className='join_membership_birth'>
                                     <label htmlFor="day_birth"></label>
                                     <select ref={dayRef} id="day_birth" required>
-                                        <option defaultValue="01">01</option>
-                                        <option defaultValue="02">02</option>
-                                        <option defaultValue="03">03</option>
-                                        <option defaultValue="04">04</option>
-                                        <option defaultValue="05">05</option>
-                                        <option defaultValue="06">06</option>
-                                        <option defaultValue="07">07</option>
-                                        <option defaultValue="08">08</option>
-                                        <option defaultValue="09">09</option>
-                                        <option defaultValue="10">10</option>
-                                        <option defaultValue="11">11</option>
-                                        <option defaultValue="12">12</option>
-                                        <option defaultValue="13">13</option>
-                                        <option defaultValue="14">14</option>
-                                        <option defaultValue="15">15</option>
-                                        <option defaultValue="16">16</option>
-                                        <option defaultValue="17">17</option>
-                                        <option defaultValue="18">18</option>
-                                        <option defaultValue="19">19</option>
-                                        <option defaultValue="20">20</option>
-                                        <option defaultValue="21">21</option>
-                                        <option defaultValue="22">22</option>
-                                        <option defaultValue="23">23</option>
-                                        <option defaultValue="24">24</option>
-                                        <option defaultValue="25">25</option>
-                                        <option defaultValue="26">26</option>
-                                        <option defaultValue="27">27</option>
-                                        <option defaultValue="28">28</option>
-                                        <option defaultValue="29">29</option>
-                                        <option defaultValue="30">30</option>
-                                        <option defaultValue="31">31</option>
+                                        {day.map((day) => (
+                                            <option key={day} defaultValue={day}>{formatDateNumber(day)}</option>
+                                        ))}
                                     </select> 일
                                 </span>
                             </div>

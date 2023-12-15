@@ -16,4 +16,5 @@ public interface UserService {
 	
 	public User updateUserPoint(int pointParam, String userId);
 	public String findId(String name, String birthday, String phone_number);
+	public int passwordUpdate(String password, String id);
 }

@@ -80,8 +80,18 @@
     margin-right: 10px;
 }
 
-.log_in_find_pw {
+.log_in_find_id a:hover {
+    font-weight: bold;
+    color: green;
+}
+
+.log_in_join_membership {
     margin-left: 10px;
+}
+
+.log_in_join_membership a:hover {
+    font-weight: bold;
+    color: green;
 }
 
 .log_in_find_container a {
@@ -95,37 +105,4 @@
     margin-left: 45px;
     text-align: left;
 
-}
-
-/* ========================== */
-.button_container {
-    margin-top: 50px;
-}
-
-.linked_button {
-    display: inline-block;
-    width: calc((80% + 10px)/2 - 10px);
-    margin: 10px auto;
-    height: 50px;
-    line-height: 50px;
-    border: 1px solid #d8d8d8;
-    background-color: white;
-    border-radius: 5px;
-    font-size: 20px;
-    text-decoration: none;
-    color: #666;
-}
-
-.linked_button:hover {
-    color: green;
-    border: 1px solid green;
-    font-weight: bold;
-}
-
-.join {
-    margin-right: 10px;
-}
-
-.non_member {
-    margin-left: 10px;
 }

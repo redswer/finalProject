@@ -85,7 +85,7 @@ function UserAddress() {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             data: checkedItems
-        }).then((res) => {
+        }).then(() => {
             alert('삭제 완료');
             refresh();
         }).catch((error) => {
