@@ -116,7 +116,7 @@ const handleCheckboxChange = () => {
         <input  style={{width:'50px', height:'50px'}} type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
         </div>
         <div className='col-product_title_item'>
-          <img src={props.image} alt="image" />
+          <img src={`../img/yeonsu.jpg`} alt="image" />
           <div className='col-product_tfc'>
 
             <div>
@@ -162,20 +162,20 @@ const handleCheckboxChange = () => {
         </div>
 
 
-        <div className='col-product_del-info_item' >
+        {/* <div className='col-product_del-info_item' >
           <div className="division-delivery">
             <span>배송금액 </span>
             <span> : </span>
             <span>3,500 원</span>
           </div>
-        </div>
+        </div> */}
 
         <div className='col-product_btn_item'>
           <div className="divisionorder">
             <div className='divivi1'>
               {/* <button type='submit' onClick={UpdateProamount} className='seller_product_addcart_btn'>수량변경</button> */}
+              {/* <button >주문하기</button> */}
               <button type='submit' onClick={DeleteThisProduct} className='seller_product_payment_btn' >삭제{props.cart_code}</button>
-              <button >주문하기</button>
             </div>
             
           </div>

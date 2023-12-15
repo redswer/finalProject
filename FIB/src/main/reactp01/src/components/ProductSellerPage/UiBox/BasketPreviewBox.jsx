@@ -7,50 +7,39 @@ import axios from 'axios';
 
 const BasketPreviewBox = () => {
 
-  // const loginID = sessionStorage.getItem("loginID");
+  const loginID = sessionStorage.getItem("loginID");
 
-// const [bookData, setBookData] = useState({});
+const [bookData,setBookData] = useState([]);
 
-const [cookieBox,setCookieBox] = useState();
+// useEffect(()=> {
+//     axios
+//       .get(`/product/productSelectedList?domestic=1&category=novel&genre=0`)
+//       .then((response) => {
+//         console.log(`response 성공 :`, response);
+//         setBookData(response.data);
+//         }).catch((err) => {
+//         alert(`최근본상품목록실패 => ${err.message}`);
+//       });
+  
+// },[]);
 
-const [idCookie, setIdCookie] = useState();
-const [pcodeCookie, setPcodeCookie] = useState();
-const [bookData,setBookData] = useState();
-
-
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) {
-        return parts.pop().split(';').shift();
-    }
-}
-
-useEffect(()=> {
-    setCookieBox(getCookie('recentCookieProduct'));
-},[]);
-
-
-const parsedCookieList = cookieBox ? JSON.parse(decodeURIComponent(cookieBox)) : [];
-
-
-      
-const recentCookieProductList = parsedCookieList.map((d, i) => (
-  <BasketPreviewList
-    key={i}
-    id={d.id}
-    product_code={d.product_code}
-    title={d.title}
-    price={d.price}
-  />
-)); 
+// const preData = bookData.slice(0, 5).map((d, i) => (
+//   <BasketPreviewList
+//     key={i}
+//     id={d.id}
+//     product_code={d.product_code}
+//     title={d.title}
+//     price={d.price}
+//   />
+// ));
 
 
 
   return (
+  <div>
     <div className='basket_preview_box_detail_container'>
       <Link to='/BookmarkPage' className='from_preview_go_basket_btn'>
-        이크에크 덴마크 북마크
+        북마크 바로가기
       </Link>
 
       <hr />
@@ -63,17 +52,18 @@ const recentCookieProductList = parsedCookieList.map((d, i) => (
       <hr />
       <hr />
 
-      <Link to='/OrderListPage' className='from_preview_go_basket_btn'>
+      {/* <Link to='/OrderListPage' className='from_preview_go_basket_btn'>
         실험용 상세상세상세 
-      </Link>
-
+      </Link> */}
+{/* 
       <div>
-        <h4>최근본상품</h4>
-        {recentCookieProductList}
-      </div>
+        <h4 className='rect'>{` < 최근본상품 > `}</h4>
+        {preData}
+      </div> */}
       
 
     </div>
+  </div>
   );
 };
 

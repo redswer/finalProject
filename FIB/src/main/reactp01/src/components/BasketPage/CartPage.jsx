@@ -200,7 +200,7 @@ const handleUpdateProamount = (cartCode, newProamount) => {
        onChange={(e) => {handleAllSelectCartLists(e.target.checked)}} />전체 선택&nbsp;&nbsp;&nbsp;
 
 
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Link to={`/AsaySellerPage`}>찜목록 ㄱㄱㄱ</Link>
+      {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Link to={`/BookmarkPage`}>찜목록 ㄱㄱㄱ</Link> */}
 
       {/* <button onClick={handleDeselectCartLists}>전체 해제</button>&nbsp;&nbsp;&nbsp; */}
       <div className='basketlist_list_container'>
@@ -209,8 +209,9 @@ const handleUpdateProamount = (cartCode, newProamount) => {
           <div className="col-product_title">상품명</div>
           <div className="col-product_price">상품 가격</div>
           <div className="col-product_amount">수량</div>
-          <div className="col-product_del-info">배송비</div>
-          <div className="col-product_btn">주문하기 / 삭제</div>
+          {/* <div className="col-product_del-info">배송비</div> */}
+          {/* <div className="col-product_btn">주문하기 / 삭제</div> */}
+          <div className="col-product_btn">삭제</div>
         </div>
 
         <div>
@@ -249,7 +250,7 @@ const handleUpdateProamount = (cartCode, newProamount) => {
                   
                     <td>
                       <span className='basket_final_payment_price'></span>
-                      <span> 원</span>
+                      <span>{totalPrice} 원</span>
                     </td>
                     
                 </tr>

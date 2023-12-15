@@ -1,4 +1,5 @@
 .basket_preview_box_detail_container {
+  position:sticky;
   border: 1px solid black;
   width: 240px;
   height: 600px;
@@ -46,4 +47,8 @@
   font-size: 9px;
   color: red;
   height: 30px;
+}
+
+.rect {
+  text-align: center;
 }

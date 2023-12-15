@@ -19,18 +19,37 @@ function saveOnCart () {
     proamount : 1
     };
 
+    const DeleteThisProductData = {
+      product_code: props.product_code,
+      bookmark_code : props.bookmark_code
+      };
+
+
     axios
       .post(`/cart/cartOnSaveAction`,savedDataOnCart)
       .then((response) => {
-        console.log(`카트담기 성공 :`, response);
+        console.log(`장바구니 담았어요 :`, response);
         console.log(`response.OK :`, response.status);
         console.log('========================================');
-        // alert(`카트담기 성공 : ${response.data}`);
+        // alert(`장바구니 담았어요 : ${response.data}`);
         
         }).catch((err) => {
 		      alert(`담기 실패!! ${err.message}`);
     });
+
+    axios
+    .post(`/bookmark/bookmarkDeleteThisAction`, DeleteThisProductData)
+    .then((response) => {
+      console.log(`장바구니 담기  : `, response.data);
+      console.log('========================================');
+      alert(`장바구니 담기 성공 `, response.data);
+      
+    }).catch((err) => {
+        alert(`카트목록 삭제 실패!! ${err.message}`);
+        console.log(props.cart_code);
+  });
     
+  window.location.reload();
 };
 
 //===============================================================================================================
@@ -45,9 +64,9 @@ function saveOnCart () {
       axios
         .post(`/bookmark/bookmarkDeleteThisAction`, DeleteThisProductData)
         .then((response) => {
-          console.log(`카트목록 삭제 성공 : `, response.data);
+          console.log(`찜목록에서 제거  : `, response.data);
           console.log('========================================');
-          alert(`카트목록 삭제  성공 `, response.data);
+          alert(`나의 찜목록에서 제거했어요 `, response.data);
           
         }).catch((err) => {
             alert(`카트목록 삭제 실패!! ${err.message}`);
@@ -98,10 +117,10 @@ const handleCheckboxChange = () => {
       <div className='basket_product_list'>
         {/* 체크박스 부분 */}
         <div > 
-        <input  style={{width:'50px', height:'50px'}} type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
+        {/* <input  style={{width:'50px', height:'50px'}} type="checkbox" checked={isChecked} onChange={handleCheckboxChange} /> */}
         </div>
         <div className='col-product_title_item'>
-          <img src={props.image} alt="image" />
+          <img src={`../img/yeonsu.jpg`} alt="image" />
           <div className='col-product_tfc'>
 
             <div>
@@ -109,13 +128,19 @@ const handleCheckboxChange = () => {
             </div>
 
             <div>
-              <span className='basket__title'> {`[ ${props.bookmark_code} ]`}&nbsp;&nbsp;:&nbsp;&nbsp;</span>
-              <span className='basket__title'>{props.product_code}</span>
+              {/* <span className='basket__title'> {`[ ${props.bookmark_code} ]`}&nbsp;&nbsp;:&nbsp;&nbsp;</span> */}
+              {/* <span className='basket__title'>{props.product_code}</span> */}
             </div>
 
-            <div className='basket__fc'>
-              <span className='basket__from'>{props.domestic}</span>
-              <span className='basket__from'>{props.protype}</span>
+            <div className='cart_keywords'>
+              <span className='cart_domestic'> {props.domestic ==1 ? '국내도서' : 
+              props.domestic == 2 ? '영미도서' : 
+              props.domestic == 3 ? '프랑스도서' :
+              props.domestic == 4 ? '독일도서' :'기타도서'}</span>
+              <span className='cart_category'>{props.category == 'novel' ? '소설' :
+              props.category == 'poem' ? '시' :
+              props.category == 'essay' ? '에세이' :
+              props.category == 'magazine' ? '잡지' :'기타'}</span>
             </div>
           </div>
 
@@ -135,8 +160,11 @@ const handleCheckboxChange = () => {
         <div className='col-product_btn_item'>
           <div className="divisionorder">
             <div className='divivi1'>
-              <button type='submit' onClick={saveOnCart} className='seller_product_payment_btn' >장바구니 담기{props.bookmark_code}</button>
-              <button type='submit' onClick={DeleteThisProduct} className='seller_product_payment_btn' >삭제{props.bookmark_code}</button>
+              {/* <button type='submit' onClick={saveOnCart} className='seller_product_payment_btn' >장바구니{props.bookmark_code}</button> */}
+              <button type='submit' onClick={saveOnCart} className='seller_product_payment_btn' >장바구니</button>
+              &nbsp;&nbsp;&nbsp;
+              {/* <button type='submit' onClick={DeleteThisProduct} className='seller_product_payment_btn' >삭제{props.bookmark_code}</button> */}
+              <button type='submit' onClick={DeleteThisProduct} className='seller_product_payment_btn' >삭제</button>
             </div>
             
           </div>

@@ -1,10 +1,10 @@
-import './SellerProductCard.css';
+import './BestSellerItem.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const SellerProductCard = (props) => {
+const BestSellerItem = (props) => {
   // =================================================================================================================
   const [sell_countRate, setCount] = useState(0);
   const targetNumber = props.sellcount; // 최종 도달 숫자
@@ -27,11 +27,26 @@ const SellerProductCard = (props) => {
   }, []);
 // =================================================================================================================
 
-// const [protype ,setProtype] = useState();
-
 const [proamount ,setProamount] = useState(1);
 
 const loginID = sessionStorage.getItem("loginID");
+
+useEffect(()=> {
+  axios
+      .get(`/bookmark/bookmarkOnSaveAction`)
+      .then((response) => {
+        console.log(`찜목록 성공 :`, response);
+        console.log(`response.OK :`, response.status);
+        console.log('========================================');
+        alert(`나의 찜목록에 담았어요`);
+        
+        }).catch((err) => {
+		      // alert(`담기 실패!! ${err.message}`);
+    });
+},[])
+
+
+
 
 function saveOnCart () {
   const savedDataOnCart = {
@@ -225,4 +240,4 @@ const dataToPayment = [{
   );
 };
 
-export default SellerProductCard;
+export default BestSellerItem;

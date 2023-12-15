@@ -107,9 +107,8 @@ public class CartController {
 	// ===============================================================================================================
 
 	@PostMapping(value = "/cartOnSaveFromBookmark")
-	public int cartOnSaveFromBookmark(@RequestBody List<FromBookmarkDTO> selectedItems, Product pentity) throws IOException {
+	public int cartOnSaveFromBookmark(@RequestBody List<FromBookmarkDTO> selectedItems, Product pentity, Cart centity) throws IOException {
 		int uDNum = 999999999;
-		Cart centity = new Cart();
 		try {
 			log.info("");
 			log.info("[115] selectedItems 배송확인 : {}", Arrays.toString(selectedItems.toArray()));
@@ -125,11 +124,9 @@ public class CartController {
 
 				log.info("[126] 중복체크 시작! 현재 상품 번호 : " + pcode);
 
+				pentity = productservice.selectOne(pcode);
 
 				if (cartservice.checkDuplicated(loginID, pcode) == 0) {
-
-					centity = new Cart();
-					pentity = productservice.selectOne(pcode);
 
 					centity.setId(loginID);
 					centity.setProduct_code(pentity.getProduct_code());

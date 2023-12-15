@@ -9,7 +9,7 @@ public interface BookmarkService {
 
 	public int checkDuplicated(String loginID, int product_code);
 
-	//============================================================================================
+	// ============================================================================================
 
 	public Bookmark selectOne(int bookmark_code);
 

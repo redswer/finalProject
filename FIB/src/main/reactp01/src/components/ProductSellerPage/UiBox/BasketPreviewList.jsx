@@ -9,9 +9,9 @@ const BasketPreviewList = (props) => {
             pcode : {props.product_code}
             </div>
 
-            <div>
+            {/* <div>
             아이디 : {props.id}
-            </div>
+            </div> */}
 
             <div className='basket_preview_item_price'>
             제목 : {props.title}

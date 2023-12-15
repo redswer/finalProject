@@ -31,10 +31,10 @@ public class ProductController {
 
 	ProductService productservice;
 
-	//	@GetMapping("/productlists")
-	//	public void productlists(Model model) {
-	//		model.addAttribute("adminProductList", productservice.selectList());
-	//	}
+	// @GetMapping("/productlists")
+	// public void productlists(Model model) {
+	// model.addAttribute("adminProductList", productservice.selectList());
+	// }
 
 	// ==========================================================================================
 
@@ -60,20 +60,19 @@ public class ProductController {
 	public void productinsert(Model model) {
 	}
 
-
 	@PostMapping(value = "/productInsertAction")
 	public String productInsertAction(HttpServletRequest request, Product entity, Model model) throws IOException {
 		String uri = "redirect:productlists";
 		String realPath = "D:\\FIB\\src\\main\\webapp\\resources\\uploadImages\\";
 
 
-		String saveOnDisk, saveOnTable = "";      //  default
+		String saveOnDisk, saveOnTable = "";      // default
 
-		MultipartFile productImage = entity.getUploadfilef();            //  저장경로 완성
-		if (productImage != null && !productImage.isEmpty()) {           //  image_File 을 선택함 -> 저장 (저장경로: relaPath+화일명)
+		MultipartFile productImage = entity.getUploadfilef();            // 저장경로 완성
+		if (productImage != null && !productImage.isEmpty()) {           // image_File 을 선택함 -> 저장 (저장경로: relaPath+화일명)
 
-			saveOnDisk = realPath + productImage.getOriginalFilename();      //  물리적위치 저장 (file1) : 저장경로 완성
-			productImage.transferTo(new File(saveOnDisk));                   //  해당경로에 저장(붙여넣기)
+			saveOnDisk = realPath + productImage.getOriginalFilename();      // 물리적위치 저장 (file1) : 저장경로 완성
+			productImage.transferTo(new File(saveOnDisk));                   // 해당경로에 저장(붙여넣기)
 
 			saveOnTable = productImage.getOriginalFilename();   // 1.3.2) Table 저장경로 완성 (file2)
 		}
@@ -93,13 +92,14 @@ public class ProductController {
 
 	}
 
+
 	// ==========================================================================================
 
 	@GetMapping(value = "/productupdate")
 	public void productupdate(Model model, Product entity) {
 		try {
 			log.info(" ENTITY : " + entity);
-			//			log.info("** product_code를 이용하여 selectOne 실행 : " + service.selectOne(entity.getProduct_code())); // 이건 잘못됐다. 왜? 실행'만' 하고 담질 않아서.
+			// log.info("** product_code를 이용하여 selectOne 실행 : " + service.selectOne(entity.getProduct_code())); // 이건 잘못됐다. 왜? 실행'만' 하고 담질 않아서.
 			log.info("** product_code를 이용하여 selectOne 실행후 담을 겁니다.");
 			entity = productservice.selectOne(entity.getProduct_code());          // 반드시 채워줘야 한다!!
 			model.addAttribute("pcode", entity);
