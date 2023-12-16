@@ -24,5 +24,5 @@ public interface CouponService {
 //	int delete(Coupon coupon_code);
 	int delete(int coupon_code);
 
-	Page<Coupon> getCouponList(Pageable pageable);
+	Page<Coupon> getPageCouponList(Pageable pageable);
 }

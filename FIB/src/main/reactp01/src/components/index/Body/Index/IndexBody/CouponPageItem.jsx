@@ -19,61 +19,16 @@ function CouponPageItem() {
             });
     }, []);
 
-    const Coupon = ({ couponCode, title, discount_rate, image, start, end, moddate, regdate }) => {
-        const [isPopupOpen, setPopupOpen] = useState(false);
-
-        const handleButtonClick = () => {
-            const loginInfo = JSON.parse(sessionStorage.getItem('user'));
-            const userId = loginInfo ? loginInfo.id : null;
-
-            setPopupOpen(true);
-
-            const data = {
-                coupon_code: couponCode,
-                id: userId
-            };
-
-            axios.post('/test/userCouponGet', data)
-                .then(response => {
-                    console.log('유저 쿠폰 발급 요청 확인!' + response.data);
-                    setResultMessage(response.data);
-                    alert(response.data); // 서버로부터 받은 응답을 알림창으로 표시하거나, 상태에 따라 다른 처리 가능
-                })
-                .catch(error => {
-                    console.error('유저 쿠폰 발급 요청 실패:', error);
-                });
-        };
-
-        const handleClosePopup = () => {
-            console.log('Closing popup');
-            setPopupOpen(false);
-            setResultMessage('');
-        };
-
-        return (
-            <div className='coupon_box'>
-                <div className='coupon_box_title'>{title}</div>
-                <img className='coupon_box_image' src={image} alt={title} />
-                <br />
-                <button onClick={handleButtonClick}>받기</button>
-
-                {isPopupOpen && (
-                    <div className="popup" onClick={handleClosePopup}>
-                        <div className="popup_content">
-                            <span className="close">{resultMessage}</span>
-                        </div>
-                    </div>
-                )}
-            </div>
-        );
-    };
-
     const renderCouponCategory = (category, title) => {
         const filteredCoupons = couponList.filter(coupon => coupon.category === category);
 
+        if (filteredCoupons.length === 0) {
+            return null;
+        }
+
         return (
             <div className="coupon_category">
-                <div className='coupon_category_title'>{title}</div>
+                <h3 className='coupon_category_title'>{title}</h3>
                 {filteredCoupons.map((coupon, index) => (
                     <Coupon
                         key={index}
@@ -91,17 +46,69 @@ function CouponPageItem() {
         );
     };
 
+    const Coupon = ({ couponCode, title, discount_rate, image, start, end, moddate, regdate }) => {
+        // const [PopupOpen, setPopupOpen] = useState(false);
+
+        const handleButtonClick = () => {
+            const loginInfo = JSON.parse(sessionStorage.getItem('user'));
+            const userId = loginInfo ? loginInfo.id : null;
+
+            // setPopupOpen(true);
+
+            const data = {
+                coupon_code: couponCode,
+                id: userId
+            };
+
+            axios.post('/test/userCouponGet', data)
+                .then(response => {
+                    console.log('유저 쿠폰 발급 요청 확인!' + response.data);
+                    setResultMessage(response.data);
+
+                    // 서버로부터 받은 결과를 알림창으로 띄워준다.
+                    // 쿠폰발급 성공 or 이미 발급받은 쿠폰
+                    alert(response.data);
+
+                })
+                .catch(error => {
+                    console.error('유저 쿠폰 발급 요청 실패:', error);
+                    alert(error.response.data);
+                });
+        };
+
+        // const handleClosePopup = () => {
+        //     console.log('Closing popup');
+        //     setPopupOpen(false);
+        // };
+
+        return (
+            <div className="coupon_item">
+                <div className="coupon_box">
+                    <h4 className="coupon_box_title">{title}</h4>
+                    <img className="coupon_box_image" src={`../img/${image}`} alt={title} />
+                    <br />
+                    <button className="coupon_get_button" onClick={handleButtonClick}>쿠폰받기</button>
+
+                    {/* {PopupOpen && (
+                    <div className="popup" onClick={handleClosePopup}>
+                    <div className="popup_content">
+                    <span className="close">{resultMessage}</span>
+                    </div>
+                    </div>
+                )} */}
+                </div>
+            </div>
+        );
+    };
+
     return (
         <div className="coupon_list_container">
-            <div className="coupon_item">
-                <span className="coupon_page_title">쿠폰</span>
-            </div>
+            <span className="coupon_page_title">쿠폰</span>
             <hr className="coupon_page_title_hr" />
             <div className="coupon_page_container">
                 {renderCouponCategory('첫구매', '신규회원/첫구매/웰컴백 쿠폰')}
                 {renderCouponCategory('월간', '매월 드리는 쿠폰!')}
-                {renderCouponCategory('생일', '생일 축하 쿠폰!')}
-                {/* 추가적인 카테고리들도 필요한 대로 추가 */}
+                {renderCouponCategory('이벤트', '이벤트 쿠폰')}
             </div>
         </div>
     );

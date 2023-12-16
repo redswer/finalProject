@@ -13,7 +13,7 @@ function couponManagement() {
 	document.getElementById("managementArea").innerHTML="";
 }
 
-// 공지사항 페이지네이션
+// 쿠폰 페이지네이션
 function couponManagementPage(pageNumber) {
     let url = "coupon/couponListAdmin?page=" + pageNumber;
 
