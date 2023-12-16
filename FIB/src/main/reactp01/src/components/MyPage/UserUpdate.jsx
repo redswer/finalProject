@@ -124,7 +124,6 @@ function UserUpdate() {
         handleuserUpdateSubmit(popupPassword);
     }
 
-    // ==================
     const handleuserUpdateSubmit = (popupPassword) => {
         const formData = new FormData();
 
@@ -189,7 +188,7 @@ function UserUpdate() {
                                     <input
                                         id='uploadfilef'
                                         className='userUpdate_input'
-                                        accept='img/jpg, img/png, img/jpeg img/gif'
+                                        accept='img/jpg, img/png, img/jpeg, img/gif'
                                         name='uploadfilef' type="file"
                                         ref={fileInput} onChange={handleFileChange}
                                     />

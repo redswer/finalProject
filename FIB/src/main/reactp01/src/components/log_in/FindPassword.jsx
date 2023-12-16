@@ -7,7 +7,6 @@ import axios from 'axios';
 function FindPassword() {
     const navigate = useNavigate();
 
-
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [birthday, setBirthday] = useState('');
@@ -39,6 +38,7 @@ function FindPassword() {
         }
     }
 
+    // ** 생년월일 현재 날짜보다 과거만 가능하도록
     const currentDate = new Date();
     const inputDate = new Date(
         parseInt(birthday.substring(0, 4)),
@@ -70,6 +70,28 @@ function FindPassword() {
             phone_numberRegex.test(phone_number) && id.includes('@') &&
             inputDate < currentDate
             ? setFindPasswordButton(false) : setFindPasswordButton(true);
+    }
+
+    // ===================================
+    // ** 데이터 전송
+
+    const findPassword = () => {
+        axios({
+            url: "/user/findPassword",
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            data: {
+                id: id,
+                name: name,
+                birthday: birthday,
+                phone_number: phone_number
+            }
+        }).then((res) => {
+            alert(res.data);
+            navigate('/LogIn');
+        }).catch((error) => {
+            alert(error.response.data);
+        });
     }
 
     return (
@@ -126,7 +148,7 @@ function FindPassword() {
                     </div>
                     <div className='find_password_button_container'>
                         <button className='find_password_submit_btn' type='button'
-                            disabled={findPasswordButton}>확인</button>
+                            disabled={findPasswordButton} onClick={findPassword}>확인</button>
                         <button type='reset'>취소</button>
                     </div>
                 </fieldset>

@@ -13,6 +13,7 @@ import com.fox.fib.entity.Product;
 import com.fox.fib.entity.RecentView;
 import com.fox.fib.service.ProductService;
 import com.fox.fib.service.RecentViewService;
+import com.fox.fib.service.ReviewService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -25,6 +26,7 @@ public class RestProductController {
 
 	ProductService productservice;
 	RecentViewService recentviewservice;
+	ReviewService reviewservice;
 
 	// ==========================================================================================
 
@@ -36,111 +38,109 @@ public class RestProductController {
 		return entity;
 	}
 
-
 	// ==========================================================================================
 
-	@GetMapping("/productSelectedList")
-	public List<Product> productSelectedList(@RequestParam(name = "domestic") String domestic,
+	@GetMapping("/productSelectedList2")
+	public ResponseEntity<?> productSelectedList2(@RequestParam(name = "domestic") String domestic,
 		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
 		try {
-			log.info("selectedKeyword 정보 : " + domestic + category + genre);
+			log.info("productSelectedList2인자 정보 : " + domestic + category + genre);
 
-			List<Product> selectedList = productservice.showListFromKeywords(domestic, category, genre);
+			List<Product> resultList = productservice.selectListSortOfTitle(domestic, category, genre);
 
-			log.info("selectedList 확인 : " + selectedList.toString());
+			log.info("[59]productSelectedList2 확인 : " + resultList.toString());
 
-			return selectedList;
+			return ResponseEntity.ok(resultList);
+
 		} catch (Exception e) {
 			log.info(" 삭제 실패 : " + e.toString());
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("productSelectedList2 오류");
 
 		}
-		return null;
 	}
 
 	// ==========================================================================================
 
-	//	@GetMapping("/productSelectedList")
-	//	public ResponseEntity<?> productSelectedList(@RequestParam(name = "domestic") String domestic,
-	//		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre, int page, int size) {
-	//		try {
-	//			log.info("selectedKeyword 정보 : " + domestic + category + genre);
-	//
-	//			List<Product> selectedList = productservice.findSelectedAllByKeywords(domestic, category, genre);
-	//
-	//			PageRequestDTO requestDTO = PageRequestDTO.builder().page(page).size(size).build();
-	//
-	//			PageResultDTO<Product> resultDTO = productservice.selectListPageNation(requestDTO);
-	//
-	//			log.info("selectedList 확인 : " + resultDTO.toString());
-	//
-	//			return ResponseEntity.ok(resultDTO);
-	//		} catch (Exception e) {
-	//			log.info(" 삭제 실패 : " + e.toString());
-	//		}
-	//		return null;
-	//	}
-
-	// ==========================================================================================
-
 	@GetMapping("/productAscendingList")
-	public List<Product> productAscendingList(@RequestParam(name = "domestic") String domestic,
+	public ResponseEntity<?> productAscendingList(@RequestParam(name = "domestic") String domestic,
 		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
 		try {
-			log.info("productAscendingList 정보 : " + domestic + category + genre);
-			List<Product> selectedList = productservice.orderedByPriceAsc(domestic, category, genre);
-			log.info("selectedList 확인 : " + selectedList.toString());
-			return selectedList;
+			log.info("productAscendingList인자 정보 : " + domestic + category + genre);
+
+			List<Product> resultList = productservice.selectListSortOfPriceAsc(domestic, category, genre);
+
+			log.info("[59]productAscendingList 확인 : " + resultList.toString());
+
+			return ResponseEntity.ok(resultList);
 
 		} catch (Exception e) {
 			log.info(" 삭제 실패 : " + e.toString());
-
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("productAscendingList 오류");
 
 		}
-		return null;
 	}
 
 	// ==========================================================================================
 
 	@GetMapping("/productDescendingList")
-	public List<Product> productDescendingList(@RequestParam(name = "domestic") String domestic,
+	public ResponseEntity<?> productDescendingList(@RequestParam(name = "domestic") String domestic,
 		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
 		try {
-			log.info("selectedKeyword 정보 : " + domestic + category + genre);
-			List<Product> selectedList = productservice.orderedByPriceDesc(domestic, category, genre);
-			log.info("selectedList 확인 : " + selectedList.toString());
-			return selectedList;
+			log.info("productDescendingList인자 정보 : " + domestic + category + genre);
+
+			List<Product> resultList = productservice.selectListSortOfPriceDesc(domestic, category, genre);
+
+			log.info("[113]productDescendingList 확인 : " + resultList.toString());
+
+			return ResponseEntity.ok(resultList);
+
 		} catch (Exception e) {
 			log.info(" 삭제 실패 : " + e.toString());
-
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("productDescendingList 오류");
 
 		}
-		return null;
 	}
 
-	// ======================================================================================================
+	// ==========================================================================================
 
 	@GetMapping("/productLimitedPriceList")
-	public List<Product> productLimitedPriceList(@RequestParam(name = "domestic") String domestic,
+	public ResponseEntity<?> productLimitedPriceList(@RequestParam(name = "domestic") String domestic,
 		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre,
-		@RequestParam(name = "min") String minPrice, @RequestParam(name = "max") String maxPrice) {
+		@RequestParam(name = "minprice") int minprice, @RequestParam(name = "maxprice") int maxprice) {
+
 		try {
-			log.info("[105]selectedKeyword 정보 : " + domestic + " & " + category + " & " + genre + " & " + minPrice + " & " + maxPrice);
+			log.info("productLimitedPriceList인자 정보 : " + domestic + category + genre + " & price & " + minprice + maxprice);
 
-			int min = Integer.parseInt(minPrice);
-			int max = Integer.parseInt(maxPrice);
+			List<Product> resultList = productservice.selectListLimitedPrice(domestic, category, genre, minprice, maxprice);
 
-			List<Product> limitedPriceList = productservice.searchLimitedPrice(domestic, category, genre, min, max);
+			log.info("[134] 1차 productLimitedPriceList의 resultList 확인 : " + resultList.toString());
 
-			log.info("[112]productLimitedPriceList 확인 : {} " + limitedPriceList.toString());
-
-			return limitedPriceList;
+			return ResponseEntity.ok(resultList);
 
 		} catch (Exception e) {
 			log.info(" 삭제 실패 : " + e.toString());
-
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("productLimitedPriceList 오류");
 
 		}
-		return null;
+	}
+
+	// ==========================================================================================
+
+	@GetMapping("/bestSeller")
+	public ResponseEntity<?> bestSeller() {
+
+		try {
+			List<Product> resultList = productservice.selectListBestSeller();
+
+			log.info("[141] 1차 bestSeller의 resultDTO 확인 : " + resultList.toString());
+
+			return ResponseEntity.ok(resultList);
+
+		} catch (Exception e) {
+			log.info(" 삭제 실패 : " + e.toString());
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("bestSeller 오류");
+
+		}
 	}
 
 	// ======================================================================================================
@@ -181,6 +181,7 @@ public class RestProductController {
 			List<RecentView> recentviewList = recentviewservice.selectListById(id);
 
 			return recentviewList;
+
 		} catch (Exception e) {
 			log.info("최근방문상품 실패요 : " + e.toString());
 			return null;
@@ -188,5 +189,74 @@ public class RestProductController {
 
 	}
 
+	// ==========================================================================================
+
+//	@GetMapping("/searchTextWord")
+//	public ResponseEntity<?> searchTextWord(@RequestParam(name = "domestic") String domestic,
+//		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre,
+//		@RequestParam(name = "minprice") int minprice, @RequestParam(name = "maxprice") int maxprice,
+//		@RequestParam(name = "textword") String textword) {
+//
+//		try {
+//			log.info("productLimitedPriceList인자 정보 : " + domestic + category + genre + " & price & " + minprice + maxprice + textword);
+//
+//			List<Product> resultList = productservice.selectListLimitedPrice(resultList, domestic, category, genre, minprice, maxprice);
+//
+//			log.info("[141] 1차 productLimitedPriceList의 resultDTO 확인 : " + resultList.toString());
+//
+//
+//			return ResponseEntity.ok(resultList);
+//
+//		} catch (Exception e) {
+//			log.info(" 삭제 실패 : " + e.toString());
+//			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("checkedListOfDefault 오류");
+//
+//		}
+//	}
+//
+//	@GetMapping("/productSelectedList")
+//	public List<Product> productSelectedList(@RequestParam(name = "domestic") String domestic,
+//		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
+//		try {
+//			log.info("selectedKeyword 정보 : " + domestic + category + genre);
+//
+//			List<Product> selectedList = productservice.showListFromKeywords(domestic, category, genre);
+//
+//			log.info("selectedList 확인 : " + selectedList.toString());
+//
+//			return selectedList;
+//		} catch (Exception e) {
+//			log.info(" 삭제 실패 : " + e.toString());
+//
+//		}
+//		return null;
+//	}
+
+	// @GetMapping("/productLimitedPriceList22222222")
+	// public List<Product> productLimitedPriceList22222222(@RequestParam(name = "domestic") String domestic,
+	// @RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre,
+	// @RequestParam(name = "minprice") int minprice, @RequestParam(name = "maxprice") int maxprice) {
+	// try {
+	// log.info("limitedpriceParams 정보 : " + domestic + category + genre + minprice + maxprice);
+	//
+	// List<Product> filteredList = productservice.showListFromKeywords22(domestic, category, genre);
+	// // List<Product> filteredList = productservice.orderedByPriceAsc(domestic, category, genre);
+	//
+	// log.info("filteredList 확인 : " + filteredList.toString());
+	//
+	// List<Product> limitedPriceList = filteredList.stream()
+	// .filter(product -> product.getPrice() >= minprice && product.getPrice() <= maxprice).collect(Collectors.toList());
+	//
+	// log.info("limitedPriceList 확인 : " + limitedPriceList.toString());
+	//
+	// // return filteredList;
+	// return limitedPriceList;
+	//
+	// } catch (Exception e) {
+	// log.info(" 삭제 실패 : " + e.toString());
+	//
+	// }
+	// return null;
+	// }
 
 }

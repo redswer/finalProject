@@ -35,7 +35,7 @@ public class RecentView extends BaseEntity {
 	private int price; // 6. 제품가격
 
 	@Transient                         // SQL에서 제외시켜야함
-	private MultipartFile uploadfilef; // => form 의 Upload_File 정보를 전달받기위한 필드  MultipartFile (Interface) -> CommonsMultipartFile
+	private MultipartFile uploadfilef; // => form 의 Upload_File 정보를 전달받기위한 필드 MultipartFile (Interface) -> CommonsMultipartFile
 
 
 }

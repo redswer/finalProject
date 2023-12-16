@@ -54,11 +54,11 @@ public class Product {
 
 	private int stack; // 16. 제품 재고수량
 
-	private int sell_count; // 17. 판매량
+	private int sellcount; // 17. 판매량
 
 
 	@Transient                         // SQL에서 제외시켜야함
-	private MultipartFile uploadfilef; // => form 의 Upload_File 정보를 전달받기위한 필드  MultipartFile (Interface) -> CommonsMultipartFile
+	private MultipartFile uploadfilef; // => form 의 Upload_File 정보를 전달받기위한 필드 MultipartFile (Interface) -> CommonsMultipartFile
 
 
 }

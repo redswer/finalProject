@@ -19,8 +19,4 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Integer> {
 	Optional<Bookmark> checkByIdPcode(@Param("id") String loginID, @Param("product_code") int product_code);
 
 
-
-
-
 }
-

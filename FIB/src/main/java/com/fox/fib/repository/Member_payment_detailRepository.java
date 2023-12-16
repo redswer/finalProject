@@ -16,6 +16,10 @@ public interface Member_payment_detailRepository extends JpaRepository<Member_pa
 	// 주문상세 Select
 	@Query("select m from Member_payment_detail m where id = :userId")
 	List<Member_payment_detail> selectList(@Param("userId") String userId);
+
+	// 특정 주문코드를 가진 주문상세 select
+	@Query("select m from Member_payment_detail m where member_payment_code = :member_payment_code")
+	List<Member_payment_detail> findByPaymentCode(@Param("member_payment_code") Long member_payment_code);
 	
 	// 주문코드 MAX 값 Select
 	@Query("select max(m.member_payment_code) from Member_payment m")
@@ -24,9 +28,9 @@ public interface Member_payment_detailRepository extends JpaRepository<Member_pa
 	// 주문상세 등록
 	@Transactional
 	@Modifying
-	@Query(nativeQuery = true, value = "insert into member_payment_detail (member_payment_code, id, product_code, amount) " +
-		       "values (:detailPayment_code, :detailId, :detailProduct_code, :detailProamount)")
-	int insertPaymentDetail(@Param("detailPayment_code") Long detailPayment_code, @Param("detailId") String detailId,
-			@Param("detailProduct_code") Long detailProduct_code, @Param("detailProamount") Long detailProamount);
+	@Query(nativeQuery = true, value = "insert into member_payment_detail (member_payment_code, id, product_code, proamount) " +
+		       "values (:payment_code, :userId, :product_code, :proamount)")
+	int insertPaymentDetail(@Param("payment_code") Long payment_code, @Param("userId") String userId,
+			@Param("product_code") int product_code, @Param("proamount") int proamount);
 
 }

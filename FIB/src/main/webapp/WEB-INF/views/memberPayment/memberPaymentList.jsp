@@ -17,13 +17,13 @@
 	<div class="adminDiv">
 		<span class="adminSpan">
 			<sapn>
-				<input type="radio" name="selectMenu" id="all" checked="checked" />
+				<input type="radio" name="selectMenu" id="all" ${requestScope.orderParam eq 'all' ? 'checked' : ''} onclick="memberPaymentList('all')" />
 				<label for="all">전체</label>
 				
-				<input type="radio" name="selectMenu" id="order" />
+				<input type="radio" name="selectMenu" id="order" ${requestScope.orderParam eq 'order' ? 'checked' : ''} onclick="memberPaymentList('order')" />
 				<label for="order">주문내역</label>
 				
-				<input type="radio" name="selectMenu" id="cancel" />
+				<input type="radio" name="selectMenu" id="cancel" ${requestScope.orderParam eq 'cancel' ? 'checked' : ''} onclick="memberPaymentList('cancel')" />
 				<label for="cancel">취소내역</label>
 			</sapn>
 			
@@ -76,7 +76,7 @@
 					</td>
 					<td>
 						<c:if test="${memberPaymentVar.payment_cancel == 0}">
-							<button type="button" class="paymentCancelBtn" onclick="paymentCancel(${memberPaymentVar.member_payment_code})">취소</button>
+							<button type="button" class="paymentCancelBtn" onclick="paymentCancel('${requestScope.orderParam}', '${String(memberPaymentVar.member_payment_code)}', '${memberPaymentVar.id}', ${memberPaymentVar.product_amount}, ${memberPaymentVar.origin_price})">취소</button>
 						</c:if>
 					</td>
 				</tr>

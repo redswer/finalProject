@@ -1,14 +1,14 @@
-import './UiBox/SellerPageCommonCSS.css';
+import './ProductListPage.css';
 import { useState, useEffect } from 'react';
 import SideButton from '../SideButton';
-import SellerProductCard from './UiBox/SellerProductCard';
-import BasketPreviewBox from './UiBox/BasketPreviewBox';
-import ProductSellerCategoryBar from './UiBox/ProductSellerCategoryBar';
+import ProductListItem from './ProductListItem';
+import RecentSideBar from './UiBox/RecentSideBar';
+import KeywordSideBar from './UiBox/KeywordSideBar';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import ProductPagination from './ProductPagination';
 const ProductListPage = () => {
   // =================================================================================================================
   const [scrollY, setScrollY] = useState(0);
@@ -26,68 +26,84 @@ const ProductListPage = () => {
   const urlNavigate = useNavigate();
   const urlParams = new URLSearchParams(urlString.search);
   
-  const [urlDomesticValue , setUrlDomesticValue] = useState(0);
-  const [urlCategoryValue , setUrlCategoryValue] = useState(0);
-  const [urlGenreValue , setUrlGenreValue] = useState(0);
+  // const [urlDomesticValue , setUrlDomesticValue] = useState(0);
+  // const [urlCategoryValue , setUrlCategoryValue] = useState(0);
+  // const [urlGenreValue , setUrlGenreValue] = useState(0);
 
-  // const [requestURL , setRequestURL] = useState();
   const [productData, setProductData] = useState([]);
-  const [titleDomestic , setTitleDomestic] = useState(0);
-  const [titleCategory , setTitleCategory] = useState(0);
-  const [titleGenre , setTitleGenre] = useState(0);
+  const [reviewData , setReviewData] = useState([]);
+  //  const [pageThemeDomestic , setPageThemeDomestic] = useState();
+  // const [pageThemeCategory , setPageThemeCategory] = useState();
+  // const [pageThemeGenre , setPageThemeGenre] = useState();
   const [limitedMinPrice , setLimitedMinPrice] = useState(0);
   const [limitedMaxPrice , setLimitedMaxPrice] = useState(0);
+  // const [titleWord , setTitleWord] = useState();
+  const [getMapping , setGetMapping] = useState('productSelectedList2');
 
-  // console.log(`현재 urlString[Page](41) : ` ,urlString);
-  // console.log(`현재 urluseLocation()[Page](42) : `,useLocation());
-  // console.log(`현재 urlString.search[Page](43) : `,urlString.search);
+  const [valueOfLimitedPrice,setValueOfLimitedPrice] = useState(0);
+
+  const [visiblePageCount, setVisiblePageCount] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [nowSize, setNowSize] = useState(3);
 
   //==========================================================================================================================
   const requestToServer = (initRequestURL) => {
-
-    // alert(`initRequestURL :: ` , initRequestURL);
-
     axios
       .get(`${initRequestURL}`)
       .then((response) => {
         const prevSearchParams = new URLSearchParams(urlString.search);
-        console.log(`response 성공 :`, response);
-        // console.log(`fetchData-response.data[0] : `, response.data[0]);
-        console.log('========================================');
+        console.log(`response 성공 :`, response.data);
+
         if (response.data && response.data.length > 0) {
           setProductData(response.data);
-          // alert(`fetchData : 데이터가 존재합니다!! yes come on!!`);
+
         } else {
-        console.log(`fetchData : 조건에 해당하는 도서가 없습니다.`);
-        alert(`fetchData : 조건에 해당하는 도서가 없습니다.`);
+        console.log(`requestToServer : 조건에 해당하는 도서가 없습니다.`);
+        console.log(`resposne data : `, response.data);
+        alert(`requestToServer : 조건에 해당하는 도서가 없습니다.`);
 
-        // const prevSearchParams = new URLSearchParams(urlString.search);
+        // // const prevSearchParams = new URLSearchParams(urlString.search);
 
-        const newURL = `/ProductListPage?${prevSearchParams.toString()}`;
+        // const newURL = `/ProductListPage?${prevSearchParams.toString()}`;
 
-        // if (urlString.search !== `?${prevSearchParams.toString()}`) {
-          // urlNavigate(newURL);
-        // }
-        urlNavigate(newURL);
+        // // if (urlString.search !== `?${prevSearchParams.toString()}`) {
+        //   // urlNavigate(newURL);
+        // // }
+        // urlNavigate(newURL);
+
+        // //==============================
 
         }
-      })
-      .catch((err) => {
-        alert(`서버연결 실패 => ${err.message}`);
+      }).catch((err) => {
+        alert(`requestToServer 서버연결 실패 => ${err.message}`);
       });
   };
 
   useEffect(()=> {
-    // alert(`첫 mount where ProductListPage`);
-    requestToServer
-    (`/product/productSelectedList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}`);
     
+    urlNavigate
+    (`/ProductListPage?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`);
+
+    requestToServer
+    (`/product/${getMapping}?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`)
+    // console.log(`mount 성공`);
+
+    // axios
+    //   .get(`/product/productReviewList`)
+    //   .then((response)=> {
+    //     console.log(`리뷰불러오기 성공 : `,response.data);
+    //     setReviewData(response.data);
+
+    //   }).catch((error) => {
+    //       // alert(`리뷰 불러오기 실패 : `,error.message);
+    //   })
+
   },[])
 
-  
 //===========================================================================================================================
 
-const [selectedOptions, setSelectedOptions] = useState({
+const [selectedOptions, setSelectedOptions] = useState(
+{
   domestic :'0',
   category :'0',
   genre:'0'
@@ -101,9 +117,84 @@ const handleKeywordChange = (keyword, value) => {
 };
 
 //============================================================================================================================
-
-const handleSelectedKeywordDefault = () => {
+const keywordSortTitle = () => {
   // 선택된 옵션들을 이용하여 파라미터를 생성합니다.
+
+  const nowParams = new URLSearchParams(urlString.search);
+
+  const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
+
+  setGetMapping('productSelectedList2');
+
+  // 선택된 옵션이 하나라도 있을 때만 서버로 요청을 보냄
+  if (isOptionSelected) {
+    requestToServer
+    (`/product/productSelectedList2?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&page=1&size=${nowSize}`);
+
+    urlNavigate
+    (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&page=1&size=${nowSize}`);
+
+  } else {
+    // alert(`이런이런, 카테고리부터 선택하라구 Boy↗↘♬ ^-^  ~0~`);
+    requestToServer
+    (`/product/productSelectedList2?domestic=${nowParams.get('domestic')}&category=${nowParams.get('category')}&genre=${nowParams.get('genre')}&page=1&size=${nowSize}`)
+    console.log(`nowParam : ` ,nowParams.get('domestic') , nowParams.get('category') , nowParams.get('genre'))
+    alert(`현재 파람 값으로 기본순 재검색합니다 ^~^`);
+  }
+  
+};
+
+//============================================================================================================================
+    
+const keywordSortPriceAsc = () => {   // 최저가
+  setGetMapping('productAscendingList');
+  const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
+  const nowParams = new URLSearchParams(urlString.search);
+  if (isOptionSelected) {
+    requestToServer
+    (`/product/productAscendingList?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&page=1&size=${nowSize}`);
+
+    urlNavigate
+    (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&page=1&size=${nowSize}`);
+  } else {
+    // fetchData(`/product/productAscendingList?domestic=${nowParams.get('domestic')}&category=${nowParams.get('category')}&genre=${nowParams.get('genre')}`);
+    // alert(`이런이런 카테고리를 선택해주세용 ^-^  ~0~`);
+    requestToServer
+    (`/product/productAscendingList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&page=1&size=${nowSize}`)
+    alert(`현재 파람 값으로 최저가순 재검색합니다 ^~^`);
+  }
+}
+
+//============================================================================================================================
+
+
+
+const keywordSortPriceDesc = () => {   // 최고가
+  setValueOfLimitedPrice(1);
+  setGetMapping('productDescendingList');
+  const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
+  const nowParams = new URLSearchParams(urlString.search);
+  if (isOptionSelected) {
+    requestToServer
+    (`/product/productDescendingList?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&page=1&size=${nowSize}`);
+
+    urlNavigate
+    (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&page=1&size=${nowSize}`);
+  } else {
+    // fetchData(`/product/productAscendingList?domestic=${nowParams.get('domestic')}&category=${nowParams.get('category')}&genre=${nowParams.get('genre')}`);
+    // alert(`이런이런 카테고리를 선택해주세용 ^-^  ~0~`);
+    requestToServer
+    (`/product/productDescendingList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&page=1&size=${nowSize}`)
+    urlNavigate
+    (`/ProductListPage?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${selectedOptions.genre}&page=1&size=${nowSize}`);
+    alert(`현재 파람 값으로 최고가순 재검색합니다 ^~^`);
+  }
+}
+
+//============================================================================================================================
+
+const keywordLimitedPrice = () => {   // 가격제한된
+  setGetMapping('productLimitedPriceList');
 
   const nowParams = new URLSearchParams(urlString.search);
 
@@ -111,154 +202,122 @@ const handleSelectedKeywordDefault = () => {
 
   // 선택된 옵션이 하나라도 있을 때만 서버로 요청을 보냄
   if (isOptionSelected) {
-
-    // setUrlDomesticValue(selectedOptions.domestic);
-    // setUrlCategoryValue(selectedOptions.category);
-    // setUrlGenreValue(selectedOptions.genre);
-
     requestToServer
-    (`/product/productSelectedList?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
+    (`/product/productLimitedPriceList?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&page=1&size=${nowSize}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`);
 
-    
     urlNavigate
-    (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
+    (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&page=1&size=${nowSize}`);
+    alert(`${limitedMinPrice}원 부터 ${limitedMaxPrice}원 까지의 상품 검색합니다 ^~^`);
 
-    // updateUrlParams();
   } else {
-    // alert(`이런이런, 카테고리부터 선택하라구 Boy↗↘♬ ^-^  ~0~`);
     requestToServer
-    (`/product/productSelectedList?domestic=${nowParams.get('domestic')}&category=${nowParams.get('category')}&genre=${nowParams.get('genre')}`)
+    (`/product/productLimitedPriceList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&page=1&size=${nowSize}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`)
     console.log(`nomParam : ` ,nowParams.get('domestic') , nowParams.get('category') , nowParams.get('genre'))
-    // alert(`현재 파람 값으로 최저가순 재검색합니다 ^~^`);
+    alert(`현재 파람 값으로 ${limitedMinPrice}원 부터 ${limitedMaxPrice}원 까지의 상품 재검색합니다 ^~^`);
   }
   
+}
+//============================================================================================================================
+const [textWordValue,setTextWordValue] = useState('');
+
+
+const searchTextWord = () => {  
+  setGetMapping('searchTextWord');
+
+  const nowParams = new URLSearchParams(urlString.search);
+
+  const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
+
+  // 선택된 옵션이 하나라도 있을 때만 서버로 요청을 보냄
+  if (isOptionSelected) {
+    requestToServer
+    (`/product/searchTextWord?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&page=1&size=${nowSize}&minprice=${limitedMinPrice}&maxprice${limitedMaxPrice}&textword=${textWordValue}`);
+
+    urlNavigate
+    (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&page=1&size=${nowSize}`);
+    alert(`해당 검색어로 상품 출력하려고 합니다 ^~^!`);
+
+  } else {
+    requestToServer
+    (`/product/productLimitedPriceList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&page=1&size=${nowSize}&minprice=${limitedMinPrice}&maxprice${limitedMaxPrice}&textword=${textWordValue}`)
+    // console.log(`nowParam : ` ,nowParams.get('domestic') , nowParams.get('category') , nowParams.get('genre'))
+    alert(`검색어를 입력해주세용 ^~^`);
+  }
   
-};
-
-//============================================================================================================================
-    
-const handleSelectedKeywordAscending = () => {   // 최저가
-  const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
-  const nowParams = new URLSearchParams(urlString.search);
-  if (isOptionSelected) {
-    requestToServer
-    (`/product/productAscendingList?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
-
-    urlNavigate
-    (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
-  } else {
-    // fetchData(`/product/productAscendingList?domestic=${nowParams.get('domestic')}&category=${nowParams.get('category')}&genre=${nowParams.get('genre')}`);
-    // alert(`이런이런 카테고리를 선택해주세용 ^-^  ~0~`);
-    requestToServer
-    (`/product/productAscendingList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}`)
-    alert(`현재 파람 값으로 최저가순 재검색합니다 ^~^`);
-  }
 }
-
 //============================================================================================================================
-const handleSelectedKeywordDescending = () => {   // 최고가
-  const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
-  const nowParams = new URLSearchParams(urlString.search);
-  if (isOptionSelected) {
-    requestToServer
-    (`/product/productDescendingList?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
-    urlNavigate
-    (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
-  } else {
-    // fetchData(`/product/productAscendingList?domestic=${nowParams.get('domestic')}&category=${nowParams.get('category')}&genre=${nowParams.get('genre')}`);
-    // alert(`이런이런 카테고리를 선택해주세용 ^-^  ~0~`);
-    requestToServer
-    (`/product/productAscendingList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}`)
-    alert(`현재 파람 값으로 최고가순 재검색합니다 ^~^`);
-  }
-}
+  const handleSizeChange = (size) => {
+    setNowSize(size);
+  };
 
-//============================================================================================================================
-const handleSelectedKeywordSellCount = () => {   // 판매량
-  const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
-  const nowParams = new URLSearchParams(urlString.search);
-  if (isOptionSelected) {
-    requestToServer
-    (`/product/productAscendingList?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
-
-    urlNavigate
-    (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
-  } else {
-    requestToServer
-    (`/product/productAscendingList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}`)
-    alert(`현재 파람 값으로 최저가순 재검색합니다 ^~^`);
-  }
-}
+  // PaginationComponent에서 사용할 데이터 범위를 계산합니다.
+  const startIdx = (currentPage - 1) * nowSize;
+  const endIdx = startIdx + nowSize;
+  const visibleProducts = productData.slice(startIdx, endIdx);
 
 //============================================================================================================================
 
-const handleSelectedKeywordLimitedPrice = () => {   // 가격제한된
-  const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
-  const nowParams = new URLSearchParams(urlString.search);
-  if (isOptionSelected) {
-    requestToServer
-    (`/product/productLimitedPriceList?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}
-    &min=${limitedMinPrice}&max=${limitedMaxPrice}`);
+// reviewData의 product_code와, productData 의 product_code가 일치하는 데이터를  intoItemData 배열에 넣고싶다.
 
-    urlNavigate
-    (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
-  } else {
-    // fetchData(`/product/productAscendingList?domestic=${nowParams.get('domestic')}&category=${nowParams.get('category')}&genre=${nowParams.get('genre')}`);
-    // alert(`이런이런 카테고리를 선택해주세용 ^-^  ~0~`);
-    requestToServer
-    (`/product/productLimitedPriceList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}
-    &min=${limitedMinPrice}&max=${limitedMaxPrice}`)
-    alert(`현재 파람 값으로 최저가순 재검색합니다 ^~^`);
-  }
-}
-
-//=======================================================================================
-
-console.log(`limitedMinPrice : `,limitedMinPrice);
-console.log(`limitedMaxPrice : `,limitedMaxPrice);
 
 //============================================================================================================================
-const bookList = productData.map((d, i) => (
-  <SellerProductCard
-    key={i}
-    product_code={d.product_code}
-    domestic={d.domestic}
-    protype={d.protype}
-    writer={d.writer_code}
-    title={d.title}
-    translator={d.translator}
-    publisher={d.publisher}
-    publish_date={d.publish_date}
-    category={d.category}
-    genre={d.genre}
-    summary={d.summary}
-    image={d.image}
-    intro_image={d.intro_image}
-    content={d.content}
-    price={d.price}
-    sell_count={d.sell_count}
-    urlNavigate={urlNavigate}
-  />
-)); 
 
-//============================================================================================================================
+const booklist = productData.map((d, i) => (
+  <ProductListItem
+  key={i}
+  product_code={d.product_code}
+  domestic={d.domestic}
+  protype={d.protype}
+  writer={d.writer_code}
+  title={d.title}
+  translator={d.translator}
+  publisher={d.publisher}
+  publish_date={d.publish_date}
+  category={d.category}
+  genre={d.genre}
+  summary={d.summary}
+  image={d.image}
+  intro_image={d.intro_image}
+  content={d.content}
+  price={d.price}
+  sellcount={d.sellcount}
+  urlNavigate={urlNavigate}
+/>
+))
+
 //============================================================================================================================
 
   return (
     <div className='seller_page_container'>
       <div className='product_seller_categorybar_container' style={{ transform: `translateY(${scrollY}px)` }}>
-        <ProductSellerCategoryBar requestFromBarToServer={requestToServer} />
+        <KeywordSideBar requestFromBarToServer={requestToServer} />
       </div>
 
       <div className='basket_preview_box_container' style={{ transform: `translateY(${scrollY}px)` }}>
-        <BasketPreviewBox />
+        <RecentSideBar />
       </div>
+
 
       <div className='seller_product_List_container'>
         <div className='seller_product_page_titlebox'>
           <div className='ProductListPage_Checkbox_container'>
              <h3>키워드 선택</h3>
+
+              <select>
+                <option value="2">2개씩 보기</option>
+                <option value="3">3개씩 보기</option>
+                <option value="5">5개씩 보기</option>
+                <option value="7">7개씩 보기</option>
+                <option value="10">10개씩 보기</option>
+                <option value="20">20개씩 보기</option>
+              </select>
+
+              <hr />
+
              <div>국가 : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
              <input type="checkbox" id='domestic1' name='domestic' value='1'
@@ -318,29 +377,49 @@ const bookList = productData.map((d, i) => (
           <hr />
 
           <div className='ProductListPage_SortOption'>
-            <button onClick={handleSelectedKeywordDefault}>기본순</button>&nbsp;&nbsp;
-            <button onClick={handleSelectedKeywordAscending}>최저가순</button>&nbsp;&nbsp;
-            <button onClick={handleSelectedKeywordDescending}>최고가순</button>&nbsp;&nbsp;
-            <button onClick={handleSelectedKeywordSellCount}>판매량순</button>&nbsp;&nbsp;
+            <button onClick={keywordSortTitle}>제목순</button>&nbsp;&nbsp;
+            <button onClick={keywordSortPriceAsc}>최저가순</button>&nbsp;&nbsp;
+            <button onClick={keywordSortPriceDesc}>최고가순</button>&nbsp;&nbsp;
+            <button onClick={keywordLimitedPrice}>판매량순</button>&nbsp;&nbsp;
             {/* <button onClick={handleSelectedKeywordDefault}>신상품순</button>&nbsp;&nbsp; */}
             <input text='number' size={7} value={limitedMinPrice} onChange={(e)=>setLimitedMinPrice(e.target.value)}/>
             <span>~</span>
             <input text='number' size={7} value={limitedMaxPrice} onChange={(e)=>setLimitedMaxPrice(e.target.value)}/>&nbsp;&nbsp;&nbsp;&nbsp;
-            <button onClick={handleSelectedKeywordLimitedPrice}>가격검색</button>
+            <button onClick={keywordLimitedPrice}>가격검색</button>
           </div>
 
+          <hr />
+
           <div>
-            <input type="text" />
+            <input type="text" value={textWordValue} onChange={(e)=>setTextWordValue(e.target.value)}/>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button onClick={searchTextWord}>검색하기</button>
           </div>
              
-          <h2 className='seller_product_page_title'>하드코딩된 타이틀</h2>
+          <h2 className='seller_product_page_title'>도서</h2>
         </div>
 
         <hr className='seller_product_page_titlebox_hr'/>
 
         <div className='seller_product_bookList'>
-          {bookList}
+          {booklist}
         </div>
+
+        <div className='productListPage_pageNationButton'>
+        <ProductPagination
+          // totalPages={Math.ceil(productData.length / nowSize)}
+          totalPages={Math.ceil(productData.length / nowSize)}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          onSizeChange={handleSizeChange}
+          pageSizeOptions={[2, 3, 5, 7, 10, 20]}
+          visiblePageCount={visiblePageCount}
+        />
+        </div>
+
+        <hr />
+        <hr />
+        
         
 
       </div>

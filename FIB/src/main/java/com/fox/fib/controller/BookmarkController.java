@@ -34,13 +34,13 @@ public class BookmarkController {
 
 	// ===============================================================================================================
 
-	//	@GetMapping("/bookmarklist")
-	//	public List<Bookmark> bookmarklist(HttpSession session, Model model, Bookmark entity) {
-	//		String loginID = (String) session.getAttribute("loginID");
-	//		log.info(loginID);
-	//		List<Bookmark> bookmarkList = bookmarkservice.selectList(loginID);
-	//		return bookmarkList;
-	//	}
+	// @GetMapping("/bookmarklist")
+	// public List<Bookmark> bookmarklist(HttpSession session, Model model, Bookmark entity) {
+	// String loginID = (String) session.getAttribute("loginID");
+	// log.info(loginID);
+	// List<Bookmark> bookmarkList = bookmarkservice.selectList(loginID);
+	// return bookmarkList;
+	// }
 
 	// ===============================================================================================================
 
@@ -54,9 +54,7 @@ public class BookmarkController {
 		return bookmarkList;
 	}
 
-
 	// ===============================================================================================================
-
 
 	@PostMapping(value = "/bookmarkOnSaveAction")
 	public int bookmarkOnSaveAction(@RequestBody PIPDTO savedDataOnBookmark, HttpSession session, Product pentity, Bookmark bentity)
