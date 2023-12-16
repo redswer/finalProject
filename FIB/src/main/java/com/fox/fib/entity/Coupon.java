@@ -32,6 +32,9 @@ public class Coupon extends BaseEntity{
 	private int coupon_code;
 	
 	@Column(nullable=false)
+	private String category;
+	
+	@Column(nullable=false)
 	private String title;
 	
 	private int discount_rate;
@@ -40,10 +43,8 @@ public class Coupon extends BaseEntity{
 	
 	private String image;
 	
-	@Column(nullable=false)
 	private String start;
 	
-	@Column(nullable=false)
 	private String end;
 	
 	@Transient

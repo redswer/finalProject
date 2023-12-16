@@ -2,8 +2,11 @@ package com.fox.fib.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fox.fib.entity.Faq;
 import com.fox.fib.entity.Notice;
 import com.fox.fib.repository.NoticeRepository;
 
@@ -25,4 +28,5 @@ public interface NoticeService {
 	// ** delete
 	int delete(int notice_code);
 
+	Page<Notice> getNoticeList(Pageable pageable);
 }

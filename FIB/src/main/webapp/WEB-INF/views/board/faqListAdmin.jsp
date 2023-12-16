@@ -16,7 +16,7 @@
 		<span class="faq_register" onclick="faqRegister()">등록하기</span>
 		<div class="faq_search">
 			<select class="faq_category" name="category" id="category" onchange="faqSortSelectOptions(this.value)">
-				<option value="전체">전체</option>
+				<option value="all">전체</option>
 				<option value="일반">일반</option>
 				<option value="로그인/회원가입">로그인/회원가입</option>
 				<option value="제품">제품</option>
@@ -57,5 +57,15 @@
 	 		</tr>
 	 	</c:if>
 	</table>
+   	<div class="pagination_wrap">
+	    <c:if test="${not empty requestScope.itemPage}">
+	        <c:forEach var="pageNumber" begin="0" end="${requestScope.totalPages - 1}">
+	     	<span onclick="faqManagementPage(${pageNumber})"
+	                class="${pageNumber == requestScope.itemPage.number ? 'currentPage' : ''}">
+	              ${pageNumber + 1}
+	     	</span>
+	        </c:forEach>
+	    </c:if>
+	</div>
 </body>
 </html>

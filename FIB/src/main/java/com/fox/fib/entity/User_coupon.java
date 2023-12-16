@@ -1,13 +1,13 @@
 package com.fox.fib.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import java.io.Serializable;
 
-import org.springframework.web.multipart.MultipartFile;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
+
+import com.fox.fib.domain.User_couponId;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,14 +20,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User_coupon {
-	
+@IdClass(User_couponId.class)
+public class User_coupon implements Serializable {
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int user_coupon_code;
-	
 	private String id;
 	
+	@Id
 	private int coupon_code;
-		
+	
+	private boolean use_check;
 }

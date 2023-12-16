@@ -72,5 +72,15 @@
 	 		</tr>
 	 	</c:if>
 	</table>
+	<div class="pagination_wrap">
+	    <c:if test="${not empty requestScope.itemPage}">
+	        <c:forEach var="pageNumber" begin="0" end="${requestScope.totalPages - 1}">
+	     	<span onclick="inquiryManagementPage(${pageNumber})"
+	                class="${pageNumber == requestScope.itemPage.number ? 'currentPage' : ''}">
+	              ${pageNumber + 1}
+	     	</span>
+	        </c:forEach>
+	    </c:if>
+	</div>
 </body>
 </html>

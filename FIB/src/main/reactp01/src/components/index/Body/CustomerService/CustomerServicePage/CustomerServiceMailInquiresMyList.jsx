@@ -2,11 +2,16 @@ import axios from 'axios';
 import './CustomerServiceMailInquires.css';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import Pagination from '../../Index/IndexBody/Pagination';
 
 function CustomerServiceMailInquiresMyList() {
     const [myInquiryList, setMyInquiryList] = useState([]);
     const navigate = useNavigate();
 
+    // 페이지네이션
+    const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
+    const offset = (page - 1) * limit; // 데이터 시작 번호
 
     useEffect(() => {
         const loginInfo = JSON.parse(sessionStorage.getItem('user'));
@@ -107,6 +112,12 @@ function CustomerServiceMailInquiresMyList() {
                     </tbody>
                 </table>
             </div>
+            <Pagination
+                total={myInquiryList.length}
+                limit={limit}
+                page={page}
+                setPage={setPage}
+            />
         </div>
     );
 }

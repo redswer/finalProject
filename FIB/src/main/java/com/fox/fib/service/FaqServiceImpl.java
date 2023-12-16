@@ -3,6 +3,8 @@ package com.fox.fib.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fox.fib.entity.Faq;
@@ -45,9 +47,21 @@ public class FaqServiceImpl implements FaqService {
     }
 	
 	// 분류별 faq 보기
+//	@Override
+//	public Page<Faq> getFaqList(String category){
+//		return repository.getFaqList(category);
+//	}
+	
+	// faq 보기(페이지네이션 적용)
 	@Override
-	public List<Faq> getFaqList(String category){
-		return repository.findAll();
+	public Page<Faq> getPageFaqList2(Pageable pageable) {
+	    return repository.getPageFaqList2(pageable);
+	}
+	
+	// 분류별 faq 보기(페이지네이션 적용)
+	@Override
+	public Page<Faq> getPageFaqList(String category, Pageable pageable) {
+	    return repository.getPageFaqList(category, pageable);
 	}
 		
 

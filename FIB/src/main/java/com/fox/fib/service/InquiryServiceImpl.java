@@ -3,6 +3,8 @@ package com.fox.fib.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fox.fib.entity.Inquiry;
@@ -44,10 +46,16 @@ public class InquiryServiceImpl implements InquiryService {
     	return inquiry_code; // 삭제 후 key return
     }
 	
-	// 내 문의내역 관련
+	// 내 문의내역 보기
 	@Override
     public List<Inquiry> getInquiryList(String id) {
     	return repository.findAll();
     }
+	
+	//  내 문의내역 보기(페이지네이션 적용) 관리자
+	@Override
+	public Page<Inquiry> getInquiryList(Pageable pageable) {
+	    return repository.getInquiryList(pageable);
+	}
 
 }

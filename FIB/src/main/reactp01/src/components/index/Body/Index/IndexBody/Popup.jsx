@@ -9,11 +9,6 @@ function Popup() {
         return book.type == 'item';
     })
 
-    // const closeClick = () =>{
-
-    // }
-
-
     const PopupItem = ({ image, title, id }) => {
         return (
             <div className='popup_container'>

@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="/resources/lib/style.css">
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/resources/lib/coupon.js"></script>
 <title>쿠폰 리스트</title>
@@ -26,10 +27,11 @@
 	<table class="couponTable" id="couponTable" border="1">
 		<tr>		
 			<th style="width: 2%;">쿠폰 CODE</th>
-			<th style="width: 20%;">쿠폰 이름</th>
-			<th style="width: 7%;">할인율</th>
+			<th style="width: 10%;">분류</th>
+			<th style="width: 15%;">쿠폰 이름</th>
+			<th style="width: 5%;">할인율</th>
 			<th style="width: 11%;">최대 할인금액</th>
-			<th style="width: 10%;">쿠폰 이미지</th>
+			<th style="width: 7%;">쿠폰 이미지</th>
 			<th style="width: 10%;">시작일</th>
 			<th style="width: 10%;">종료일</th>
 			<th style="width: 10%;">쿠폰 등록일</th>
@@ -40,6 +42,7 @@
 			<c:forEach var="s" items="${requestScope.couponList}">
 				<tr style="text-align:center">
 					<td>${s.coupon_code}</td>
+					<td>${s.category}</td>
 					<td>${s.title}</td>
 					<td>${s.discount_rate}%</td>
 					<td>${s.max}원</td>
@@ -49,7 +52,7 @@
 					<td>${s.start}</td>
 					<td>${s.end}</td>
 					<td>${s.regdate}</td>
-					<td>${s.moddate}</td>				
+					<td>${s.moddate}</td>	
 					<td class="textlink" onclick="couponEditForm('${s.coupon_code}')">수정</td>					
 					<td class="couponDeleteClick" class="textlink" onclick="couponDelete('${s.coupon_code}')">삭제</td>					
 				</tr>
@@ -57,9 +60,19 @@
 		</c:if>
 	 	<c:if test="${empty requestScope.couponList}">
 	 		<tr>
-	 			<td colspan="7">출력할 데이터 없음</td>
+	 			<td colspan="10">출력할 데이터 없음</td>
 	 		</tr>
 	 	</c:if>
 	</table>
+	<div class="pagination_wrap">
+	    <c:if test="${not empty requestScope.itemPage}">
+	        <c:forEach var="pageNumber" begin="0" end="${requestScope.totalPages - 1}">
+	     	<span onclick="couponManagementPage(${pageNumber})"
+	                class="${pageNumber == requestScope.itemPage.number ? 'currentPage' : ''}">
+	              ${pageNumber + 1}
+	     	</span>
+	        </c:forEach>
+	    </c:if>
+	</div>
 </body>
 </html>

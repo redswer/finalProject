@@ -6,6 +6,9 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,9 +18,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fox.fib.entity.Coupon;
+import com.fox.fib.entity.Notice;
 import com.fox.fib.service.CouponService;
 import com.fox.fib.service.ProductService;
 
@@ -35,7 +40,7 @@ public class CouponController {
 
 	// ** couponList
 	@GetMapping("/couponList")
-	public void couponList(Model model) {
+	public void couponList(HttpServletRequest request, Model model, Coupon entity) {
 		model.addAttribute("couponList", service.selectList());
 	}
 	
@@ -77,8 +82,18 @@ public class CouponController {
 	
 	// 쿠폰리스트 관리 페이지 get
 	@GetMapping("/couponListAdmin")
-	public void couponListAdmin(HttpServletRequest request, Model model, Coupon entity) {
-		model.addAttribute("couponList", service.selectList());
+	public void couponListAdmin(@RequestParam(name = "category", defaultValue = "") String category,
+			          			@RequestParam(name = "page", defaultValue = "0") int page,
+			          			@RequestParam(name = "size", defaultValue = "10") int size,
+			          			Model model) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Coupon> couponPageList = service.getCouponList(pageable);
+		
+		model.addAttribute("couponList", couponPageList.getContent());
+		model.addAttribute("itemPage", couponPageList);
+		model.addAttribute("currentPage", couponPageList.getNumber());
+		model.addAttribute("totalPages", couponPageList.getTotalPages());
+		model.addAttribute("totalItems", couponPageList.getTotalElements());
 	}
 		
 	// 쿠폰 수정하기 get

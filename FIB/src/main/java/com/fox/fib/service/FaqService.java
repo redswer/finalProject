@@ -2,8 +2,10 @@ package com.fox.fib.service;
 
 import java.util.List;
 
-import com.fox.fib.entity.Faq;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import com.fox.fib.entity.Faq;
 
 
 public interface FaqService {
@@ -20,6 +22,12 @@ public interface FaqService {
 	// ** delete
 	int delete(int faq_code);
 
-	List<Faq> getFaqList(String category);
+//	List<Faq> getFaqList(String category);
+	
+//	Page<Faq> getFaqList(Pageable pageable);
+	
+	Page<Faq> getPageFaqList(String category, Pageable pageable);
+
+	Page<Faq> getPageFaqList2(Pageable pageable);
 
 }

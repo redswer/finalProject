@@ -1,9 +1,10 @@
 package com.fox.fib.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fox.fib.entity.Coupon;
@@ -49,7 +50,11 @@ public class CouponServiceImpl implements CouponService {
     	return coupon_code; // 삭제 후 key return
     }
 	
-	
+	// Coupon 보기(페이지네이션 적용)
+	@Override
+	public Page<Coupon> getCouponList(Pageable pageable) {
+	    return repository.getCouponList(pageable);
+	}
 
 
 }

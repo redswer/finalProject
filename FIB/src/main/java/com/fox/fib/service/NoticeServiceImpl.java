@@ -3,6 +3,8 @@ package com.fox.fib.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fox.fib.entity.Notice;
@@ -49,6 +51,11 @@ public class NoticeServiceImpl implements NoticeService {
     	return notice_code; // 삭제 후 key return
     }
 
+	// 공지사항 리스트(페이지네이션 적용)
+	@Override
+	public Page<Notice> getNoticeList(Pageable pageable) {
+	    return repository.getNoticeList(pageable);
+	}
 	
 
 }

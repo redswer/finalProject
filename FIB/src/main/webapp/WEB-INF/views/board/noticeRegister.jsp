@@ -27,7 +27,6 @@
 					</select>
 					<br>
 					<span id="tMessage" class="eMessage"></span>
-
 				</td>
 			</tr>
 			<tr height="40">
