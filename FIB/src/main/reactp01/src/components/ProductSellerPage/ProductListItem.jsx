@@ -171,7 +171,8 @@ const dataToPayment = [{
           </div>
 
           <hr />
-            <span>평균 별점 : {props.gradeavg}</span>&nbsp;&nbsp;&nbsp;
+            <span>별점 : </span>
+            <span>{props.gradeavg}</span>&nbsp;&nbsp;&nbsp;
             <span>리뷰수 : {props.viewcount}</span>
           <hr />
 
