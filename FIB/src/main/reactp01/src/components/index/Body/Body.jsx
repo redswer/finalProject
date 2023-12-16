@@ -36,6 +36,7 @@ import FindUserInfo from '../../log_in/FindUserInfo';
 import JoinMembership from '../../join_membership/JoinMembership';
 import UserInfo from '../../MyPage/UserInfo';
 import MyPage from '../../MyPage/MyPage';
+import UserCoupon from '../../MyPage/UserCoupon';
 
 
 // 성룡
@@ -95,6 +96,7 @@ function Body() {
                     <Route path='/JoinMembership' element={<JoinMembership />}></Route>
                     <Route path='/MyPage' element={<MyPage />}></Route>
                     <Route path='/UserInfo' element={<UserInfo />}></Route>
+                    <Route path='/UserCoupon' element={<UserCoupon />}></Route>
 
 
                     {/* 성룡 */}

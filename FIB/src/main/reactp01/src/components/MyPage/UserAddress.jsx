@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import InsertAddressPopup from "./InsertAddressPopup";
-import UpdateAddressPopup from "./UpdateAddressPopup";
 import './UserAddress.css';
 import axios from "axios";
 import { MdOutlineRefresh } from "react-icons/md";
@@ -40,7 +39,17 @@ function UserAddress() {
 
     useEffect(() => {
         loadAddressList();
-    }, [id])
+    }, [id]);
+
+    const toggleAllCheckboxes = () => {
+        setCheckedList((prevList) => {
+            if (prevList.length === addressList.length) {
+                return [];
+            } else {
+                return addressList.map((addressData) => addressData.address_code);
+            }
+        });
+    }
 
     const toggleCheckbox = (addressCode) => {
         setCheckedList((prevList) => {
@@ -106,12 +115,13 @@ function UserAddress() {
                 <table className="user_address_table">
                     <thead>
                         <tr className="user_address_column user_address_index_column">
-                            <th><input type="checkbox" /></th>
+                            <th><input type="checkbox"
+                                checked={addressList.length > 0 && checkedList.length === addressList.length}
+                                onChange={toggleAllCheckboxes} /></th>
                             <th>주소 명</th>
                             <th>주소</th>
                             <th>연락처</th>
                             <th>수령인</th>
-                            <th>관리</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -132,9 +142,6 @@ function UserAddress() {
                                 </td>
                                 <td>{addressData.phone_number}</td>
                                 <td>{addressData.name}</td>
-                                <td>
-                                    <button>수정</button>
-                                </td>
                             </tr>
                         ))}
                     </tbody>

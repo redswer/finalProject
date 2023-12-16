@@ -35,14 +35,15 @@ public class Delivery_addressController {
 			return new ResponseEntity<> (HttpStatus.BAD_GATEWAY);
 		} else {
 			if (request.getBasic_address()) {
+				
+				User user = uservice.selectOne(request.getUser_id());
+				user.setAddress_zip(request.getAddress_zip());
+				user.setAddress(request.getAddress());
+				user.setAddress_detail(request.getAddress_detail());
+				uservice.register(user);
+				
 				if (service.basicSearch() != null) {
 					service.basicUpdate();
-					
-					User user = uservice.selectOne(request.getUser_id());
-					user.setAddress_zip(request.getAddress_zip());
-					user.setAddress(request.getAddress());
-					user.setAddress_detail(request.getAddress_detail());
-					uservice.register(user);
 				}
 			}
 			service.register(request);

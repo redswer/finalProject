@@ -2,7 +2,10 @@ package com.fox.fib.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fox.fib.domain.PasswordUpdateDTO;
+import com.fox.fib.entity.Coupon;
 import com.fox.fib.entity.Delivery_address;
 import com.fox.fib.entity.User;
+import com.fox.fib.service.CouponService;
 import com.fox.fib.service.Delivery_addressService;
 import com.fox.fib.service.UserService;
 import com.fox.fib.util.RandomPasswordCreator;
@@ -32,6 +37,7 @@ import lombok.AllArgsConstructor;
 public class UserController {
 	UserService service;
 	Delivery_addressService dservice;
+	CouponService cservice;
 	PasswordEncoder passwordEncoder;
 //	------------------------------
 //	// ** 로그인
@@ -59,9 +65,7 @@ public class UserController {
 		
 		request.setPassword(passwordEncoder.encode(request.getPassword()));
 		
-		if ((request.getAddress_zip() != null || request.getAddress_zip() != "")
-				&& (request.getAddress() != null || request.getAddress() != "")
-				&& (request.getAddress_detail() != null || request.getAddress_detail() != "")) {
+		if (!request.getAddress_zip().equals("") && !request.getAddress().equals("") && !request.getAddress_detail().equals("")) {
 			Delivery_address delivery = new Delivery_address();
 			delivery.setUser_id(request.getId());
 			delivery.setName(request.getName());
@@ -117,6 +121,32 @@ public class UserController {
 		} else {
 			return new ResponseEntity<> (HttpStatus.BAD_GATEWAY);
 		}
+	}
+	
+//	-----------------------
+	// ** 쿠폰 리스트 출력
+//	@PostMapping("/userCouponList")
+//	public ResponseEntity<List<Coupon>> userCouopnList(@RequestBody String id) {
+//		System.out.println(id);
+//		for (Coupon result: service.userCouponList(id)) {
+//			System.out.println(result);
+//		}
+//		return new ResponseEntity<List<Coupon>> (service.userCouponList(id), HttpStatus.OK);
+//	}
+	
+	@PostMapping("/userCouponList")
+	public ResponseEntity<List<Coupon>> userCouponList(@RequestBody String id) {
+	    System.out.println("Received user ID: " + id);
+
+	    List<Coupon> coupons = service.userCouponList(id);
+
+	    System.out.println("Number of coupons retrieved: " + coupons.size());
+
+	    for (Coupon result : coupons) {
+	        System.out.println(result);
+	    }
+
+	    return new ResponseEntity<>(coupons, HttpStatus.OK);
 	}
 	
 //	-----------------------
