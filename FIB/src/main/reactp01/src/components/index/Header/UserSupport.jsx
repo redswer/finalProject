@@ -1,11 +1,17 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function UserSupport() {
 
+    const navigate = useNavigate();
+    // const [loginId, setLoginId] = useState(JSON.parse(sessionStorage.getItem('user')).id === null ? "" : JSON.parse(sessionStorage.getItem('user')).id);
+
     // 로그인 상태가 sessionStorage에 담겨있음
     const loginInfo = JSON.parse(sessionStorage.getItem('user'));
-    const isLoggedIn = !!loginInfo; // 로그인 여부 확인
-    const navigate = useNavigate();
+    const id = loginInfo ? loginInfo.id : null;
+
+    // const isLoggedIn = !!loginInfo; // 로그인 여부 확인
+    const isLoggedIn = loginInfo; // 로그인 여부 확인
 
     // 로그인 후 이용가능한 서비스를 비 로그인 상태로 클릭한 경우 
     const showWarning = () => {
@@ -38,18 +44,20 @@ function UserSupport() {
                             (<Link to='/LogIn' className='Link'>로그인</Link>)}
                     </li>
                     <li>
-                        {isLoggedIn ?
+                        {id === 'admin@admin.com' ? "" : isLoggedIn ?
                             (<Link to='/MyPage' className='Link'>마이페이지</Link>)
                             :
                             (<Link to='/LogIn' className='Link' onClick={showWarning}>마이페이지</Link>)}
                     </li>
                     <li>
-                        <Link to='/CustomerServiceCategory/CustomerServiceNotice' className='Link'>고객센터</Link>
+                        {id !== 'admin@admin.com' &&
+                            <Link to='/CustomerServiceCategory/CustomerServiceNotice' className='Link'>고객센터</Link>
+                        }
                     </li>
                 </ul>
             </nav>
             <div className="admin">
-                {isLoggedIn === 'admin' &&
+                {id === 'admin@admin.com' &&
                     <Link to='http://localhost:8080/home' className='Link'>관리자 모드 전환</Link>
                 }
             </div>

@@ -145,40 +145,57 @@ public class RestProductController {
 
 	// ======================================================================================================
 
-	@GetMapping("/recentView")
-	public ResponseEntity<?> recentView(@RequestParam(name = "id") String id, @RequestParam(name = "pcode") String pcode, Product pentity,
-		RecentView rentity) {
-
+	@GetMapping("/recentProduct")
+	public ResponseEntity<?> recentProduct(@RequestParam(name = "id") String id, @RequestParam(name = "pcode") String pcode,
+		Product pentity, RecentView rentity) {
 		try {
-			log.info("[126]최근방문 pcode 확인 : " + pcode);
+			log.info("[153]최근방문 pcode 확인 : " + pcode);
 
 			int product_code = Integer.parseInt(pcode);
 
 			pentity = productservice.selectOne(product_code);
-			rentity.setId(id);
-			rentity.setProduct_code(product_code);
-			rentity.setProtype(pentity.getProtype());
-			rentity.setTitle(pentity.getTitle());
-			rentity.setImage(pentity.getImage());
-			rentity.setPrice(pentity.getPrice());
 
-			recentviewservice.save(rentity);
+			if (recentviewservice.checkDuplicated(id, product_code) == 0) {
 
-			return ResponseEntity.ok("잘 들어갓슈");
+				List<RecentView> recentviewList = recentviewservice.selectListForUserId(id);
+
+				if (recentviewList.size() >= 5) {
+					recentviewservice.deleteOldest(id);
+				}
+
+				rentity.setId(id);
+				rentity.setProduct_code(product_code);
+				rentity.setProtype(pentity.getProtype());
+				rentity.setTitle(pentity.getTitle());
+				rentity.setImage(pentity.getImage());
+				rentity.setPrice(pentity.getPrice());
+
+				recentviewservice.save(rentity);
+
+				log.info("새 최근본 상품 세이브!");
+
+
+			} else if (recentviewservice.checkDuplicated(id, product_code) == 1) {
+
+				log.info("중복 제품이라 안 들어감");
+				return ResponseEntity.ok("중복 제품이라 안 들어감");
+			}
 		} catch (Exception e) {
-			log.info("최근방문상품 실패요 : " + e.toString());
+			log.info("최근방문상품 저장 실패요 : " + e.toString());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("최근방문 상품데이터 저장 실패");
 		}
+
+		return ResponseEntity.ok("최근본 상품 잘 들어감");
 
 	}
 
 	// ======================================================================================================
 
-	@GetMapping("/showRecentViewList")
-	public List<RecentView> showRecentViewList(@RequestParam(name = "id") String id, RecentView rentity) {
+	@GetMapping("/selectRecentProductList")
+	public List<RecentView> selectRecentProductList(@RequestParam(name = "id") String id, RecentView rentity) {
 
 		try {
-			List<RecentView> recentviewList = recentviewservice.selectListById(id);
+			List<RecentView> recentviewList = recentviewservice.selectListForUserId(id);
 
 			return recentviewList;
 

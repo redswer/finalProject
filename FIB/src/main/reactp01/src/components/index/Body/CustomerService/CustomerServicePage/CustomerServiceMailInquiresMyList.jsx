@@ -2,9 +2,16 @@ import axios from 'axios';
 import './CustomerServiceMailInquires.css';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import Pagination from '../../Index/IndexBody/Pagination';
 
 function CustomerServiceMailInquiresMyList() {
     const [myInquiryList, setMyInquiryList] = useState([]);
+    const navigate = useNavigate();
+
+    // 페이지네이션
+    const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
+    const offset = (page - 1) * limit; // 데이터 시작 번호
 
     useEffect(() => {
         const loginInfo = JSON.parse(sessionStorage.getItem('user'));
@@ -52,6 +59,19 @@ function CustomerServiceMailInquiresMyList() {
         );
     }
 
+    const InquiryClick = () => {
+        const loginInfo = JSON.parse(sessionStorage.getItem('user'));
+        if (!loginInfo) {
+            // Redirect to login page if not logged in
+            alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+            navigate('/LogIn'); // Replace with your login page path
+        } else {
+            // Handle the logic for clicking on "1:1 문의하기"
+            // For example, navigate to the 1:1 문의 등록 페이지
+            navigate('/CustomerServiceCategory/CustomerServiceMailInquires/CustomerServiceMailInquiresRegister');
+        }
+    };
+
     return (
         <div className='customer_service_mail_inquires'>
             <h2 className="inquires">내 문의 내역</h2>
@@ -61,7 +81,8 @@ function CustomerServiceMailInquiresMyList() {
                         <Link to="/CustomerServiceCategory/CustomerServiceMailInquires/CustomerServiceMailInquiresMyList">내 문의 내역</Link>
                     </span>
                     <span>
-                        <Link to='/CustomerServiceCategory/CustomerServiceMailInquires/CustomerServiceMailInquiresRegister'>1:1 문의하기</Link>
+                        {/* <Link to='/CustomerServiceCategory/CustomerServiceMailInquires/CustomerServiceMailInquiresRegister'>1:1 문의하기</Link> */}
+                        <a onClick={InquiryClick}>1:1 문의하기</a>
                     </span>
                 </div>
                 <table className='my_inquiry_container'>
@@ -91,6 +112,12 @@ function CustomerServiceMailInquiresMyList() {
                     </tbody>
                 </table>
             </div>
+            <Pagination
+                total={myInquiryList.length}
+                limit={limit}
+                page={page}
+                setPage={setPage}
+            />
         </div>
     );
 }

@@ -16,19 +16,19 @@ function CustomerServiceFaq() {
                     <Link to="/CustomerServiceCategory/CustomerServiceFaq/CustomerServiceFaqCategory/nomal" state={{ category: '일반' }} >일반</Link>
                 </span>
                 <span>
-                    <Link to="/CustomerServiceCategory/CustomerServiceFaq/CustomerServiceFaqCategory/FaqLogin" state={{ category: '로그인/회원가입' }} >로그인/회원가입</Link>
+                    <Link to="/CustomerServiceCategory/CustomerServiceFaq/CustomerServiceFaqCategory/FaqLogin" state={{ category: '로그인' }} >로그인/회원가입</Link>
                 </span>
                 <span>
                     <Link to="/CustomerServiceCategory/CustomerServiceFaq/CustomerServiceFaqCategory/FaqProduct" state={{ category: '제품' }}>제품</Link>
                 </span>
                 <span>
-                    <Link to="/CustomerServiceCategory/CustomerServiceFaq/CustomerServiceFaqCategory/FaqOrder" state={{ category: '주문/결제' }}>주문/결제</Link>
+                    <Link to="/CustomerServiceCategory/CustomerServiceFaq/CustomerServiceFaqCategory/FaqOrder" state={{ category: '주문' }}>주문/결제</Link>
                 </span>
                 <span>
                     <Link to="/CustomerServiceCategory/CustomerServiceFaq/CustomerServiceFaqCategory/FaqDelivery" state={{ category: '배송' }}>배송</Link>
                 </span>
                 <span>
-                    <Link to="/CustomerServiceCategory/CustomerServiceFaq/CustomerServiceFaqCategory/FaqCancell" state={{ category: '반품/환불/취소' }}>반품/환불/취소</Link>
+                    <Link to="/CustomerServiceCategory/CustomerServiceFaq/CustomerServiceFaqCategory/FaqCancell" state={{ category: '반품' }}>반품/환불/취소</Link>
                 </span>
                 <span>
                     <Link to="/CustomerServiceCategory/CustomerServiceFaq/CustomerServiceFaqCategory/FaqEvent" state={{ category: '이벤트' }}>이벤트</Link>

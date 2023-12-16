@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 body {
     width: 1500px;
     margin: 0 auto; 
@@ -72,22 +74,118 @@ body {
 .faq_register_search,
 .inquiry_register_search,
 .coupon_register_search {
+	width: 95%;
 	display : flex;
 	justify-content: space-between;
+	padding: 10px 0px;
 }
 
-/* 테이블 크기 관련 ========================================================================== */
+.underline {
+	width: 95%;
+	height: 2px;
+	background-color: #007bff;
+	margin-bottom: 20px
+}
+
+.notice_category,
+.faq_category,
+.inquiry_category {
+	width: 150px;
+	height: 30px;
+	border-color: lightgrey;
+}
+
+.notice_search_input,
+.faq_search_input,
+.coupon_search_input{
+	width: 250px;
+	height: 30px;
+	border: 1px solid lightgrey;
+}
+
+.searchBtn {
+	width: 50px;
+	height: 30px;
+	color: white;
+	background-color: #007bff;
+	border: none;
+	cursor: pointer;
+}
+
+/* 관리자 테이블 관련 ========================================================================== */
+.noticeTable,
+.faqTable,
+.inquiryTable,
+.couponTable {
+	border-collapse: collapse;
+	width:95%;
+	text-align: center;
+	font-size: 15px;
+	background-color: white;
+}
+
 .noticeTable th,
 .faqTable th,
-.inquiryTable th {
+.inquiryTable th,
+.couponTable th {
 	font-size: 14px;
+	background-color: lightgrey;
+	border: 1px solid; 
 }
 
 .noticeTable tr,
 .faqTable tr,
-.inquiryTable tr {
+.inquiryTable tr,
+.couponTable tr {
 	height: 50px;
 	font-size: 14px;
 }
 
+.noticeTable td,
+.faqTable td,
+.inquiryTable td,
+.couponTable td {
+	border: 1px solid; 
+}
+
+/* 관리목록 등록,수정 테이블 관련 ========================================================================== */
+.noticeRegisterTable th,
+.noticeEditFormTable th,
+.faqRegisterTable th,
+.faqEditFormTable th,
+.inquiryAnswerFormTable th,
+.couponRegisterTable th,
+.couponEditFormTable th {
+	background-color: lightgrey;
+}
+
+/* 페이지네이션 ========================================================================== */
+
+.pagination_wrap {
+	width:95%;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.pagination_wrap:before {
+	content: "<<";
+}
+
+.pagination_wrap:after {
+	content: ">>";
+}
+
+.pagination_wrap span {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.pagination_wrap .currentPage {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
 /* 1:1문의 관리============================================================================= */

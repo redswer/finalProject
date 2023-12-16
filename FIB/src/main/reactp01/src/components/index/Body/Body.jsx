@@ -5,8 +5,8 @@ import { Routes, Route } from 'react-router-dom';
 
 // index body
 import IndexBody from './Index/IndexBody/IndexBody';
-import EventPage from '../../ProductSellerPage/EventPage';
-import EventPageItemContent from './Index/IndexBody/EventPageItemContent';
+import CouponPage from '../../ProductSellerPage/CouponPage';
+// import EventPageItemContent from './Index/IndexBody/EventPageItemContent';
 
 // Header--usersupport
 import SearchResultPage from './Index/IndexBody/SearchResultPage';
@@ -73,8 +73,10 @@ function Body() {
                     <Route path='/ItemPage' element={<ItemPage />}></Route>
 
                     {/* 이벤트 페이지 */}
-                    <Route path='/EventPage' element={<EventPage />}></Route>
-                    <Route path='/EventPageItemContent/:id' element={<EventPageItemContent />}></Route>
+                    {/* <Route path='/EventPage' element={<EventPage />}></Route>
+                    <Route path='/EventPageItemContent/:id' element={<EventPageItemContent />}></Route> */}
+                    {/* 쿠폰 페이지 */}
+                    <Route path='/CouponPage' element={<CouponPage />}></Route>
 
                     {/* customer_service */}
                     <Route path='/CustomerServiceCategory/*' element={<CustomerServiceCategory />}></Route>

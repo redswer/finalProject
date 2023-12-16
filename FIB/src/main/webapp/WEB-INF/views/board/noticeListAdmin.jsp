@@ -23,13 +23,13 @@
 				<option value="이벤트">이벤트</option>
 				<option value="쿠폰">쿠폰</option>
 			</select> 
-			<input type="text"></input>
-			<button>검색</button>
+			<input class="notice_search_input" type="text"></input>
+			<button class="searchBtn" type="button">검색</button>
 		</div>
 	</div>
-	<br>
+	<div class="underline"></div>
 	<table class="noticeTable" id="noticeTable" border="1">
-		<tr bgcolor="Lime">
+		<tr>
 			<th style="width: 3%;">CODE</th>
 			<th style="width: 5%;">분류</th>
 			<th style="width: 25%;">제목</th>
@@ -63,5 +63,15 @@
 			</tr>
 		</c:if>
 	</table>
+	<div class="pagination_wrap">
+	    <c:if test="${not empty requestScope.itemPage}">
+	        <c:forEach var="pageNumber" begin="0" end="${requestScope.totalPages - 1}">
+	     	<span onclick="noticeManagementPage(${pageNumber})"
+	                class="${pageNumber == requestScope.itemPage.number ? 'currentPage' : ''}">
+	              ${pageNumber + 1}
+	     	</span>
+	        </c:forEach>
+	    </c:if>
+	</div>
 </body>
 </html>

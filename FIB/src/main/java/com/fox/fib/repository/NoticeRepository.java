@@ -1,9 +1,9 @@
 package com.fox.fib.repository;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,9 +12,10 @@ import org.springframework.data.repository.query.Param;
 import com.fox.fib.entity.Notice;
 
 public interface NoticeRepository extends JpaRepository<Notice, Integer> {
-		
-	@Query("SELECT n FROM Notice n ORDER BY n.notice_code DESC")
-    List<Notice> orderByNoticeCodeDesc();
+	// 쿼리문을 만들때 db table이름이 아니라 entity이름으로
+	// jpql문으로 하게되면
+	@Query("select n from Notice n order by n.notice_code desc")
+	Page<Notice> getNoticeList(Pageable pageable);
 	
 	@Modifying
 	@Transactional

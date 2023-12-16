@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fox.fib.domain.User_couponId;
 import com.fox.fib.entity.Coupon;
 import com.fox.fib.entity.Faq;
 import com.fox.fib.entity.Inquiry;
@@ -24,6 +25,7 @@ import com.fox.fib.entity.Product;
 import com.fox.fib.entity.User;
 import com.fox.fib.entity.User_coupon;
 import com.fox.fib.repository.FaqRepository;
+import com.fox.fib.repository.User_couponRepository;
 import com.fox.fib.service.CouponService;
 import com.fox.fib.service.FaqService;
 import com.fox.fib.service.InquiryService;
@@ -47,7 +49,9 @@ public class TestController {
 	InquiryService inquiryService;
 	ProductService productService;	
 	
-	private FaqRepository faq_reposityory;
+	private FaqRepository faqRepository;
+//	private User_couponRepository user_couponRepository;
+	
 	
 	// ****** Server에서 React(Front) Project로 전달================================================================================= 	
 	// 쿠폰 리스트
@@ -62,7 +66,7 @@ public class TestController {
 		return noticeService.selectList();
 	} 
 	
-	// 공지사항 리스트
+	// FAQ 리스트
 	@GetMapping("/faqList")
 	public List<Faq> faqList() {
 		return faqService.selectList();
@@ -77,28 +81,65 @@ public class TestController {
 	
 	// ****** React(Front) Project에서 Server로 전달================================================================================= 	
 	// 유저가 쿠폰 받기
-	@PostMapping("/userCouponGet")
-	public String userCouponGet(@RequestBody User_coupon user_coupon, User_coupon entity, Model model)  throws IOException {
-		String uri = "/userCoupon/userCouponList";
-			log.info(user_coupon.getCoupon_code());
-			log.info(user_coupon.getId());
-		try {
-			int getCode = user_coupon.getCoupon_code();
-			String getId = user_coupon.getId();
-			log.info(getCode);
-			log.info(getId);
-	      	        
-			entity.setCoupon_code(getCode);
-			entity.setId(getId);
-			log.info("** 쿠폰 받기 성공 => "+userCouponService.save(entity));
+//	@PostMapping("/userCouponGet")
+//	public String userCouponGet(@RequestBody User_coupon entity, Model model)  throws IOException {
+//			String uri = "/userCoupon/userCouponList";
+//			log.info(entity.getCoupon_code());
+//			log.info(entity.getId());
+//		try {
+//			int getCode = entity.getCoupon_code();
+//			String getId = entity.getId();
+//			entity.setCoupon_code(getCode);
+//			entity.setId(getId);
+//			log.info("** 쿠폰 받기 성공 => "+userCouponService.save(entity));
+//
+//			uri = "redirect:userCouponList";
+//		} catch (Exception e) {
+//			log.info("** 쿠폰 받기 실패 exception => "+e.toString());
+//			model.addAttribute("message", "쿠폰 등록에 실패했습니다.");
+//		}
+//		return uri;
+//	}
 
-			uri = "redirect:userCouponList";
+	@PostMapping("/userCouponGet")
+	public ResponseEntity<String> userCouponGet(@RequestBody User_coupon entity, Model model)  throws IOException {
+			log.info("쿠폰 코드 : " + entity.getCoupon_code());
+			log.info("로그인 ID : " + entity.getId());
+		try {
+			int getCode = entity.getCoupon_code();
+			String getId = entity.getId();
+			User_couponId id = new User_couponId(getId, getCode);
+			
+			if(userCouponService.selectOne(id) == null && userCouponService.save(entity) > 0) {
+				log.info("쿠폰발급 성공!");
+				return ResponseEntity.ok("쿠폰을 성공적으로 발급하였습니다.");
+	        }else {
+	        	log.info("이미 발급받은 쿠폰입니다.");
+	        	return ResponseEntity.badRequest().body("이미 해당 쿠폰이 발급되었습니다.");
+	        }
 		} catch (Exception e) {
 			log.info("** 쿠폰 받기 실패 exception => "+e.toString());
-			model.addAttribute("message", "쿠폰 등록에 실패했습니다.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("쿠폰 발급 중에 오류가 발생했습니다.");
 		}
-		return uri;
 	}
+	
+	// 현주 coupon 발급 참조
+//	try {
+//        
+//        System.out.println(entity);
+//        
+//        UserCouponId id = new UserCouponId(entity.getCoupon_id(), entity.getUser_id());
+//	
+//        if(couListService.selectDetail(id) == null && couListService.save(entity) > 0) {
+//           return "발급완료";
+//        }else {
+//           return "기발급쿠폰";
+//        }
+//     } catch (Exception e) {
+//        log.info("** User CouponDownload Exception => " + e.toString());
+//        
+//        return "에러";
+//     }
 	
 	// FAQ category에 따라 출력
 	@GetMapping("/faqList/{category}")
@@ -108,7 +149,7 @@ public class TestController {
 			
 		try {
 			// 쿼리문의 return값들의 리스트에 
-			List<Faq> getFaqList = faq_reposityory.getFaqList(category);
+			List<Faq> getFaqList = faqService.selectList();
 			
 			List<Faq> filteredList = getFaqList.stream()
 		                .filter(faq -> faq.getCategory() != null)
@@ -121,47 +162,84 @@ public class TestController {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
-	
-	// 유저 1:1문의 내역 보기위한 React에서 서버로 id 전달
-//	@GetMapping("/inquiryList/{id}")
-//	public List<Inquiry> inquiryList(@PathVariable("id") String id, Inquiry inquiry, Model model)  throws IOException {
-//			// 리액트에서 넘어온 notice_code 정보 확인
-//			log.info(id);
+	// 리액트 페이지네이션관련 트라이
+//	@GetMapping("/faqList/{category}")
+//	public ResponseEntity<Page<Faq>> faqList(@PathVariable("category") String category) {
+//		// 페이지 네이션을 위한 변수선언
+//		int page = 0; // 시작 페이지번호
+//		int size = 10; // 페이지당 보여지는 컨텐츠 갯수
+//		
+//		Pageable pageable = PageRequest.of(page, size);
+//		
+//		// 리액트에서 넘어온 notice_code 정보 확인
+//		log.info("전달받은 category : " + category);
+//			
 //		try {
 //			// 쿼리문의 return값들의 리스트에 
-//			List<Inquiry> getInquiryList = inquiryService.getInquiryList(id);
+//			Page<Faq> getFaqList = faqService.getFaqList(pageable);
 //			
-//	        // 요청받은 정보에서 현재 조회수를 조회
-//			log.info("현재 아이디의 문의코드 : " + inquiry.getInquiry_code());
-//			log.info("현재 아이디의 문의 아이디 : " + inquiry.getId());
-//			log.info("현재 아이디의 문의 제목 : " + inquiry.getTitle());
-//			return ResponseEntity.ok(getInquiryList);
+//			Page<Faq> filteredPage = new PageImpl<>(getFaqList.getContent().stream()
+//		            .filter(faq -> faq.getCategory() != null)
+//		            .collect(Collectors.toList()), pageable, getFaqList.getTotalElements());
+//			
+//			return ResponseEntity.ok(filteredPage);
+////			return ResponseEntity.ok(getFaqList);
 //
 //		} catch (Exception e) {
-//			log.info("회원 문의내역 조회 실패 exception => "+e.toString());
-//			model.addAttribute("message", "회원 문의내역 조회에 실패했습니다.");
+//			log.error("회원 문의내역 조회 중 오류 발생: " + e.getMessage(), e);
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 //		}
 //	}
+
+	// 유저 1:1문의 내역 보기위한 React에서 서버로 id 전달
 	@GetMapping("/inquiryList/{id}")
-	public ResponseEntity<List<Inquiry>> inquiryList(@PathVariable("id") String id) {
+	public ResponseEntity<List<Inquiry>> inquiryList(@PathVariable("id") String id, Inquiry inquiry, Model model)  throws IOException {
 			// 리액트에서 넘어온 notice_code 정보 확인
 			log.info(id);
 		try {
 			// 쿼리문의 return값들의 리스트에 
 			List<Inquiry> getInquiryList = inquiryService.getInquiryList(id);
 			
-			List<Inquiry> filteredList = getInquiryList.stream()
-		                .filter(inquiry -> inquiry.getId() != null)
-		                .collect(Collectors.toList());
-			
 	        // 요청받은 정보에서 현재 조회수를 조회
-			return ResponseEntity.ok(filteredList);
+			log.info("현재 아이디의 문의코드 : " + inquiry.getInquiry_code());
+			log.info("현재 아이디의 문의 아이디 : " + inquiry.getId());
+			log.info("현재 아이디의 문의 제목 : " + inquiry.getTitle());
+			return ResponseEntity.ok(getInquiryList);
 
 		} catch (Exception e) {
-			log.error("회원 문의내역 조회 중 오류 발생: " + e.getMessage(), e);
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+			log.info("회원 문의내역 조회 실패 exception => " + e.toString());
+			model.addAttribute("message", "회원 문의내역 조회에 실패했습니다.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
+	// 리액트 페이지네이션관련 트라이
+//	@GetMapping("/inquiryList/{id}")
+//	public ResponseEntity<Page<Inquiry>> inquiryList(@PathVariable("id") String id) {
+//			
+//		// 페이지 네이션을 위한 변수선언
+//		int page = 0; // 시작 페이지번호
+//		int size = 10; // 페이지당 보여지는 컨텐츠 갯수
+//		
+//		Pageable pageable = PageRequest.of(page, size);
+//				
+//		// 리액트에서 넘어온 notice_code 정보 확인
+//		log.info(id);
+//		try {
+//			// 쿼리문의 return값들의 리스트에 
+//			Page<Inquiry> getInquiryList = inquiryService.getInquiryList(pageable);
+//			
+//			Page<Inquiry> filteredList = new PageImpl<>(getInquiryList.getContent().stream()
+//		            .filter(faq -> faq.getCategory() != null)
+//		            .collect(Collectors.toList()), pageable, getInquiryList.getTotalElements());
+//			
+//	        // 요청받은 정보에서 현재 조회수를 조회
+//			return ResponseEntity.ok(filteredList);
+//
+//		} catch (Exception e) {
+//			log.error("회원 문의내역 조회 중 오류 발생: " + e.getMessage(), e);
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//		}
+//	}
 	
 	// 유저가 1:1문의 등록
 	@PostMapping("/userInquiryRegister")

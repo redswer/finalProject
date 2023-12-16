@@ -22,7 +22,7 @@ function HeaderCategory() {
                             <Link to='/ItemPage'>도서용품</Link>
                         </li>
                         <li className="header_maincategory_menu_category">
-                            <Link to='/EventPage'>이벤트·쿠폰</Link>
+                            <Link to='/CouponPage'>쿠폰</Link>
                         </li>
                     </ul>
                 </div>

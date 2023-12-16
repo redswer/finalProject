@@ -13,6 +13,40 @@ function couponManagement() {
 	document.getElementById("managementArea").innerHTML="";
 }
 
+// 공지사항 페이지네이션
+function couponManagementPage(pageNumber) {
+    let url = "coupon/couponListAdmin?page=" + pageNumber;
+
+    axios.get(url
+    ).then(response => {
+        document.getElementById('managementArea').innerHTML = response.data;
+        /* 요청받은 데이터를 출력하면서 제목과 내용의 길이를 조절*/
+		let table = document.getElementById("couponTable");
+		let rows = table.getElementsByTagName("tr");
+		
+		/* 제목과 내용의 크기를 확인 후 substring을 위한 for문 */
+		for (let i = 1; i < rows.length; i++) {
+			let cells = rows[i].getElementsByTagName("td");
+			
+			if (cells.length >= 4) {
+				/* 제목과 내용 데이터의 length를 확인하기위해*/
+				let titleValue = cells[2].innerText; 
+				
+				/* 제목 데이터를 innerText를 사용하기 위해 변수 지정
+				innerText = 변경값이 원본에 영향을 주지 않기 때문에. */
+				let titleCell = cells[2];
+				
+				if(titleValue.length > 20) {
+					titleCell.innerText = titleValue.substring(0, 20) + "...";
+				}
+			}
+		}	     
+    })
+    .catch(err => {
+        alert("쿠폰 List response 실패 =>" + err.message);
+    });
+}
+
 // 쿠폰 등록 폼 받기
 function couponRegister() {
 	let url="coupon/couponRegister";
@@ -92,4 +126,33 @@ function couponDelete(coupon_code) {
 }
 
 
+/*// 카테고리 선택값을 가져와서 변경될 때마다 실행
+function updateCouponDateInput() {
+    // 현재 선택된 카테고리의 값
+    let selectedCategory = document.getElementById('categorySelect').value;
+
+    // 쿠폰 사용기간 입력 필드의 활성화 여부 업데이트
+    let couponDateInput = document.getElementById('couponDateInput');
+    if (selectedCategory === '시즌') {
+        couponDateInput.style.display = 'table-row';
+    } else {
+        couponDateInput.style.display = 'none';
+    }
+}*/
+
+// 카테고리 선택값을 가져와서 변경될 때마다 실행
+function updateCouponDateInput() {
+    // 현재 선택된 카테고리의 값
+    let selectedCategory = document.getElementById('categorySelect').value;
+
+    // 쿠폰 사용기간 입력 필드의 활성화 여부 업데이트
+    let couponDateInput = document.getElementById('couponDateInput');
+    
+    if (selectedCategory === '시즌') {
+        couponDateInput.style.display= 'table-row';
+
+    } else {
+        couponDateInput.style.display= 'none';
+    }
+}
 

@@ -6,12 +6,8 @@ const RecentSideBarItem = (props) => {
     return (
         <div className='basket_preview_item_container'>
             <div className='basket_preview_item_title'>
-            pcode : {props.product_code}
+            pcode : {props.pcode}
             </div>
-
-            {/* <div>
-            아이디 : {props.id}
-            </div> */}
 
             <div className='basket_preview_item_price'>
             제목 : {props.title}

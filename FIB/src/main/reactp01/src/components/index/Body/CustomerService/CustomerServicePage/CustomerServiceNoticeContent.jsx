@@ -1,7 +1,8 @@
 import './CustomerServiceNotice.css';
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Pagination from '../../Index/IndexBody/Pagination';
 
 function CustomerServiceNoticeContent({ search }) {
 
@@ -9,6 +10,11 @@ function CustomerServiceNoticeContent({ search }) {
     const [noticeList, setNoticeList] = useState([]);
     const [filteredNotices, setFilteredNotices] = useState([]);
     const [noResultMessage, setNoResultMessage] = useState('');
+
+    // 페이지네이션
+    const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
+    const offset = (page - 1) * limit; // 데이터 시작 번호
 
     useEffect(() => {
         axios
@@ -38,12 +44,12 @@ function CustomerServiceNoticeContent({ search }) {
             notice.title.toLowerCase().includes(lowerKeyword) ||
             notice.content.toLowerCase().includes(lowerKeyword)
         );
-        
+
         // 일치하는 내용들만 저장
         setFilteredNotices(filtered);
 
-        
-        
+
+
         console.log(`검색결과를 받았습니다 search : ${search}`);
 
         if (filtered.length === 0) {
@@ -55,7 +61,7 @@ function CustomerServiceNoticeContent({ search }) {
 
     // Server에서 받아온 배열형태의 정보를 객체 하나씩 꺼내기
     const Notice_item = ({ num, notice_code, category, title, content, view, regdate }) => {
-        
+
         const handleView = () => {
             console.log('조회수) 공지사항 코드' + notice_code);
             console.log('조회수) 공지사항 조회수' + view);
@@ -129,6 +135,13 @@ function CustomerServiceNoticeContent({ search }) {
             </table>
             {/* 공지사항 검색어와 일치하는 항목이 없을 경우 */}
             {noResultMessage && <p>{noResultMessage}</p>}
+
+            <Pagination
+                total={filteredNotices.length}
+                limit={limit}
+                page={page}
+                setPage={setPage}
+            />
         </div>
     );
 }

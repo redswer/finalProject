@@ -14,14 +14,16 @@ import com.fox.fib.entity.RecentView;
 public interface RecentViewRepository extends JpaRepository<RecentView, Integer> {
 
 	@Query("SELECT rv FROM RecentView rv WHERE rv.id = :id")
-	public List<RecentView> findAllByUserId(@Param("id") String id);
+	public List<RecentView> selectListForUserId(@Param("id") String id);
+
 
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE FROM RecentView r WHERE r.id = :id ORDER BY r.regdate ASC LIMIT 1", nativeQuery = true)
+	@Query(nativeQuery = true, value = "DELETE FROM RecentView r WHERE r.id = :id ORDER BY r.regdate ASC LIMIT 1")
 	void deleteOldest(@Param("id") String id);
 
+
 	@Query("SELECT c FROM RecentView c WHERE c.id = :id AND c.product_code = :pcode")
-	Optional<RecentView> checkByIdPcode(@Param("id") String id, @Param("pcode") int product_code);
+	Optional<RecentView> checkDuplicated(@Param("id") String id, @Param("pcode") int product_code);
 
 }

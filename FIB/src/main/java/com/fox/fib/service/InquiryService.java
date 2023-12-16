@@ -2,6 +2,10 @@ package com.fox.fib.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import com.fox.fib.entity.Faq;
 import com.fox.fib.entity.Inquiry;
 
 public interface InquiryService {
@@ -20,5 +24,8 @@ public interface InquiryService {
 	
 	// 내 문의내역 확인하는 service
 	List<Inquiry> getInquiryList(String id);
+	
+	// 내 문의내역 확인하는 service
+	Page<Inquiry> getInquiryList(Pageable pageable);
 
 }

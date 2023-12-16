@@ -6,6 +6,9 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fox.fib.entity.Faq;
@@ -41,17 +45,26 @@ public class BoardController {
 	InquiryService inquiry_service;
 	
 	// 내림차순 정렬을 위한 repository 선언
-	private NoticeRepository notice_reposityory;
-	private FaqRepository faq_reposityory;
-	private InquiryRepository inquiry_reposityory;
+	private NoticeRepository notice_repository;
+	private FaqRepository faq_repository;
+	private InquiryRepository inquiry_repository;
 	
-	// noticeList 관리자
+	// (관리자) 공지사항 리스트 + 페이지네이션, 내림차순 정렬
 	@GetMapping("/noticeListAdmin")
-	public void noticeListAdmin(HttpServletRequest request, Model model, Notice entity) {
-		// NoticeRepository에 선언된 select문의 정렬방식을 noticeList에 담는다.
-		model.addAttribute("noticeList", notice_reposityory.orderByNoticeCodeDesc());
+	public void noticeListAdmin(@RequestParam(name = "category", defaultValue = "") String category,
+					            @RequestParam(name = "page", defaultValue = "0") int page,
+					            @RequestParam(name = "size", defaultValue = "10") int size,
+					            Model model) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Notice> noticePageList = notice_service.getNoticeList(pageable);
+		
+		model.addAttribute("noticeList", noticePageList.getContent());
+	    model.addAttribute("itemPage", noticePageList);
+	    model.addAttribute("currentPage", noticePageList.getNumber());
+	    model.addAttribute("totalPages", noticePageList.getTotalPages());
+	    model.addAttribute("totalItems", noticePageList.getTotalElements());
 	}
-	
+
 	// notice 등록하기 get
 	@GetMapping(value="/noticeRegister")
 	public void noticeRegister() {
@@ -99,7 +112,8 @@ public class BoardController {
 	@PostMapping("/noticeEditForm")
 	public String noticeEditForm(HttpSession session, Notice entity, Model model) throws IOException {
 		// 수정 성공 -> noticeList를 받아와야함 (selectList()) -> 그후 출력 요청해야함
-		model.addAttribute("list", entity);
+		model.addAttribute("noticeList", notice_service.selectList());
+//		model.addAttribute("list", entity);
 		String uri="board/noticeListAdmin";
 			
 		MultipartFile uploadfilef = entity.getUploadfilef(); 
@@ -142,9 +156,118 @@ public class BoardController {
 	// FAQ
 	
 	// faqList
+//	@GetMapping("/faqListAdmin")
+//	public void faqListAdmin(Model model) {
+//		model.addAttribute("faqList", faq_service.selectList());
+//	}
+	
+//	@GetMapping("/faqListAdmin")
+//	public void faqListAdmin(@RequestParam(name = "category", defaultValue = "") String category, Model model) {
+//		// 페이지 네이션을 위한 변수선언
+//		int page = 0; // 시작 페이지번호
+//		int size = 2; // 페이지당 보여지는 컨텐츠 갯수
+//		
+//		Pageable pageable = PageRequest.of(page, size);
+//		Page<Faq> faqPageList = faq_service.getFaqList(category, pageable);		
+//		
+//		model.addAttribute("faqList", faqPageList.getContent());
+//		// 페이지 관련 정보를 모델에 추가
+//		model.addAttribute("itemPage", faqPageList);
+//		model.addAttribute("currentPage", faqPageList.getNumber());
+//		model.addAttribute("totalPages", faqPageList.getTotalPages());
+//		model.addAttribute("totalItems", faqPageList.getTotalElements());
+//		
+//		log.info("faq_service.selectList() : " + faq_service.selectList());
+//		log.info("faq_service.getFaqList(category, pageable) : " + faq_service.getFaqList(category, pageable));
+//		log.info("faqPageList.getContent() : " + faqPageList.getContent());
+//		log.info("faqPageList : " + faqPageList);
+//		log.info("faqPageList.getNumber() : " + faqPageList.getNumber());
+//		log.info("faqPageList.getTotalElements() : " + faqPageList.getTotalElements());
+//	}
+//	
+	// (관리자) FAQ 리스트 + 페이지네이션, 내림차순 정렬
+//	@GetMapping("/faqListAdmin")
+//	public void faqListAdmin(@RequestParam(name = "category", defaultValue = "") String category,
+//	                         @RequestParam(name = "page", defaultValue = "0") int page,
+//	                         @RequestParam(name = "size", defaultValue = "10") int size,
+//	                         Model model) {
+//		log.info("Received request with category: " + category);
+//		
+//	    Pageable pageable = PageRequest.of(page, size);
+//	    Page<Faq> faqPageList = faq_service.getFaqList(pageable);
+//
+//	    model.addAttribute("faqList", faqPageList.getContent());
+//	    model.addAttribute("itemPage", faqPageList);
+//	    model.addAttribute("currentPage", faqPageList.getNumber());
+//	    model.addAttribute("totalPages", faqPageList.getTotalPages());
+//	    model.addAttribute("totalItems", faqPageList.getTotalElements());
+//	    
+//		log.info("faq_service.getFaqList(category, pageable) : " + faq_service.getFaqList(pageable));
+//		log.info("faqPageList.getContent() : " + faqPageList.getContent());
+//		log.info("faqPageList : " + faqPageList);
+//		log.info("faqPageList.getNumber() : " + faqPageList.getNumber());
+//		log.info("faqPageList.getTotalElements() : " + faqPageList.getTotalElements());
+//	}
 	@GetMapping("/faqListAdmin")
-	public void faqListAdmin(Model model) {
-		model.addAttribute("faqList", faq_reposityory.orderByFaqCodeDesc());
+	public String faqListAdmin(@RequestParam(name = "category", defaultValue = "all") String category,
+							   @RequestParam(name = "page", defaultValue = "0") int page,
+	                           @RequestParam(name = "size", defaultValue = "10") int size,
+	                           Model model) {
+		log.info("Received request with category: " + category);
+	    Pageable pageable = PageRequest.of(page, size);
+	    
+	    Page<Faq> faqPageList;
+	    
+	    if(category.equals("all")) {
+	    	faqPageList = faq_service.getPageFaqList2(pageable);
+	    } else {
+	    	faqPageList = faq_service.getPageFaqList(category, pageable);
+	    }
+
+	    model.addAttribute("faqList", faqPageList.getContent());
+	    model.addAttribute("itemPage", faqPageList);
+	    model.addAttribute("currentPage", faqPageList.getNumber());
+	    model.addAttribute("totalPages", faqPageList.getTotalPages());
+	    model.addAttribute("totalItems", faqPageList.getTotalElements());
+	    
+	    log.info("faqPageList : " + faqPageList);
+		log.info("faqPageList.getContent() : " + faqPageList.getContent());
+		log.info("faqPageList.getNumber() : " + faqPageList.getNumber());
+		log.info("faqPageList.getTotalElements() : " + faqPageList.getTotalElements());
+		
+		return "board/faqListAdmin";
+	}
+	
+	@GetMapping("/pageFaqListAdmin")
+//	@GetMapping("/pageFaqListAdmin")
+	public String pageFaqListAdmin(@RequestParam(name = "category") String category,
+	                        	   @RequestParam(name = "page", defaultValue = "0") int page,
+	                        	   @RequestParam(name = "size", defaultValue = "10") int size,
+	                        	   Model model) {
+		
+		log.info("파라미터Received request with category: " + category);
+	    Pageable pageable = PageRequest.of(page, size);
+	    Page<Faq> faqPageList;
+   
+	    if(category.equals("all")) {
+	    	faqPageList = faq_service.getPageFaqList2(pageable);
+	    } else {
+	    	faqPageList = faq_service.getPageFaqList(category, pageable);
+	    }
+
+	    model.addAttribute("faqList", faqPageList.getContent());
+	    model.addAttribute("itemPage", faqPageList);
+	    model.addAttribute("currentPage", faqPageList.getNumber());
+	    model.addAttribute("totalPages", faqPageList.getTotalPages());
+	    model.addAttribute("totalItems", faqPageList.getTotalElements());
+	    
+
+	    log.info("faqPageList : " + faqPageList);
+		log.info("faqPageList.getContent() : " + faqPageList.getContent());
+		log.info("faqPageList.getNumber() : " + faqPageList.getNumber());
+		log.info("faqPageList.getTotalElements() : " + faqPageList.getTotalElements());
+		
+		return "board/faqListAdmin";
 	}
 	
 	// faq 등록하기 get
@@ -179,7 +302,8 @@ public class BoardController {
 	@PostMapping("/faqEditForm")
 	public String faqEditForm(HttpSession session, Faq entity, Model model) throws IOException {
 		// 수정 성공 -> noticeList를 받아와야함 (selectList()) -> 그후 출력 요청해야함
-		model.addAttribute("list", entity);
+		model.addAttribute("faqList", faq_service.selectList());
+//		model.addAttribute("list", entity);
 			
 		return "board/faqListAdmin";
 	}
@@ -200,11 +324,20 @@ public class BoardController {
 	// ==================================================================================================================
 	// 1:1문의 (inquiry)
 	
-	// 1:1문의 리스트
+	// (관리자) 1:1문의 리스트 + 페이지네이션, 내림차순 정렬
 	@GetMapping("/inquiryListAdmin")
-	public void inquiryListAdmin(Model model) {
-		// InquiryRepository에 선언된 select문의 정렬방식을 inquiryList에 담는다.
-		model.addAttribute("inquiryList", inquiry_reposityory.orderByInquiryCodeDesc());
+	public void inquiryListAdmin(@RequestParam(name = "category", defaultValue = "") String category,
+					             @RequestParam(name = "page", defaultValue = "0") int page,
+					             @RequestParam(name = "size", defaultValue = "10") int size,
+					             Model model) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Inquiry> inquiryPageList = inquiry_service.getInquiryList(pageable);
+		
+		model.addAttribute("inquiryList", inquiryPageList.getContent());
+	    model.addAttribute("itemPage", inquiryPageList);
+	    model.addAttribute("currentPage", inquiryPageList.getNumber());
+	    model.addAttribute("totalPages", inquiryPageList.getTotalPages());
+	    model.addAttribute("totalItems", inquiryPageList.getTotalElements());
 	}
 	
 	// 1:1문의 답변달기 get
@@ -222,7 +355,7 @@ public class BoardController {
 		entity.setAnswer_check(true);
 		inquiry_service.save(entity);
 		
-		model.addAttribute("list", entity);
+		model.addAttribute("inquiryList", inquiry_service.selectList());
 			
 		return "board/inquiryListAdmin";
 	}

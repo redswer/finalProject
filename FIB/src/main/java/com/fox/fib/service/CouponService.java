@@ -2,7 +2,11 @@ package com.fox.fib.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.fox.fib.entity.Coupon;
+import com.fox.fib.entity.Faq;
 
 public interface CouponService {
 
@@ -20,5 +24,5 @@ public interface CouponService {
 //	int delete(Coupon coupon_code);
 	int delete(int coupon_code);
 
-
+	Page<Coupon> getCouponList(Pageable pageable);
 }
