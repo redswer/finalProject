@@ -55,6 +55,4 @@ public class CouponServiceImpl implements CouponService {
 	public Page<Coupon> getPageCouponList(Pageable pageable) {
 	    return repository.getPageCouponList(pageable);
 	}
-
-
 }

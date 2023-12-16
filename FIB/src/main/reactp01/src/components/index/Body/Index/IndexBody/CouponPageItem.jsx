@@ -87,7 +87,7 @@ function CouponPageItem() {
                     <h4 className="coupon_box_title">{title}</h4>
                     <img className="coupon_box_image" src={`../img/${image}`} alt={title} />
                     <br />
-                    <button className="coupon_get_button" onClick={handleButtonClick}>받기</button>
+                    <button className="coupon_get_button" onClick={handleButtonClick}>쿠폰받기</button>
 
                     {/* {PopupOpen && (
                     <div className="popup" onClick={handleClosePopup}>
@@ -108,7 +108,7 @@ function CouponPageItem() {
             <div className="coupon_page_container">
                 {renderCouponCategory('첫구매', '신규회원/첫구매/웰컴백 쿠폰')}
                 {renderCouponCategory('월간', '매월 드리는 쿠폰!')}
-                {renderCouponCategory('생일', '생일 축하 쿠폰!')}
+                {renderCouponCategory('이벤트', '이벤트 쿠폰')}
             </div>
         </div>
     );
