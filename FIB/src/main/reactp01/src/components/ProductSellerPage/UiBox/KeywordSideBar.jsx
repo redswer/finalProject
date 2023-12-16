@@ -12,41 +12,9 @@ function KeywordSideBar(props) {
     const [urlString , setUrlString] = useState(useLocation());
     const urlParams = new URLSearchParams(urlString.search);
     
-// const domestic = () => {
-//     props.requestFromBarToServer
-//     (`/product/productSelectedList?domestic=1&category=0&genre=0`);
-//     urlNavigate
-//     (`/ProductListPage?domestic=1&category=0&genre=0`);
-
-//     window.location.reload();
-//   };
-
-//   const english = () => {
-//     props.requestFromBarToServer
-//     (`/product/productSelectedList?domestic=2&category=0&genre=0`);
-//     urlNavigate
-//     (`/ProductListPage?domestic=2&category=0&genre=0`);
-//     window.location.reload();
-//   };
-
-//   const france = () => {
-//     props.requestFromBarToServer
-//     (`/product/productSelectedList?domestic=3&category=0&genre=0`);
-//     urlNavigate
-//     (`/ProductListPage?domestic=3&category=0&genre=0`);
-//     window.location.reload();
-//   };
-
-//   const germany = () => {
-//     props.requestFromBarToServer
-//     (`/product/productSelectedList?domestic=4&category=0&genre=0`);
-//     urlNavigate
-//     (`/ProductListPage?domestic=4&category=0&genre=0`);
-//     window.location.reload();
-//   };
 
 const getProductList = (domesticValue, categoryValue, genreValue) => {
-    const query = `domestic=${domesticValue}&category=${categoryValue}&genre=${genreValue}&page=1&size=3`;
+    const query = `domestic=${domesticValue}&category=${categoryValue}&genre=${genreValue}`;
     props.requestFromBarToServer(`/product/productSelectedList2?${query}`);
     urlNavigate(`/ProductListPage?${query}`);
     window.location.reload();
@@ -58,7 +26,7 @@ const selectOptions = (domesticValue, categoryValue, genreValue) => {
     return () => getProductList(domesticValue, categoryValue, genreValue);
 };
 
-const domestic = selectOptions(1, 0, 0);
+const korea = selectOptions(1, 0, 0);
 const english = selectOptions(2, 0, 0);
 const france = selectOptions(3, 0, 0);
 const germany = selectOptions(4, 0, 0);
@@ -73,15 +41,12 @@ const melo = selectOptions(0, 0, 'melo');
 const detective = selectOptions(0, 0, 'detective');
 const sf = selectOptions(0, 0, 'sf');
 
-
-  
-
         return (
         <div className='SelectKeywordSideBar_Container'>
             <div className='ProductSellerCategoryBar_h4'>
                 <div>국가별 도서</div>
                 <div className='product_seller_category_link_box'>
-                    <button onClick={domestic}>국내도서</button>
+                    <button onClick={korea}>국내도서</button>
                 </div>
 
                 <div className='product_seller_category_link_box'>
