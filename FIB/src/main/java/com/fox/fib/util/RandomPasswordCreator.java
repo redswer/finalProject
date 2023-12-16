@@ -4,7 +4,7 @@ import java.security.SecureRandom;
 
 public class RandomPasswordCreator {
 	private static final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static final String SPECIAL = "!@#$%^&*()-_=+";
+    private static final String SPECIAL = "!@#$%^&";
 
     private static final String ALL_CHARACTERS = UPPER + SPECIAL;
 

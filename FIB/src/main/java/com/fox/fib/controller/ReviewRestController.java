@@ -28,11 +28,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
-@RequestMapping("/kim")
+@RequestMapping("/restreview")
 @Log4j2
 @AllArgsConstructor
 @CrossOrigin
-public class KimController {
+public class ReviewRestController {
 
 	ProductService productService;
 	WriterService writerService;
@@ -47,7 +47,7 @@ public class KimController {
 	// 리뷰 등록
 	@PostMapping("/reviewinsert")
 	public ResponseEntity<?> reviewinsert(Review entity) throws IOException {
-
+		
 		String realPath = "C:\\MyTest_git\\Project\\FIB\\FIB\\src\\main\\webapp\\resources\\uploadImages\\";
 		String StorageTable = "";
 
@@ -114,6 +114,7 @@ public class KimController {
 	// 리뷰 삭제
 	@PostMapping("/reviewdelete")
 	public ResponseEntity<?> reviewdelete(@RequestBody Review entity) {
+		System.out.println("상품코드!!!!!!!!!!!!!!!" + entity.getProduct_code());
 	   try {
 		  log.info(entity);
 	 	  reviewService.delete(entity.getReview_code());
