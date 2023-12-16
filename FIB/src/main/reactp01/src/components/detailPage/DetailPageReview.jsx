@@ -72,8 +72,6 @@ function DetailPageReview({ oneProductWriterJoin }) {
     useEffect(() => {
         axios.post('/kim/reviewList')
             .then((response) => {
-                console.log('reviewList 성공');
-
                 const reviewFilter = response.data.filter(item => item.product_code === product_code);
                 setReview(reviewFilter);
             }).catch((err) => {
@@ -155,10 +153,10 @@ function DetailPageReview({ oneProductWriterJoin }) {
 
                 <div className="review_con_box">
                     {review.map((it, index) =>
-                        (<DetailPageReviewCon key={index} {...it}
-                            onClick_review_update={onClick_review_update}
-                            onClick_review_delete={onClick_review_delete} />
-                        )
+                    (<DetailPageReviewCon key={index} {...it}
+                        onClick_review_update={onClick_review_update}
+                        onClick_review_delete={onClick_review_delete} />
+                    )
                     )}
                 </div>
             </form>

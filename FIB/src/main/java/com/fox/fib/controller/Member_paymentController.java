@@ -103,6 +103,5 @@ public class Member_paymentController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("주문정보 취소 실패 : " + e.toString());
 		}
-	}
-	
+	}	
 }

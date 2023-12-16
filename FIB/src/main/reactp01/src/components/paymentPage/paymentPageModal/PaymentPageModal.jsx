@@ -30,7 +30,7 @@ const PaymentPageModal = ({ setCoupon_put }) => {
 
     return (
         <div>
-            <button className="coupon_btn" onClick={openModal}>쿠폰 선택</button>
+            <button type="button" className="coupon_btn" onClick={openModal}>쿠폰 선택</button>
 
             <Modal
                 style={modalStyles}

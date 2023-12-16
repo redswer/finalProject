@@ -12,6 +12,8 @@ import axios from 'axios';
 function DetailPage() {
     const { id } = useParams();
 
+    const loginID = sessionStorage.getItem('loginID');
+
     const [oneProductWriterJoin, setOneProductWriterJoin] = useState('');
 
     useEffect(() => {
@@ -22,6 +24,14 @@ function DetailPage() {
             }).catch((err) => {
                 console.log(`reviewList 실패 : ${err.message}`);
             });
+
+        axios
+            .get(`/product/recentProduct?id=${loginID}&pcode=${id}`)
+            .then((response) => {
+                alert(`전송성공 : `, response.data);
+            }).catch((error) => {
+                alert(`프로덕트실패`, error.message);
+            })
     }, []);
 
     return (

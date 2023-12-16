@@ -34,22 +34,29 @@ function DetailPageBook({ oneProductWriterJoin }) {
 
     // 장바구니 버튼
     function saveOnCart() {
-        const savedDataOnCart = {
-            product_code: product_code,
-            proamount: selected_quantity,
-            id: loginID
-        };
+        if (loginID == null) {
+            alert('로그인 후 이용 가능합니다.')
+        } else {
+            const savedDataOnCart = {
+                product_code: product_code,
+                proamount: selected_quantity,
+                id: loginID
+            };
 
-        axios
-            .post(`/cart/cartOnSaveAction`, savedDataOnCart)
-            .then((response) => {
-                console.log(`response.OK :`, response.status);
-                window.location.href = `/DetailPage/${product_code}`;
-            }).catch((err) => {
-                alert(`담기 실패!! ${err.message}`);
-            });
-
+            axios
+                .post(`/cart/cartOnSaveAction`, savedDataOnCart)
+                .then((response) => {
+                    console.log(`response.OK :`, response.status);
+                    window.location.href = `/DetailPage/${product_code}`;
+                }).catch((err) => {
+                    alert(`담기 실패!! ${err.message}`);
+                });
+        }
     };
+
+    const orderLoginCheck = () => {
+        alert('로그인 후 구매 가능합니다.');
+    }
 
     return (
         <div className="book d-flex" >
@@ -147,11 +154,16 @@ function DetailPageBook({ oneProductWriterJoin }) {
                         <button type="button" className="detailCart" onClick={saveOnCart}>장바구니</button>
                     </div>
                     <div className="book_info_06_R">
-                        <Link to={`/PaymentPage`}
-                            state={{ order_data: order_data }}
-                            className='buy'>
-                            바로구매
-                        </Link>
+                        {
+                            loginID == null ?
+                                <div className='buy' onClick={orderLoginCheck}>바로구매</div>
+                                :
+                                <Link to={`/PaymentPage`}
+                                    state={{ order_data: order_data }}
+                                    className='buy'>
+                                    바로구매
+                                </Link>
+                        }
                     </div>
                 </div>
             </div>

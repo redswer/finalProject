@@ -38,11 +38,17 @@ public class Member_paymentRestController {
 	UserService userService;
 	ProductService productService;
 	CartService cartService;
+	
+	// 회원정보 배송지 가져오기
+	@PostMapping("userAddress")
+	public List<User> userAddress() {
+		return userService.selectList();
+	}
 
 	//주문정보, 주문상세 등록 및 회원포인트 수정	
 	@PostMapping("memberpaymentinsert")
 	public ResponseEntity<?> memberpaymentinsert(@RequestBody HashMap<String, Object> payment_formData, Member_payment entity) throws IOException {
-		
+
 		Gson gson = new Gson();
         Type listType = new TypeToken<List<Map<String, Object>>>() {}.getType();
         List<Map<String, Object>> paymentDetailList = gson.fromJson((String) payment_formData.get("paymentDetailData"), listType);
@@ -82,10 +88,10 @@ public class Member_paymentRestController {
 				Product productOne = productService.selectOne(product_code);
 				
 				int stack = productOne.getStack() - proamount;
-				int sell_count = productOne.getSellcount() + proamount;
+				int sellCount = productOne.getSellcount() + proamount;
 				
 				productOne.setStack(stack);
-				productOne.setSellcount(sell_count);
+				productOne.setSellcount(sellCount);
 				
 				productService.save(productOne);
 			
@@ -95,11 +101,11 @@ public class Member_paymentRestController {
 
 			// 회원포인트 증가
 			User userOne =  userService.selectOne((String)payment_formData.get("id"));
-			
+
 			int pointUpdate = (int) (userOne.getPoint() + (Integer.parseInt((String)payment_formData.get("origin_price"))) * 0.05);
 			
 			userOne.setPoint(pointUpdate);
-			
+
 			userService.register(userOne);
 
 			return ResponseEntity.ok("주문정보 등록 성공");
