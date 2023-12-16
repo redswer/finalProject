@@ -49,8 +49,9 @@ function DetailPageReview({ oneProductWriterJoin }) {
                 alert('리뷰 내용을 작성해 주세요~');
             } else {
                 const review_formData = new FormData(document.getElementById('review_form'));
+
                 axios.post(
-                    '/kim/reviewinsert',
+                    '/restreview/reviewinsert',
                     review_formData,
                     {
                         headers: { 'Content-Type': 'multipart/form-data' }
@@ -70,7 +71,7 @@ function DetailPageReview({ oneProductWriterJoin }) {
     const [review, setReview] = useState([]);
 
     useEffect(() => {
-        axios.post('/kim/reviewList')
+        axios.post('/restreview/reviewList')
             .then((response) => {
                 const reviewFilter = response.data.filter(item => item.product_code === product_code);
                 setReview(reviewFilter);
@@ -88,9 +89,10 @@ function DetailPageReview({ oneProductWriterJoin }) {
     const onClick_review_delete = (num) => {
 
         axios.post(
-            '/kim/reviewdelete',
+            '/restreview/reviewdelete',
             {
-                review_code: num
+                review_code: num,
+                product_code: product_code
             })
             .then((response) => {
                 alert("리뷰 삭제 성공 : " + response.data);
