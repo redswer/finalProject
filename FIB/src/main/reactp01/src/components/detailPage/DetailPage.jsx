@@ -32,7 +32,7 @@ function DetailPage() {
             }).catch((error) => {
                 alert(`프로덕트실패`, error.message);
             })
-    }, []);
+    }, []); 
 
     return (
         <div className='detailPage'>
