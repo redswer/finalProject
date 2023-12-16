@@ -52,8 +52,8 @@ public class CouponServiceImpl implements CouponService {
 	
 	// Coupon 보기(페이지네이션 적용)
 	@Override
-	public Page<Coupon> getCouponList(Pageable pageable) {
-	    return repository.getCouponList(pageable);
+	public Page<Coupon> getPageCouponList(Pageable pageable) {
+	    return repository.getPageCouponList(pageable);
 	}
 
 

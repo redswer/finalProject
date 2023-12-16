@@ -17,6 +17,18 @@
 	<form action="couponEditForm" method="post" enctype="multipart/form-data" id="couponEditForm">
 		<table class="couponEditFormTable" border="1">
 			<c:if test="${not empty requestScope.couponList}">
+				<tr>
+					<th>분류</th>
+					<td>
+						<select name="category" id="categorySelect" onchange="updateCouponDateInput()" value="${requestScope.couponList.category}">
+							<option value="첫구매">신규/첫구매/웰컴</option>
+							<option value="월간">월간</option>
+							<option value="생일">생일</option>
+							<option value="시즌">시즌</option>
+							<option value="이벤트">이벤트</option>
+						</select>
+					</td>
+				</tr>
 				<tr height="40">
 					<th>쿠폰 코드</th>
 					<td>
@@ -71,30 +83,26 @@
 	   				};
 				</script>   
 				<tr height="40">
-					<th>쿠폰 시작일</th>
-					<td>
-	 					<input type="datetime" name="start" id="start" size="20" value="${requestScope.couponList.start}"/> 
-						<br>
-						<span id="sMessage" class="eMessage"></span>
-					</td>
-				</tr>
-				<tr height="40">
-					<th>쿠폰 종료일</th>
-					<td>
-						<input type="datetime" name="end" id="end" size="20" value="${requestScope.couponList.end}"/>
-						<br>
-						<span id="endMessage" class="eMessage"></span>
-					</td>
+				    <th>쿠폰 사용기간</th>
+				    <td id="couponDateInput" style="display:none;">
+	                    <input type="date" name="start" id="start" size="20" value=""/>
+	                    <span id="startLabel">부터</span>
+	                    <input type="date" name="end" id="end" size="20" value=""/>
+	                    <span id="endLabel">까지</span>
+	                    <br>
+	                    <span id="sMessage" class="eMessage"></span>
+	                    <span id="endMessage" class="eMessage"></span>
+	                </td>
 				</tr>
 				<tr height="40">
 					<td colspan="2" style="text-align:center;">
 						<input type="submit" id="submitTag" onclick="couponEditFinish()" value="수정" />
 						&nbsp;&nbsp;&nbsp;
-						<input type="reset" value="취소" onclick="couponList_Admin()"/>
+						<input type="reset" value="취소" onclick="couponManagement()"/>
 						&nbsp;&nbsp;
 					</td>
 				</tr>
-			</c:if>		
+			</c:if>
 		</table>
 	</form>
 </body>

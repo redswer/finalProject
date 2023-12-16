@@ -115,7 +115,7 @@ public class TestController {
 				return ResponseEntity.ok("쿠폰을 성공적으로 발급하였습니다.");
 	        }else {
 	        	log.info("이미 발급받은 쿠폰입니다.");
-	        	return ResponseEntity.badRequest().body("이미 해당 쿠폰이 발급되었습니다.");
+	        	return ResponseEntity.ok("이미 발급 받은 쿠폰입니다.");
 	        }
 		} catch (Exception e) {
 			log.info("** 쿠폰 받기 실패 exception => "+e.toString());
