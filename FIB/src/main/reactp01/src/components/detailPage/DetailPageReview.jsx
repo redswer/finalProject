@@ -49,8 +49,9 @@ function DetailPageReview({ oneProductWriterJoin }) {
                 alert('리뷰 내용을 작성해 주세요~');
             } else {
                 const review_formData = new FormData(document.getElementById('review_form'));
+
                 axios.post(
-                    '/kim/reviewinsert',
+                    '/restreview/reviewinsert',
                     review_formData,
                     {
                         headers: { 'Content-Type': 'multipart/form-data' }
@@ -70,10 +71,8 @@ function DetailPageReview({ oneProductWriterJoin }) {
     const [review, setReview] = useState([]);
 
     useEffect(() => {
-        axios.post('/kim/reviewList')
+        axios.post('/restreview/reviewList')
             .then((response) => {
-                console.log('reviewList 성공');
-
                 const reviewFilter = response.data.filter(item => item.product_code === product_code);
                 setReview(reviewFilter);
             }).catch((err) => {
@@ -90,9 +89,10 @@ function DetailPageReview({ oneProductWriterJoin }) {
     const onClick_review_delete = (num) => {
 
         axios.post(
-            '/kim/reviewdelete',
+            '/restreview/reviewdelete',
             {
-                review_code: num
+                review_code: num,
+                product_code: product_code
             })
             .then((response) => {
                 alert("리뷰 삭제 성공 : " + response.data);
@@ -155,10 +155,10 @@ function DetailPageReview({ oneProductWriterJoin }) {
 
                 <div className="review_con_box">
                     {review.map((it, index) =>
-                        (<DetailPageReviewCon key={index} {...it}
-                            onClick_review_update={onClick_review_update}
-                            onClick_review_delete={onClick_review_delete} />
-                        )
+                    (<DetailPageReviewCon key={index} {...it}
+                        onClick_review_update={onClick_review_update}
+                        onClick_review_delete={onClick_review_delete} />
+                    )
                     )}
                 </div>
             </form>

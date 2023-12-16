@@ -5,7 +5,7 @@ import java.util.List;
 import com.fox.fib.entity.RecentView;
 
 public interface RecentViewService {
-	public List<RecentView> selectListById(String id);
+	public List<RecentView> selectListForUserId(String id);
 
 	public int save(RecentView entity);
 

@@ -126,8 +126,29 @@
     <tr>
          <th bgcolor="deeppink">17. sell_count</th>
          <td><input type="number" name="sellcount" id="sellcount"  size="40" value="${requestScope.pcode.sellcount}"></td>
-         <td>현재 상품 누적 판매량. not null.</td>
+         <td>현재 상품 누적 판매량. not null.독자들에 의해 업데이트 되는 항목. 관리자가 입력하지 않음.</td>
     </tr>
+    <tr>
+         <th bgcolor="Greenyellow">18. gradeavg</th>
+         <td><input type="number" name="gradeavg" id="gradeavg"  size="40" value="${requestScope.pcode.gradeavg}"></td>
+         <td>독자들에 의해 업데이트 되는 항목. 관리자가 입력하지 않음.</td>
+    </tr>
+    <tr>
+         <th bgcolor="Greenyellow">19. viewcount</th>
+         <td><input type="number" name="viewcount" id="viewcount"  size="40" value="${requestScope.pcode.viewcount}"></td>
+         <td>독자들에 의해 업데이트 되는 항목. 관리자가 입력하지 않음.</td>
+    </tr>
+    <tr>
+         <th bgcolor="Greenyellow">20. regdate</th>
+         <td><input type="date" name="regdate" id="regdate"  size="40" value="${requestScope.pcode.regdate}"></td>
+         <td>독자들에 의해 업데이트 되는 항목. 관리자가 입력하지 않음.</td>
+    </tr>
+    <tr>
+         <th bgcolor="Greenyellow">21. moddate</th>
+         <td><input type="date" name="moddate" id="moddate"  size="40" value="${requestScope.pcode.moddate}"></td>
+         <td>독자들에 의해 업데이트 되는 항목. 관리자가 입력하지 않음.</td>
+    </tr>
+    
     <tr>
     	<td>실패시 메시지출력 : </td>
     	<td>${requestScope.insertActionMsg}</td>

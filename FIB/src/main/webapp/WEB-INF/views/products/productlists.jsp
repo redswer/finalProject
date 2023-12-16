@@ -17,15 +17,15 @@
       
    <table border="1" style="width:95%">
 	<tr bgcolor="Orange">
-         <th>01. product_code</th>
-         <th>02. protype </th>
-         <th>03. domestic</th>
-         <th>04. writer </th>
-         <th>05. title</th>
-         <th>06. translator</th>
-         <th>07. publisher</th>
-         <th>08. publish_date</th>
-         <th>09. category</th>
+         <th>1. pcode</th>
+         <th>2. protype </th>
+         <th>3. domestic</th>
+         <th>4. writer </th>
+         <th>5. title</th>
+         <th>6. translator</th>
+         <th>7. publisher</th>
+         <th>8. publish_date</th>
+         <th>9. category</th>
          <th>10. genre</th>
          <th>11. summary</th>
          <th>12. image</th>
@@ -33,11 +33,13 @@
          <th>14. content</th>
          <th>15. price</th>
          <th>16. stack</th>
-         <th>17. sell_count</th>
-         <th>장바구니</th>
+         <th>17. sellcount</th>
+         <th>18. gradeavg</th>
+         <th>19. viewcount</th>
+         <th>20. regdate</th>
+         <th>21. moddate</th>
          <th>상품정보수정</th>
          <th>삭제하기^-^</th>
-         <th>찜하기</th>
       </tr>
  		<c:forEach var="s" items="${requestScope.adminProductList.entityList}">
         	<tr>
@@ -58,6 +60,10 @@
                <td>${s.price}</td>
                <td>${s.stack}</td>
                <td>${s.sellcount}</td>
+               <td>${s.gradeavg}</td>
+               <td>${s.viewcount}</td>
+               <td>${s.regdate}</td>
+               <td>${s.moddate}</td>
                
                <td><a href="productupdate?product_code=${s.product_code}">정보 수정</a></td>
                

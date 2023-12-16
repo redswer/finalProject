@@ -19,13 +19,13 @@ public class RecentViewServiceImpl implements RecentViewService {
 	private final RecentViewRepository repository;
 
 	@Override
-	public List<RecentView> selectListById(String id) {
-		return repository.findAllByUserId(id);
+	public List<RecentView> selectListForUserId(String id) {
+		return repository.selectListForUserId(id);
 	}
 
 	@Override
 	public int save(RecentView entity) {
-		repository.save(entity);                             // 저장 또는 수정
+		repository.save(entity);                   // 저장 또는 수정
 		return entity.getProduct_code();           // 저장후 key return
 	}
 
@@ -36,7 +36,7 @@ public class RecentViewServiceImpl implements RecentViewService {
 
 	@Override
 	public int checkDuplicated(String id, int product_code) {
-		Optional<RecentView> result = repository.checkByIdPcode(id, product_code);
+		Optional<RecentView> result = repository.checkDuplicated(id, product_code);
 		if (result.isPresent())
 			return 1;
 		else

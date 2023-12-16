@@ -116,9 +116,19 @@
          <td>현재 상품 재고수량</td>
     </tr>
     <tr>
-         <th bgcolor="Greenyellow">17. sell_count</th>
+         <th bgcolor="Greenyellow">17. sellcount</th>
          <td><input type="number" name="sellcount" id="sellcount"  size="40" value="0"></td>
-         <td>현재 상품 누적 판매량. not null.</td>
+         <td>현재 상품 누적 판매량. not null. 독자들에 의해 업데이트 되는 항목. 관리자가 입력하지 않음.</td>
+    </tr>
+    <tr>
+         <th bgcolor="Greenyellow">18. gradeavg</th>
+         <td><input type="number" name="gradeavg" id="gradeavg"  size="40" value="0"></td>
+         <td>독자들에 의해 업데이트 되는 항목. 관리자가 입력하지 않음.</td>
+    </tr>
+    <tr>
+         <th bgcolor="Greenyellow">19. viewcount</th>
+         <td><input type="number" name="viewcount" id="viewcount"  size="40" value="0"></td>
+         <td>독자들에 의해 업데이트 되는 항목. 관리자가 입력하지 않음.</td>
     </tr>
     <tr>
     	<td>실패시 메시지출력 : </td>
