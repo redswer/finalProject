@@ -15,7 +15,7 @@ useEffect(()=> {
   axios
     .get(`/product/selectRecentProductList?id=${loginID}`)
     .then((response)=> {
-      alert(`최근본상품 목록 불러오기 성공 ^~^ : `,response.data);
+      // alert(`최근본상품 목록 불러오기 성공 ^~^ : `,response.data);
       if(response.data) {
         setRecentData(response.data);
       }

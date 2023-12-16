@@ -26,21 +26,18 @@ const ProductListPage = () => {
   const urlNavigate = useNavigate();
   const urlParams = new URLSearchParams(urlString.search);
   
-  // const [urlDomesticValue , setUrlDomesticValue] = useState(0);
-  // const [urlCategoryValue , setUrlCategoryValue] = useState(0);
-  // const [urlGenreValue , setUrlGenreValue] = useState(0);
-
   const [productData, setProductData] = useState([]);
-  const [reviewData , setReviewData] = useState([]);
+
   //  const [pageThemeDomestic , setPageThemeDomestic] = useState();
   // const [pageThemeCategory , setPageThemeCategory] = useState();
   // const [pageThemeGenre , setPageThemeGenre] = useState();
+
   const [limitedMinPrice , setLimitedMinPrice] = useState(0);
   const [limitedMaxPrice , setLimitedMaxPrice] = useState(0);
-  // const [titleWord , setTitleWord] = useState();
-  const [getMapping , setGetMapping] = useState('productSelectedList2');
 
-  const [valueOfLimitedPrice,setValueOfLimitedPrice] = useState(0);
+  const [titleWord , setTitleWord] = useState();
+
+  const [getMapping , setGetMapping] = useState('productSelectedList2');
 
   //==========================================================================================================================
   const requestToServer = (initRequestURL) => {
@@ -82,17 +79,6 @@ const ProductListPage = () => {
 
     requestToServer
     (`/product/${getMapping}?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`)
-    // console.log(`mount 성공`);
-
-    // axios
-    //   .get(`/product/productReviewList`)
-    //   .then((response)=> {
-    //     console.log(`리뷰불러오기 성공 : `,response.data);
-    //     setReviewData(response.data);
-
-    //   }).catch((error) => {
-    //       // alert(`리뷰 불러오기 실패 : `,error.message);
-    //   })
 
   },[])
 
@@ -111,9 +97,47 @@ const handleKeywordChange = (keyword, value) => {
     [keyword]: prevOptions[keyword] === value ? '0' : value,
   }));
 };
+//============================================================================================================================
+const generateTitleWord = () => {
+  const domesticOptions = {
+    '0': '전체 국가',
+    '1': '국내도서',
+    '2': '영/미도서',
+    '3': '프랑스도서',
+    '4': '독일도서',
+    // 추가적인 국가에 대한 옵션도 필요하다면 이어서 계속 작성
+  };
+
+  const categoryOptions = {
+    '0': '전체 카테고리',
+    'novel': '소설',
+    'poem': '시',
+    'essay': '에세이',
+    'magazine': '잡지',
+    // 추가적인 카테고리에 대한 옵션도 필요하다면 이어서 계속 작성
+  };
+
+  const genreOptions = {
+    '0': '전체 장르',
+    'fantasy': '판타지',
+    'melo': '멜로',
+    'detective': '추리',
+    'sf': '공상과학',
+    // 추가적인 장르에 대한 옵션도 필요하다면 이어서 계속 작성
+  };
+
+  const domesticName = selectedOptions.domestic ? domesticOptions[selectedOptions.domestic] : '전체 국가';
+  const categoryName = selectedOptions.category ? categoryOptions[selectedOptions.category] : '전체 카테고리';
+  const genreName = selectedOptions.genre ? genreOptions[selectedOptions.genre] : '전체 장르';
+
+  const titleWord = `${domesticName} > ${categoryName} > ${genreName}`;
+
+  setTitleWord(titleWord);
+};
 
 //============================================================================================================================
-const keywordSortTitle = () => {
+const keywordSortTitle = () => { // 1.제목순
+
   // 선택된 옵션들을 이용하여 파라미터를 생성합니다.
 
   const nowParams = new URLSearchParams(urlString.search);
@@ -130,8 +154,9 @@ const keywordSortTitle = () => {
     urlNavigate
     (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
 
+    generateTitleWord();
+
   } else {
-    // alert(`이런이런, 카테고리부터 선택하라구 Boy↗↘♬ ^-^  ~0~`);
     requestToServer
     (`/product/productSelectedList2?domestic=${nowParams.get('domestic')}&category=${nowParams.get('category')}&genre=${nowParams.get('genre')}`)
     console.log(`nowParam : ` ,nowParams.get('domestic') , nowParams.get('category') , nowParams.get('genre'))
@@ -142,7 +167,7 @@ const keywordSortTitle = () => {
 
 //============================================================================================================================
     
-const keywordSortPriceAsc = () => {   // 최저가
+const keywordSortPriceAsc = () => {   // 2.최저가
   setGetMapping('productAscendingList');
   const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
   const nowParams = new URLSearchParams(urlString.search);
@@ -152,9 +177,10 @@ const keywordSortPriceAsc = () => {   // 최저가
 
     urlNavigate
     (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
+
+    generateTitleWord();
+
   } else {
-    // fetchData(`/product/productAscendingList?domestic=${nowParams.get('domestic')}&category=${nowParams.get('category')}&genre=${nowParams.get('genre')}`);
-    // alert(`이런이런 카테고리를 선택해주세용 ^-^  ~0~`);
     requestToServer
     (`/product/productAscendingList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}`)
     alert(`현재 파람 값으로 최저가순 재검색합니다 ^~^`);
@@ -163,10 +189,7 @@ const keywordSortPriceAsc = () => {   // 최저가
 
 //============================================================================================================================
 
-
-
-const keywordSortPriceDesc = () => {   // 최고가
-  setValueOfLimitedPrice(1);
+const keywordSortPriceDesc = () => {   // 3.최고가
   setGetMapping('productDescendingList');
   const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
   const nowParams = new URLSearchParams(urlString.search);
@@ -176,9 +199,10 @@ const keywordSortPriceDesc = () => {   // 최고가
 
     urlNavigate
     (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
+
+    generateTitleWord();
+
   } else {
-    // fetchData(`/product/productAscendingList?domestic=${nowParams.get('domestic')}&category=${nowParams.get('category')}&genre=${nowParams.get('genre')}`);
-    // alert(`이런이런 카테고리를 선택해주세용 ^-^  ~0~`);
     requestToServer
     (`/product/productDescendingList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}`)
     urlNavigate
@@ -189,7 +213,90 @@ const keywordSortPriceDesc = () => {   // 최고가
 
 //============================================================================================================================
 
-const keywordLimitedPrice = () => {   // 가격제한된
+  const keywordSortSellCount = () => {   // 4.판매량
+    setGetMapping('productSellCountList');
+
+    const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
+    const nowParams = new URLSearchParams(urlString.search);
+    if (isOptionSelected) {
+      requestToServer
+      (`/product/productSellCountList?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
+  
+      urlNavigate
+      (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
+
+      generateTitleWord();
+
+      alert(`판매량순으로 상품 검색합니다 ^~^`);
+
+
+    } else {
+      requestToServer
+      (`/product/productSellCountList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}`)
+      urlNavigate
+      (`/ProductListPage?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${selectedOptions.genre}`);
+      alert(`현재 파람 값으로 판매량순 재검색합니다 ^~^`);
+    }
+  }
+//============================================================================================================================
+
+const keywordSortGradeAvg = () => {   // 5.평점순
+  setGetMapping('productGradeAvgList');
+
+  const nowParams = new URLSearchParams(urlString.search);
+
+  const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
+
+  // 선택된 옵션이 하나라도 있을 때만 서버로 요청을 보냄
+  if (isOptionSelected) {
+    requestToServer
+    (`/product/productGradeAvgList?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`);
+
+    urlNavigate
+    (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
+    alert(`별점이 높은 순으로 상품 검색합니다 ^~^`);
+
+  } else {
+    requestToServer
+    (`/product/productGradeAvgList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`)
+    console.log(`nomParam : ` ,nowParams.get('domestic') , nowParams.get('category') , nowParams.get('genre'))
+    alert(`현재 파람 값으로 별점순 상품 재검색합니다 ^~^`);
+  }
+  
+}
+
+//============================================================================================================================
+
+const keywordSortViewCount = () => {   // 6.리뷰순
+  setGetMapping('productViewCountList');
+
+  const nowParams = new URLSearchParams(urlString.search);
+
+  const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
+
+  // 선택된 옵션이 하나라도 있을 때만 서버로 요청을 보냄
+  if (isOptionSelected) {
+    requestToServer
+    (`/product/productViewCountList?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`);
+
+    urlNavigate
+    (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
+    alert(`리뷰많은 제품순으로 검색합니다 ^~^`);
+
+  } else {
+    requestToServer
+    (`/product/productViewCountList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`)
+    console.log(`nomParam : ` ,nowParams.get('domestic') , nowParams.get('category') , nowParams.get('genre'))
+    alert(`현재 파람 값으로 리뷰순 상품 재검색합니다 ^~^`);
+  }
+  
+}
+
+
+
+//============================================================================================================================
+
+const keywordLimitedPrice = () => {   // 7.제한가격검색
   setGetMapping('productLimitedPriceList');
 
   const nowParams = new URLSearchParams(urlString.search);
@@ -213,7 +320,9 @@ const keywordLimitedPrice = () => {   // 가격제한된
   }
   
 }
+
 //============================================================================================================================
+
 const [textWordValue,setTextWordValue] = useState('');
 
 
@@ -242,8 +351,6 @@ const searchTextWord = () => {
   
 }
 //============================================================================================================================
-const [currentPage, setCurrentPage] = useState(1);
-const [itemsPerPage, setItemsPerPage] = useState(3); // 한 페이지에 보여질 아이템 수
 const [page, setPage] = useState(1);
 const [size, setSize] = useState(3); // 한 페이지에 보여질 아이템 수
 
@@ -251,6 +358,11 @@ const [size, setSize] = useState(3); // 한 페이지에 보여질 아이템 수
 const indexOfLastItem = page * size;               // 현재 페이지에서 보여줄 첫번째 아이템의 index
 const indexOfFirstItem = indexOfLastItem - size;   // 현재 페이지에서 보여줄 마지막 아이템의 index
 const viewedList = productData.slice(indexOfFirstItem, indexOfLastItem);  // 현재 페이지에서 보여줄 List들.
+
+const handlePageSizeChange = (event) => {
+  const newSize = parseInt(event.target.value, 10);
+  setSize(newSize);
+};
 
 // 페이지 변경 핸들러
 const handlePageChange = (pageNumber) => {
@@ -263,39 +375,7 @@ for (let i = 1; i <= Math.ceil(productData.length / size); i++) {
   pageNumbers.push(i);
 }
 
-// 페이지 컴포넌트 생성
-const ProductPagination = pageNumbers.map(number => (
-  <button key={number} onClick={() => handlePageChange(number)}>
-    {number}
-  </button>
-));
 
-
-//============================================================================================================================
-
-// const viewedList = intoItemData.map((d, i) => (
-// const booklist = productData.map((d, i) => (
-//   <ProductListItem
-//   key={i}
-//   product_code={d.product_code}
-//   domestic={d.domestic}
-//   protype={d.protype}
-//   writer={d.writer_code}
-//   title={d.title}
-//   translator={d.translator}
-//   publisher={d.publisher}
-//   publish_date={d.publish_date}
-//   category={d.category}
-//   genre={d.genre}
-//   summary={d.summary}
-//   image={d.image}
-//   intro_image={d.intro_image}
-//   content={d.content}
-//   price={d.price}
-//   sellcount={d.sellcount}
-//   urlNavigate={urlNavigate}
-// />
-// ))
 
 //============================================================================================================================
 
@@ -315,7 +395,7 @@ const ProductPagination = pageNumbers.map(number => (
           <div className='ProductListPage_Checkbox_container'>
              <h3>키워드 선택</h3>
 
-              <select>
+              <select onChange={handlePageSizeChange} value={size}>
                 <option value="2">2개씩 보기</option>
                 <option value="3">3개씩 보기</option>
                 <option value="5">5개씩 보기</option>
@@ -388,7 +468,9 @@ const ProductPagination = pageNumbers.map(number => (
             <button onClick={keywordSortTitle}>제목순</button>&nbsp;&nbsp;
             <button onClick={keywordSortPriceAsc}>최저가순</button>&nbsp;&nbsp;
             <button onClick={keywordSortPriceDesc}>최고가순</button>&nbsp;&nbsp;
-            <button onClick={keywordLimitedPrice}>판매량순</button>&nbsp;&nbsp;
+            <button onClick={keywordSortSellCount}>판매량순</button>&nbsp;&nbsp;
+            <button onClick={keywordSortGradeAvg}>평점순</button>&nbsp;&nbsp;
+            <button onClick={keywordSortViewCount}>리뷰순</button>&nbsp;&nbsp;
             
             <input text='number' size={7} value={limitedMinPrice} onChange={(e)=>setLimitedMinPrice(e.target.value)}/>
             <span>~</span>
@@ -404,7 +486,7 @@ const ProductPagination = pageNumbers.map(number => (
             <button onClick={searchTextWord}>검색하기</button>
           </div>
              
-          <h2 className='seller_product_page_title'>도서</h2>
+          <h2 className='seller_product_page_title'>{titleWord}</h2>
         </div>
 
         <hr className='seller_product_page_titlebox_hr'/>
@@ -441,7 +523,12 @@ const ProductPagination = pageNumbers.map(number => (
         </div>
 
         <div className='productListPage_pageNationButton'>
-        {ProductPagination}
+        {/* {ProductPagination} */}
+        <ProductPagination
+         pageNumbers={pageNumbers}
+         page={page}
+         handlePageChange={handlePageChange}
+         />
         </div>
 
         <hr />
