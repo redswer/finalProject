@@ -20,12 +20,20 @@ public interface ReviewService {
 
 	// castledragon=====================================================
 
-	double calculateAvg(int product_code);
+	void calculateAvg(int product_code);
 
-	int updateGradAvg(int product_code, double calculatedAvg);
+	int calculateViewCount(int product_code);
+
+	void updateViewCount(int product_code, int calculatedViewCount);
+
+	// 멍같이 유기 ============================================================================
 
 	int addViewCount(int product_code);
 
 	int subtractViewCount(int product_code);
+
+
+//	int updateGradAvg(int product_code, double calculatedAvg);
+
 
 }

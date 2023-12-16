@@ -60,15 +60,29 @@ public class ReviewServiceImpl implements ReviewService {
 	// CastleDragon=====================================================================
 
 	@Override
-	public double calculateAvg(int product_code) {
-		return repository.calculateAvg(product_code);
+	public void calculateAvg(int product_code) {
+		repository.calculateAvg(product_code);
+	}
+
+
+	@Override
+	public int calculateViewCount(int product_code) {
+		return repository.calculateViewCount(product_code);
 	}
 
 	@Override
-	public int updateGradAvg(int product_code, double calculatedAvg) {
-		repository.updateGradeAvg(product_code, calculatedAvg);
-		return 1004;
+	public void updateViewCount(int product_code, int calculatedViewCount) {
+		repository.updateViewCount(product_code, calculatedViewCount);
 	}
+
+
+	// =====멍같이 유기 =============================================================
+
+//	@Override
+//	public int updateGradAvg(int product_code, double calculatedAvg) {
+//		repository.updateGradeAvg(product_code, calculatedAvg);
+//		return 1004;
+//	}
 
 	@Override
 	public int addViewCount(int product_code) {
@@ -81,5 +95,7 @@ public class ReviewServiceImpl implements ReviewService {
 		repository.subtractViewCount(product_code);
 		return 10005;
 	}
+
+
 
 }

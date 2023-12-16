@@ -4,18 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,7 +41,7 @@ public class ReviewRestController {
 	// 리뷰 등록
 	@PostMapping("/reviewinsert")
 	public ResponseEntity<?> reviewinsert(Review entity) throws IOException {
-		
+
 		String realPath = "C:\\MyTest_git\\Project\\FIB\\FIB\\src\\main\\webapp\\resources\\uploadImages\\";
 		String StorageTable = "";
 
@@ -76,52 +70,74 @@ public class ReviewRestController {
 		entity.setImage(StorageTable);
 
 		try {
-			reviewService.save(entity);
+			System.out.println("[121] 등록할 리뷰의 상품코드 : " + entity.getProduct_code());
+
+			int pcode = entity.getProduct_code();
+
+			reviewService.save(entity); // 1. 리뷰 등록
+
+			reviewService.calculateAvg(pcode); // 2. 평균값계산후 업데이트.
+
+			int calculatedViewCount = reviewService.calculateViewCount(pcode); // 3. 리뷰수 계산
+
+			reviewService.updateViewCount(pcode, calculatedViewCount); // 4. 계산된 리뷰수로 업데이트
+
 			return ResponseEntity.ok("리뷰 등록 성공");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("리뷰 등록 실패 : " + e.toString());
 		}
 	}
-	
+
 	// 리뷰 수정 service 처리
 //	@PostMapping("/reviewupdate")
 //	public ResponseEntity<?> reviewupdate(Review entity) throws IOException {
-//	   
+//
 //	   String realPath = "C:\\MyTest_git\\Project\\FIB\\FIB\\src\\main\\webapp\\resources\\uploadImages\\";
 //	   String StorageTable = "";
-//	   
+//
 //	   MultipartFile reviewImageFile = entity.getReviewImageUploadfile();
-//	   
+//
 //	   if(reviewImageFile != null && !reviewImageFile.isEmpty()) {
 //	      String StorageFile = realPath + reviewImageFile.getOriginalFilename();
 //	      reviewImageFile.transferTo(new File(StorageFile));
-//	
+//
 //	      StorageTable = reviewImageFile.getOriginalFilename();
 //	   } else {
 //	      StorageTable= entity.getImage();
 //	   }
-//	   
-//	   entity.setImage(StorageTable); 
-//	   
-//	   try {	   
+//
+//	   entity.setImage(StorageTable);
+//
+//	   try {
 //		   reviewService.save(entity);
 //		   return ResponseEntity.ok("리뷰 등록 성공");
-//	   } catch(Exception e) {  
+//	   } catch(Exception e) {
 //		   return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("리뷰 등록 실패 : " + e.toString());
 //	   }
 //	}
-	
+
 	// 리뷰 삭제
 	@PostMapping("/reviewdelete")
 	public ResponseEntity<?> reviewdelete(@RequestBody Review entity) {
-		System.out.println("상품코드!!!!!!!!!!!!!!!" + entity.getProduct_code());
-	   try {
-		  log.info(entity);
-	 	  reviewService.delete(entity.getReview_code());
-	 	  return ResponseEntity.ok("리뷰 삭제 성공");
-	   } catch(Exception e) {
-	 	  return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("리뷰 삭제 실패 : " + e.toString());
-	   }	      
+		System.out.println("[121] 삭제할 리뷰의 상품코드 : " + entity.getProduct_code());
+
+		try {
+			int pcode = entity.getProduct_code();
+
+			log.info(entity);
+
+			reviewService.delete(entity.getReview_code()); // 1. 리뷰 삭제
+
+			reviewService.calculateAvg(pcode); // 2. 평균값계산후 업데이트.
+
+			int calculatedViewCount = reviewService.calculateViewCount(pcode); // 3. 리뷰수 계산
+
+			reviewService.updateViewCount(pcode, calculatedViewCount); // 4. 계산된 리뷰수로 업데이트
+
+			return ResponseEntity.ok("리뷰 삭제 성공");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("리뷰 삭제 실패 : " + e.toString());
+		}
 	}
 
 }
