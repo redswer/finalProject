@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fox.fib.entity.Coupon;
+import com.fox.fib.entity.Faq;
 import com.fox.fib.entity.Notice;
 import com.fox.fib.service.CouponService;
 import com.fox.fib.service.ProductService;
@@ -54,7 +55,7 @@ public class CouponController {
 	public String couponRegister(HttpServletRequest request, Coupon entity, Model model)  throws IOException {
 		String uri = "/coupon/couponRegister";
 		
-		String realPath = "C:\\Users\\yangs\\Desktop\\pp\\pjt\\FIB\\src\\main\\webapp\\resources\\uploadImages\\";
+		String realPath = "C:\\Users\\yangs\\Desktop\\FOX\\FIB\\src\\main\\reactp01\\public\\img\\";
 		String file1, file2="";
 		
 		MultipartFile uploadfilef = entity.getUploadfilef();
@@ -63,7 +64,7 @@ public class CouponController {
 			// 1.3.1) 물리적위치 저장 (file1)
 			file1 = realPath + uploadfilef.getOriginalFilename(); //저장경로 완성 
 			uploadfilef.transferTo(new File(file1)); //해당경로에 저장(붙여넣기)
-			file2 = "/resources/uploadImages/" + uploadfilef.getOriginalFilename();
+			file2 = uploadfilef.getOriginalFilename();
 		} // Image 선택한 경우
 		
 		// 1.4) 완성된 경로를 dto 에 set
@@ -82,12 +83,12 @@ public class CouponController {
 	
 	// 쿠폰리스트 관리 페이지 get
 	@GetMapping("/couponListAdmin")
-	public void couponListAdmin(@RequestParam(name = "category", defaultValue = "") String category,
-			          			@RequestParam(name = "page", defaultValue = "0") int page,
+	public void couponListAdmin(@RequestParam(name = "page", defaultValue = "0") int page,
 			          			@RequestParam(name = "size", defaultValue = "10") int size,
 			          			Model model) {
+		
 		Pageable pageable = PageRequest.of(page, size);
-		Page<Coupon> couponPageList = service.getCouponList(pageable);
+		Page<Coupon> couponPageList = service.getPageCouponList(pageable);
 		
 		model.addAttribute("couponList", couponPageList.getContent());
 		model.addAttribute("itemPage", couponPageList);
@@ -114,11 +115,11 @@ public class CouponController {
 		
 		MultipartFile uploadfilef = entity.getUploadfilef(); 
 		if ( uploadfilef!=null && !uploadfilef.isEmpty() ) {
-			String realPath = "C:\\Users\\yangs\\Desktop\\pp\\pjt\\FIB\\src\\main\\webapp\\resources\\uploadImages\\";
+			String realPath = "C:\\Users\\yangs\\Desktop\\FOX\\FIB\\src\\main\\reactp01\\public\\img\\";
 			String file1 = realPath + uploadfilef.getOriginalFilename(); 
 			uploadfilef.transferTo(new File(file1)); // IO 발생: Checked Exception 처리  
 			
-			String file2="resources/uploadImages/" + uploadfilef.getOriginalFilename();
+			String file2= uploadfilef.getOriginalFilename();
 			entity.setImage(file2);
 		} // Image 선택 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		

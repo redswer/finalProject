@@ -28,6 +28,14 @@ const PaymentPageModal = ({ setCoupon_put }) => {
         setCoupon_put(parseInt(e.target.value));
     }
 
+    // ========================================================================
+    // 쿠폰 데이터 가져오기
+    // 전체 쿠폰
+
+
+    // 회원별 쿠폰
+
+
     return (
         <div>
             <button type="button" className="coupon_btn" onClick={openModal}>쿠폰 선택</button>

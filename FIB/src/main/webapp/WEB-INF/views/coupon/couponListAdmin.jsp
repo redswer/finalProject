@@ -47,7 +47,7 @@
 					<td>${s.discount_rate}%</td>
 					<td>${s.max}원</td>
 					<td>
-						<img alt="${s.title}" src="${s.image}" width="120" height="80">
+						<img alt="${s.title}" src="../../../../reactp01/public/img/${s.image}" width="120" height="80">
 					</td>
 					<td>${s.start}</td>
 					<td>${s.end}</td>
@@ -66,11 +66,12 @@
 	</table>
 	<div class="pagination_wrap">
 	    <c:if test="${not empty requestScope.itemPage}">
-	        <c:forEach var="pageNumber" begin="0" end="${requestScope.totalPages - 1}">
-	     	<span onclick="couponManagementPage(${pageNumber})"
-	                class="${pageNumber == requestScope.itemPage.number ? 'currentPage' : ''}">
-	              ${pageNumber + 1}
-	     	</span>
+	        <%-- <c:forEach var="pageNumber" begin="0" end="${requestScope.totalPages - 1}"> --%>
+	        <c:forEach var="pageNumber" begin="0" end="${requestScope.totalPages}">
+		     	<span onclick="couponManagementPage(${pageNumber})"
+		                class="${pageNumber == requestScope.itemPage.number ? 'currentPage' : ''}">
+		              ${pageNumber + 1}
+		     	</span>
 	        </c:forEach>
 	    </c:if>
 	</div>

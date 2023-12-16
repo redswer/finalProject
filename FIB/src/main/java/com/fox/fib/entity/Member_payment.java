@@ -26,7 +26,7 @@ public class Member_payment {
    private int product_amount;
    private int origin_price;
    private int discount_coupon;
-   private int discount_event;
+   private int discount_point;
    private int final_price;
    private String recipient;
    private String recipient_phone_number;

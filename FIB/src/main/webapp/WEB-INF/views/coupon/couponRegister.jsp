@@ -17,7 +17,7 @@
 				<th>분류</th>
 				<td>
 					<select name="category" id="categorySelect" onchange="updateCouponDateInput()">
-						<option value="첫구매">첫구매/가입</option>
+						<option value="첫구매">신규/첫구매/웰컴</option>
 						<option value="월간">월간</option>
 						<option value="생일">생일</option>
 						<option value="시즌">시즌</option>

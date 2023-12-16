@@ -14,25 +14,50 @@
     margin: 15px 0;
 }
 
+.coupon_category {
+    width: 80%;
+    margin: 0 auto 100px;
+    text-align: center;
+}
+
+.coupon_category_title {
+    width: 90%;
+    margin: 0 auto 20px;
+    text-align: left;
+}
+
+.coupon_item {
+    width: calc(90% / 3);
+    height: 220px;
+    display: inline-block;
+    background-color: #edf2fb;
+}
+
+
 .coupon_box {
-    width: 250px;
-    height: 200px;
+    height: 150px;
     display: inline-block;
     margin: 20px;
 }
 
-.first_buy_coupon,
+.coupon_box_title {
+    width: 195px;
+    margin: 0 auto 5px;
+    text-align: left;
+}
+
+.coupon_get_button {
+    width: 195px;
+    height: 35px;
+}
+
+/* .first_buy_coupon,
 .month_coupon,
 .birth_coupon {
     width: 70%;
     height: 400px;
     margin: 0 auto;
-}
-
-.coupon_box {
-    background-color: silver;
-
-}
+} */
 
 .popup {
     display: block;

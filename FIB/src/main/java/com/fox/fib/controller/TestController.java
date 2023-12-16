@@ -2,7 +2,11 @@ package com.fox.fib.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -49,7 +53,6 @@ public class TestController {
 	InquiryService inquiryService;
 	ProductService productService;	
 	
-	private FaqRepository faqRepository;
 //	private User_couponRepository user_couponRepository;
 	
 	
@@ -81,26 +84,6 @@ public class TestController {
 	
 	// ****** React(Front) Project에서 Server로 전달================================================================================= 	
 	// 유저가 쿠폰 받기
-//	@PostMapping("/userCouponGet")
-//	public String userCouponGet(@RequestBody User_coupon entity, Model model)  throws IOException {
-//			String uri = "/userCoupon/userCouponList";
-//			log.info(entity.getCoupon_code());
-//			log.info(entity.getId());
-//		try {
-//			int getCode = entity.getCoupon_code();
-//			String getId = entity.getId();
-//			entity.setCoupon_code(getCode);
-//			entity.setId(getId);
-//			log.info("** 쿠폰 받기 성공 => "+userCouponService.save(entity));
-//
-//			uri = "redirect:userCouponList";
-//		} catch (Exception e) {
-//			log.info("** 쿠폰 받기 실패 exception => "+e.toString());
-//			model.addAttribute("message", "쿠폰 등록에 실패했습니다.");
-//		}
-//		return uri;
-//	}
-
 	@PostMapping("/userCouponGet")
 	public ResponseEntity<String> userCouponGet(@RequestBody User_coupon entity, Model model)  throws IOException {
 			log.info("쿠폰 코드 : " + entity.getCoupon_code());
@@ -110,12 +93,29 @@ public class TestController {
 			String getId = entity.getId();
 			User_couponId id = new User_couponId(getId, getCode);
 			
+			LocalDate currentTime = LocalDate.now();
+			LocalDate endDate = currentTime.plusDays(7);
+			log.info("currentTime: " + currentTime);
+			log.info("endDate: " + endDate);
+			
+			// 설정 전에 날짜를 출력하여 확인
+			log.info("시작 날짜 설정 전: " + entity.getStartDate());
+			log.info("종료 날짜 설정 전: " + entity.getEndDate());
+
+			entity.setStart(currentTime);
+			entity.setEnd(endDate);
+
+			// 설정 후에 날짜를 출력하여 확인
+			log.info("시작 날짜 설정 후: " + entity.getStartDate());
+			log.info("종료 날짜 설정 후: " + entity.getEndDate());
+
 			if(userCouponService.selectOne(id) == null && userCouponService.save(entity) > 0) {
+				
 				log.info("쿠폰발급 성공!");
 				return ResponseEntity.ok("쿠폰을 성공적으로 발급하였습니다.");
 	        }else {
 	        	log.info("이미 발급받은 쿠폰입니다.");
-	        	return ResponseEntity.badRequest().body("이미 해당 쿠폰이 발급되었습니다.");
+	        	return ResponseEntity.ok("이미 발급 받은 쿠폰입니다.");
 	        }
 		} catch (Exception e) {
 			log.info("** 쿠폰 받기 실패 exception => "+e.toString());
