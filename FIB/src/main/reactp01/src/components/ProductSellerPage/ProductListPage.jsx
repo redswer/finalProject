@@ -28,14 +28,10 @@ const ProductListPage = () => {
   
   const [productData, setProductData] = useState([]);
 
-  //  const [pageThemeDomestic , setPageThemeDomestic] = useState();
-  // const [pageThemeCategory , setPageThemeCategory] = useState();
-  // const [pageThemeGenre , setPageThemeGenre] = useState();
-
   const [limitedMinPrice , setLimitedMinPrice] = useState(0);
   const [limitedMaxPrice , setLimitedMaxPrice] = useState(0);
 
-  const [titleWord , setTitleWord] = useState();
+  const [titleWord , setTitleWord] = useState(`국내도서 > 전체 카테고리 > 전체 장르`);
 
   const [getMapping , setGetMapping] = useState('productSelectedList2');
 
@@ -98,13 +94,14 @@ const handleKeywordChange = (keyword, value) => {
   }));
 };
 //============================================================================================================================
+
 const generateTitleWord = () => {
   const domesticOptions = {
     '0': '전체 국가',
-    '1': '국내도서',
-    '2': '영/미도서',
-    '3': '프랑스도서',
-    '4': '독일도서',
+    '1': '국내',
+    '2': '영/미',
+    '3': '프랑스',
+    '4': '독일',
     // 추가적인 국가에 대한 옵션도 필요하다면 이어서 계속 작성
   };
 
@@ -126,13 +123,12 @@ const generateTitleWord = () => {
     // 추가적인 장르에 대한 옵션도 필요하다면 이어서 계속 작성
   };
 
-  const domesticName = selectedOptions.domestic ? domesticOptions[selectedOptions.domestic] : '전체 국가';
-  const categoryName = selectedOptions.category ? categoryOptions[selectedOptions.category] : '전체 카테고리';
-  const genreName = selectedOptions.genre ? genreOptions[selectedOptions.genre] : '전체 장르';
+  const domestic = domesticOptions[selectedOptions.domestic] || '해외';
+  const category = categoryOptions[selectedOptions.category] || '기타 분류';
+  const genre = genreOptions[selectedOptions.genre] || '기타 장르';
 
-  const titleWord = `${domesticName} > ${categoryName} > ${genreName}`;
+  setTitleWord(`${domestic} > ${category} > ${genre}`);
 
-  setTitleWord(titleWord);
 };
 
 //============================================================================================================================
@@ -162,7 +158,7 @@ const keywordSortTitle = () => { // 1.제목순
     console.log(`nowParam : ` ,nowParams.get('domestic') , nowParams.get('category') , nowParams.get('genre'))
     alert(`현재 파람 값으로 기본순 재검색합니다 ^~^`);
   }
-  
+
 };
 
 //============================================================================================================================
@@ -185,6 +181,7 @@ const keywordSortPriceAsc = () => {   // 2.최저가
     (`/product/productAscendingList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}`)
     alert(`현재 파람 값으로 최저가순 재검색합니다 ^~^`);
   }
+
 }
 
 //============================================================================================================================
@@ -209,6 +206,7 @@ const keywordSortPriceDesc = () => {   // 3.최고가
     (`/ProductListPage?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${selectedOptions.genre}`);
     alert(`현재 파람 값으로 최고가순 재검색합니다 ^~^`);
   }
+
 }
 
 //============================================================================================================================
@@ -229,7 +227,6 @@ const keywordSortPriceDesc = () => {   // 3.최고가
 
       alert(`판매량순으로 상품 검색합니다 ^~^`);
 
-
     } else {
       requestToServer
       (`/product/productSellCountList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}`)
@@ -237,6 +234,9 @@ const keywordSortPriceDesc = () => {   // 3.최고가
       (`/ProductListPage?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${selectedOptions.genre}`);
       alert(`현재 파람 값으로 판매량순 재검색합니다 ^~^`);
     }
+
+    
+
   }
 //============================================================================================================================
 
@@ -254,6 +254,7 @@ const keywordSortGradeAvg = () => {   // 5.평점순
 
     urlNavigate
     (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
+
     alert(`별점이 높은 순으로 상품 검색합니다 ^~^`);
 
   } else {
@@ -262,7 +263,7 @@ const keywordSortGradeAvg = () => {   // 5.평점순
     console.log(`nomParam : ` ,nowParams.get('domestic') , nowParams.get('category') , nowParams.get('genre'))
     alert(`현재 파람 값으로 별점순 상품 재검색합니다 ^~^`);
   }
-  
+
 }
 
 //============================================================================================================================
@@ -281,6 +282,7 @@ const keywordSortViewCount = () => {   // 6.리뷰순
 
     urlNavigate
     (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
+    
     alert(`리뷰많은 제품순으로 검색합니다 ^~^`);
 
   } else {
@@ -289,7 +291,7 @@ const keywordSortViewCount = () => {   // 6.리뷰순
     console.log(`nomParam : ` ,nowParams.get('domestic') , nowParams.get('category') , nowParams.get('genre'))
     alert(`현재 파람 값으로 리뷰순 상품 재검색합니다 ^~^`);
   }
-  
+
 }
 
 
@@ -310,6 +312,7 @@ const keywordLimitedPrice = () => {   // 7.제한가격검색
 
     urlNavigate
     (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
+
     alert(`${limitedMinPrice}원 부터 ${limitedMaxPrice}원 까지의 상품 검색합니다 ^~^`);
 
   } else {
@@ -318,13 +321,11 @@ const keywordLimitedPrice = () => {   // 7.제한가격검색
     console.log(`nomParam : ` ,nowParams.get('domestic') , nowParams.get('category') , nowParams.get('genre'))
     alert(`현재 파람 값으로 ${limitedMinPrice}원 부터 ${limitedMaxPrice}원 까지의 상품 재검색합니다 ^~^`);
   }
-  
 }
 
 //============================================================================================================================
 
 const [textWordValue,setTextWordValue] = useState('');
-
 
 const searchTextWord = () => {  
   setGetMapping('searchTextWord');

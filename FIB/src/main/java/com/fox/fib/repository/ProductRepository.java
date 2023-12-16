@@ -28,33 +28,32 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 		@Param("genre") String genre); // 2.최저가순
 
 
-	@Query("SELECT p FROM Product p WHERE (:domestic = '0' OR p.domestic = :domestic) " + "AND (:category = '0' OR p.category = :category) "
-		+ "AND (:genre = '0' OR p.genre = :genre) order by p.price desc")
+	@Query("SELECT p FROM Product p WHERE (p.protype=1) and  (:domestic = '0' OR p.domestic = :domestic) "
+		+ "AND (:category = '0' OR p.category = :category) " + "AND (:genre = '0' OR p.genre = :genre) order by p.price desc")
 	List<Product> selectListSortOfPriceDesc(@Param("domestic") String domestic, @Param("category") String category,
 		@Param("genre") String genre); // 3.최고가순
 
 
-	@Query("SELECT p FROM Product p WHERE (:domestic = '0' OR p.domestic = :domestic) " + "AND (:category = '0' OR p.category = :category) "
-		+ "AND (:genre = '0' OR p.genre = :genre) order by p.sellcount desc")
+	@Query("SELECT p FROM Product p WHERE (p.protype=1) and  (:domestic = '0' OR p.domestic = :domestic) "
+		+ "AND (:category = '0' OR p.category = :category) " + "AND (:genre = '0' OR p.genre = :genre) order by p.sellcount desc")
 	List<Product> selectListSortOfSellCount(@Param("domestic") String domestic, @Param("category") String category,
 		@Param("genre") String genre); // 4.판매량순
 
 
-	@Query("SELECT p FROM Product p WHERE (:domestic = '0' OR p.domestic = :domestic) " + "AND (:category = '0' OR p.category = :category) "
-		+ "AND (:genre = '0' OR p.genre = :genre) order by p.gradeavg desc")
+	@Query("SELECT p FROM Product p WHERE (p.protype=1) and  (:domestic = '0' OR p.domestic = :domestic) "
+		+ "AND (:category = '0' OR p.category = :category) " + "AND (:genre = '0' OR p.genre = :genre) order by p.gradeavg desc")
 	List<Product> selectListSortOfGradeAvg(@Param("domestic") String domestic, @Param("category") String category,
 		@Param("genre") String genre); // 5.평점순
 
 
-	@Query("SELECT p FROM Product p WHERE (:domestic = '0' OR p.domestic = :domestic) " + "AND (:category = '0' OR p.category = :category) "
-		+ "AND (:genre = '0' OR p.genre = :genre) order by p.viewcount desc")
+	@Query("SELECT p FROM Product p WHERE (p.protype=1) and  (:domestic = '0' OR p.domestic = :domestic) "
+		+ "AND (:category = '0' OR p.category = :category) " + "AND (:genre = '0' OR p.genre = :genre) order by p.viewcount desc")
 	List<Product> selectListSortOfViewCount(@Param("domestic") String domestic, @Param("category") String category,
 		@Param("genre") String genre); // 6.리뷰순
 
 
 	@Query("SELECT p FROM Product p WHERE (p.protype=1) and (:domestic = '0' OR p.domestic = :domestic) "
-		+ "AND (:category = '0' OR p.category = :category) "
-		+ "AND (:genre = '0' OR p.genre = :genre) and (p.price between :minprice and :maxprice) order by p.price asc")
+		+ "AND (:category = '0' OR p.category = :category) AND (:genre = '0' OR p.genre = :genre) and (p.price between :minprice and :maxprice) order by p.price asc")
 	List<Product> selectListLimitedPrice(@Param("domestic") String domestic, @Param("category") String category,
 		@Param("genre") String genre, @Param("minprice") int minprice, @Param("maxprice") int maxprice); // 7.제한가격검색
 
