@@ -22,15 +22,22 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
 	@Transactional
 	@Modifying
-	@Query(value = "SELECT AVG(r.star_count) FROM Review r WHERE r.product_code = :pcode")
-	double calculateAvg(@Param("pcode") int product_code);
+	@Query(value = "UPDATE Product p SET p.gradeavg = (SELECT AVG(r.star_count) FROM Review r WHERE r.product_code = :pcode) WHERE p.product_code = :pcode")
+	void calculateAvg(@Param("pcode") int product_code);
+
+
+	@Transactional
+	@Query(value = "SELECT COUNT(r) FROM Review r WHERE r.product_code = :pcode")
+	int calculateViewCount(@Param("pcode") int product_code);
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE Product p SET p.gradeavg = :caledavg WHERE p.product_code = :pcode")
-	void updateGradeAvg(@Param("pcode") int product_code, @Param("caledavg") double calculatedAvg);
+	@Query("UPDATE Product p SET p.viewcount = :caledvc WHERE p.product_code = :pcode")
+	void updateViewCount(@Param("pcode") int product_code, @Param("caledvc") int calculatedViewCount);
 
 
+
+	// ===== 멍같이 유기 ===================================================================================================
 	@Transactional
 	@Modifying
 	@Query("UPDATE Product p SET p.viewcount = p.viewcount+1 WHERE p.product_code = :pcode")
@@ -41,5 +48,18 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 	@Modifying
 	@Query("UPDATE Product p SET p.viewcount = p.viewcount-1 WHERE p.product_code = :pcode")
 	void subtractViewCount(@Param("pcode") int product_code);
+
+//	@Transactional
+//	@Modifying
+//	@Query(value = "SELECT AVG(r.star_count) FROM Review r WHERE r.product_code = :pcode")
+//	double calculateAvg(@Param("pcode") int product_code);
+
+
+//	@Transactional
+//	@Modifying
+//	@Query("UPDATE Product p SET p.gradeavg = :caledavg WHERE p.product_code = :pcode")
+//	void updateGradeAvg(@Param("pcode") int product_code, @Param("caledavg") double calculatedAvg);
+
+
 
 }

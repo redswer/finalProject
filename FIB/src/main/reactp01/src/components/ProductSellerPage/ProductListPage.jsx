@@ -432,6 +432,9 @@ const ProductPagination = pageNumbers.map(number => (
               content={d.content}
               price={d.price}
               sellcount={d.sellcount}
+              gradeavg={d.gradeavg}
+              viewcount={d.viewcount}
+              regdate={d.regdate}
               urlNavigate={urlNavigate}
             />          
   ))}

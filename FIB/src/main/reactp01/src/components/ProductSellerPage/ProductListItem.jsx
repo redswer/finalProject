@@ -171,6 +171,9 @@ const dataToPayment = [{
           </div>
 
           <hr />
+            <span>평균 별점 : {props.gradeavg}</span>&nbsp;&nbsp;&nbsp;
+            <span>리뷰수 : {props.viewcount}</span>
+          <hr />
 
           <div className="seller_product_expense">
 
@@ -195,13 +198,6 @@ const dataToPayment = [{
             <span className='product_sales_rate_1'> : </span>
             <span className='product_sales_rate'>{props.sellcount}</span>
             <span className='product_sales_rate_3'> 권</span>
-          </div>
-
-          <div className='seller_product_sales_rate_box'>
-            <span className='product_sales_rate_1'>평균별점</span>
-            <span className='product_sales_rate_1'> : </span>
-            {/* <span className='product_sales_rate'>{starCountAverage}</span> */}
-            <span className='product_sales_rate_3'> 몰라요</span>
           </div>
 
         <div className='seller_product_form_container'>
