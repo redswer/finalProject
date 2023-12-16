@@ -139,10 +139,11 @@ public class UserController {
 	@PostMapping("findPassword")
 	public ResponseEntity<String> findPassword(@RequestBody User request) {
 		User user = service.selectOne(request.getId());
-		if (user.getId() == request.getId()
-				&& user.getName() == request.getName()
-				&& user.getBirthday() == request.getBirthday()
-				&& user.getPhone_number() == request.getPhone_number()) {
+		
+		if (user.getId().equals(request.getId()) 
+				&& user.getName().equals(request.getName())
+				&& user.getBirthday().equals(request.getBirthday())
+				&& user.getPhone_number().equals(request.getPhone_number())) {
 			
 			String randomPassword = RandomPasswordCreator.generateRandomPassword(8);
 			
@@ -153,11 +154,11 @@ public class UserController {
 	        message.setText(randomPassword);
 	        emailSender.send(message);
 	        
-	        user.setPassword(passwordEncoder.encode(randomPassword));
-	        service.register(user);
+	        System.out.println(randomPassword);
+	        
+	        service.passwordUpdate(passwordEncoder.encode(randomPassword), request.getId());
 
 	        return new ResponseEntity<>("아이디(메일)로 임시 비밀번호가 발급되었습니다.", HttpStatus.OK);
-			
 		} else {			
 	        return new ResponseEntity<>("입력하신 정보가 일치하지 않습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -168,9 +169,6 @@ public class UserController {
 	// ** 비밀번호 변경
 	@PostMapping("/passwordUpdate")
 	public ResponseEntity<String> passwordUpdate(@RequestBody PasswordUpdateDTO request) {
-		System.out.println(request.getId());
-		System.out.println(request.getPassword());
-		System.out.println(request.getNewPassword());
 		if (passwordEncoder.matches(request.getPassword(), service.selectOne(request.getId()).getPassword())) {
 			service.passwordUpdate(passwordEncoder.encode(request.getNewPassword()), request.getId());
 			return new ResponseEntity<> ("비밀번호가 변경되었습니다.", HttpStatus.OK);
@@ -185,13 +183,9 @@ public class UserController {
 	public ResponseEntity<String> delete(@RequestBody User request) {
 
 		if (passwordEncoder.matches(request.getPassword(), service.selectOne(request.getId()).getPassword())) {
-			try {
-				service.delete(request.getId());
-				dservice.deleteIdAddress(request.getId());
-				return new ResponseEntity<> ("탈퇴되었습니다", HttpStatus.OK);
-			} catch (Exception e) {
-				return new ResponseEntity<> ("서버 오류", HttpStatus.UNAUTHORIZED);
-			}			
+			dservice.deleteIdAddress(request.getId());
+			service.delete(request.getId());
+			return new ResponseEntity<> ("탈퇴되었습니다", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<String> ("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_GATEWAY);
 		}

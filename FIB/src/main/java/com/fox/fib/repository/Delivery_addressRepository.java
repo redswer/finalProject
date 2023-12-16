@@ -27,6 +27,7 @@ public interface Delivery_addressRepository extends JpaRepository<Delivery_addre
 	int basicUpdate();
 	
 	@Modifying
-	@Query(nativeQuery = true, value="delete from delivery_address where id= :id")
-	int deleteIdAddress(@Param("id") String id);
+	@Transactional
+	@Query(nativeQuery = true, value="delete from delivery_address where user_id= :user_id")
+	int deleteIdAddress(@Param("user_id") String id);
 }
