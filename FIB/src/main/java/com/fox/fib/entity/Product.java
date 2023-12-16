@@ -19,8 +19,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//public class Product extends BaseEntity {
-public class Product {
+//public class Product {
+public class Product extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int product_code; // 1. 제품코드 (primary key)
@@ -55,6 +55,10 @@ public class Product {
 	private int stack; // 16. 제품 재고수량
 
 	private int sellcount; // 17. 판매량
+
+	private double gradeavg; // 18. 평점평균
+
+	private int viewcount; // 19. 리뷰개수
 
 
 	@Transient                         // SQL에서 제외시켜야함
