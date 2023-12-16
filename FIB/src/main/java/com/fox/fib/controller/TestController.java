@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fox.fib.domain.User_couponId;
 import com.fox.fib.entity.Coupon;
 import com.fox.fib.entity.Faq;
 import com.fox.fib.entity.Inquiry;
@@ -80,27 +81,46 @@ public class TestController {
 	
 	// ****** React(Front) Project에서 Server로 전달================================================================================= 	
 	// 유저가 쿠폰 받기
+//	@PostMapping("/userCouponGet")
+//	public String userCouponGet(@RequestBody User_coupon entity, Model model)  throws IOException {
+//			String uri = "/userCoupon/userCouponList";
+//			log.info(entity.getCoupon_code());
+//			log.info(entity.getId());
+//		try {
+//			int getCode = entity.getCoupon_code();
+//			String getId = entity.getId();
+//			entity.setCoupon_code(getCode);
+//			entity.setId(getId);
+//			log.info("** 쿠폰 받기 성공 => "+userCouponService.save(entity));
+//
+//			uri = "redirect:userCouponList";
+//		} catch (Exception e) {
+//			log.info("** 쿠폰 받기 실패 exception => "+e.toString());
+//			model.addAttribute("message", "쿠폰 등록에 실패했습니다.");
+//		}
+//		return uri;
+//	}
+
 	@PostMapping("/userCouponGet")
-	public String userCouponGet(@RequestBody User_coupon entity, Model model)  throws IOException {
-			String uri = "/userCoupon/userCouponList";
-			log.info(entity.getCoupon_code());
-			log.info(entity.getId());
+	public ResponseEntity<String> userCouponGet(@RequestBody User_coupon entity, Model model)  throws IOException {
+			log.info("쿠폰 코드 : " + entity.getCoupon_code());
+			log.info("로그인 ID : " + entity.getId());
 		try {
 			int getCode = entity.getCoupon_code();
 			String getId = entity.getId();
-			log.info(getCode);
-			log.info(getId);
-	      	        
-			entity.setCoupon_code(getCode);
-			entity.setId(getId);
-			log.info("** 쿠폰 받기 성공 => "+userCouponService.save(entity));
-
-			uri = "redirect:userCouponList";
+			User_couponId id = new User_couponId(getId, getCode);
+			
+			if(userCouponService.selectOne(id) == null && userCouponService.save(entity) > 0) {
+				log.info("쿠폰발급 성공!");
+				return ResponseEntity.ok("쿠폰을 성공적으로 발급하였습니다.");
+	        }else {
+	        	log.info("이미 발급받은 쿠폰입니다.");
+	        	return ResponseEntity.badRequest().body("이미 해당 쿠폰이 발급되었습니다.");
+	        }
 		} catch (Exception e) {
 			log.info("** 쿠폰 받기 실패 exception => "+e.toString());
-			model.addAttribute("message", "쿠폰 등록에 실패했습니다.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("쿠폰 발급 중에 오류가 발생했습니다.");
 		}
-		return uri;
 	}
 	
 	// 현주 coupon 발급 참조

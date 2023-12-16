@@ -4,6 +4,8 @@ import './CouponPageItem.css';
 
 function CouponPageItem() {
     const [couponList, setCouponList] = useState([]);
+    const [resultMessage, setResultMessage] = useState('');
+
 
     useEffect(() => {
         axios
@@ -24,8 +26,6 @@ function CouponPageItem() {
             const loginInfo = JSON.parse(sessionStorage.getItem('user'));
             const userId = loginInfo ? loginInfo.id : null;
 
-            console.log('쿠폰코드확인' + couponCode);
-            console.log('Opening popup');
             setPopupOpen(true);
 
             const data = {
@@ -35,16 +35,19 @@ function CouponPageItem() {
 
             axios.post('/test/userCouponGet', data)
                 .then(response => {
-                    console.log('유저쿠폰 받기 요청 확인!' + response.data);
+                    console.log('유저 쿠폰 발급 요청 확인!' + response.data);
+                    setResultMessage(response.data);
+                    alert(response.data); // 서버로부터 받은 응답을 알림창으로 표시하거나, 상태에 따라 다른 처리 가능
                 })
                 .catch(error => {
-                    console.error('유저쿠폰 받기 요청 실패:', error);
+                    console.error('유저 쿠폰 발급 요청 실패:', error);
                 });
         };
 
         const handleClosePopup = () => {
             console.log('Closing popup');
             setPopupOpen(false);
+            setResultMessage('');
         };
 
         return (
@@ -57,7 +60,7 @@ function CouponPageItem() {
                 {isPopupOpen && (
                     <div className="popup" onClick={handleClosePopup}>
                         <div className="popup_content">
-                            <span className="close">쿠폰 받기 성공!</span>
+                            <span className="close">{resultMessage}</span>
                         </div>
                     </div>
                 )}
