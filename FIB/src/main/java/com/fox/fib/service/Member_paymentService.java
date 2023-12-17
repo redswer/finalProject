@@ -2,6 +2,7 @@ package com.fox.fib.service;
 
 import java.util.List;
 
+import com.fox.fib.domain.OrderSummaryDTO;
 import com.fox.fib.entity.Member_payment;
 
 public interface Member_paymentService {
@@ -14,5 +15,6 @@ public interface Member_paymentService {
 	
 	// 주문정보 삭제
 	int deleteOne(Long member_payment_code);
-	
+	// 관리자 페이지용 양세현=========================================================================
+	List<OrderSummaryDTO> getDailyOrderSummary(String startDate, String endDate);
 }

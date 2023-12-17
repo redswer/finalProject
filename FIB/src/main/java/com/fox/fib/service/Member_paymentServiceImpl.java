@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.fox.fib.domain.OrderSummaryDTO;
 import com.fox.fib.entity.Member_payment;
 import com.fox.fib.repository.Member_paymentRepository;
 
@@ -33,6 +34,10 @@ public class Member_paymentServiceImpl implements Member_paymentService {
 	public int deleteOne(Long member_payment_code) {
 		return repository.updateOne(member_payment_code);
 	}
-		
+	// 관리자 페이지용 양세현=========================================================================
+	@Override
+    public List<OrderSummaryDTO> getDailyOrderSummary(String startDate, String endDate) {
+        return repository.getDailyOrderSummary(startDate, endDate);
+    }
 	
 }

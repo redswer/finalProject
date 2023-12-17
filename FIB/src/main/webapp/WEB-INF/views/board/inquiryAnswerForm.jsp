@@ -65,7 +65,7 @@
 				<tr height="40">
 					<th>내용</th>
 					<td colspan="4">
-						<textarea class="form-control" name="content" style="width:100%; height: 300px; resize: none;" readonly>${requestScope.inquiryList.content}</textarea>
+						<textarea class="form-control" name="content" style="width:100%; height: 200px; resize: none;" readonly>${requestScope.inquiryList.content}</textarea>
 						<br>
 						<span id="m2Message" class="eMessage"></span>
 					</td>
@@ -80,7 +80,7 @@
 				<tr height="40">
 					<th>답변 내용</th>
 					<td colspan="4">
-						<textarea class="form-control" name="answer" id="answer" style="width: 100%; height: 300px; resize: none;" placeholder="내용을 입력해 주세요.">${requestScope.inquiryList.answer}</textarea>
+						<textarea class="form-control" name="answer" id="answer" style="width: 100%; height: 200px; resize: none;" placeholder="내용을 입력해 주세요.">${requestScope.inquiryList.answer}</textarea>
 						<br>
 						<span id="m2Message" class="eMessage"></span>
 					</td>
@@ -95,6 +95,5 @@
 			</c:if>
 		</table>
 	</form>
-	<hr>
 </body>
 </html>
