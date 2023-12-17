@@ -1,4 +1,4 @@
-.order_list_product_card_container {
+/* .order_list_product_card_container {
     display: flex;
     height: 100px;
 }
@@ -36,7 +36,6 @@
     width: 150px;
 }
 
-/* 공통정보 끝. 이제 세부 설정 시작 */
 
 .order_list_item_date_number {
     flex-direction: column;
@@ -78,7 +77,6 @@
 }
 
 .order_list_item_category {
-    /* text-align: center; */
     background-color: rgb(132, 132, 132);
     color: white;
     border-radius: 3px;
@@ -152,4 +150,4 @@
 
 .order_list_item_cancel_btn button:hover {
     background-color: rgb(255, 0, 0);
-}
+} */

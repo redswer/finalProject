@@ -1,11 +1,86 @@
 .orderListPageContainer {
-    width: 1180px;
+    width: 1240px;
     margin: 0 auto;
-    border: 2px solid blue;
+}
+
+
+/* [1] 주문/배송조회 & 날짜 선택 .=============================================================================== */
+
+.orderdelivery-title {
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 25px;
+    margin-bottom: 22px;
+}
+
+.orderlist_sub_title {
+    font-size: 15px;
+    margin-bottom: 25px;
+}
+
+.orderDetailSearchDateArea {
+    width: 900px;
+    height: 50px;
+    background-color: rgb(211, 211, 211);
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.orderDetailForSelectingDateDirection {
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 110%;
+}
+
+.orderDetailSelectingDateBox {
+    height: 100%;
+    width: 750px;
+    display: flex;
+    background-color: rgb(233, 232, 232);
+    /* justify-content: center; */
+    align-self: center;
+}
+
+.orderDetailSelectingDate {
+    line-height: 50px;
+    margin-left: 20px;
+    /* background-color: aqua; */
+    align-items: center;
+}
+
+.orderDetailSelectingDate select {
+    font-size: 18px;
+}
+
+
+
+.selectdate-detaildate-year,
+.selectdate-detaildate-month,
+.selectdate-detaildate-day {
+    margin-right: 8px;
+}
+
+.selectdate-detaildate-margin {
+    margin-left: 4px;
+    margin-right: 12px;
+    font-weight: bold;
+    /* font-size: 20px; */
+}
+
+
+
+
+/* [2] thead : orderDetailTable .=============================================================================== */
+
+.orderListPageTable {
+    width: 100%;
+    /* border: 2px solid blue; */
     border-collapse: collapse;
 }
 
-.orderListPageContainer>thead th {
+.orderListPageTable>thead th {
     text-align: center;
     padding: 15px 0;
     font-size: 18px;
@@ -14,12 +89,20 @@
     background-color: rgb(189, 189, 189);
 }
 
-.orderListPageContainer th,
-.orderListPageContainer td {
+.orderListPageTable th,
+.orderListPageTable td {
     border: 1px solid black;
 }
 
-/* [3] map돌리는 orderDetailItem.=============================================================================== */
+/* [3] tbody : map돌리는 orderDetailItem .=============================================================================== */
+
+.orderDetailDataIsVacant {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    height: 300px;
+    line-height: 300px;
+}
 
 .orderDetailItem {
     height: 80px;

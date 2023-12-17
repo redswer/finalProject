@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,9 +59,8 @@ public class BookmarkController {
 	// ===============================================================================================================
 
 	@PostMapping(value = "/bookmarkOnSaveAction")
-	public int bookmarkOnSaveAction(@RequestBody PIPDTO savedDataOnBookmark, HttpSession session, Product pentity, Bookmark bentity)
-		throws IOException {
-		int uDNum = 99999999;
+	public ResponseEntity<?> bookmarkOnSaveAction(@RequestBody PIPDTO savedDataOnBookmark, HttpSession session, Product pentity,
+		Bookmark bentity) throws IOException {
 		try {
 			String loginID = savedDataOnBookmark.getId();
 
@@ -79,19 +80,17 @@ public class BookmarkController {
 				bentity.setPrice(pentity.getPrice());
 				bookmarkservice.save(bentity);
 
-				return bentity.getProduct_code();
+				log.info(" bookmarkOnSave 성공");
+				return ResponseEntity.ok("새 상품을 찜목록에 담았어요");
 
 			} else {
-				uDNum = 777777;
+				return ResponseEntity.ok("이미 찜목록에 상품을 담았어요");
 			}
 
-			log.info(" bookmarkOnSave 성공");
 		} catch (Exception e) {
 			log.info("** insert Exception => " + e.toString());
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("북마크 오류");
 		}
-
-		return uDNum;
-
 	}
 
 
