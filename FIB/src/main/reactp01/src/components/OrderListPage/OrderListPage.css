@@ -1,70 +1,45 @@
 .orderListPageContainer {
-    width: 1100px;
+    width: 1180px;
     margin: 0 auto;
     border: 2px solid blue;
-    table-layout: fixed;
+    border-collapse: collapse;
 }
 
-  .orderListPageContainer th, 
-  .orderListPageContainer td {
-    border: 1px solid #ddd;
-    padding: 8px;
+.orderListPageContainer>thead th {
     text-align: center;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-
-.order_list_head_box {
-    display: flex;
-    font-size: 15px;
-    font-weight: 700;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 22px;
+    background-color: rgb(189, 189, 189);
 }
 
-
-.order_list_head_date_number {
-    background-color: rgb(195, 195, 195);
-    width: 200px;
+.orderListPageContainer th,
+.orderListPageContainer td {
     border: 1px solid black;
-    text-align: center;
-    height: 30px;
-    line-height: 30px;
 }
 
-.order_list_head_product_infomation {
-    background-color: rgb(195, 195, 195);
-    width: 400px;
-    border: 1px solid black;
-    text-align: center;
-    height: 30px;
-    line-height: 30px;
+/* [3] map돌리는 orderDetailItem.=============================================================================== */
+
+.orderDetailItem {
+    height: 80px;
 }
 
-.order_list_head_price_amount {
-    background-color: rgb(195, 195, 195);
-    width: 150px;
-    /* 750 , 1100-750 =350 */
-    border: 1px solid black;
+
+.orderDetailDataPmCode {
     text-align: center;
-    height: 30px;
-    line-height: 30px;
 }
 
-.order_list_head_delivery-state {
-    background-color: rgb(195, 195, 195);
-    width: 200px;
-    border: 1px solid black;
-    text-align: center;
-    height: 30px;
-    line-height: 30px;
+.orderDetailPmCode {
+    margin-top: 10px;
 }
 
-.order_list_head_cancel_btn {
-    background-color: rgb(195, 195, 195);
-    width: 150px;
-    border: 1px solid black;
-    text-align: center;
-    height: 30px;
-    line-height: 30px;
+
+.orderListItemImg {
+    display: inline-block;
+    border: 1px solid rgb(154, 154, 154);
+    width: 40px;
+    height: 55px;
+    margin-left: 10px;
+    margin-top: 5px;
 }
