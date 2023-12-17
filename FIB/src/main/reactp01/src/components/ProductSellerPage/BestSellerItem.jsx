@@ -1,10 +1,10 @@
-import './ProductListItem.css';
+import './BestSellerItem.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const ProductListItem = (props) => {
+const BestSellerItem = (props) => {
   // =================================================================================================================
   // const [sell_countRate, setCount] = useState(0);
   // const targetNumber = props.sellcount; // 최종 도달 숫자
@@ -171,7 +171,8 @@ const dataToPayment = [{
           </div>
 
           <hr />
-            <span>평균 별점 : {props.gradeavg}</span>&nbsp;&nbsp;&nbsp;
+            <span>별점 : </span>
+            <span>{props.gradeavg}</span>&nbsp;&nbsp;&nbsp;
             <span>리뷰수 : {props.viewcount}</span>
           <hr />
 
@@ -238,4 +239,4 @@ const dataToPayment = [{
   );
 };
 
-export default ProductListItem;
+export default BestSellerItem;

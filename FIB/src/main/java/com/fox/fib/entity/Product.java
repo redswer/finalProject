@@ -26,6 +26,7 @@ public class Product extends BaseEntity {
 	private int product_code; // 1. 제품코드 (primary key)
 
 	private String protype; // 2. 제품분류코드 (책 or 도서제품)
+
 	private String domestic; // 3. 해외 or 국내
 
 	private String writer;  // 4. 작가명 (null 가능)
