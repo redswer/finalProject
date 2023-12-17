@@ -55,6 +55,7 @@ public class CouponController {
 	public String couponRegister(HttpServletRequest request, Coupon entity, Model model)  throws IOException {
 		String uri = "/coupon/couponRegister";
 		
+		// 프론트엔드 리액트 이미지폴더 주소
 		String realPath = "C:\\Users\\yangs\\Desktop\\FOX\\FIB\\src\\main\\reactp01\\public\\img\\";
 		String file1, file2="";
 		

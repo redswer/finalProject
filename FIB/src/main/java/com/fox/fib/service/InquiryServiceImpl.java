@@ -58,4 +58,8 @@ public class InquiryServiceImpl implements InquiryService {
 	    return repository.getInquiryList(pageable);
 	}
 
+	@Override
+	public List<Inquiry> getUnanswerInquiryList(Boolean answer_check) {
+	    return repository.getUnanswerInquiryList(answer_check);
+	}
 }

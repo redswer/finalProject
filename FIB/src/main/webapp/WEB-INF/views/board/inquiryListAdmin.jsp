@@ -13,7 +13,6 @@
 <body>
     <h2>1:1문의 관리</h2>
     <div class="inquiry_register_search">
-		<span class="inquiry_register" onclick="inquiryRegister()"> 등록하기</span>
 		<div class="inquiry_search">
 			<input type="checkbox" class="inquiry_answer_toggle" id="inquiry_answer_toggle" onclick="toggleAnswerSort()">답변여부</button>
 			<!-- onchange속성으로 select의 option값을 전달하려면 인자로 this.value를 사용해야 함 -->

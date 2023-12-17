@@ -21,5 +21,9 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Integer> {
 	@Transactional
 	@Query("select i from Inquiry i ORDER BY i.inquiry_code DESC")
 	Page<Inquiry> getInquiryList(Pageable pageable);
+
+	@Transactional
+	@Query("select i from Inquiry i where answer_check=0 ORDER BY i.inquiry_code DESC")
+	List<Inquiry> getUnanswerInquiryList(Boolean answer_check);
 }
 
