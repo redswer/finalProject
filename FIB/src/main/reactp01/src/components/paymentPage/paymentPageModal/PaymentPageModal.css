@@ -21,22 +21,55 @@
     height: 40px;
     background-color: white;
     font-weight: bold;
-    border: solid 1px lightgrey;
+    border: solid 1px rgb(176, 176, 176);
     border-radius: 5px;
     cursor: pointer;
 }
 
 .payment_modal_title_btn:hover {
-    border: 2px solid lightgrey;
+    border: 1.5px solid rgb(176, 176, 176);
 }
 
 .payment_modal_line {
-    background-color: rgb(233, 233, 233);
+    background-color: rgb(176, 176, 176);
     height: 1px;
     border: 0px;
 }
 
-.payment_modal_list>div {
+.payment_modal_list {
     justify-content: space-between;
-    margin-top: 30px;
+    margin-top: 20px;
+}
+
+.payment_modal_list input {
+    display: none;
+}
+
+.payment_modal_list input:checked+label {
+    border: 1.5px solid rgb(160, 160, 160);
+}
+
+.payment_modal_list label {
+    padding: 20px 0;
+    width: 48%;
+    text-align: center;
+    border: 1px solid rgb(176, 176, 176);
+    cursor: pointer;
+}
+
+.modal_coupon_content {
+    margin: 0 auto;
+    width: 86%;
+    text-align: left;
+}
+
+.modal_coupon_title {
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(50, 50, 50);
+}
+
+.modal_coupon_date {
+    font-size: 13px;
+    color: rgb(72, 72, 72);
 }

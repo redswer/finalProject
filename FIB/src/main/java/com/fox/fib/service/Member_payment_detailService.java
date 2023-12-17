@@ -2,6 +2,8 @@ package com.fox.fib.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import com.fox.fib.entity.Member_payment_detail;
 
 public interface Member_payment_detailService {
@@ -16,7 +18,9 @@ public interface Member_payment_detailService {
 	Long findMaxByMember_payment_code();
 	
 	// 주문상세 등록
-	int insertPaymentDetail(Long payment_code, String userId, int product_code, int proamount);
+	int insertPaymentDetail(Long payment_code, String userId, int product_code, int proamount,
+			String payment_date, int origin_price, int final_price, String delivery_state, String arrive_date,
+			String protype, String domestic, String title, String image, int price);
 	
 	// 주문상세 수정
 //	Long save(Member_payment_detail entity);

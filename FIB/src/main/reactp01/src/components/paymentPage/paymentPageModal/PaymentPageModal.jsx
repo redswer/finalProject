@@ -1,8 +1,10 @@
 import './PaymentPageModal.css';
-import React, { useState } from 'react';
 import Modal from 'react-modal';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const PaymentPageModal = ({ setCoupon_put }) => {
+const PaymentPageModal = ({ setCoupon_selected }) => {
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
@@ -15,26 +17,65 @@ const PaymentPageModal = ({ setCoupon_put }) => {
 
     const modalStyles = {
         content: {
-            width: '600px',
+            width: '35%',
             padding: '45px 0',
-            border: 'solid 1px lightgrey',
+            border: 'solid 1px rgb(176, 176, 176)',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)'
         }
     };
 
-    const coupon_selected = (e) => {
-        setCoupon_put(parseInt(e.target.value));
-    }
-
     // ========================================================================
-    // 쿠폰 데이터 가져오기
-    // 전체 쿠폰
+    // 쿠폰 조회
+    const [couponList, setCouponList] = useState('');
+    const [userCuponList, setUserCuponList] = useState('');
 
+    useEffect(() => {
+        axios.get(`/restcoupon/couponList`)
+            .then((response) => {
+                setCouponList(response.data);
+                console.log('쿠폰 내역 조회 성공');
+            }).catch((err) => {
+                console.log(`쿠폰 내역 조회 실패 : ${err.message}`);
+            });
 
-    // 회원별 쿠폰
+        axios.get(`/restuserCoupon/userCouponList`)
+            .then((response) => {
+                setUserCuponList(response.data);
+                console.log('회원쿠폰 내역 조회 성공');
+            }).catch((err) => {
+                console.log(`회원쿠폰 내역 조회 실패 : ${err.message}`);
+            });
+    }, []);
 
+    const [couponArray, setCouponArray] = useState([]);
+
+    useEffect(() => {
+        const array = [];
+
+        for (const userCouponOne of userCuponList) {
+            for (const couponOne of couponList) {
+                if (userCouponOne.coupon_code === couponOne.coupon_code) {
+                    array.push(couponOne);
+                }
+            }
+        }
+
+        setCouponArray(array);
+
+    }, [couponList, userCuponList]);
+
+    // =================================================================
+    // 선택한 쿠폰 데이터
+    // const coupon_put = (coupon_code, coupon_title, discount_rate, max) => (e) => {
+    //     setCoupon_selected((prevState) => {
+
+    //     });
+    // }
+    const coupon_put = (coupon_code) => {
+        setCoupon_selected(coupon_code);
+    }
 
     return (
         <div>
@@ -56,49 +97,32 @@ const PaymentPageModal = ({ setCoupon_put }) => {
 
                     <hr className="payment_modal_line" />
 
-                    <div className="payment_modal_list">
-                        <div className="d-flex">
-                            <span>
-                                <input className='coupon_select' onClick={coupon_selected} type="radio" name="payment_coupon" id="coupon_input_label_01" value="5000" />
-                                <label htmlFor="coupon_input_label_01">신규 회원가입 환영 쿠폰</label>
-                            </span>
-                            <span>5,000원</span>
-                        </div>
-                        <div className="d-flex">
-                            <span>
-                                <input className='coupon_select' onClick={coupon_selected} type="radio" name="payment_coupon" id="coupon_input_label_02" value="1000" />
-                                <label htmlFor="coupon_input_label_02">생일 축하 쿠폰</label>
-                            </span>
-                            <span>1,000원</span>
-                        </div>
-                        <div className="d-flex">
-                            <span>
-                                <input className='coupon_select' onClick={coupon_selected} type="radio" name="payment_coupon" id="coupon_input_label_03" value="1500" />
-                                <label htmlFor="coupon_input_label_03">가을맞이 이벤트 쿠폰</label>
-                            </span>
-                            <span>1,500원</span>
-                        </div>
-                        <div className="d-flex">
-                            <span>
-                                <input className='coupon_select' onClick={coupon_selected} type="radio" name="payment_coupon" id="coupon_input_label_04" value="1000" />
-                                <label htmlFor="coupon_input_label_04">여름휴가는 책과 함께</label>
-                            </span>
-                            <span>1,000원</span>
-                        </div>
-                        <div className="d-flex">
-                            <span>
-                                <input className='coupon_select' onClick={coupon_selected} type="radio" name="payment_coupon" id="coupon_input_label_05" value="3000" />
-                                <label htmlFor="coupon_input_label_05">이달의 독서왕</label>
-                            </span>
-                            <span>3,000원</span>
-                        </div>
-                        <div className="d-flex">
-                            <span>
-                                <input className='coupon_select' onClick={coupon_selected} type="radio" name="payment_coupon" id="coupon_input_label_06" value="0" />
-                                <label htmlFor="coupon_input_label_06">쿠폰 적용 안함</label>
-                            </span>
-                            <span>0원</span>
-                        </div>
+                    <div className="payment_modal_list d-flex">
+                        {
+                            couponArray.map(index => (
+                                <>
+                                    <input
+                                        key={index.coupon_code}
+                                        type="radio"
+                                        name="payment_coupon"
+                                        value={index.discount_rate == 0 ? index.max : index.discount_rate}
+                                        className='modal_coupon_input'
+                                        id={`coupon_input_label_${index.coupon_code}`}
+                                        // onClick={coupon_put(index.coupon_code, index.title, index.discount_rate, index.max)}
+                                        onClick={coupon_put(index.coupon_code)}
+                                    />
+                                    <label id="modal_coupon_label" htmlFor={`coupon_input_label_${index.coupon_code}`}>
+
+                                        <img src={`../img/${index.image}`} />
+                                        <div className="modal_coupon_content">
+                                            <div className="modal_coupon_title">{index.title}</div>
+                                            <div className="modal_coupon_date">~ {index.end} 까지</div>
+                                        </div>
+
+                                    </label>
+                                </>
+                            ))
+                        }
                     </div>
                 </div>
             </Modal>

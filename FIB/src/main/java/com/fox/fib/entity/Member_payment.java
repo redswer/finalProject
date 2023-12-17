@@ -25,6 +25,7 @@ public class Member_payment {
    private String payment_option_detail;
    private int product_amount;
    private int origin_price;
+   private Long coupon_code;
    private int discount_coupon;
    private int discount_point;
    private int final_price;

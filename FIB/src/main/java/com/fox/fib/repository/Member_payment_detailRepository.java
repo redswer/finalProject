@@ -28,9 +28,17 @@ public interface Member_payment_detailRepository extends JpaRepository<Member_pa
 	// 주문상세 등록
 	@Transactional
 	@Modifying
-	@Query(nativeQuery = true, value = "insert into member_payment_detail (member_payment_code, id, product_code, proamount) " +
-		       "values (:payment_code, :userId, :product_code, :proamount)")
+	@Query(nativeQuery = true, value = "insert into member_payment_detail (member_payment_code, id, product_code, proamount, "
+			+ "payment_date, origin_price, final_price, delivery_state, arrive_date, "
+			+ "protype, domestic, title, image, price) "
+			+ "values (:payment_code, :userId, :product_code, :proamount,"
+			+ ":payment_date, :origin_price, :final_price, :delivery_state, :arrive_date,"
+			+ ":protype, :domestic, :title, :image, :price)")
 	int insertPaymentDetail(@Param("payment_code") Long payment_code, @Param("userId") String userId,
-			@Param("product_code") int product_code, @Param("proamount") int proamount);
+			@Param("product_code") int product_code, @Param("proamount") int proamount,
+			@Param("payment_date") String payment_date, @Param("origin_price") int origin_price,
+			@Param("final_price") int final_price, @Param("delivery_state") String delivery_state, @Param("arrive_date") String arrive_date,
+			@Param("protype") String protype, @Param("domestic") String domestic,
+			@Param("title") String title, @Param("image") String image, @Param("price") int price);
 
 }
