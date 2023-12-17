@@ -1,0 +1,24 @@
+.pageNationContainer {
+    border: 3px solid red;
+}
+
+.handlePageButton {
+    display: inline-block;
+    width:35px;
+    height:30px;
+    line-height: 30px;
+    margin:10px;
+}
+
+.handledpageNumbers_,
+.handledpageNumbers_currentPage {
+    display: inline-block;
+    width:30px;
+    height:30px;
+    line-height: 30px;
+    margin:5px;
+}
+
+.handledpageNumbers_currentPage {
+    background-color: red;
+}

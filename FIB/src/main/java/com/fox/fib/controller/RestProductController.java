@@ -38,8 +38,7 @@ public class RestProductController {
 		return entity;
 	}
 
-	// ==========================================================================================
-
+	// [1] 제목순. ========================================================================================
 	@GetMapping("/productSelectedList2")
 	public ResponseEntity<?> productSelectedList2(@RequestParam(name = "domestic") String domestic,
 		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
@@ -59,8 +58,8 @@ public class RestProductController {
 		}
 	}
 
-	// ==========================================================================================
 
+	// [2] 최저가순. ==========================================================================================
 	@GetMapping("/productAscendingList")
 	public ResponseEntity<?> productAscendingList(@RequestParam(name = "domestic") String domestic,
 		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
@@ -80,8 +79,7 @@ public class RestProductController {
 		}
 	}
 
-	// ==========================================================================================
-
+	// [3] 최고가순. ==========================================================================================
 	@GetMapping("/productDescendingList")
 	public ResponseEntity<?> productDescendingList(@RequestParam(name = "domestic") String domestic,
 		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
@@ -101,7 +99,70 @@ public class RestProductController {
 		}
 	}
 
-	// ==========================================================================================
+	// [4] 판매량순. ==========================================================================================
+
+	@GetMapping("/productSellCountList")
+	public ResponseEntity<?> productSellCountList(@RequestParam(name = "domestic") String domestic,
+		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
+		try {
+			log.info("productDescendingList인자 정보 : " + domestic + category + genre);
+
+			List<Product> resultList = productservice.selectListSortOfSellCount(domestic, category, genre);
+
+			log.info("[113]productDescendingList 확인 : " + resultList.toString());
+
+			return ResponseEntity.ok(resultList);
+
+		} catch (Exception e) {
+			log.info(" 삭제 실패 : " + e.toString());
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("productDescendingList 오류");
+
+		}
+	}
+
+	// [5] 평점순. ==========================================================================================
+
+	@GetMapping("/productGradeAvgList")
+	public ResponseEntity<?> productGradeAvgList(@RequestParam(name = "domestic") String domestic,
+		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
+		try {
+			log.info("productDescendingList인자 정보 : " + domestic + category + genre);
+
+			List<Product> resultList = productservice.selectListSortOfGradeAvg(domestic, category, genre);
+
+			log.info("[113]productDescendingList 확인 : " + resultList.toString());
+
+			return ResponseEntity.ok(resultList);
+
+		} catch (Exception e) {
+			log.info(" 삭제 실패 : " + e.toString());
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("productDescendingList 오류");
+
+		}
+	}
+
+	// [6] 리뷰순. ==========================================================================================
+
+	@GetMapping("/productViewCountList")
+	public ResponseEntity<?> productViewCountList(@RequestParam(name = "domestic") String domestic,
+		@RequestParam(name = "category") String category, @RequestParam(name = "genre") String genre) {
+		try {
+			log.info("productDescendingList인자 정보 : " + domestic + category + genre);
+
+			List<Product> resultList = productservice.selectListSortOfViewCount(domestic, category, genre);
+
+			log.info("[113]productDescendingList 확인 : " + resultList.toString());
+
+			return ResponseEntity.ok(resultList);
+
+		} catch (Exception e) {
+			log.info(" 삭제 실패 : " + e.toString());
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("productDescendingList 오류");
+
+		}
+	}
+
+	// [7] 제한가격검색. ==========================================================================================
 
 	@GetMapping("/productLimitedPriceList")
 	public ResponseEntity<?> productLimitedPriceList(@RequestParam(name = "domestic") String domestic,

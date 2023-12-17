@@ -44,8 +44,12 @@ public class Member_payment_detailServiceImpl implements Member_payment_detailSe
 
 	// 주문상세 등록
 	@Override
-	public int insertPaymentDetail(Long payment_code, String userId, int product_code, int proamount) {
-		return repository.insertPaymentDetail(payment_code, userId, product_code, proamount);
+	public int insertPaymentDetail(Long payment_code, String userId, int product_code, int proamount,
+			String payment_date, int origin_price, int final_price, String delivery_state, String arrive_date,
+			String protype, String domestic, String title, String image, int price) {
+		return repository.insertPaymentDetail(payment_code, userId, product_code, proamount,
+				payment_date, origin_price, final_price, delivery_state, arrive_date,
+				protype, domestic, title, image, price);
 	}
 	
 	// 주문상세 수정

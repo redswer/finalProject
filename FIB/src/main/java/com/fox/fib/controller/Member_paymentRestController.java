@@ -60,6 +60,7 @@ public class Member_paymentRestController {
 			entity.setPayment_option_detail((String)payment_formData.get("payment_option_detail"));
 			entity.setProduct_amount(Integer.parseInt((String)payment_formData.get("product_amount")));
 			entity.setOrigin_price(Integer.parseInt((String)payment_formData.get("origin_price")));
+			entity.setCoupon_code(Long.parseLong((String)payment_formData.get("coupon_code")));
 			entity.setFinal_price(Integer.parseInt((String)payment_formData.get("final_price")));
 			entity.setRecipient((String)payment_formData.get("recipient"));
 			entity.setRecipient_phone_number((String)payment_formData.get("recipient_phone_number"));
@@ -81,12 +82,23 @@ public class Member_paymentRestController {
 				int product_code = (int)((double)paymentDetailList.get(i).get("product_code"));
 				int proamount = (int)((double)paymentDetailList.get(i).get("proamount"));
 				
-				// 주문상세 등록
-				member_payment_detailService.insertPaymentDetail(payment_code, userId, product_code, proamount);
-				
-				// 재고수량 감소, 판매량 증가
+				// 상품정보 조회
 				Product productOne = productService.selectOne(product_code);
 				
+				// 주문상세 등록
+				member_payment_detailService.insertPaymentDetail(payment_code, userId, product_code, proamount,
+						(String)payment_formData.get("payment_date"),
+						Integer.parseInt((String)payment_formData.get("origin_price")),
+						Integer.parseInt((String)payment_formData.get("final_price")),
+						(String)payment_formData.get("delivery_state"),
+						(String)payment_formData.get("arrive_date"),
+						productOne.getProtype(),
+						productOne.getDomestic(),
+						productOne.getTitle(),
+						productOne.getImage(),
+						productOne.getPrice());
+				
+				// 재고수량 감소, 판매량 증가
 				int stack = productOne.getStack() - proamount;
 				int sellCount = productOne.getSellcount() + proamount;
 				

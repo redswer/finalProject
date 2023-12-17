@@ -24,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
 
 	private final ProductRepository repository;
 
-	// [1] 기본 정렬.=========================================================================================
+	// [1] 관리자 페이지.=========================================================================================
 	@Override
 	public List<Product> selectList() {
 		return repository.findAll();
@@ -37,34 +37,51 @@ public class ProductServiceImpl implements ProductService {
 		return new PageResultDTO<>(result);
 	}
 
-	// [2] 필요시에 쓰는 커스텀 메소드.==============================================================================
 
-	@Override
+	// [2] 리액트 메소드.==============================================================================
+
+	@Override // 1.제목순
 	public List<Product> selectListSortOfTitle(String domestic, String category, String genre) {
 		return repository.selectListSortOfTitle(domestic, category, genre);
 	}
 
-	@Override
+	@Override // 2.최저가순
 	public List<Product> selectListSortOfPriceAsc(String domestic, String category, String genre) {
 		return repository.selectListSortOfPriceAsc(domestic, category, genre);
 	}
 
-	@Override
+	@Override // 3.최고가순
 	public List<Product> selectListSortOfPriceDesc(String domestic, String category, String genre) {
 		return repository.selectListSortOfPriceDesc(domestic, category, genre);
 	}
 
-	@Override
+	@Override // 4.판매량순
+	public List<Product> selectListSortOfSellCount(String domestic, String category, String genre) {
+		return repository.selectListSortOfSellCount(domestic, category, genre);
+	}
+
+	@Override // 5.평점순
+	public List<Product> selectListSortOfGradeAvg(String domestic, String category, String genre) {
+		return repository.selectListSortOfGradeAvg(domestic, category, genre);
+	}
+
+	@Override // 6.리뷰순
+	public List<Product> selectListSortOfViewCount(String domestic, String category, String genre) {
+		return repository.selectListSortOfViewCount(domestic, category, genre);
+	}
+
+	@Override // 7.제한가격검색
 	public List<Product> selectListLimitedPrice(String domestic, String category, String genre, int minprice, int maxprice) {
 		return repository.selectListLimitedPrice(domestic, category, genre, minprice, maxprice);
 	}
 
-	@Override
+	@Override // 8.베스트셀러
 	public List<Product> selectListBestSeller() {
 		return repository.selectListBestSeller();
 	}
 
-	// [4] 기본 내장 메소드.=============================================================================================
+
+	// [3] 기본 내장 메소드.=============================================================================================
 
 	@Override
 	public Product selectOne(int product_code) {
@@ -86,8 +103,6 @@ public class ProductServiceImpl implements ProductService {
 		repository.deleteById(product_code);
 		return product_code;
 	}
-
-
 
 
 	// =============================================================================================끝

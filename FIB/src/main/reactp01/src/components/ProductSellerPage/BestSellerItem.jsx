@@ -1,10 +1,10 @@
-import './BestSellerItem.css';
+import './ProductListItem.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const BestSellerItem = (props) => {
+const ProductListItem = (props) => {
   // =================================================================================================================
   // const [sell_countRate, setCount] = useState(0);
   // const targetNumber = props.sellcount; // 최종 도달 숫자
@@ -31,19 +31,9 @@ const [proamount ,setProamount] = useState(1);
 
 const loginID = sessionStorage.getItem("loginID");
 
-useEffect(()=> {
-  axios
-      .get(`/bookmark/bookmarkOnSaveAction`)
-      .then((response) => {
-        console.log(`찜목록 성공 :`, response);
-        console.log(`response.OK :`, response.status);
-        console.log('========================================');
-        alert(`나의 찜목록에 담았어요`);
-        
-        }).catch((err) => {
-		      // alert(`담기 실패!! ${err.message}`);
-    });
-},[])
+const [reviewData,setReviewData] =useState();
+
+//====================================================================================================================
 
 function saveOnCart () {
   const savedDataOnCart = {
@@ -72,6 +62,8 @@ const domesticLink = () => {
   props.urlNavigate(`/ProductListPage?domestic=${props.domestic}&category=${0}&genre=${0}`);
 }
 
+//====================================================================================================================
+
 function saveOnBookmark () {
   const savedDataOnBookmark = {
     product_code: props.product_code,
@@ -99,6 +91,12 @@ const dataToPayment = [{
   price : props.price,
   proamount : proamount
 }]
+
+
+
+
+
+//====================================================================================================================
 
 
   return (
@@ -173,6 +171,9 @@ const dataToPayment = [{
           </div>
 
           <hr />
+            <span>평균 별점 : {props.gradeavg}</span>&nbsp;&nbsp;&nbsp;
+            <span>리뷰수 : {props.viewcount}</span>
+          <hr />
 
           <div className="seller_product_expense">
 
@@ -237,4 +238,4 @@ const dataToPayment = [{
   );
 };
 
-export default BestSellerItem;
+export default ProductListItem;

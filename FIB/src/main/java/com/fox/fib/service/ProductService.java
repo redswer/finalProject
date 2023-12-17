@@ -8,32 +8,32 @@ import com.fox.fib.entity.Product;
 
 public interface ProductService {
 
-	// [1] 페이지네이션 React.==================================================================================
+	// [1] 관리자 페이지.==================================================================================
 
 	public List<Product> selectList();
 
 	PageResultDTO<Product> selectListPageNation(PageRequestDTO requestDTO);
 
-	// [2] 페이지네이션 React.==================================================================================
+	// [2] 리액트 메소드.==================================================================================
 
-	public List<Product> selectListSortOfTitle(String domestic, String category, String genre);
+	public List<Product> selectListSortOfTitle(String domestic, String category, String genre); // 1.제목순
 
-	public List<Product> selectListSortOfPriceAsc(String domestic, String category, String genre);
+	public List<Product> selectListSortOfPriceAsc(String domestic, String category, String genre); // 2.최저가순
 
-	public List<Product> selectListSortOfPriceDesc(String domestic, String category, String genre);
+	public List<Product> selectListSortOfPriceDesc(String domestic, String category, String genre); // 3.최고가순
 
-	public List<Product> selectListLimitedPrice(String domestic, String category, String genre, int minprice, int maxprice);
+	public List<Product> selectListSortOfSellCount(String domestic, String category, String genre); // 4.판매량순
 
-	public List<Product> selectListBestSeller();
+	public List<Product> selectListSortOfGradeAvg(String domestic, String category, String genre); // 5.평점순
+
+	public List<Product> selectListSortOfViewCount(String domestic, String category, String genre); // 6.리뷰순
+
+	public List<Product> selectListLimitedPrice(String domestic, String category, String genre, int minprice, int maxprice); // 7.제한가격검색
+
+	public List<Product> selectListBestSeller(); // 8. 베스트셀러
 
 
-	// ============================================================================================
-//	public List<Product> showListFromKeywords22(String domestic, String category, String genre);
-
-	// public List<Product> orderedByPriceAsc(String domestic, String category, String genre);
-
-	// public List<Product> orderedByPriceDesc(String domestic, String category, String genre);
-	// ============================================================================================
+	// [3] 기본 메소드.============================================================================================
 	public Product selectOne(int product_code);
 
 	public int save(Product entity);
