@@ -21,8 +21,6 @@ public class Member_paymentServiceImpl implements Member_paymentService {
 		return repository.findAllDesc();
 	}
 	
-	// 
-	
 	// 주문정보 등록, 삭제
 	@Override
 	public Long save(Member_payment entity) {
