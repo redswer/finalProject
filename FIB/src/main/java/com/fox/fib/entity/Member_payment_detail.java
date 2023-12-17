@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Member_payment_detail {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int member_payment_detail_code;
 	private Long member_payment_code;
 	private String id;
 	private int product_code;
