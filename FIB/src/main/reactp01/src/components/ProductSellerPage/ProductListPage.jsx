@@ -35,6 +35,8 @@ const ProductListPage = () => {
 
   const [getMapping, setGetMapping] = useState('productSelectedList2');
 
+  const [isBookmarked, setIsBookmarked] = useState(0);
+
   //==========================================================================================================================
   const requestToServer = (initRequestURL) => {
     axios
@@ -76,6 +78,7 @@ const ProductListPage = () => {
     requestToServer
       (`/product/${getMapping}?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`)
 
+    // requestToServer(`/bookmark/`)
   }, [])
 
   //===========================================================================================================================
