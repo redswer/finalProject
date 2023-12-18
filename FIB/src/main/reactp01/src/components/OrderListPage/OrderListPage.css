@@ -69,14 +69,10 @@
     /* font-size: 20px; */
 }
 
-
-
-
 /* [2] thead : orderDetailTable .=============================================================================== */
 
 .orderListPageTable {
     width: 100%;
-    /* border: 2px solid blue; */
     border-collapse: collapse;
 }
 

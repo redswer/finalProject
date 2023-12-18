@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import CartItem from './CartItem';
 import { Link } from 'react-router-dom';
 import CartCautionBox from './CartCautionBox';
-import CategoryMiniBox from './CategoryMiniBox';
+import CartAdvertise from './CartAdvertise';
 import axios from 'axios';
 
 const CartPage = () => {
@@ -152,170 +152,119 @@ const CartPage = () => {
 
   //====================================================================================================================
 
-
-
   console.log(`selectedItems[Page] : `, selectedItems);
   // console.log(`selectAllCartList[Page] : ` , selectAllCartList);
   console.log(`totalPrice[Page](147) : `, totalPrice);
   console.log(`isAllChecked[Page](151) : `, isAllChecked);
   console.log(`======Page 분단======Page 분단======Page 분단======Page 분단======Page 분단======`);
 
-  //====================================================================================================================
-
-  const cartList = cartData.map((d, i) => (
-    <CartItem
-      key={i}
-      cart_code={d.cart_code}
-      id={d.id}
-      product_code={d.product_code}
-      protype={d.protype}
-      domestic={d.domestic}
-      title={d.title}
-      image={d.image}
-      proamount={d.proamount}
-      price={d.price}
-      onSelectItem={handleSelectItem}
-      // onUpdateCart={handleUpdateCart}
-      onDeleteSelected={handleDeleteSelected}
-      onSelectAllItems={handleAllSelectCartLists}
-      isAllChecked={isAllChecked}
-      setProamount={(newProamount) => handleUpdateProamount(d.cart_code, newProamount)}
-    />
-  ));
-
-
 
   //=====================================================================================================================
   return (
-    <div className='basket_top_level_container'>
-      <h1>장바구니 페이지</h1>
-      <span>구매하실 상품목록들을 확인하실 수 있는 페이지입니다. : </span>
+    <div className='CartPageContainer'>
+      <span className='CartPageTitle'>장바구니 페이지</span>
+      <span className='CartPageSubtitle'>구매하실 상품목록들을 확인하실 수 있는 페이지입니다.</span>
 
-      <button onClick={handleDeleteSelected}>선택목록 삭제</button>&nbsp;&nbsp;&nbsp;
-
-
-
-
-      {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Link to={`/BookmarkPage`}>찜목록 ㄱㄱㄱ</Link> */}
-
-      {/* <button onClick={handleDeselectCartLists}>전체 해제</button>&nbsp;&nbsp;&nbsp; */}
-      <div className='basketlist_list_container'>
-
-        <div className='basketlist_head'>
-          <div className="col-product_title"></div>
-          <div className="col-product_price"></div>
-          <div className="col-product_amount"></div>
-          {/* <div className="col-product_del-info">배송비</div> */}
-          {/* <div className="col-product_btn">주문하기 / 삭제</div> */}
-          <div className="col-product_btn"></div>
-        </div>
-
-        <div>
-          {/* 카트페이지 =========================================================================== */}
-          <table className="CartPageTable">
-            <thead>
-              <tr>
-                <th style={{ width: '10%' }}>
-                  <input type='checkbox' style={{ width: '50px', height: '50px' }} checked={isAllChecked}
-                    onChange={(e) => { handleAllSelectCartLists(e.target.checked) }} />
-                </th>
-                <th style={{ width: '15%' }}>상품명</th>
-                <th style={{ width: '45%' }}>상품 가격</th>
-                <th style={{ width: '10%' }}>수량</th>
-                <th style={{ width: '15%' }}>삭제</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cartData.length === 0 ?
-                <tr className='cartDataIsVacant'>
-                  <td colSpan='4'>장바구니에 담은 상품이 없습니다.</td>
-                </tr>
-                :
-                cartData.map((d, i) => (
-
-                  <tr key={i} className='orderDetailItem'>
-                    <td className='cartDataPmCode'>
-                      <div className='orderDetailData'>{d.payment_date}</div>
-                      <div className='orderDetailPmCode'>{`[ ${d.member_payment_code} ]`}</div>
-                    </td>
-
-                    <td className='orderDetailItemInfomation'>
-                      <img src={`../img/yeonsu.jpg`} className='orderListItemImg'></img>
-                      <div>
-                        <span>{d.title}제목</span>
-                        <span>{d.domestic}</span>
-                        <span>{d.protype}</span>
-                        <div></div>
-                        <div>{totalPrice >= 20000 ? 0 : 3500}</div>
-                      </div>
-                    </td>
-
-                    <td>현재 총 상품 금액 </td>
-                    <td> : </td>
-                    <td>{totalPrice} 원</td>
-                    <td>상품준비중</td>
-                    <td><button >주문 취소</button></td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
-
-
+      <div>
+        <button onClick={handleDeleteSelected}>선택목록 삭제</button>&nbsp;&nbsp;&nbsp;
       </div>
 
-      <div className='basket_total_sum_container'>
-        <div className='basket_figure_flex_box'>
-          <figure className='basket_total_sum_figure'>
-            <table className="basket_total_sum_table">
-              <tbody>
-                <tr>
-                  <td>현재 총 상품 금액 </td>
-                  <td> : </td>
-                  <td>{totalPrice} 원</td>
-                </tr>
+      {/* 카트페이지 =========================================================================== */}
+      <table className="CartPageTable">
+        <thead>
+          <tr>
+            <th style={{ width: '6%' }} >
+              <input type='checkbox' style={{ width: '26px', height: '26px' }} checked={isAllChecked}
+                onChange={(e) => { handleAllSelectCartLists(e.target.checked) }} />
+            </th>
+            <th style={{ width: '35%' }}>상품정보</th>
+            <th style={{ width: '10%' }}>가격</th>
+            <th style={{ width: '12%' }}>수량</th>
+            <th style={{ width: '15%' }}>총 가격</th>
+            <th style={{ width: '8%' }}>삭제</th>
+          </tr>
+        </thead>
 
-                <tr>
-                  <td>할인 적용 총 금액</td>
-                  <td> : </td>
-                  <td> 원</td>
-                </tr>
+        <tbody>
+          {cartData.length === 0 ?
+            <tr className='cartDataIsVacant'>
+              <td colSpan='4'>장바구니에 담은 상품이 없습니다.</td>
+            </tr>
+            :
+            cartData.map((d, i) => (
+              <CartItem
+                key={i}
+                cart_code={d.cart_code}
+                id={d.id}
+                product_code={d.product_code}
+                protype={d.protype}
+                domestic={d.domestic}
+                title={d.title}
+                image={d.image}
+                proamount={d.proamount}
+                price={d.price}
+                onSelectItem={handleSelectItem}
+                onDeleteSelected={handleDeleteSelected}
+                onSelectAllItems={handleAllSelectCartLists}
+                isAllChecked={isAllChecked}
+                setProamount={(newProamount) => handleUpdateProamount(d.cart_code, newProamount)}
+              />
+            ))}
+        </tbody>
+      </table>
 
-                <tr className='trLine_basket'>
-                  <td>배송금액</td>
-                  <td> : </td>
-                  <td> 원</td>
-                </tr>
+      <div className='TotalOrderAndCartAdvertise'>
+        <table className='settlementTotalOrderTable'>
+          <tbody>
+            <tr className='totalPriceOfSelectedItemsTr'>
+              <td style={{ width: '10px' }}></td>
+              <td style={{ width: '170px' }} className='totalPriceOfSelectedItemsColumn'>선택 상품 총 금액 </td>
+              <td> : </td>
+              <td>
+                <span className='totalPriceOfSelectedItems'>{totalPrice ? totalPrice.toLocaleString() : 0}</span>&nbsp;
+                <span className='totalPriceOfSelectedItemsUnit'>원</span></td>
+            </tr>
 
-                <tr>
-                  <td className='basket_final_payment_price'>최종 결제 금액</td>
-                  <td> : </td>
+            <tr className='shippingChargeTr'>
+              <td></td>
+              <td className='shippingChargeColumn'>배송금액</td>
+              <td> : </td>
+              <td className='shippingCharge'>
+                {totalPrice >= 20000 ? '무료' : `${(3500).toLocaleString()} 원`}
+              </td>
+            </tr>
 
-                  <td>
-                    <span className='basket_final_payment_price'></span>
-                    <span>{totalPrice} 원</span>
-                  </td>
+            <tr className='finalTotalPriceOfSelectedItemsTr'>
+              <td></td>
+              <td className='finalTotalPriceOfSelectedItemsColumn'>최종 결제 금액</td>
+              <td> : </td>
+              <td>
+                <span className='finalTotalPriceOfSelectedItems'>
+                  {totalPrice == 0 ? 0 : totalPrice >= 20000 ? totalPrice.toLocaleString() : (totalPrice + 3500).toLocaleString()}
+                </span>
+                <span> 원</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-                </tr>
-
-              </tbody>
-            </table>
-          </figure>
-
-          <CategoryMiniBox />
+        <div>
+          <CartAdvertise />
         </div>
+      </div>
+      <div className='basket_total_sum_container'>
 
-        <div className='basket_final_product_order_btn_box'>
 
-          <Link to='/'><button className='basket_final_product_order_btn_1'>계속 쇼핑하기</button></Link>
+        <div className='CartPageMoveToOtherPageButton'>
 
-          <div className='basket_final_product_order_btn_2'>
+          <Link to='/'><button className='CartPageToHome'>계속 쇼핑하기</button></Link>
+
+          <div className='CartPageToPayment'>
             <Link to={`/PaymentPage`}
               state={{ order_data: selectedItems }}
               className='buynowletsgo'>
               바로구매
             </Link>
-
           </div>
 
 
@@ -327,7 +276,7 @@ const CartPage = () => {
         <CartCautionBox />
       </div>
 
-    </div>
+    </div >
   );
 };
 
