@@ -32,7 +32,7 @@
 .item_info_box {
     width: 100%;
     display: inline-block;
-    
+
 }
 
 .item_info_box_price,
@@ -41,9 +41,9 @@
     margin: 0px;
 }
 
-.item_info_box_price {
+/* .item_info_box_price {
     text-decoration: line-through;
-}
+} */
 
 .item_info_box_discount {
     font-size: 10px;

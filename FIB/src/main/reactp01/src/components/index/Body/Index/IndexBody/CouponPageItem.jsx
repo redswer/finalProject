@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import './CouponPageItem.css';
 
@@ -6,6 +7,8 @@ function CouponPageItem() {
     const [couponList, setCouponList] = useState([]);
     const [resultMessage, setResultMessage] = useState('');
 
+    const loginInfo = JSON.parse(sessionStorage.getItem('user'));
+    const userId = loginInfo ? loginInfo.id : null;
 
     useEffect(() => {
         axios
@@ -50,9 +53,6 @@ function CouponPageItem() {
         // const [PopupOpen, setPopupOpen] = useState(false);
 
         const handleButtonClick = () => {
-            const loginInfo = JSON.parse(sessionStorage.getItem('user'));
-            const userId = loginInfo ? loginInfo.id : null;
-
             // setPopupOpen(true);
 
             const data = {
@@ -68,7 +68,13 @@ function CouponPageItem() {
                     // 서버로부터 받은 결과를 알림창으로 띄워준다.
                     // 쿠폰발급 성공 or 이미 발급받은 쿠폰
                     alert(response.data);
-
+                    alert("잠시 후 로그인 화면으로 이동합니다");
+                    // 일정 시간 후에 로그인 페이지로 이동
+                    if (data.id == null) {
+                        setTimeout(() => {
+                            window.location.href = '/Login';
+                        }, 1000); // 1000 밀리초 = 1초
+                    }
                 })
                 .catch(error => {
                     console.error('유저 쿠폰 발급 요청 실패:', error);
@@ -88,7 +94,6 @@ function CouponPageItem() {
                     <img className="coupon_box_image" src={`../img/${image}`} alt={title} />
                     <br />
                     <button className="coupon_get_button" onClick={handleButtonClick}>쿠폰받기</button>
-
                     {/* {PopupOpen && (
                     <div className="popup" onClick={handleClosePopup}>
                     <div className="popup_content">

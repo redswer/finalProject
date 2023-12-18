@@ -54,8 +54,8 @@ public class FaqServiceImpl implements FaqService {
 	
 	// faq 보기(페이지네이션 적용)
 	@Override
-	public Page<Faq> getPageFaqList2(Pageable pageable) {
-	    return repository.getPageFaqList2(pageable);
+	public Page<Faq> getPageFaqListAll(Pageable pageable) {
+	    return repository.getPageFaqListAll(pageable);
 	}
 	
 	// 분류별 faq 보기(페이지네이션 적용)

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -43,11 +44,7 @@ public class BoardController {
 	NoticeService notice_service;
 	FaqService faq_service;
 	InquiryService inquiry_service;
-	
-	// 내림차순 정렬을 위한 repository 선언
-	private NoticeRepository notice_repository;
-	private FaqRepository faq_repository;
-	private InquiryRepository inquiry_repository;
+
 	
 	// (관리자) 공지사항 리스트 + 페이지네이션, 내림차순 정렬
 	@GetMapping("/noticeListAdmin")
@@ -211,15 +208,19 @@ public class BoardController {
 	@GetMapping("/faqListAdmin")
 	public String faqListAdmin(@RequestParam(name = "category", defaultValue = "all") String category,
 							   @RequestParam(name = "page", defaultValue = "0") int page,
-	                           @RequestParam(name = "size", defaultValue = "10") int size,
+	                           @RequestParam(name = "size", defaultValue = "5") int size,
 	                           Model model) {
 		log.info("Received request with category: " + category);
+		
+		if(category == "all") {
+			category = "";
+		}
 	    Pageable pageable = PageRequest.of(page, size);
 	    
 	    Page<Faq> faqPageList;
 	    
 	    if(category.equals("all")) {
-	    	faqPageList = faq_service.getPageFaqList2(pageable);
+	    	faqPageList = faq_service.getPageFaqListAll(pageable);
 	    } else {
 	    	faqPageList = faq_service.getPageFaqList(category, pageable);
 	    }
@@ -239,7 +240,6 @@ public class BoardController {
 	}
 	
 	@GetMapping("/pageFaqListAdmin")
-//	@GetMapping("/pageFaqListAdmin")
 	public String pageFaqListAdmin(@RequestParam(name = "category") String category,
 	                        	   @RequestParam(name = "page", defaultValue = "0") int page,
 	                        	   @RequestParam(name = "size", defaultValue = "10") int size,
@@ -247,25 +247,18 @@ public class BoardController {
 		
 		log.info("파라미터Received request with category: " + category);
 	    Pageable pageable = PageRequest.of(page, size);
-	    Page<Faq> faqPageList;
+	    Page<Faq> faqPageList = faq_service.getPageFaqList(category, pageable);
    
-	    if(category.equals("all")) {
-	    	faqPageList = faq_service.getPageFaqList2(pageable);
-	    } else {
-	    	faqPageList = faq_service.getPageFaqList(category, pageable);
-	    }
-
-	    model.addAttribute("faqList", faqPageList.getContent());
 	    model.addAttribute("itemPage", faqPageList);
+	    model.addAttribute("faqList", faqPageList.getContent());
 	    model.addAttribute("currentPage", faqPageList.getNumber());
 	    model.addAttribute("totalPages", faqPageList.getTotalPages());
 	    model.addAttribute("totalItems", faqPageList.getTotalElements());
 	    
-
-	    log.info("faqPageList : " + faqPageList);
-		log.info("faqPageList.getContent() : " + faqPageList.getContent());
-		log.info("faqPageList.getNumber() : " + faqPageList.getNumber());
-		log.info("faqPageList.getTotalElements() : " + faqPageList.getTotalElements());
+	    log.info("파라미터itemPage : " + faqPageList);
+		log.info("파라미터faqPageList.getContent() : " + faqPageList.getContent());
+		log.info("파라미터faqPageList.getNumber() : " + faqPageList.getNumber());
+		log.info("파라미터faqPageList.getTotalElements() : " + faqPageList.getTotalElements());
 		
 		return "board/faqListAdmin";
 	}
@@ -326,12 +319,12 @@ public class BoardController {
 	
 	// (관리자) 1:1문의 리스트 + 페이지네이션, 내림차순 정렬
 	@GetMapping("/inquiryListAdmin")
-	public void inquiryListAdmin(@RequestParam(name = "category", defaultValue = "") String category,
-					             @RequestParam(name = "page", defaultValue = "0") int page,
+	public void inquiryListAdmin(@RequestParam(name = "answer_check") Boolean answer_check,
+								 @RequestParam(name = "page", defaultValue = "0") int page,
 					             @RequestParam(name = "size", defaultValue = "10") int size,
 					             Model model) {
 		Pageable pageable = PageRequest.of(page, size);
-		Page<Inquiry> inquiryPageList = inquiry_service.getInquiryList(pageable);
+		Page<Inquiry> inquiryPageList = inquiry_service.getUnanswerInquiryList(answer_check, pageable);
 		
 		model.addAttribute("inquiryList", inquiryPageList.getContent());
 	    model.addAttribute("itemPage", inquiryPageList);
