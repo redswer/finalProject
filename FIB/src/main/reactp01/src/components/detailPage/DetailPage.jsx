@@ -28,7 +28,7 @@ function DetailPage() {
         axios
             .get(`/product/recentProduct?id=${loginID}&pcode=${id}`)
             .then((response) => {
-                alert(`전송성공 : `, response.data);
+                // alert(`전송성공 : `, response.data);
             }).catch((error) => {
                 alert(`프로덕트실패`, error.message);
             })

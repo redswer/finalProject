@@ -319,10 +319,24 @@ public class BoardController {
 	
 	// (관리자) 1:1문의 리스트 + 페이지네이션, 내림차순 정렬
 	@GetMapping("/inquiryListAdmin")
-	public void inquiryListAdmin(@RequestParam(name = "answer_check") boolean answer_check,
-								 @RequestParam(name = "page", defaultValue = "0") int page,
+	public void inquiryListAdmin(@RequestParam(name = "page", defaultValue = "0") int page,
 					             @RequestParam(name = "size", defaultValue = "10") int size,
 					             Model model) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Inquiry> inquiryPageList = inquiry_service.getPageInquiryList(pageable);
+		
+		model.addAttribute("inquiryList", inquiryPageList.getContent());
+	    model.addAttribute("itemPage", inquiryPageList);
+	    model.addAttribute("currentPage", inquiryPageList.getNumber());
+	    model.addAttribute("totalPages", inquiryPageList.getTotalPages());
+	    model.addAttribute("totalItems", inquiryPageList.getTotalElements());
+	}
+	
+	@GetMapping("/pageInquiryListAdmin")
+	public void pageInquiryListAdmin(@RequestParam(name = "answer_check") boolean answer_check,
+								 	 @RequestParam(name = "page", defaultValue = "0") int page,
+								 	 @RequestParam(name = "size", defaultValue = "10") int size,
+								 	 Model model) {
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Inquiry> inquiryPageList = inquiry_service.getUnanswerInquiryList(answer_check, pageable);
 		

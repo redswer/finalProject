@@ -21,7 +21,20 @@ function DetailPageReview({ oneProductWriterJoin }) {
     // 별점 값 계산
     const star_count = 6 - click_count;
 
-    // 리뷰 등록 ===========================================================
+    // 리뷰 내용 받아오기
+    const [review, setReview] = useState([]);
+
+    useEffect(() => {
+        axios.post('/restreview/reviewList')
+            .then((response) => {
+                const reviewFilter = response.data.filter(item => item.product_code === product_code);
+                setReview(reviewFilter);
+            }).catch((err) => {
+                alert(`리뷰 내용을 가져오지 못했습니다. (${err.message})`);
+            });
+    }, [product_code]);
+
+    // 리뷰 등록 ============================================================
     // 리뷰 내용 작성
     const [review_content, setReview_content] = useState('');
 
@@ -37,55 +50,81 @@ function DetailPageReview({ oneProductWriterJoin }) {
 
     const today = `${year}-${month}-${day}`;
 
-    // 리뷰 등록 버튼 클릭
+    // 리뷰 등록 버튼 클릭 --------------------------
+    // 로그인 전
+    const reviewLoginCheck = () => {
+        alert('로그인 후 이용 가능합니다.');
+        window.location.href = `/LogIn`;
+    }
+
+    // 로그인 후
     const review_ref = useRef();
 
-    const review_insert = () => {
-        if (click_count >= 6) {
-            alert('별점을 선택해 주세요~');
-        } else {
-            if (!review_content) {
-                review_ref.current.focus();
-                alert('리뷰 내용을 작성해 주세요~');
-            } else {
-                const review_formData = new FormData(document.getElementById('review_form'));
+    // 상품 구매 여부
+    // const [orderCheck, setOrderCheck] = useState(0);
 
-                axios.post(
-                    '/restreview/reviewinsert',
-                    review_formData,
-                    {
-                        headers: { 'Content-Type': 'multipart/form-data' }
-                    }
-                ).then((response) => {
-                    console.log(response.data);
-                    window.location.href = `/DetailPage/${product_code}`;
-                }).catch((err) => {
-                    console.log(err.response.data);
-                    console.log(err.message);
-                });
+    // useEffect(() => {
+    //     axios.post(
+    //         '/mpdetail/mpordercheck',
+    //         {
+    //             id: loginID,
+    //             product_code: product_code
+    //         }
+    //     ).then((response) => {
+    //         setOrderCheck(response.data);
+    //     }).catch((err) => {
+    //         alert(`상품 구매 여부를 확인하지 못했습니다. (${err.message})`);
+    //     });
+    // }, [review]);
+
+    //  리뷰 등록한 아이디 존재 여부
+    const [reviewCheck, setReviewCheck] = useState(false);
+
+    useEffect(() => {
+        for (const r of review) {
+            if (r.id === loginID) {
+                setReviewCheck(true);
+            }
+        }
+    }, [review]);
+
+    const review_insert = () => {
+
+        if (reviewCheck) {
+            alert('이미 등록된 리뷰가 있습니다.');
+        } else {
+            if (click_count >= 6) {
+                alert('별점을 선택해 주세요~');
+            } else {
+                if (!review_content) {
+                    review_ref.current.focus();
+                    alert('리뷰 내용을 작성해 주세요~');
+                } else {
+                    const review_formData = new FormData(document.getElementById('review_form'));
+
+                    axios.post(
+                        '/restreview/reviewinsert',
+                        review_formData,
+                        {
+                            headers: { 'Content-Type': 'multipart/form-data' }
+                        }
+                    ).then((response) => {
+                        alert('리뷰가 등록되었습니다.');
+                        window.location.href = `/DetailPage/${product_code}`;
+                    }).catch((err) => {
+                        alert(`리뷰 등록에 실패했습니다. (${err.message})`);
+                    });
+                }
             }
         }
     }
 
-    // 리뷰 내용 받아오기 ================================================================
-    const [review, setReview] = useState([]);
-
-    useEffect(() => {
-        axios.post('/restreview/reviewList')
-            .then((response) => {
-                const reviewFilter = response.data.filter(item => item.product_code === product_code);
-                setReview(reviewFilter);
-            }).catch((err) => {
-                console.log(`reviewList 실패 : ${err.message}`);
-            });
-    }, [product_code]);
-
     // 리뷰 수정 버튼 클릭
-    const onClick_review_update = (num) => {
+    // const onClick_review_update = (num) => {
 
-    }
+    // }
 
-    // 리뷰 삭제 버튼 클릭 ==========================================================
+    // 리뷰 삭제 버튼 클릭
     const onClick_review_delete = (num) => {
 
         axios.post(
@@ -95,11 +134,11 @@ function DetailPageReview({ oneProductWriterJoin }) {
                 product_code: product_code
             })
             .then((response) => {
-                alert("리뷰 삭제 성공 : " + response.data);
+                alert('리뷰가 삭제되었습니다.');
                 window.location.href = `/DetailPage/${product_code}`;
             })
             .catch((err) => {
-                alert("리뷰 삭제 실패 : " + err.message);
+                alert(`리뷰 삭제에 실패했습니다. (${err.message})`);
             });
 
     }
@@ -147,7 +186,12 @@ function DetailPageReview({ oneProductWriterJoin }) {
                                 <input type="file" name="reviewImageUploadfile" id="reviewImageUploadfile" accept='.jpg, .png' />
                             </div>
                             <div className="review_btn_cover">
-                                <button type="button" className="review_btn" onClick={review_insert}>등록</button>
+                                {
+                                    loginID == null ?
+                                        <button type="button" className="review_btn" onClick={reviewLoginCheck}>등록</button>
+                                        :
+                                        <button type="button" className="review_btn" onClick={review_insert}>등록</button>
+                                }
                             </div>
                         </div>
                     </div>
@@ -156,7 +200,7 @@ function DetailPageReview({ oneProductWriterJoin }) {
                 <div className="review_con_box">
                     {review.map((it, index) =>
                     (<DetailPageReviewCon key={index} {...it}
-                        onClick_review_update={onClick_review_update}
+                        // onClick_review_update={onClick_review_update}
                         onClick_review_delete={onClick_review_delete} />
                     )
                     )}

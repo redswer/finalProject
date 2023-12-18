@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const PaymentPageModal = ({ setCoupon_selected }) => {
+const PaymentPageModal = ({ loginID, setCoupon_selected }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -55,9 +55,11 @@ const PaymentPageModal = ({ setCoupon_selected }) => {
         const array = [];
 
         for (const userCouponOne of userCuponList) {
-            for (const couponOne of couponList) {
-                if (userCouponOne.coupon_code === couponOne.coupon_code) {
-                    array.push(couponOne);
+            if (loginID == userCouponOne.id && !userCouponOne.use_check) {
+                for (const couponOne of couponList) {
+                    if (userCouponOne.coupon_code === couponOne.coupon_code) {
+                        array.push(couponOne);
+                    }
                 }
             }
         }

@@ -26,7 +26,7 @@ public interface InquiryService {
 	Page<Inquiry> getInquiryList(String id, Pageable pageable);
 	
 	// 내 문의내역 확인하는 service
-	List<Inquiry> getInquiryList(boolean answer_check);
+	Page<Inquiry> getPageInquiryList(Pageable pageable);
 	
 	Page<Inquiry> getUnanswerInquiryList(Boolean answer_check, Pageable pageable);
 }

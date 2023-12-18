@@ -38,10 +38,13 @@
 
 .payment_modal_list {
     justify-content: space-between;
+    flex-wrap: wrap;
     margin-top: 20px;
+    width: 472px;
 }
 
 .modal_coupon_map {
+    margin-bottom: 20px;
     width: 48%;
     height: 180px;
     text-align: center;

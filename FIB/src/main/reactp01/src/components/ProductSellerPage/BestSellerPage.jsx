@@ -22,107 +22,107 @@ const BestSellerPage = () => {
     };
   }, []);
   //==========================================================================================================================
-  const [urlString , setUrlString] = useState(useLocation());
+  const [urlString, setUrlString] = useState(useLocation());
   const urlNavigate = useNavigate();
   const urlParams = new URLSearchParams(urlString.search);
-  
+
   const [productData, setProductData] = useState([]);
+  // const [bestData, setBestData] = useState([]);
+
+  const loginID = sessionStorage.getItem("loginID");
 
   //==========================================================================================================================
   const requestToServer = (initRequestURL) => {
     axios
       .get(`${initRequestURL}`)
       .then((response) => {
-        const prevSearchParams = new URLSearchParams(urlString.search);
         console.log(`response 성공 :`, response.data);
 
         if (response.data && response.data.length > 0) {
           setProductData(response.data);
 
         } else {
-        console.log(`requestToServer : 조건에 해당하는 도서가 없습니다.`);
-        console.log(`resposne data : `, response.data);
-        alert(`requestToServer : 조건에 해당하는 도서가 없습니다.`);
-
+          console.log(`requestToServer : 조건에 해당하는 도서가 없습니다.`);
+          console.log(`resposne data : `, response.data);
+          alert(`requestToServer : 조건에 해당하는 도서가 없습니다.`);
         }
       }).catch((err) => {
         alert(`requestToServer 서버연결 실패 => ${err.message}`);
       });
   };
 
-  useEffect(()=> {
-    
+  useEffect(() => {
+
     urlNavigate
-    (`/BestSellerPage`);
+      (`/BestSellerPage`);
 
     requestToServer
-    (`/product/bestSeller`);
+      (`/product/bestSeller`)
 
-  },[])
+  }, []);
 
-//===========================================================================================================================
+  // useEffect(() => {
+  //   // productData가 변경될 때만 실행되도록 조건 추가
+  //   if (productData.length > 0) {
+  //     const slicedData = productData.slice(0, 20);
+  //     setBestData(slicedData);
+  //   }
+  // }, [productData]);
+  //============================================================================================================================
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(3); // 한 페이지에 보여질 아이템 수
 
-const [textWordValue,setTextWordValue] = useState('');
+  // productData를 현재 페이지에 따라 슬라이스하여 보여줍니다.
 
+  const indexOfLastItem = page * size;               // 현재 페이지에서 보여줄 첫번째 아이템의 index
+  const indexOfFirstItem = indexOfLastItem - size;   // 현재 페이지에서 보여줄 마지막 아이템의 index
+  const viewedList = productData.slice(indexOfFirstItem, indexOfLastItem);  // 현재 페이지에서 보여줄 List들.
 
-//============================================================================================================================
-const [page, setPage] = useState(1);
-const [size, setSize] = useState(3); // 한 페이지에 보여질 아이템 수
+  const handlePageSizeChange = (event) => {
+    const newSize = parseInt(event.target.value, 10);
+    setSize(newSize);
+  };
 
-// productData를 현재 페이지에 따라 슬라이스하여 보여줍니다.
-const indexOfLastItem = page * size;               // 현재 페이지에서 보여줄 첫번째 아이템의 index
-const indexOfFirstItem = indexOfLastItem - size;   // 현재 페이지에서 보여줄 마지막 아이템의 index
-const viewedList = productData.slice(indexOfFirstItem, indexOfLastItem);  // 현재 페이지에서 보여줄 List들.
+  // 페이지 변경 핸들러
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
 
-const handlePageSizeChange = (event) => {
-  const newSize = parseInt(event.target.value, 10);
-  setSize(newSize);
-};
+  // 페이지 번호를 생성합니다.
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(productData.length / size); i++) {
+    pageNumbers.push(i);
+  }
 
-// 페이지 변경 핸들러
-const handlePageChange = (pageNumber) => {
-  setPage(pageNumber);
-};
-
-// 페이지 번호를 생성합니다.
-const pageNumbers = [];
-for (let i = 1; i <= Math.ceil(productData.length / size); i++) {
-  pageNumbers.push(i);
-}
-
-
-
-//============================================================================================================================
+  //============================================================================================================================
 
   return (
-    <div className='seller_page_container'>
-      <div className='product_seller_categorybar_container' style={{ transform: `translateY(${scrollY}px)` }}>
+    <div className='productListPageContainer'>
+      {/* <div className='KeywordSideBar' style={{ transform: `translateY(${scrollY}px)` }}>
         <KeywordSideBar requestFromBarToServer={requestToServer} />
-      </div>
+      </div> */}
 
-      <div className='basket_preview_box_container' style={{ transform: `translateY(${scrollY}px)` }}>
-        <RecentSideBar />
-      </div>
-
-      <div className='seller_product_List_container'>
+      <div className='productListPageDisplayContentContainer'>
         <div className='seller_product_page_titlebox'>
-          <div className='ProductListPage_Checkbox_container'>
-             <h3>키워드 선택</h3>
+          <div className='ProductListPageTitleAndSize'>
+            <span className='BestSellerPageTitle'>베스트셀러</span>&nbsp;&nbsp;
+            <span className='BestSellerPageSubtitle'>가장 많은 독자분들에게 팔린 책 목록입니다.</span>
+            <select onChange={handlePageSizeChange} value={size} className='ProductListPageHandleSize'>
+              <option value="3">3개씩 보기</option>
+              <option value="5">5개씩 보기</option>
+            </select>
           </div>
 
-          <hr />
-          <h2 className='seller_product_page_title'>베스트 셀러</h2>
         </div>
 
-        <hr className='seller_product_page_titlebox_hr'/>
+        <hr className='ProductListPageCurrentKeywordTitleHrLine' />
 
-        <div className='seller_product_bookList'>
-          {/* {viewedList} */}
-          {/* {booklist} */}
+        <div className='productListItemMapedArea'>
 
           {viewedList.map((d, i) => (
             <BestSellerItem
               key={i}
+              rank={i + 1}
               product_code={d.product_code}
               domestic={d.domestic}
               protype={d.protype}
@@ -138,30 +138,30 @@ for (let i = 1; i <= Math.ceil(productData.length / size); i++) {
               intro_image={d.intro_image}
               content={d.content}
               price={d.price}
+              stack={d.stack}
               sellcount={d.sellcount}
               gradeavg={d.gradeavg}
               viewcount={d.viewcount}
               regdate={d.regdate}
               urlNavigate={urlNavigate}
-            />          
-  ))}
+            />
+          ))}
         </div>
 
         <div className='productListPage_pageNationButton'>
-        {/* {ProductPagination} */}
-        <ProductPagination
-         pageNumbers={pageNumbers}
-         page={page}
-         handlePageChange={handlePageChange}
-         />
+          <ProductPagination
+            pageNumbers={pageNumbers}
+            page={page}
+            handlePageChange={handlePageChange}
+          />
         </div>
 
-        <hr />
-        <hr />
-        
-        
-
       </div>
+
+      <div className='RecentSideBar' style={{ transform: `translateY(${scrollY}px)` }}>
+        <RecentSideBar />
+      </div>
+
       <SideButton />
     </div>
 

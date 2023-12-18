@@ -473,6 +473,7 @@ const ProductListPage = () => {
               intro_image={d.intro_image}
               content={d.content}
               price={d.price}
+              stack={d.stack}
               sellcount={d.sellcount}
               gradeavg={d.gradeavg}
               viewcount={d.viewcount}

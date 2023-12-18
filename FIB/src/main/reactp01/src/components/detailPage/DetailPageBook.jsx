@@ -47,7 +47,12 @@ function DetailPageBook({ oneProductWriterJoin }) {
                 .post(`/cart/cartOnSaveAction`, savedDataOnCart)
                 .then((response) => {
                     console.log(`response.OK :`, response.status);
-                    window.location.href = `/DetailPage/${product_code}`;
+
+                    if (window.confirm('장바구니로 이동하시겠습니까?')) {
+                        window.location.href = `/CartPage`;
+                    } else {
+                        window.location.href = `/DetailPage/${product_code}`;
+                    }
                 }).catch((err) => {
                     alert(`담기 실패!! ${err.message}`);
                 });
@@ -56,6 +61,7 @@ function DetailPageBook({ oneProductWriterJoin }) {
 
     const orderLoginCheck = () => {
         alert('로그인 후 구매 가능합니다.');
+        window.location.href = `/LogIn`;
     }
 
     return (
@@ -78,7 +84,7 @@ function DetailPageBook({ oneProductWriterJoin }) {
                     }
 
                     {
-                        publisher ?
+                        publisher !== '주식회사 여우' ?
                             <strong className='book_publishingHouse'>{publisher} (출판사)</strong>
                             :
                             ''
@@ -104,7 +110,7 @@ function DetailPageBook({ oneProductWriterJoin }) {
                     </div>
 
                     {
-                        publisher ?
+                        publisher !== '주식회사 여우' ?
                             <div className="book_info_03 d-flex" >
                                 <div className="book_info_03_L">전자책</div>
                                 <div className="book_info_03_R">10,000원</div>
@@ -151,7 +157,7 @@ function DetailPageBook({ oneProductWriterJoin }) {
 
                 <div className="book_info_06 d-flex">
                     <div className="book_info_06_L">
-                        <button type="button" className="detailCart" onClick={saveOnCart}>장바구니</button>
+                        <button type="button" className="detailCart" onClick={saveOnCart}>장바구니 담기</button>
                     </div>
                     <div className="book_info_06_R">
                         {
