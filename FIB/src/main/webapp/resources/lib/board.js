@@ -396,28 +396,6 @@ function faqSortSelectOptions(pageNumber) {
 	document.getElementById("managementArea").innerHTML="";
 }
 
-
-
-/*function faqSortSelectOptions() {
-
-	let table = document.getElementById("faqTable");
-	let rows = table.getElementsByTagName("tr");
-
-	// 선택된 카테고리 가져오기
-	let categorySelect = document.getElementById("category");
-	let selectedCategory = categorySelect.value;
-
-	for (let i = 1; i < rows.length; i++) {
-		let cells = rows[i].getElementsByTagName("td");
-		let categoryValue = cells[1].innerText; // 분류 열의 데이터
-
-	if (selectedCategory === "전체" || categoryValue === selectedCategory) {
-		rows[i].style.display = ""; // 해당 조건을 만족하는 경우 보이기
-	} else {
-		rows[i].style.display = "none"; // 기타는 숨기기
-    }
-  }
-}*/
 //=====================================================================================
 // 1:1문의 리스트
 function inquiryManagement() {
@@ -460,6 +438,7 @@ function inquiryManagement() {
 
 // 1:1문의 페이지네이션
 function inquiryManagementPage(pageNumber) {
+	pageNumber = pageNumber || 0;
     let url = "board/inquiryListAdmin?page=" + pageNumber;
 
     axios.get(url
@@ -536,28 +515,38 @@ function inquiryAnswerFinish() {
 }
 
 // 1:1문의 답변여부 체크박스 클릭시 정렬방법
-function toggleAnswerSort() {
-	let table = document.getElementById("inquiryTable");
-	let rows = table.getElementsByTagName("tr");
+function toggleAnswerSort(pageNumber) {
+	pageNumber = pageNumber || 0;
 	let checkbox = document.getElementById("inquiry_answer_toggle");
 	let showOnlyAnswered = checkbox.checked;
-
-	// 선택된 카테고리 가져오기
-	let categorySelect = document.getElementById("category");
-	let selectedCategory = categorySelect.value;
-
-	for (let i = 1; i < rows.length; i++) {
-		let cells = rows[i].getElementsByTagName("td");
-		let answerStatus = cells[7].innerText; // 답변여부 열의 데이터
-		let categoryValue = cells[2].innerText; // 분류 열의 데이터
-
-	if ((showOnlyAnswered && answerStatus === "x" && (selectedCategory === "전체" || categoryValue === selectedCategory)) ||
-		(!showOnlyAnswered && (selectedCategory === "전체" || categoryValue === selectedCategory))) {
-		rows[i].style.display = ""; // 해당 조건을 만족하는 경우 보이기
-	} else {
-		rows[i].style.display = "none"; // 기타는 숨기기
-    }
-  }
+	
+	let url=`board/inquiryListAdmin?answer_check=${showOnlyAnswered}&page=${pageNumber}`;
+	
+	axios.get(url
+	).then(response => {
+		document.getElementById('managementArea').innerHTML=response.data;
+		
+		/* 요청받은 데이터를 출력하면서 제목과 내용의 길이를 조절*/
+		let table = document.getElementById("inquiryTable");
+		let rows = table.getElementsByTagName("tr");
+		
+		/* 제목과 내용의 크기를 확인 후 substring을 위한 for문 */
+		for (let i = 1; i < rows.length; i++) {
+				let cells = rows[i].getElementsByTagName("td");
+				let answerStatus = cells[7].innerText; // 답변여부 열의 데이터
+				let categoryValue = cells[2].innerText; // 분류 열의 데이터
+		
+			if ((showOnlyAnswered && answerStatus === "x" && (selectedCategory === "전체" || categoryValue === selectedCategory)) ||
+				(!showOnlyAnswered && (selectedCategory === "전체" || categoryValue === selectedCategory))) {
+				rows[i].style.display = ""; // 해당 조건을 만족하는 경우 보이기
+			} else {
+				rows[i].style.display = "none"; // 기타는 숨기기
+		    }
+		}	
+	}).catch(err => {
+		alert("FAQ List response 실패 =>" + err.message);
+	});
+	document.getElementById("managementArea").innerHTML="";
 }
 
 // 1:1문의분류에 따른 정렬

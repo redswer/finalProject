@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -198,12 +199,12 @@ public class TestController {
 
 	// 유저 1:1문의 내역 보기위한 React에서 서버로 id 전달
 	@GetMapping("/inquiryList/{id}")
-	public ResponseEntity<List<Inquiry>> inquiryList(@PathVariable("id") String id, Inquiry inquiry, Model model)  throws IOException {
+	public ResponseEntity<Page<Inquiry>> inquiryList(@PathVariable("id") String id, Inquiry inquiry, Model model)  throws IOException {
 			// 리액트에서 넘어온 notice_code 정보 확인
 			log.info(id);
 		try {
 			// 쿼리문의 return값들의 리스트에 
-			List<Inquiry> getInquiryList = inquiryService.getInquiryList(id);
+			Page<Inquiry> getInquiryList = inquiryService.getInquiryList(id);
 			
 	        // 요청받은 정보에서 현재 조회수를 조회
 			log.info("현재 아이디의 문의코드 : " + inquiry.getInquiry_code());

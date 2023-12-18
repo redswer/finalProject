@@ -20,7 +20,7 @@
 				<c:forEach var="category" items="${fn:split('전체,일반,제품,주문/결제,반품/환불/취소,이벤트/쿠폰', ',')}">
                		<option value="${category}" ${param.category == category ? "selected" : ""}>${category}</option>
            		</c:forEach>
-<!-- 				<option value="전체">전체</option>
+<!-- 			<option value="전체">전체</option>
 				<option value="일반">일반</option>
 				<option value="제품">제품</option>
 				<option value="주문/결제">주문/결제</option>

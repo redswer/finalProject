@@ -74,7 +74,7 @@ public class HomeController {
         log.info("dailyOrderSummaryAdd : " + dailyOrderSummary);
         // 일별데이터
         model.addAttribute("dailyOrderSummary", dailyOrderSummary);
-        model.addAttribute("UnAnsweredInquiries", inquiryService.getUnanswerInquiryList(false));
+        model.addAttribute("UnAnsweredInquiries", inquiryService.getUnanswerInquiryList(false, null));
         return "home"; // adminHome은 관리자 페이지의 JSP 파일명입니다.
     }
 

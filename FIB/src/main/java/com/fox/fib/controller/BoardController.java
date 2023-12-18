@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -207,7 +208,7 @@ public class BoardController {
 	@GetMapping("/faqListAdmin")
 	public String faqListAdmin(@RequestParam(name = "category", defaultValue = "all") String category,
 							   @RequestParam(name = "page", defaultValue = "0") int page,
-	                           @RequestParam(name = "size", defaultValue = "10") int size,
+	                           @RequestParam(name = "size", defaultValue = "5") int size,
 	                           Model model) {
 		log.info("Received request with category: " + category);
 		
@@ -318,12 +319,12 @@ public class BoardController {
 	
 	// (관리자) 1:1문의 리스트 + 페이지네이션, 내림차순 정렬
 	@GetMapping("/inquiryListAdmin")
-	public void inquiryListAdmin(@RequestParam(name = "category", defaultValue = "") String category,
-					             @RequestParam(name = "page", defaultValue = "0") int page,
+	public void inquiryListAdmin(@RequestParam(name = "answer_check") Boolean answer_check,
+								 @RequestParam(name = "page", defaultValue = "0") int page,
 					             @RequestParam(name = "size", defaultValue = "10") int size,
 					             Model model) {
 		Pageable pageable = PageRequest.of(page, size);
-		Page<Inquiry> inquiryPageList = inquiry_service.getInquiryList(pageable);
+		Page<Inquiry> inquiryPageList = inquiry_service.getUnanswerInquiryList(answer_check, pageable);
 		
 		model.addAttribute("inquiryList", inquiryPageList.getContent());
 	    model.addAttribute("itemPage", inquiryPageList);

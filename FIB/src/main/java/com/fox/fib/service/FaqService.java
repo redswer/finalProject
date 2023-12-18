@@ -21,10 +21,6 @@ public interface FaqService {
 
 	// ** delete
 	int delete(int faq_code);
-
-//	List<Faq> getFaqList(String category);
-	
-//	Page<Faq> getFaqList(Pageable pageable);
 	
 	Page<Faq> getPageFaqListAll(Pageable pageable);
 	

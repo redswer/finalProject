@@ -11,19 +11,14 @@ import org.springframework.data.repository.query.Param;
 import com.fox.fib.entity.Faq;
 
 public interface FaqRepository extends JpaRepository<Faq, Integer> {
-
-//	@Query("SELECT f FROM Faq f ORDER BY f.faq_code DESC")
-//  List<Faq> orderByFaqCodeDesc();
-	
-	@Transactional
-//    @Query("SELECT f FROM Faq f " +
-//            "WHERE (:category IS NULL OR :category = '' OR f.category = :category) " +
-//            "ORDER BY f.faq_code DESC")
-    @Query("SELECT f FROM Faq f WHERE f.category=:category ORDER BY f.faq_code DESC")
-	Page<Faq> getPageFaqList(@Param("category") String category, Pageable pageable);
-	
+		
 	@Transactional
 	@Query("SELECT f FROM Faq f ORDER BY f.faq_code DESC")
 	Page<Faq> getPageFaqListAll(Pageable pageable);
+	
+	@Transactional
+    @Query("SELECT f FROM Faq f WHERE f.category=:category ORDER BY f.faq_code DESC")
+	Page<Faq> getPageFaqList(@Param("category") String category, Pageable pageable);
 }
+
 
