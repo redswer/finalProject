@@ -54,11 +54,16 @@ const PaymentPageModal = ({ loginID, setCoupon_selected }) => {
     useEffect(() => {
         const array = [];
 
-        for (const userCouponOne of userCuponList) {
-            if (loginID == userCouponOne.id && !userCouponOne.use_check) {
-                for (const couponOne of couponList) {
-                    if (userCouponOne.coupon_code === couponOne.coupon_code) {
-                        array.push(couponOne);
+        for (let i = 0; i < userCuponList.length; i++) {
+            if (loginID == userCuponList[i].id && !userCuponList[i].use_check) {
+                for (let j = 0; j < couponList.length; j++) {
+                    if (userCuponList[i].coupon_code === couponList[j].coupon_code) {
+                        array.push(
+                            {
+                                userCouponOne: userCuponList[i],
+                                couponOne: couponList[j]
+                            }
+                        );
                     }
                 }
             }
@@ -67,6 +72,8 @@ const PaymentPageModal = ({ loginID, setCoupon_selected }) => {
         setCouponArray(array);
 
     }, [couponList, userCuponList]);
+
+    console.log("배열학이니닐ㅇ : ", couponArray);
 
     // =================================================================
     // 선택한 쿠폰 데이터
