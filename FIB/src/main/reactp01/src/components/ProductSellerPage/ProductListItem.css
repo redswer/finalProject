@@ -1,6 +1,6 @@
 .productItemContainer {
   display: flex;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 100%;
   height: 220px;
   justify-content: space-between;
@@ -27,11 +27,22 @@
 
 .productItemTitle {
   display: inline-block;
-  font-size: 21px;
+  font-size: 22px;
   font-weight: bold;
   margin-bottom: 10px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   margin-right: 13px;
+}
+
+.productItemContainer img:hover {
+  transform: translateY(-20px) translateX(-10px);
+  transition: transform 0.7s;
+  box-shadow: 0 5px 20px rgba(119, 175, 107, 1);
+}
+
+.productItemTitle:hover,
+.productItemSummary:hover {
+  text-decoration: underline;
 }
 
 .productItemDomestic,
@@ -42,10 +53,10 @@
   text-align: center;
   color: white;
   border-radius: 4px;
-  width: 100px;
-  height: 29px;
-  line-height: 29px;
-  font-size: 15px;
+  width: 85px;
+  height: 27px;
+  line-height: 27px;
+  font-size: 13px;
   background-color: rgb(115, 179, 97);
 }
 
@@ -63,9 +74,12 @@
 }
 
 .productItemDomestic:hover,
-.productItemCategory:hover,
-.productItemGenre:hover {
+.productItemCategory:hover {
   background-color: rgb(10, 51, 29);
+}
+
+.productItemGenre:hover {
+  background-color: rgb(115, 179, 97);
 }
 
 .productItemWriterTranslatorPublisher {
@@ -92,7 +106,6 @@
 .productItemStar {
   width: 20px;
   height: 20px;
-  /* border: 1px solid red; */
   margin-bottom: -5px;
   fill: rgb(255, 88, 88);
   cursor: pointer;
@@ -137,69 +150,116 @@
 
 /* [3] 제품 판매 관련 영역=========================================================================*/
 
-.productItemEmptyHeart,
-.productItemFilledHeart {
-  width: 30px;
+.productItemSellingFunctions {
+  width: 170px;
+  /* border: 1px solid green; */
+  text-align: center;
+}
+
+.productItemSaveToBookmarkButton {
+  margin-left: 122px;
   color: rgb(255, 88, 88);
 }
 
-.productItemFilledHeart {
-  color: rgb(255, 88, 88);
+.productItemSaveToBookmarkButton:hover {
+  color: rgb(255, 0, 0);
 }
 
+.productItemPriceDiv {
+  margin-top: -11px;
+  margin-bottom: 10px;
+}
 
-.product_sales_rate {
-  font-size: 17px;
-  transition: font-size 0.8s ease-in-out;
-  /* 숫자 크기에 대한 트랜지션 효과 설정 */
+.productItemPrice {
+  font-size: 24px;
+  font-weight: bold;
+  color: red;
+}
+
+.productItemSellCountDiv {
+  margin-bottom: 15px;
+}
+
+.productItemSellCountLabel {
+  color: rgb(159, 159, 159);
+}
+
+.productItemSellCount {
+  font-size: 18px;
   font-weight: bold;
   color: blueviolet;
 }
 
-.product_sales_rate_1 {
-  font-size: 14px;
+.productItemSellCountLabelUnit {
+  font-size: 11px;
+  color: rgb(160, 160, 160);
 }
 
-.product_sales_rate_3 {
-  color: gray;
-  font-size: 12px;
+.productItemProamountController {
+  text-align: center;
 }
 
 .productItemInputProamount {
+  box-sizing: border-box;
   display: inline-block;
   width: 55px;
   text-align: center;
-  height: 25px;
-  line-height: 25px;
+  height: 30px;
+  border: 1px solid rgb(206, 206, 206);
 }
 
 .productItemAddProamountButton,
 .productItemSubtractProamountButton {
+  box-sizing: border-box;
   display: inline-block;
   text-align: center;
   width: 35px;
-  height: 33px;
-  line-height: 25px;
+  height: 30px;
+  border: 1px solid rgb(206, 206, 206);
 }
 
-
-.seller_product_sales_rate_box {
-  margin-top: -6px;
-  margin-bottom: -2px;
+.productItemAddProamountButton:hover,
+.productItemSubtractProamountButton:hover {
+  background-color: rgb(185, 185, 185);
+  border: 1px solid rgb(185, 185, 185);
 }
 
-.productItemContainer img:hover {
-  transform: translateY(-20px) translateX(-10px);
-  transition: transform 0.7s;
-  box-shadow: 0 5px 20px rgba(119, 175, 107, 1);
+.productItemSaveOnCartButton,
+.productItemOrderNowButton a {
+  box-sizing: border-box;
+  display: inline-block;
+  line-height: 30px;
+  width: 125px;
+  height: 30px;
+  font-size: 19px;
+  font-weight: bold;
+  color: white;
+  margin-top: 10px;
+  border-radius: 3px;
 }
 
-.productItemTitle:hover,
-.seller_product_explain:hover {
-  text-decoration: underline;
+.productItemSaveOnCartButton {
+  background-color: rgb(115, 179, 97);
+  border: 1px solid rgb(115, 179, 97);
+
 }
 
-.seller_product_division_hr {
-  width: 100%;
-  /* margin: 41px 0; */
+.productItemOrderNowButton a {
+  background-color: rgb(255, 88, 88);
+  border: 1px solid rgb(255, 88, 88);
+}
+
+.productItemSaveOnCartButton:hover {
+  background-color: rgb(35, 109, 15);
+  border: 1px solid rgb(35, 109, 15);
+
+}
+
+.productItemOrderNowButton a:hover {
+  background-color: rgb(183, 7, 7);
+  border: 1px solid rgb(183, 7, 7);
+}
+
+.productItemSectioningHrLine {
+  margin: 35px 0;
 }

@@ -8,10 +8,10 @@ function DivisionBestSeller() {
     );
 }
 
-function DivisionSteadySeller() {
+function DivisionAllItem() {
     return (
         <div className='division'>
-            <div className="division_line">STEADY SELLER</div>
+            <div className="division_line">PRODUCT</div>
         </div>
     );
 }
@@ -24,5 +24,31 @@ function DivisionRecommendBook() {
     );
 }
 
+export { DivisionBestSeller, DivisionAllItem, DivisionRecommendBook };
 
-export { DivisionBestSeller, DivisionSteadySeller, DivisionRecommendBook };
+// function DivisionBestSeller() {
+//     return (
+//         <div className='division'>
+//             <div className="division_line">BEST SELLER</div>
+//         </div>
+//     );
+// }
+
+// function DivisionSteadySeller() {
+//     return (
+//         <div className='division'>
+//             <div className="division_line">STEADY SELLER</div>
+//         </div>
+//     );
+// }
+
+// function DivisionRecommendBook() {
+//     return (
+//         <div className='division'>
+//             <div className="division_line">RECOMMED BOOK</div>
+//         </div>
+//     );
+// }
+
+
+// export { DivisionBestSeller, DivisionSteadySeller, DivisionRecommendBook };

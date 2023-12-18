@@ -1,8 +1,8 @@
-import './CategoryMiniBox.css';
+import './CartAdvertise.css';
 import { useState, useEffect } from 'react';
 
-function CategoryMiniBox() {
-//================================================================================
+function CartAdvertise() {
+    //================================================================================
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
@@ -61,4 +61,4 @@ function CategoryMiniBox() {
         </div>
     );
 }
-export default CategoryMiniBox;
+export default CartAdvertise;

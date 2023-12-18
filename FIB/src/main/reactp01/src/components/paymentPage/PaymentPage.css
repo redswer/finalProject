@@ -252,6 +252,14 @@
     text-align: right;
 }
 
+.coupon_selected_title,
+.coupon_selected_content {
+    margin-right: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    color: rgb(80, 80, 80);
+}
+
 .orderPointInput {
     height: 30px;
     text-align: right;

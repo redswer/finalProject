@@ -31,6 +31,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public List<Product> selectAllList() {
+		return repository.selectAllList();
+	}
+
+	@Override
 	public PageResultDTO<Product> selectListPageNation(PageRequestDTO requestDTO) {
 		Pageable pageable = requestDTO.getPageable(Sort.by("title").ascending());
 		Page<Product> result = repository.findAll(pageable);
