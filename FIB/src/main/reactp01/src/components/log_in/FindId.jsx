@@ -86,15 +86,32 @@ function FindId() {
         });
     }
 
+    // =================================
+    // ** 엔터 키 설정
+    const handleEnterKey = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+
+            if (e.target.id === 'find_id_name') {
+                document.getElementById('find_id_birthday').focus();
+            } else if (e.target.id === 'find_id_birthday') {
+                document.getElementById('find_id_phone_number').focus();
+            } else if (e.target.id === 'find_id_phone_number') {
+                findIdSubmit(e);
+            }
+        }
+    }
+
     return (
         <div className='FindId'>
-            <form className='find_id_form'>
+            <form className='find_id_form' onSubmit={findIdSubmit}>
                 <fieldset className='find_id_fieldset d-flex'>
                     <div className='find_id_input_container'>
                         <div>이름</div>
                         <input type="text" placeholder='이름을 입력해 주세요.'
-                            name='name' autoComplete='off'
+                            name='name' autoComplete='off' id='find_id_name'
                             onKeyUp={changeButton}
+                            onKeyDown={handleEnterKey}
                             onChange={(e) => {
                                 setName(e.target.value);
                                 setNameError('');
@@ -105,8 +122,9 @@ function FindId() {
                     <div className='find_id_input_container'>
                         <div>생년월일</div>
                         <input type="text" placeholder='생년월일 8자리를 입력해 주세요.'
-                            name='birthday' autoComplete='off'
+                            name='birthday' autoComplete='off' id='find_id_birthday'
                             onKeyUp={changeButton}
+                            onKeyDown={handleEnterKey}
                             onChange={(e) => {
                                 setBirthday(e.target.value);
                                 setBirthdayError('');
@@ -117,8 +135,9 @@ function FindId() {
                     <div className='find_id_input_container'>
                         <div>전화번호</div>
                         <input type="text" placeholder='(-)없이 숫자만 입력해주세요.'
-                            name='phone_number' autoComplete='off'
+                            name='phone_number' autoComplete='off' id='find_id_phone_number'
                             onKeyUp={changeButton}
+                            onKeyDown={handleEnterKey}
                             onChange={(e) => {
                                 setPhone_number(e.target.value);
                                 setPhone_numberError('');

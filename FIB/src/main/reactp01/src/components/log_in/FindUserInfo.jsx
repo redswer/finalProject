@@ -3,6 +3,7 @@ import FindId from "./FindId";
 import FindPassword from "./FindPassword";
 import './FindUserInfo.css';
 import { useState } from "react";
+import { TbAlertSquare } from "react-icons/tb";
 
 function FindUserInfo() {
     const [selectedTab, setSelectedTab] = useState("findId");
@@ -23,7 +24,7 @@ function FindUserInfo() {
                 </Link>
                 <span><h1>회원정보 조회</h1></span>
             </div>
-            <div className="findUserInfo_sub_text">정보를 모두 정확히 입력해주세요.</div>
+            <div className="findUserInfo_sub_text d-flex"><TbAlertSquare className="findUserInfo_sub_text_icon" />정보를 정확하게 입력해주세요.</div>
             <div className="findUserInfo_select_container">
                 <ul className="findUserInfo_select d-flex">
                     <li

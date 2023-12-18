@@ -52,7 +52,9 @@
 					<td>${s.start}</td>
 					<td>${s.end}</td>
 					<td>${s.regdate}</td>
-					<td>${s.moddate}</td>	
+					<c:if test="${!empty s.moddate}">
+						<td>${s.moddate}</td>	
+					</c:if>
 					<td class="textlink" onclick="couponEditForm('${s.coupon_code}')">수정</td>					
 					<td class="couponDeleteClick" class="textlink" onclick="couponDelete('${s.coupon_code}')">삭제</td>					
 				</tr>

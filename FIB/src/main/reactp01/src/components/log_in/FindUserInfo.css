@@ -17,8 +17,17 @@
 }
 
 .findUserInfo_sub_text {
-    text-align: center;
     margin-bottom: 15px;
+    font-size: 17px;
+    align-items: center;
+    justify-content: center;
+    color: red;
+}
+
+.findUserInfo_sub_text_icon {
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
 }
 
 .findUserInfo_select_container {
