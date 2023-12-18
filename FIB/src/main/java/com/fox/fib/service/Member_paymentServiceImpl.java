@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.fox.fib.domain.OrderSummaryDTO;
 import com.fox.fib.entity.Member_payment;
+import com.fox.fib.entity.Review;
 import com.fox.fib.repository.Member_paymentRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,14 @@ public class Member_paymentServiceImpl implements Member_paymentService {
 	
 	// 주문정보 개별 조회
 	@Override
-	public Optional<Member_payment> selectOne(Long member_payment_code) {
-		return repository.findById(member_payment_code);
+	public Member_payment selectOne(Long member_payment_code) {
+		Optional<Member_payment> result = repository.findById(member_payment_code);
+
+		if (result.isPresent()) {
+			return result.get();
+		} else {
+			return null;
+		}
 	}
 	
 	// 주문정보 등록, 삭제

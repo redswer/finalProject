@@ -1,5 +1,6 @@
 package com.fox.fib.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,23 +46,24 @@ public class Member_payment_detailController {
 	}
 	
 	// 리뷰 등록 시 상품 주문 여부 확인
-	@PostMapping("/mpordercheck")
-	public int orderCheck(@Param("id") String id, @Param("product_code") int product_code) {
-		try {
-			List<Member_payment_detail> mpdList = member_payment_detailService.selectList(id);
-			
-			int orderCheck = 0;
-			
-			for(int i = 0; i < mpdList.size(); i++) {
-				if(mpdList.get(i).getProduct_code() == product_code) {
-					Optional<Member_payment> memberPaymentOne =  member_paymentService.selectOne((Long)mpdList.get(i).getMember_payment_code());
-				}
-			}
-
-			return 0;
-		} catch (Exception e) {
-			return 1;
-		}
-	}
+//	@PostMapping("/mpordercheck")
+//	public ResponseEntity<?> orderCheck(@RequestBody HashMap<String, Object> orderCheckData) {
+//		try {
+//			List<Member_payment_detail> mpdList = member_payment_detailService.selectList((String)orderCheckData.get("id"));
+//
+//			int orderCheck = 0;
+//			
+//			for(int i = 0; i < mpdList.size(); i++) {
+//				if(mpdList.get(i).getProduct_code() == (int)orderCheckData.get("product_code")) {
+//					Member_payment memberPaymentOne =  member_paymentService.selectOne((Long)mpdList.get(i).getMember_payment_code());
+//					orderCheck = memberPaymentOne.getPayment_cancel();
+//				}
+//			}
+//
+//			return ResponseEntity.ok(orderCheck);
+//		} catch (Exception e) {
+//			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("주문상세 조회 실패 : " + e.toString());
+//		}
+//	}
 
 }

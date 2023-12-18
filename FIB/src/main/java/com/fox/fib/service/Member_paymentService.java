@@ -12,7 +12,7 @@ public interface Member_paymentService {
 	List<Member_payment> selectList();
 	
 	// 주문정보 개별 조회
-	Optional<Member_payment> selectOne(Long member_payment_code);
+	Member_payment selectOne(Long member_payment_code);
 	
 	// 주문정보 등록
 	Long save(Member_payment entity);

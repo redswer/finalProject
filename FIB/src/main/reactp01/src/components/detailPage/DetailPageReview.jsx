@@ -61,21 +61,21 @@ function DetailPageReview({ oneProductWriterJoin }) {
     const review_ref = useRef();
 
     // 상품 구매 여부
-    const [orderCheck, setOrderCheck] = useState([]);
+    // const [orderCheck, setOrderCheck] = useState(0);
 
-    useEffect(() => {
-        axios.post(
-            '/mpdetail/mpordercheck',
-            {
-                id: loginID,
-                product_code: product_code
-            }
-        ).then((response) => {
-            // setOrderCheck(reviewFilter);
-        }).catch((err) => {
-            alert(`상품 구매 여부를 확인하지 못했습니다. (${err.message})`);
-        });
-    }, [product_code]);
+    // useEffect(() => {
+    //     axios.post(
+    //         '/mpdetail/mpordercheck',
+    //         {
+    //             id: loginID,
+    //             product_code: product_code
+    //         }
+    //     ).then((response) => {
+    //         setOrderCheck(response.data);
+    //     }).catch((err) => {
+    //         alert(`상품 구매 여부를 확인하지 못했습니다. (${err.message})`);
+    //     });
+    // }, [review]);
 
     //  리뷰 등록한 아이디 존재 여부
     const [reviewCheck, setReviewCheck] = useState(false);
