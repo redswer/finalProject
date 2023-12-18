@@ -1,7 +1,7 @@
 import './DetailPageReviewCon.css';
 import { ReactComponent as Star } from './review_star.svg';
 
-function DetailPageReviewCon({ review_code, product_code, id, star_count, regdate, content, image, onClick_review_update, onClick_review_delete }) {
+function DetailPageReviewCon({ review_code, product_code, id, star_count, regdate, content, image, onClick_review_delete }) {
 
     const loginID = sessionStorage.getItem("loginID");
 
@@ -32,7 +32,7 @@ function DetailPageReviewCon({ review_code, product_code, id, star_count, regdat
                                     ''
                                     :
                                     <span className="review_delete_btn_box">
-                                        <button type="button" className='review_delete_btn' onClick={() => onClick_review_update(review_code)}>수정</button> &#124;
+                                        {/* <button type="button" className='review_delete_btn' onClick={() => onClick_review_update(review_code)}>수정</button> &#124; */}
                                         <button type="button" className='review_delete_btn' onClick={() => onClick_review_delete(review_code)}>삭제</button>
                                     </span>
                             }

@@ -21,7 +21,7 @@ function DetailPageReview({ oneProductWriterJoin }) {
     // 별점 값 계산
     const star_count = 6 - click_count;
 
-    // 리뷰 등록 ===========================================================
+    // 리뷰 등록 ============================================================
     // 리뷰 내용 작성
     const [review_content, setReview_content] = useState('');
 
@@ -57,17 +57,16 @@ function DetailPageReview({ oneProductWriterJoin }) {
                         headers: { 'Content-Type': 'multipart/form-data' }
                     }
                 ).then((response) => {
-                    console.log(response.data);
+                    alert('리뷰가 등록되었습니다.');
                     window.location.href = `/DetailPage/${product_code}`;
                 }).catch((err) => {
-                    console.log(err.response.data);
-                    console.log(err.message);
+                    alert(`리뷰 등록에 실패했습니다. (${err.message})`);
                 });
             }
         }
     }
 
-    // 리뷰 내용 받아오기 ================================================================
+    // 리뷰 내용 받아오기
     const [review, setReview] = useState([]);
 
     useEffect(() => {
@@ -76,16 +75,16 @@ function DetailPageReview({ oneProductWriterJoin }) {
                 const reviewFilter = response.data.filter(item => item.product_code === product_code);
                 setReview(reviewFilter);
             }).catch((err) => {
-                console.log(`reviewList 실패 : ${err.message}`);
+                alert(`리뷰 내용을 가져오지 못했습니다. (${err.message})`);
             });
     }, [product_code]);
 
     // 리뷰 수정 버튼 클릭
-    const onClick_review_update = (num) => {
+    // const onClick_review_update = (num) => {
 
-    }
+    // }
 
-    // 리뷰 삭제 버튼 클릭 ==========================================================
+    // 리뷰 삭제 버튼 클릭
     const onClick_review_delete = (num) => {
 
         axios.post(
@@ -95,11 +94,11 @@ function DetailPageReview({ oneProductWriterJoin }) {
                 product_code: product_code
             })
             .then((response) => {
-                alert("리뷰 삭제 성공 : " + response.data);
+                alert('리뷰가 삭제되었습니다.');
                 window.location.href = `/DetailPage/${product_code}`;
             })
             .catch((err) => {
-                alert("리뷰 삭제 실패 : " + err.message);
+                alert(`리뷰 삭제에 실패했습니다. (${err.message})`);
             });
 
     }
@@ -156,7 +155,7 @@ function DetailPageReview({ oneProductWriterJoin }) {
                 <div className="review_con_box">
                     {review.map((it, index) =>
                     (<DetailPageReviewCon key={index} {...it}
-                        onClick_review_update={onClick_review_update}
+                        // onClick_review_update={onClick_review_update}
                         onClick_review_delete={onClick_review_delete} />
                     )
                     )}
