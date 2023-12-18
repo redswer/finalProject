@@ -163,7 +163,6 @@ function UserUpdate() {
         formData.append('ad_check_email', ad_check_email);
         formData.append('ad_check_sms', ad_check_sms);
         formData.append('point', point);
-        formData.append('join_date', join_date);
 
         axios({
             url: "/user/update",

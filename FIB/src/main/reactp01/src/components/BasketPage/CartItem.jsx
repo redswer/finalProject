@@ -3,7 +3,7 @@ import './CartItem.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const BasketItem = (props) => {
+const CartItem = (props) => {
   //===============================================================================================================
   const { proamount, setProamount, isAllChecked } = props;
 
@@ -158,4 +158,4 @@ const BasketItem = (props) => {
 
 }
 
-export default BasketItem;
+export default CartItem;

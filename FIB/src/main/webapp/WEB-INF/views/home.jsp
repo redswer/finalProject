@@ -63,7 +63,7 @@
 						</div>
 					</c:if>
 					<!-- 최근 미답변 게시글을 동적으로 생성 -->
-					<c:if test="${not empty requestScope.UnAnsweredInquiries}">
+					<%-- <c:if test="${not empty requestScope.UnAnsweredInquiries}">
 						<h4>1:1문의글 ${fn:length(UnAnsweredInquiries)}개</h4>
 							<div class="UnAnsweredInquiriesContainer">
 							<c:forEach var="inquiry" items="${UnAnsweredInquiries}" varStatus="loopStatus">
@@ -75,7 +75,7 @@
 								</c:if>
 							</c:forEach>
 						</div>
-					</c:if>
+					</c:if> --%>
 				</div>
             </div>
         </div>

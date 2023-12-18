@@ -71,31 +71,3 @@
 .trLine_basket td {
   border-bottom: 1px dashed gray;
 }
-
-.basket_final_product_order_btn_box {
-  display: flex;
-  margin: 30px auto;
-  /* background-color: aqua; */
-  width: 1100px;
-  justify-content: space-evenly;
-}
-
-.basket_final_product_order_btn_1,
-.basket_final_product_order_btn_2 {
-  display: inline-block;
-  width: 200px;
-  height: 50px;
-  border: none;
-  border-radius: 5px;
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.basket_final_product_order_btn_2 {
-  color: white;
-  background-color: red;
-}
-
-.basket_figure_flex_box {
-  display: flex;
-}

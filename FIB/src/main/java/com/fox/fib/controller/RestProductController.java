@@ -200,7 +200,7 @@ public class RestProductController {
 		try {
 			List<Product> resultList = productservice.selectListBestSeller();
 
-			log.info("[141] 1차 bestSeller의 resultDTO 확인 : " + resultList.toString());
+			log.info("[203] bestSeller 확인 : " + resultList.toString());
 
 			return ResponseEntity.ok(resultList);
 

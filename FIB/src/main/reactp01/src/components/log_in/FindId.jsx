@@ -78,24 +78,9 @@ function FindId() {
                 phone_number: phone_number
             }
         }).then((res) => {
-            alert(res.data);
+            alert(name + "님의 아이디는 " + res.data + "입니다.");
             navigate('/LogIn');
         }).catch((err) => {
-            if (err.response) {
-                // 서버가 응답을 반환한 경우
-                console.error("Login error - Server responded with data:", err.response.data);
-                console.error("Status code:", err.response.status);
-                console.error("Headers:", err.response.headers);
-
-            } else if (err.request) {
-                // 서버에 요청이 전송되었지만 응답이 없는 경우
-                console.error("Login error - No response received:", err.request);
-
-            } else {
-                // 요청을 보내기 전에 오류가 발생한 경우
-                console.error("Login error - Request setup error:", err.message);
-
-            }
             alert(err.response.data);
             window.location.reload();
         });

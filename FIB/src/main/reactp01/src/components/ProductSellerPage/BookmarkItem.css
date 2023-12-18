@@ -8,9 +8,9 @@
   margin-right: 10px;
 }
 
-.col-proamount{
+.col-proamount {
   display: inline-block;
-  width:35px;
+  width: 35px;
 }
 
 
@@ -158,4 +158,12 @@
 
 .divivi2 button:hover {
   background-color: rgb(122, 0, 0);
+}
+
+.KeywordGenreStandard {
+  background-color: rgb(86, 109, 156);
+}
+
+.KeywordGenreDiv>button {
+  background-color: rgb(197, 208, 228);
 }

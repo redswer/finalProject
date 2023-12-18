@@ -56,12 +56,12 @@ public class CouponController {
 		String uri = "/coupon/couponRegister";
 		
 		// 프론트엔드 리액트 이미지폴더 주소
-		String realPath = "D:\\JinHyuk_Ahn\\finalProject\\FIB\\src\\main\\reactp01\\public\\img\\";
-//		String realPath = "C:\\Users\\yangs\\Desktop\\FOX\\FIB\\src\\main\\reactp01\\public\\img\\";
-		String file1, file2="";
-		
+		String realPath = "C:\\Users\\yangs\\Desktop\\FOX\\FIB\\src\\main\\reactp01\\public\\img\\";
+		String file1, file2= "";
+
 		MultipartFile uploadfilef = entity.getUploadfilef();
 		if ( uploadfilef!=null && !uploadfilef.isEmpty()) {
+			// 프론트 이미지 경로
 			// => image_File 을 선택함 -> 저장 (저장경로: relaPath+화일명)
 			// 1.3.1) 물리적위치 저장 (file1)
 			file1 = realPath + uploadfilef.getOriginalFilename(); //저장경로 완성 

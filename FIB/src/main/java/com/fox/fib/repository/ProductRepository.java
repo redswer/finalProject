@@ -61,8 +61,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 		@Param("genre") String genre, @Param("minprice") int minprice, @Param("maxprice") int maxprice); // 7.제한가격검색
 
 
-	@Query(nativeQuery = true, value = "SELECT * FROM product p ORDER BY p.sellcount DESC")
+	@Query(value = "SELECT * FROM product p WHERE p.protype = 1 ORDER BY p.sellcount DESC LIMIT 20", nativeQuery = true)
 	List<Product> selectListBestSeller();
+
+//	@Query(value = "SELECT * FROM product p ORDER BY p.sellcount DESC LIMIT 20", nativeQuery = true)
+//	List<Product> selectListBestSeller();
 
 
 	// ============================================================================================================================
