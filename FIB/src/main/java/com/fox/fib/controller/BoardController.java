@@ -210,6 +210,10 @@ public class BoardController {
 	                           @RequestParam(name = "size", defaultValue = "10") int size,
 	                           Model model) {
 		log.info("Received request with category: " + category);
+		
+		if(category == "all") {
+			category = "";
+		}
 	    Pageable pageable = PageRequest.of(page, size);
 	    
 	    Page<Faq> faqPageList;

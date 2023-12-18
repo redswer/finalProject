@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,14 +16,16 @@
     <div class="inquiry_register_search">
 		<div class="inquiry_search">
 			<input type="checkbox" class="inquiry_answer_toggle" id="inquiry_answer_toggle" onclick="toggleAnswerSort()">답변여부</button>
-			<!-- onchange속성으로 select의 option값을 전달하려면 인자로 this.value를 사용해야 함 -->
-			<select class="inquiry_category" name="category" id="category" onchange="inquirySortSelectOptions(this.value)"> 
-				<option value="전체">전체</option>
+			<select class="inquiry_category" name="category" id="category" onchange="inquirySortSelectOptions()"> 
+				<c:forEach var="category" items="${fn:split('전체,일반,제품,주문/결제,반품/환불/취소,이벤트/쿠폰', ',')}">
+               		<option value="${category}" ${param.category == category ? "selected" : ""}>${category}</option>
+           		</c:forEach>
+<!-- 				<option value="전체">전체</option>
 				<option value="일반">일반</option>
 				<option value="제품">제품</option>
 				<option value="주문/결제">주문/결제</option>
 				<option value="반품/환불/취소">반품/환불/취소</option>
-				<option value="이벤트/쿠폰">이벤트/쿠폰</option>
+				<option value="이벤트/쿠폰">이벤트/쿠폰</option> -->
 			</select>
 		</div>
 	</div>

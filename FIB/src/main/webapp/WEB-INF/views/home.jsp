@@ -43,7 +43,7 @@
 				<div id="managementArea">
 					<h2>관리자 페이지입니다</h2>
 					<!-- 일별 데이터 -->
-<%-- 					<c:if test="${not empty requestScope.dailyOrderSummary}">
+ 					<c:if test="${not empty requestScope.dailyOrderSummary}">
 						<div class="dailyOrderSummary">
 							<h4>일별 주문건수, 주문금액</h4>
  							<c:forEach var="dailyOrder" items="${dailyOrderSummary}" varStatus="loopStatus">
@@ -59,7 +59,7 @@
 								</c:if>
 							</c:forEach>
 						</div>
-					</c:if> --%>
+					</c:if>
 					<!-- 최근 미답변 게시글을 동적으로 생성 -->
 					<c:if test="${not empty requestScope.UnAnsweredInquiries}">
 						<h4>1:1문의글 ${fn:length(UnAnsweredInquiries)}개</h4>

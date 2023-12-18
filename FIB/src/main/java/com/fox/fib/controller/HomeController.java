@@ -2,21 +2,17 @@ package com.fox.fib.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fox.fib.domain.OrderSummaryDTO;
-import com.fox.fib.entity.Inquiry;
 import com.fox.fib.service.InquiryService;
 import com.fox.fib.service.Member_paymentService;
 
@@ -30,6 +26,18 @@ public class HomeController {
 
     Member_paymentService memberPaymentService;
     InquiryService inquiryService;
+    
+    private List<String> generateDateRange(String startDate, String endDate) {
+        List<String> dateRange = new ArrayList<>();
+        LocalDate start = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate end = LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        while (!start.isAfter(end)) {
+            dateRange.add(start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            start = start.plusDays(1);
+        }
+        return dateRange;
+    }
     
 //    @GetMapping("/home")
 //    public String home() {
@@ -49,13 +57,28 @@ public class HomeController {
         log.info("startDateString : " + startDateString);
         log.info("일별 결과물 : " + memberPaymentService.getDailyOrderSummary(startDateString, endDateString));
         
-        List<OrderSummaryDTO> dailyOrderSummary = memberPaymentService.getDailyOrderSummary(startDateString, endDateString);
+        List<OrderSummaryDTO> dailyOrderSummary = memberPaymentService.getDailyOrderSummary(startDateString, endDateString);      
+        
+        
+        List<String> dateRange = generateDateRange(startDateString, endDateString);
 
+        // dateRange를 반복하며 dailyOrderSummary에 날짜가 없는 경우, 누락된 날짜에 대한 OrderSummaryDTO를 추가
+        for (String date : dateRange) {
+            if (dailyOrderSummary.stream().noneMatch(summary -> summary.getOrderDate().equals(date))) {
+                dailyOrderSummary.add(new OrderSummaryDTO(date, 0, 0)); // null 대신에 적절한 기본값 사용
+            }
+        }
+        dailyOrderSummary.sort(Comparator.comparing(s -> LocalDate.parse(s.getOrderDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+
+        
+        log.info("dailyOrderSummaryAdd : " + dailyOrderSummary);
         // 일별데이터
         model.addAttribute("dailyOrderSummary", dailyOrderSummary);
         model.addAttribute("UnAnsweredInquiries", inquiryService.getUnanswerInquiryList(false));
         return "home"; // adminHome은 관리자 페이지의 JSP 파일명입니다.
     }
+
+
 //    @GetMapping("/dailyOrderSummary")
 //    public ResponseEntity<Map<String, Object>> dailyOrderSummary() {
 //        Map<String, Object> responseData = new HashMap<>();
