@@ -61,9 +61,8 @@ public class CartController {
 	// ===============================================================================================================
 
 	@PostMapping(value = "/cartOnSaveAction")
-	public int cartOnSaveAction(@RequestBody PIPDTO savedDataOnCart, HttpSession session, Product pentity, Cart centity)
+	public ResponseEntity<?> cartOnSaveAction(@RequestBody PIPDTO savedDataOnCart, HttpSession session, Product pentity, Cart centity)
 		throws IOException {
-		int uDNum = 999999999;
 		try {
 			String loginID = savedDataOnCart.getId();
 			log.info("loginID가 잘 담겼나? " + loginID);
@@ -85,21 +84,21 @@ public class CartController {
 				centity.setPrice(pentity.getPrice());
 				cartservice.save(centity);
 
-				return centity.getProduct_code();
+				log.info(" cartOnSave 성공");
+				return ResponseEntity.ok("새 상품을 장바구니에 담았습니다.");
 
 			} else if (cartservice.checkDuplicated(loginID, pcode) == 1) {
 				cartservice.addDuplicated(loginID, pcode, amount);
+				return ResponseEntity.ok("이미 장바구니에 상품이 존재하므로, 수량만 추가합니다.");
 
-				uDNum = 1004;
-
+			} else {
+				return ResponseEntity.ok("이미 장바구니에 상품이 존재하므로, 수량만 추가합니다.");
 			}
 
-			log.info(" cartOnSave 성공");
 		} catch (Exception e) {
 			log.info("** insert Exception => " + e.toString());
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("장바구니 오류");
 		}
-
-		return uDNum;
 
 	}
 

@@ -35,7 +35,7 @@ const ProductListPage = () => {
 
   const [getMapping, setGetMapping] = useState('productSelectedList2');
 
-  const [isBookmarked, setIsBookmarked] = useState(0);
+  const loginID = sessionStorage.getItem("loginID");
 
   //==========================================================================================================================
   const requestToServer = (initRequestURL) => {
@@ -78,7 +78,6 @@ const ProductListPage = () => {
     requestToServer
       (`/product/${getMapping}?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&minprice=${limitedMinPrice}&maxprice=${limitedMaxPrice}`)
 
-    // requestToServer(`/bookmark/`)
   }, [])
 
   //===========================================================================================================================
@@ -105,7 +104,6 @@ const ProductListPage = () => {
       '2': '영/미',
       '3': '프랑스',
       '4': '독일',
-      // 추가적인 국가에 대한 옵션도 필요하다면 이어서 계속 작성
     };
 
     const categoryOptions = {
@@ -114,7 +112,6 @@ const ProductListPage = () => {
       'poem': '시',
       'essay': '에세이',
       'magazine': '잡지',
-      // 추가적인 카테고리에 대한 옵션도 필요하다면 이어서 계속 작성
     };
 
     const genreOptions = {
@@ -123,7 +120,6 @@ const ProductListPage = () => {
       'melo': '멜로',
       'detective': '추리',
       'sf': '공상과학',
-      // 추가적인 장르에 대한 옵션도 필요하다면 이어서 계속 작성
     };
 
     const domestic = domesticOptions[selectedOptions.domestic] || '해외';
@@ -326,34 +322,7 @@ const ProductListPage = () => {
     }
   }
 
-  //============================================================================================================================
 
-  const [textWordValue, setTextWordValue] = useState('');
-
-  const searchTextWord = () => {
-    setGetMapping('searchTextWord');
-
-    const nowParams = new URLSearchParams(urlString.search);
-
-    const isOptionSelected = Object.values(selectedOptions).some((value) => value !== '0');
-
-    // 선택된 옵션이 하나라도 있을 때만 서버로 요청을 보냄
-    if (isOptionSelected) {
-      requestToServer
-        (`/product/searchTextWord?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}&minprice=${limitedMinPrice}&maxprice${limitedMaxPrice}&textword=${textWordValue}`);
-
-      urlNavigate
-        (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
-      alert(`해당 검색어로 상품 출력하려고 합니다 ^~^!`);
-
-    } else {
-      requestToServer
-        (`/product/productLimitedPriceList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}&minprice=${limitedMinPrice}&maxprice${limitedMaxPrice}&textword=${textWordValue}`)
-      // console.log(`nowParam : ` ,nowParams.get('domestic') , nowParams.get('category') , nowParams.get('genre'))
-      alert(`검색어를 입력해주세용 ^~^`);
-    }
-
-  }
   //============================================================================================================================
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(3); // 한 페이지에 보여질 아이템 수
@@ -384,34 +353,16 @@ const ProductListPage = () => {
   //============================================================================================================================
 
   return (
-    <div className='seller_page_container'>
-      <div className='product_seller_categorybar_container' style={{ transform: `translateY(${scrollY}px)` }}>
+    <div className='productListPageContainer'>
+      <div className='KeywordSideBar' style={{ transform: `translateY(${scrollY}px)` }}>
         <KeywordSideBar requestFromBarToServer={requestToServer} />
       </div>
 
-      <div className='basket_preview_box_container' style={{ transform: `translateY(${scrollY}px)` }}>
-        <RecentSideBar />
-      </div>
-
-
-      <div className='seller_product_List_container'>
+      <div className='productListPageDisplayContentContainer'>
         <div className='seller_product_page_titlebox'>
-          <div className='ProductListPage_Checkbox_container'>
-            <h3>키워드 선택</h3>
-
-            <select onChange={handlePageSizeChange} value={size}>
-              <option value="2">2개씩 보기</option>
-              <option value="3">3개씩 보기</option>
-              <option value="5">5개씩 보기</option>
-              <option value="7">7개씩 보기</option>
-              <option value="10">10개씩 보기</option>
-              <option value="20">20개씩 보기</option>
-            </select>
-
-            <hr />
-
-            <div>국가 : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
+          <div className='ProductListPageKeywordCheckBoxWrapper'>
+            <div className='productListPageCategoryCheckBox'>
+              <span className='productListPageCategoryCheckBoxLabel'>국가 : </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <input type="checkbox" id='domestic1' name='domestic' value='1'
                 checked={selectedOptions.domestic.includes('1')}
                 onChange={() => handleKeywordChange('domestic', '1')} />국내&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -429,7 +380,8 @@ const ProductListPage = () => {
                 onChange={() => handleKeywordChange('domestic', '4')} />독일&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
 
-            <div>카테고리 :
+            <div className='productListPageCategoryCheckBox'>
+              <span className='productListPageCategoryCheckBoxLabel'>카테고리 : </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <input type="checkbox" id='category1' name='category' value='novel'
                 checked={selectedOptions.category.includes('novel')}
                 onChange={() => handleKeywordChange('category', 'novel')} />소설&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -447,7 +399,8 @@ const ProductListPage = () => {
                 onChange={() => handleKeywordChange('category', 'magazine')} />잡지&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
 
-            <div>장르 :
+            <div className='productListPageCategoryCheckBox'>
+              <span className='productListPageCategoryCheckBoxLabel'>장르 : </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <input type="checkbox" id='genre1' value='fantasy'
                 checked={selectedOptions.genre.includes('fantasy')}
                 onChange={() => handleKeywordChange('genre', 'fantasy')} />판타지&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -466,15 +419,15 @@ const ProductListPage = () => {
             </div>
           </div>
 
-          <hr />
-
           <div className='ProductListPage_SortOption'>
             <button onClick={keywordSortTitle}>제목순</button>&nbsp;&nbsp;
             <button onClick={keywordSortPriceAsc}>최저가순</button>&nbsp;&nbsp;
             <button onClick={keywordSortPriceDesc}>최고가순</button>&nbsp;&nbsp;
             <button onClick={keywordSortSellCount}>판매량순</button>&nbsp;&nbsp;
             <button onClick={keywordSortGradeAvg}>평점순</button>&nbsp;&nbsp;
-            <button onClick={keywordSortViewCount}>리뷰순</button>&nbsp;&nbsp;
+            <button onClick={keywordSortViewCount}>리뷰순</button>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
             <input text='number' size={7} value={limitedMinPrice} onChange={(e) => setLimitedMinPrice(e.target.value)} />
             <span>~</span>
@@ -484,20 +437,23 @@ const ProductListPage = () => {
 
           <hr />
 
-          <div>
-            <input type="text" value={textWordValue} onChange={(e) => setTextWordValue(e.target.value)} />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button onClick={searchTextWord}>검색하기</button>
+          <div className='ProductListPageTitleAndSize'>
+            <span className='ProductListPageCurrentKeywordTitle'>{titleWord}</span>
+            <select onChange={handlePageSizeChange} value={size} className='ProductListPageHandleSize'>
+              <option value="2">2개씩 보기</option>
+              <option value="3">3개씩 보기</option>
+              <option value="5">5개씩 보기</option>
+              <option value="7">7개씩 보기</option>
+              <option value="10">10개씩 보기</option>
+              <option value="20">20개씩 보기</option>
+            </select>
           </div>
 
-          <h2 className='seller_product_page_title'>{titleWord}</h2>
         </div>
 
-        <hr className='seller_product_page_titlebox_hr' />
+        <hr className='ProductListPageCurrentKeywordTitleHrLine' />
 
-        <div className='seller_product_bookList'>
-          {/* {viewedList} */}
-          {/* {booklist} */}
+        <div className='productListItemMapedArea'>
 
           {viewedList.map((d, i) => (
             <ProductListItem
@@ -527,7 +483,6 @@ const ProductListPage = () => {
         </div>
 
         <div className='productListPage_pageNationButton'>
-          {/* {ProductPagination} */}
           <ProductPagination
             pageNumbers={pageNumbers}
             page={page}
@@ -535,12 +490,12 @@ const ProductListPage = () => {
           />
         </div>
 
-        <hr />
-        <hr />
-
-
-
       </div>
+
+      <div className='RecentSideBar' style={{ transform: `translateY(${scrollY}px)` }}>
+        <RecentSideBar />
+      </div>
+
       <SideButton />
     </div>
 

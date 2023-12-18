@@ -7,25 +7,23 @@ import { ReactComponent as Star } from '../detailPage/review_star.svg';
 
 const ProductListItem = (props) => {
   // =================================================================================================================
-  // const [sell_countRate, setCount] = useState(0);
-  // const targetNumber = props.sellcount; // 최종 도달 숫자
-  // const animationDuration = 2000; // 애니메이션 시간 (밀리초)
-  // const increment = targetNumber / (animationDuration / 10); // 10ms마다 증가할 숫자
+  const loginInfo = JSON.parse(sessionStorage.getItem('user'));
+  const id = loginInfo ? loginInfo.id : null;
 
-  // useEffect(() => {
+  // const isLoggedIn = !!loginInfo; // 로그인 여부 확인
+  const isLoggedIn = loginInfo; // 로그인 여부 확인
 
-  //   const startTime = Date.now();
-  //   const interval = setInterval(() => {
-  //     const elapsedTime = Date.now() - startTime;
-  //     const progress = Math.min(elapsedTime / animationDuration, 1);
-  //     const newValue = Math.floor(progress * targetNumber);
-  //     setCount(newValue);
-  //     if (progress >= 1) {
-  //       clearInterval(interval);
-  //     }
-  //   }, 10);
-  //   return () => clearInterval(interval);
-  // }, []);
+  // 로그인 후 이용가능한 서비스를 비 로그인 상태로 클릭한 경우 
+  const showWarning = () => {
+    alert("로그인 후 이용 가능한 서비스입니다.");
+  };
+
+  // {
+  //   id === 'admin@admin.com' ? "" : isLoggedIn ?
+  //     (<Link to='/MyPage' className='Link'>마이페이지</Link>)
+  //     :
+  //     (<Link to='/LogIn' className='Link' onClick={showWarning}>마이페이지</Link>)
+  // }
   // =================================================================================================================
 
   const [proamount, setProamount] = useState(1);
@@ -46,7 +44,7 @@ const ProductListItem = (props) => {
         console.log(`찜목록 성공 :`, response);
         console.log(`response.OK :`, response.status);
         console.log('========================================');
-        alert(`나의 찜목록에 담았어요`);
+        alert(response.data);
 
       }).catch((err) => {
         alert(`담기 실패!! ${err.message}`);
@@ -54,40 +52,6 @@ const ProductListItem = (props) => {
 
   };
   //====================================================================================================================
-  function deleteOnBookmark() {
-    const deleteData = {
-      product_code: props.product_code,
-      id: loginID
-    };
-
-    axios
-      .post(`/bookmark/bookmarkOnSaveAction`, deleteData)
-      .then((response) => {
-        console.log(`찜목록 성공 :`, response);
-        console.log(`response.OK :`, response.status);
-        console.log('========================================');
-        alert(`나의 찜목록에 담았어요`);
-
-      }).catch((err) => {
-        alert(`담기 실패!! ${err.message}`);
-      });
-
-  };
-  //====================================================================================================================
-
-  const handleBookmark = () => {
-    // axios
-    //   .post(`/bookmark/bookmarkOnSaveAction`, )
-    //   .then((response) => {
-    //     console.log(`찜목록 성공 :`, response);
-    //     console.log(`response.OK :`, response.status);
-    //     console.log('========================================');
-    //     alert(`나의 찜목록에 담았어요`);
-
-    //   }).catch((err) => {
-    //     alert(`담기 실패!! ${err.message}`);
-    //   });
-  }
 
   // <span className='productItemEmptyHeart'>
   //           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
@@ -95,11 +59,7 @@ const ProductListItem = (props) => {
   //           </svg>
   //         </span>
 
-  //         <span className='productItemFilledHeart'>
-  //           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
-  //             <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
-  //           </svg>
-  //         </span>
+  //         
   //====================================================================================================================
   const addProamount = () => {
     setProamount(proamount + 1);
@@ -129,7 +89,7 @@ const ProductListItem = (props) => {
         console.log(`카트담기 성공 :`, response);
         console.log(`response.OK :`, response.status);
         console.log('========================================');
-        alert(`상품 장바구니에 담았어요. : ${response.data}`);
+        alert(response.data);
 
       }).catch((err) => {
         alert(`담기 실패!! ${err.message}`);
@@ -218,12 +178,7 @@ const ProductListItem = (props) => {
 
 
           <div className="productItemSummary">
-            <Link to={`/DetailPage/${props.product_code}`}>{props.summary}summarysummarysummarysummarysummarysummary
-              summarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummary
-              summarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummaryv
-              summarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummary
-              summarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummary
-              summarysummarysummarysummarysummarysummarysummarysummarysummary</Link>
+            <Link to={`/DetailPage/${props.product_code}`}>{props.summary}</Link>
           </div>
 
 
@@ -233,71 +188,65 @@ const ProductListItem = (props) => {
 
 
         {/* ======================productItemSelling=================================================== */}
-        <div className="seller_product_sell_sub_infomation">
+        <div className="productItemSellingFunctions">
 
           <div className="seller_publisher_box">
             <span className="seller_publisher_name"></span>
             <span className="seller_publisher_date"></span>&nbsp;&nbsp;
-            <button type='button' onClick={handleBookmark} className='productItemSaveToBookmarkButton'>찜</button>
+            <span className='productItemSaveToBookmarkButton'>
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" className="bi bi-suit-heart-fill" viewBox="0 0 16 16" onClick={saveOnBookmark}>
+                <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
+              </svg>
+            </span>
           </div>
 
-          <hr />
 
-          <hr />
-
-          <div className="seller_product_expense">
-
-            <div className='seller_product_pricebox'>
-              <span className='seller_product_price'>{props.price ? props.price.toLocaleString() : '0'}</span>
-              <span> 원</span>
-            </div>
-
+          <div className='productItemPriceDiv'>
+            <span className='productItemPrice'>{props.price ? props.price.toLocaleString() : '0'}</span>
+            <span> 원</span>
           </div>
 
-          <hr />
 
-          <div className='seller_product_sales_rate_box'>
-            <span className='product_sales_rate_1'>누적 판매량</span>
-            <span className='product_sales_rate_1'> : </span>
-            <span className='product_sales_rate'>{props.sellcount}</span>
-            <span className='product_sales_rate_3'> 권</span>
+
+          <div className='productItemSellCountDiv'>
+            <span className='productItemSellCountLabel'>누적 판매량 : </span>
+            {/* <span className='product_sales_rate_1'> : </span> */}
+            <span className='productItemSellCount'>{props.sellcount}</span>
+            <span className='productItemSellCountLabelUnit'> 권</span>
           </div>
 
-          <div className='seller_product_form_container'>
-
-
-            <hr />
-
-            <div>
-              <span>수량 : </span>
+          <div>
+            <div className='productItemProamountController'>
               <button onClick={subtractProamount} className='productItemAddProamountButton' > - </button>
               <input type='number' value={proamount} name='proamount' id='proamount'
                 className='productItemInputProamount'
                 onChange={(e) => setProamount(e.target.value)} min={1}
               />
               <button onClick={addProamount} className='productItemSubtractProamountButton' > + </button>
+            </div>
 
+            <div>
               <div>
-                &nbsp;&nbsp;<button type='submit' onClick={saveOnCart} className='seller_product_addcart_btn'>장바구니</button>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type='submit' onClick={saveOnCart} className='productItemSaveOnCartButton'>장바구니</button>
+              </div>
 
+              <div className='productItemOrderNowButton'>
                 <Link to={`/PaymentPage`}
                   state={{ order_data: dataToPayment }}
-                  className='probuynowletsgo'>
+                  className='productItemOrderNowButton'>
                   바로구매
                 </Link>
               </div>
-
-
-
             </div>
-
           </div>
+
+
+
         </div>
 
-      </div>
+      </div >
 
-      <hr className='seller_product_division_hr' />
+      <hr className='productItemSectioningHrLine' />
 
     </>
   );

@@ -30,6 +30,12 @@ public class RestProductController {
 
 	// ==========================================================================================
 
+	@GetMapping("/selectAllList")
+	public ResponseEntity<?> selectAllList() {
+		List<Product> selectedAllList = productservice.selectAllList();
+		return ResponseEntity.ok(selectedAllList);
+	}
+
 	@GetMapping("/productSelectOne")
 	public Product productSelectOne(@RequestParam(name = "productOneParam") String product_code, Product entity) {
 		log.info(product_code);
@@ -37,6 +43,7 @@ public class RestProductController {
 		entity = productservice.selectOne(pcode);
 		return entity;
 	}
+
 
 	// [1] 제목순. ========================================================================================
 	@GetMapping("/productSelectedList2")

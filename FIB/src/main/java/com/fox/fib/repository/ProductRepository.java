@@ -14,6 +14,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Override
 	Page<Product> findAll(Pageable pageable);
 
+	@Query("select p from Product p")
+	List<Product> selectAllList();
+
 	// [2] 리액트 메소드. ==================================================================================================================
 
 	@Query("SELECT p FROM Product p WHERE (p.protype=1) and (:domestic = '0' OR p.domestic = :domestic)"

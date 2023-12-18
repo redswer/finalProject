@@ -9,16 +9,7 @@ function OrderListDateSelect() {
             <div className="selectdate-grandbox">
                 <div className="selectdate-name">조회기간</div>
                 <div className="selectdate-tool">
-                    <form className="selectdate-simplebutton">
-                        <button>오늘</button>
-                        <button>1주일</button>
-                        <button>1개월</button>
-                        <button>3개월</button>
-                        <button>6개월</button>
-                        <button>1년</button>
-                    </form>
-
-                    <form className="selectdate-detaildate">
+                    <div className="selectdate-detaildate">
                         <div>
                             <label htmlFor="year1"></label>
                             <select name="year1" id="year1">
@@ -175,15 +166,8 @@ function OrderListDateSelect() {
 
                         <div className="selectdate-detaildate-day">일</div>
 
-                    </form>
+                    </div>
 
-                    <form className="selectdate-search">
-                        <div className="selectdate-search-box">
-                            <input type="text" placeholder="주문하신 상품명을 검색하세요" />
-                        </div>
-
-                        <button className="search-button">검색하기</button>
-                    </form>
                 </div>
 
             </div>
