@@ -53,6 +53,9 @@ function UserCoupon() {
                         {couponList.map((couponData, index) => (
                             <tr key={index} className="user_coupon_column">
                                 <td>
+                                    <img src={`../img/${couponData.image}`} alt="coupon_image" />
+                                </td>
+                                <td>
                                     <input type="hidden" value={couponData.coupon_code} />
                                 </td>
                                 <td>{couponData.title}</td>

@@ -16,7 +16,7 @@
 
 .user_coupon_column {
     display: grid;
-    grid-template-columns: 0fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     text-align: center;
     align-items: center;
     padding: 15px;
