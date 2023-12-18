@@ -127,9 +127,6 @@ public class Member_paymentRestController {
 			userOne.setPoint(pointUpdate);
 
 			userService.register(userOne);
-			
-			// 사용한 회원포인트 차감
-			
 
 			return ResponseEntity.ok("주문정보 등록 성공");
 		} catch (Exception e) {

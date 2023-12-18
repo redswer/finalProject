@@ -1,6 +1,7 @@
 package com.fox.fib.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,12 @@ public class Member_paymentServiceImpl implements Member_paymentService {
 	@Override
 	public List<Member_payment> selectList() {
 		return repository.findAllDesc();
+	}
+	
+	// 주문정보 개별 조회
+	@Override
+	public Optional<Member_payment> selectOne(Long member_payment_code) {
+		return repository.findById(member_payment_code);
 	}
 	
 	// 주문정보 등록, 삭제

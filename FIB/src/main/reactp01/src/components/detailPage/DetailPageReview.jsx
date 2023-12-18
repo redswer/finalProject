@@ -71,7 +71,7 @@ function DetailPageReview({ oneProductWriterJoin }) {
                 product_code: product_code
             }
         ).then((response) => {
-            setOrderCheck(reviewFilter);
+            // setOrderCheck(reviewFilter);
         }).catch((err) => {
             alert(`상품 구매 여부를 확인하지 못했습니다. (${err.message})`);
         });
