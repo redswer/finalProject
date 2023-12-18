@@ -78,7 +78,7 @@ body {
 /* 관리자페이지 메인상태에서 보여지는 컨텐츠 */
 .dailyOrderSummaryItem {
 	display: inline-block;
-    width: 130px; /* 너비 설정 */
+    width: 120px; /* 너비 설정 */
     height: 100px; /* 높이 설정 */
     margin: 10px; /* 바깥쪽 여백 설정 */
     padding: 10px; /* 안쪽 여백 설정 */
@@ -90,6 +90,11 @@ body {
 /* 답변안된 1:1문의글 최대 5개 보이기 
    내용이 길어져서 줄바꿈을하더라도 UnAnsweredInquiriesItem의
    수직정렬이 흐트러지지않기위해 display: flex; flex-wrap: wrap; 사용*/
+.dailyOrderSummary {
+	display: flex;
+	flex-wrap: wrap;
+}
+
 .UnAnsweredInquiriesContainer {
 	display: flex;
 	flex-wrap: wrap;

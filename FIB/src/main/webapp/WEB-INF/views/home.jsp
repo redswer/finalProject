@@ -44,16 +44,18 @@
 					<h2>관리자 페이지입니다</h2>
 					<!-- 일별 데이터 -->
  					<c:if test="${not empty requestScope.dailyOrderSummary}">
-						<div class="dailyOrderSummary">
-							<h4>일별 주문건수, 주문금액</h4>
+						<h4>일별 주문건수, 주문금액</h4>
+							<div class="dailyOrderSummary">
  							<c:forEach var="dailyOrder" items="${dailyOrderSummary}" varStatus="loopStatus">
 								<c:if test="${loopStatus.index < 31}">
 									<div class="dailyOrderSummaryItem textlink">	
 										<div class="dailyOrderSummaryOrderDate">${dailyOrder.orderDate}</div>
-										<div class="dailyOrderSummaryCount">${dailyOrder.dailyOrderCount}건</div>
-										<div class="dailyOrderSummaryAmount"><fmt:formatNumber value="${dailyOrder.dailyOrderAmount}" pattern="#,##0"/>원</div>
+										<c:if test="${dailyOrder.dailyOrderCount > 0}" >
+											<div class="dailyOrderSummaryCount">${dailyOrder.dailyOrderCount}건</div>
+											<div class="dailyOrderSummaryAmount"><fmt:formatNumber value="${dailyOrder.dailyOrderAmount}" pattern="#,##0"/>원</div>
+										</c:if>
 									</div>
-					                <c:if test="${loopStatus.index % 7 == 6 and loopStatus.index < 30}">
+					                <c:if test="${loopStatus.index % 7 == 6 and loopStatus.index < 31}">
 				                    	<br /> <!-- 7번째 요소마다 줄바꿈 -->
 				                	</c:if>
 								</c:if>
