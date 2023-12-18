@@ -23,10 +23,10 @@ public interface InquiryService {
 	int delete(int inquiry_code);
 	
 	// 내 문의내역 확인하는 service
-	Page<Inquiry> getInquiryList(String id);
+	Page<Inquiry> getInquiryList(String id, Pageable pageable);
 	
 	// 내 문의내역 확인하는 service
-//	Page<Inquiry> getInquiryList(Pageable pageable);
+	List<Inquiry> getInquiryList(boolean answer_check);
 	
 	Page<Inquiry> getUnanswerInquiryList(Boolean answer_check, Pageable pageable);
 }
