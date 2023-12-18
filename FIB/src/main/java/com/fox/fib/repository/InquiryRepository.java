@@ -1,5 +1,7 @@
 package com.fox.fib.repository;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
@@ -15,16 +17,16 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Integer> {
 	// 내 문의내역(페이지네이션) 사용자
 	@Transactional
 	@Query("select i from Inquiry i where i.id = :id ")
-	Page<Inquiry> getInquiryList(@Param("id") String id);
+	Page<Inquiry> getInquiryList(@Param("id") String id, Pageable pageable);
 	
 	// 모든 문의내역(페이지네이션) 관리자
-//	@Transactional
-//	@Query("select i from Inquiry i ORDER BY i.inquiry_code DESC")
-//	Page<Inquiry> getInquiryList(Pageable pageable);
+	@Transactional
+	@Query("select i from Inquiry i where i.answer_check=:answer_check ORDER BY i.inquiry_code DESC")
+	List<Inquiry> getInquiryList(boolean answer_check);
 
 	// 답변안된 문의내역(페이지네이션) 관리자
 	@Transactional
 	@Query("select i from Inquiry i where i.answer_check=:answer_check ORDER BY i.inquiry_code DESC")
-	Page<Inquiry> getUnanswerInquiryList(@Param("answer_check")Boolean answer_check, Pageable pageable);
+	Page<Inquiry> getUnanswerInquiryList(@Param("answer_check") boolean answer_check, Pageable pageable);
 }
 

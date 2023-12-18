@@ -204,7 +204,7 @@ public class TestController {
 			log.info(id);
 		try {
 			// 쿼리문의 return값들의 리스트에 
-			Page<Inquiry> getInquiryList = inquiryService.getInquiryList(id);
+			Page<Inquiry> getInquiryList = inquiryService.getInquiryList(id, null);
 			
 	        // 요청받은 정보에서 현재 조회수를 조회
 			log.info("현재 아이디의 문의코드 : " + inquiry.getInquiry_code());

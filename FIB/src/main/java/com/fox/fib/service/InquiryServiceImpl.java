@@ -48,15 +48,15 @@ public class InquiryServiceImpl implements InquiryService {
 	
 	// 내 문의내역 보기
 	@Override
-    public Page<Inquiry> getInquiryList(String id) {
-    	return repository.getInquiryList(id);
+    public Page<Inquiry> getInquiryList(String id, Pageable pageable) {
+    	return repository.getInquiryList(id, pageable);
     }
 	
 	//  모든 문의내역 보기(페이지네이션 적용) 관리자
-//	@Override
-//	public Page<Inquiry> getInquiryList(Pageable pageable) {
-//	    return repository.getInquiryList(pageable);
-//	}
+	@Override
+	public List<Inquiry> getInquiryList(boolean answer_check) {
+	    return repository.getInquiryList(answer_check);
+	}
 
 //  내 문의내역 보기(페이지네이션 적용) 관리자
 	@Override
