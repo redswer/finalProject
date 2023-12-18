@@ -467,15 +467,6 @@ function JoinMembership() {
                                 </span>
                             </div>
                             <div>
-                                <span className='join_membership_basic_span'>성별</span>
-                                <span className='join_membership_radio'>
-                                    <input id='male' name='sex' type="radio" required />
-                                    <label htmlFor="male">남자</label>
-                                    <input id='female' name='sex' type="radio" />
-                                    <label htmlFor="female">여자</label>
-                                </span>
-                            </div>
-                            <div>
                                 <span className='join_membership_basic_span'>생년월일</span>
                                 <span className='join_membership_birth'>
                                     <label htmlFor="year_birth"></label>
