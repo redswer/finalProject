@@ -16,6 +16,11 @@
     width: 70%;
 }
 
+.findUserInfo_sub_text {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
 .findUserInfo_select_container {
     width: 30%;
     text-align: center;

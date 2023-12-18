@@ -8,6 +8,8 @@
 }
 
 .footer_container_2 {
+    width: 100vw;
+    min-width: 1240px;
     text-align: center;
     line-height: 70px;
     border-top: 1px solid #cfcdcd;
