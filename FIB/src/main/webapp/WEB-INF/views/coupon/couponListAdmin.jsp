@@ -72,6 +72,7 @@
 		                class="${pageNumber == requestScope.itemPage.number ? 'currentPage' : ''}">
 		              ${pageNumber + 1}
 		     	</span>
+
 	        </c:forEach>
 	    </c:if>
 	</div>

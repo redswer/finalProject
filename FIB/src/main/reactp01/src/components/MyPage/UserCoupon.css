@@ -1,0 +1,23 @@
+.UserCoupon {
+    width: 1240px;
+    margin: auto;
+}
+
+.user_coupon_table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 1px solid black;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    margin: 0;
+    padding: 0;
+}
+
+.user_coupon_column {
+    display: grid;
+    grid-template-columns: 0fr 1fr 1fr 1fr 1fr;
+    text-align: center;
+    align-items: center;
+    padding: 15px;
+}
