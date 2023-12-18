@@ -73,8 +73,6 @@ const PaymentPageModal = ({ loginID, setCoupon_selected }) => {
 
     }, [couponList, userCuponList]);
 
-    console.log("배열학이니닐ㅇ : ", couponArray);
-
     // =================================================================
     // 선택한 쿠폰 데이터
     const coupon_put = (coupon_code, coupon_title, discount_rate, max) => {
@@ -110,21 +108,21 @@ const PaymentPageModal = ({ loginID, setCoupon_selected }) => {
                     <div className="payment_modal_list d-flex">
                         {
                             couponArray.map(index => (
-                                <div key={ImageBitmapRenderingContext} className='modal_coupon_map'>
+                                <div key={index} className='modal_coupon_map'>
                                     <input
                                         type="radio"
                                         name="payment_coupon"
-                                        value={index.discount_rate == 0 ? index.max : index.discount_rate}
+                                        id={`coupon_input_label_${index.couponOne.coupon_code}`}
+                                        value={index.couponOne.discount_rate == 0 ? index.couponOne.max : index.couponOne.discount_rate}
                                         className='modal_coupon_input'
-                                        id={`coupon_input_label_${index.coupon_code}`}
-                                        onClick={() => coupon_put(index.coupon_code, index.title, index.discount_rate, index.max)}
+                                        onClick={() => coupon_put(index.couponOne.coupon_code, index.couponOne.title, index.couponOne.discount_rate, index.couponOne.max)}
                                     />
-                                    <label id="modal_coupon_label" htmlFor={`coupon_input_label_${index.coupon_code}`}>
+                                    <label id="modal_coupon_label" htmlFor={`coupon_input_label_${index.couponOne.coupon_code}`}>
 
-                                        <img src={`../img/${index.image}`} />
+                                        <img src={`../img/${index.couponOne.image}`} />
                                         <div className="modal_coupon_content">
-                                            <div className="modal_coupon_title">{index.title}</div>
-                                            <div className="modal_coupon_date">~ {index.end} 까지</div>
+                                            <div className="modal_coupon_title">{index.couponOne.title}</div>
+                                            <div className="modal_coupon_date">~ {index.userCouponOne.end} 까지</div>
                                         </div>
 
                                     </label>
