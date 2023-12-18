@@ -58,15 +58,15 @@ function UserUpdate() {
     // 수정 불가능 항목 안내
     const validateId = () => {
         setIdError('아이디는 수정 불가능합니다.');
-        setTimeout(() => setIdError(''), 5000);
+        setTimeout(() => setIdError(''), 3000);
     };
     const validateAddress = () => {
         setAddressError('주소 관리 메뉴에서 수정해주세요.');
-        setTimeout(() => setAddressError(''), 5000);
+        setTimeout(() => setAddressError(''), 3000);
     };
     const validatePoint = () => {
         setPointError('포인트는 수정 불가능합니다.');
-        setTimeout(() => setPointError(''), 5000);
+        setTimeout(() => setPointError(''), 3000);
     };
 
     // 이메일 수신 여부 라디오 버튼 상태 변경 함수
