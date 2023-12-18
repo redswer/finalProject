@@ -21,4 +21,5 @@ public interface UserService {
 	public List<Integer> userCouponCodeList(String id);
 	public Coupon userCoupon(int code);
 	public String endDate(int code);
+	public Boolean useCheck(int code);
 }

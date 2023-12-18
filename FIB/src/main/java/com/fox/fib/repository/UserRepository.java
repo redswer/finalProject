@@ -29,4 +29,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Query(nativeQuery = true, value = "select end from user_coupon where coupon_code =:code")
 	String endDate(@Param("code") int code);
 	
+	@Query(nativeQuery = true, value = "select use_check from user_coupon where coupon_code =:code")
+	Boolean useCheck(@Param("code") int code);
+	
 }

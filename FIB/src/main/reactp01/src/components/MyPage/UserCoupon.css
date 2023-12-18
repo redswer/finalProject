@@ -20,4 +20,9 @@
     text-align: center;
     align-items: center;
     padding: 15px;
+    border-bottom: 1px solid #666;
+}
+
+.user_coupon_column_item {
+    border-bottom: 0.5px solid rgb(215, 223, 216);
 }

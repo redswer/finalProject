@@ -51,12 +51,12 @@ function UserCoupon() {
                     </thead>
                     <tbody>
                         {couponList.map((couponData, index) => (
-                            <tr key={index} className="user_coupon_column">
+                            <tr key={index} className="user_coupon_column user_coupon_column_item">
                                 <td>
                                     <img src={`../img/${couponData.image}`} alt="coupon_image" />
                                 </td>
                                 <td>{couponData.title}</td>
-                                <td>{couponData.discount_rate}</td>
+                                <td>{couponData.discount_rate}%</td>
                                 <td>{couponData.max}</td>
                                 <td>{couponData.end}</td>
                             </tr>

@@ -51,6 +51,10 @@ public class UserServiceImpl implements UserService {
 		return repository.endDate(code);
 	}
 	
+	public Boolean useCheck(int code) {
+		return repository.useCheck(code);
+	}
+	
 	// ** 아이디 찾기
 	public String findId(String name, String birthday, String phone_number) {
 		return repository.findId(name, birthday, phone_number);
