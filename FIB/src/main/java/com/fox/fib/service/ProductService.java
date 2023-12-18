@@ -12,6 +12,8 @@ public interface ProductService {
 
 	public List<Product> selectList();
 
+	public List<Product> selectAllList();
+
 	PageResultDTO<Product> selectListPageNation(PageRequestDTO requestDTO);
 
 	// [2] 리액트 메소드.==================================================================================

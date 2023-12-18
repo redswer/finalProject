@@ -1,26 +1,26 @@
 import './RecentSideBarItem.css'
-import { useEffect ,useState} from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 const RecentSideBarItem = (props) => {
 
     return (
-        <div className='basket_preview_item_container'>
-            <div className='basket_preview_item_title'>
-            pcode : {props.pcode}
+        <div className='RecentSideBarItemContainer'>
+            <div>
+                <Link to={`/DetailPage/${props.pcode}`}>
+                    <img src={`../../img/yeonsu.jpg`} alt="image" className='RecentSideBarItemImage' />
+                </Link>
+
             </div>
 
-            <div className='basket_preview_item_price'>
-            제목 : {props.title}
-            </div>
+            <div className='recentSideBarTitlePrice'>
+                <Link to={`/DetailPage/${props.pcode}`}>
+                    <div className='basket_preview_item_title'>{props.title}</div>
+                </Link>
 
-            <div className='basket_preview_item_price'>
-            가격 : {props.price}
+                <span className='basket_preview_item_price'>{props.price.toLocaleString()} 원</span>
             </div>
-
-            <div className='basket_preview_item_amount'>
-                
-            </div>
-        </div>
+        </div >
     );
 };
 

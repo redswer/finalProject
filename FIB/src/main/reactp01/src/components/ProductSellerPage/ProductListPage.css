@@ -1,83 +1,114 @@
-.pMLP {
-  border:3px solid red;
-  padding:0;
-}
-
-.seller_page_container {
+.productListPageContainer {
   margin: 0 auto;
-  /* border: 1px solid brown; */
   margin-top: 30px;
+  /* border: 3px solid red; */
+  width: 1500px;
+  display: flex;
 }
 
-.ProductListPage_Checkbox_container input {
+/* 사이드바======================================================================================================= */
+
+.KeywordSideBar {
+  display: flex;
+  justify-self: center;
+  margin-top: 20px;
+  transition: transform 0.9s ease;
+}
+
+.RecentSideBar {
+  /* margin-top: 20px; */
+  transition: transform 0.9s ease;
+}
+
+/* 상품판매 ======================================================================================================= */
+.ProductListPageKeywordCheckBoxWrapper {
+  background-color: rgb(162, 224, 138);
+  border: 1px solid rgb(162, 224, 138);
+  border-radius: 6px;
+  margin-bottom: 14px;
+  width: 70%;
+}
+
+.productListPageCategoryCheckBox {
+  /* border: 1px solid blue; */
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.productListPageCategoryCheckBoxLabel {
+  font-size: 16px;
+  font-weight: bold;
   display: inline-block;
-  width:40px;
-  height:40px;
+
+}
+
+.ProductListPageKeywordCheckBoxWrapper input {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+
 }
 
 .ProductListPage_SortOption button {
   display: inline-block;
-  border:1px solid green;
+  background-color: rgb(183, 212, 175);
+  border: 1px solid rgb(183, 212, 175);
+  color: rgb(90, 90, 90);
   border-radius: 10px;
-  width:100px;
-  height:40px;
-  font-size:17px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  width: 70px;
+  height: 30px;
+  font-size: 13px;
   margin-right: 17px;
-  background-color: rgb(127, 183, 164);
+  margin-bottom: 8px;
 }
 
 .ProductListPage_SortOption button:hover {
-  background-color: rgb(111, 132, 125);
+  background-color: rgb(132, 201, 113);
+  color: black;
 }
 
-.seller_product_List_container {
+.productListPageDisplayContentContainer {
   /* border: 5px solid green; */
-  width: 900px;
+  width: 920px;
   margin: 0 auto;
 }
 
-.seller_product_page_title {
+.ProductListPageTitleAndSize {
+  margin-top: 20px;
+}
+
+.ProductListPageCurrentKeywordTitle {
   font-size: 25px;
   font-weight: bold;
   margin-right: 10px;
   /* border:3px solid green; */
 }
 
-.seller_product_page_sub_title {
-  font-size: 11px;
+.ProductListPageHandleSize {
+  float: right;
+  width: 100px;
+  height: 30px;
+  text-align: center;
 }
 
-.seller_product_page_titlebox_hr {
+.ProductListPageCurrentKeywordTitleHrLine {
   margin-top: 15px;
-  margin-bottom: 40px;
+  margin-bottom: 38px;
 }
 
-.product_seller_categorybar_container {
-  /* margin-left: 240px; */
-  margin-left: 290px;
-  margin-top: 30px;
-  width: 250px;
-  transition: transform 0.9s ease;
-  position: absolute;
-
-}
-
-.basket_preview_box_container {
-  /* margin-left: 1350px; */
-  margin-left: 1530px;
-  margin-top: 30px;
-  width: 300px;
-  transition: transform 0.9s ease;
-  position: absolute;
-}
-
-.seller_product_bookList {
+.productListItemMapedArea {
   margin: 0 auto;
 }
+
 .productList_pageNationButton_selected,
 .productList_pageNationButton_ {
   display: inline-block;
-  margin:3px 20px;
+  margin: 3px 20px;
   border: 1px solid black;
   width: 30px;
   height: 30px;
@@ -92,3 +123,5 @@
 .productListPage_pageNationButton {
   text-align: center;
 }
+
+/* 사이드바========================================================================================================== */
