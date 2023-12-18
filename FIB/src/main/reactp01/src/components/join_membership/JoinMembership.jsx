@@ -311,6 +311,10 @@ function JoinMembership() {
         setAddress_detail(detail);
     }
 
+    function pageToLogin() {
+        navigate('/LogIn');
+    }
+
     function submitButton() {
         const selectedYear = yearRef.current.value;
         const selectedMonth = monthRef.current.value;
@@ -337,23 +341,7 @@ function JoinMembership() {
 
             navigate("/LogIn");
         }).catch((error) => {
-            // if (error.response) {
-            //     // 서버가 응답을 반환한 경우
-            //     console.error("Login error - Server responded with data:", error.response.data);
-            //     console.error("Status code:", error.response.status);
-            //     console.error("Headers:", error.response.headers);
-
-            // } else if (error.request) {
-            //     // 서버에 요청이 전송되었지만 응답이 없는 경우
-            //     console.error("Login error - No response received:", error.request);
-
-            // } else {
-            //     // 요청을 보내기 전에 오류가 발생한 경우
-            //     console.error("Login error - Request setup error:", error.message);
-
-            // }
             alert(error.response.data);
-            // window.location.reload();
         });
     }
 
@@ -364,6 +352,9 @@ function JoinMembership() {
                     <img src="img/fox_logo.png" alt="findUserInfo_logo" className="find_userInfo_logo" />
                 </Link>
                 <span><h1>회원가입</h1></span>
+            </div>
+            <div className='toLoginButton'>
+                <button onClick={pageToLogin}>로그인 하러가기</button>
             </div>
             <form className='join_membership_form'>
                 <fieldset className='join_membership_fieldset'>

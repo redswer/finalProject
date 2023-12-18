@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.fox.fib.entity.Coupon;
 import com.fox.fib.entity.User;
 import com.fox.fib.repository.UserRepository;
 
@@ -32,6 +33,11 @@ public class UserServiceImpl implements UserService {
 		} else {			
 			return null;
 		}
+	}
+	
+	// ** 쿠폰 리스트 출력
+	public List<Coupon> userCouponList(String id) {
+		return repository.userCouponList(id);
 	}
 	
 	// ** 아이디 찾기

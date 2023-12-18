@@ -59,6 +59,13 @@ function FindId() {
     }
 
     // ==================================
+    // ** 취소 버튼 클릭 시 로그인 페이지로
+
+    function pageToLogin() {
+        navigate('/LogIn');
+    }
+
+    // ==================================
     // ** 데이터 전송
     const findIdSubmit = () => {
         axios({
@@ -137,7 +144,7 @@ function FindId() {
                     <div className='find_id_button_container'>
                         <button className='find_id_submit_btn' type='button'
                             disabled={findIdButton} onClick={findIdSubmit}>확인</button>
-                        <button type='reset'>취소</button>
+                        <button onClick={pageToLogin}>취소</button>
                     </div>
                 </fieldset>
             </form>

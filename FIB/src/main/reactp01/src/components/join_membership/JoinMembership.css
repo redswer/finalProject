@@ -9,6 +9,21 @@
     margin-bottom: 50px;
 }
 
+.toLoginButton {
+    text-align: right;
+}
+
+.toLoginButton button {
+    width: 130px;
+    line-height: 40px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(119, 175, 107);
+    margin-bottom: 20px;
+
+}
+
 .join_membership_form {
     width: 100%;
     margin: auto;

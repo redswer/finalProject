@@ -30,35 +30,32 @@ public class Delivery_addressController {
 	}
 	
 	@PostMapping("insert")
-	public ResponseEntity<String> isnert(@RequestBody Delivery_address request) {
+	public ResponseEntity<User> isnert(@RequestBody Delivery_address request) {
 		if (service.dupCheck(request.getAddress_zip(), request.getAddress(), request.getAddress_detail()) != null) {
-			return new ResponseEntity<> ("이미 존재하는 주소입니다.", HttpStatus.BAD_GATEWAY);
+			return new ResponseEntity<> (HttpStatus.BAD_GATEWAY);
 		} else {
 			if (request.getBasic_address()) {
+				
+				User user = uservice.selectOne(request.getUser_id());
+				user.setAddress_zip(request.getAddress_zip());
+				user.setAddress(request.getAddress());
+				user.setAddress_detail(request.getAddress_detail());
+				uservice.register(user);
+				
 				if (service.basicSearch() != null) {
 					service.basicUpdate();
-					
-					User user = uservice.selectOne(request.getUser_id());
-					user.setAddress_zip(request.getAddress_zip());
-					user.setAddress(request.getAddress());
-					user.setAddress_detail(request.getAddress_detail());
-					uservice.register(user);
 				}
 			}
 			service.register(request);
-			return new ResponseEntity<> ("등록 완료", HttpStatus.OK);			
+			return new ResponseEntity<> (uservice.selectOne(request.getUser_id()), HttpStatus.OK);			
 		}
 	}
 	
 	@PostMapping("delete")
 	public ResponseEntity<String> delete(@RequestBody List<Integer> request) {
-		for (int code : request) {			
+		for (int code : request) {
 			service.delete(code);
-//			if (service.basicSearch().getAddress_code() == code) {
-//				
-//			}
 		}
-		
-		return new ResponseEntity<> ("삭제 완료", HttpStatus.OK);
+		return new ResponseEntity<> ("삭제 완료", HttpStatus.OK);			
 	}
 }

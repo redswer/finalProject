@@ -49,6 +49,8 @@ function InsertAddressPopup({ isOpen, onClose }) {
     };
 
     function changeButton() {
+        const detail_length = address_detail.length
+
         address_zip && address && address_detail
             ? setInsertAddressButton(false) : setInsertAddressButton(true);
     }
@@ -69,10 +71,15 @@ function InsertAddressPopup({ isOpen, onClose }) {
                 basic_address: basic_address
             }
         }).then((res) => {
-            alert(res.data);
+            alert("등록 완료");
+            sessionStorage.setItem('user', JSON.stringify(res.data));
             onClose();
         }).catch((err) => {
-            alert(err.response.data)
+            if (err.response.status == 502) {
+                alert("이미 존재하는 주소입니다.");
+            } else {
+                alert('입력 오류입니다.');
+            }
         });
     }
 
@@ -114,7 +121,7 @@ function InsertAddressPopup({ isOpen, onClose }) {
                             type="text"
                             id="sample6_detailAddress"
                             name='address_detail'
-                            placeholder="상세주소"
+                            placeholder="상세주소 (50자 이하)"
                             autoComplete='off'
                             value={address_detail}
                             onKeyUp={changeButton}
@@ -126,19 +133,19 @@ function InsertAddressPopup({ isOpen, onClose }) {
                     <div className='insert_address_option'>
                         <div>
                             <span>주소명 :&nbsp;</span>
-                            <input type="text"
+                            <input type="text" placeholder='10자 이하'
                                 onChange={(e) => setAddressName(e.target.value)}
                                 value={isChecked ? '기본 배송지' : addressName} />
                         </div>
                         <div>
                             <span>연락처 :&nbsp;</span>
-                            <input type="text"
+                            <input type="text" placeholder='숫자만 입력'
                                 onChange={(e) => setPhone_number(e.target.value)}
                                 value={isChecked ? defaultPhone_number : phone_number} />
                         </div>
                         <div>
                             <span>수령인 :&nbsp;</span>
-                            <input type="text"
+                            <input type="text" placeholder='30자 이하'
                                 onChange={(e) => setName(e.target.value)}
                                 value={isChecked ? defaultName : name} />
                         </div>
