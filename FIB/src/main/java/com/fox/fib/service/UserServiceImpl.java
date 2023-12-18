@@ -44,8 +44,11 @@ public class UserServiceImpl implements UserService {
 	
 	public Coupon userCoupon(int code) {
 		Coupon coupon = cRepository.userCoupon(code);
-		System.out.println("serviceImpl => "+coupon);
 		return coupon;
+	}
+	
+	public String endDate(int code) {
+		return repository.endDate(code);
 	}
 	
 	// ** 아이디 찾기

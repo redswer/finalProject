@@ -55,9 +55,6 @@ function UserCoupon() {
                                 <td>
                                     <img src={`../img/${couponData.image}`} alt="coupon_image" />
                                 </td>
-                                <td>
-                                    <input type="hidden" value={couponData.coupon_code} />
-                                </td>
                                 <td>{couponData.title}</td>
                                 <td>{couponData.discount_rate}</td>
                                 <td>{couponData.max}</td>

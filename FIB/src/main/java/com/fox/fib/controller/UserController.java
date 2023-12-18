@@ -131,6 +131,7 @@ public class UserController {
 		
 		for (int i: codes) {
 			Coupon coupon = service.userCoupon(i);
+			coupon.setEnd(service.endDate(i));
 			userCoupon.add(coupon);
 		}	
 		return new ResponseEntity<> (userCoupon, HttpStatus.OK);
