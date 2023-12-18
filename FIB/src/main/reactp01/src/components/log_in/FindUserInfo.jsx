@@ -23,6 +23,7 @@ function FindUserInfo() {
                 </Link>
                 <span><h1>회원정보 조회</h1></span>
             </div>
+            <div className="findUserInfo_sub_text">정보를 모두 정확히 입력해주세요.</div>
             <div className="findUserInfo_select_container">
                 <ul className="findUserInfo_select d-flex">
                     <li
