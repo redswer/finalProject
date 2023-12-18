@@ -13,14 +13,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fox.fib.domain.User_couponId;
 import com.fox.fib.entity.Member_payment;
 import com.fox.fib.entity.Product;
 import com.fox.fib.entity.User;
+import com.fox.fib.entity.User_coupon;
 import com.fox.fib.service.CartService;
 import com.fox.fib.service.Member_paymentService;
 import com.fox.fib.service.Member_payment_detailService;
 import com.fox.fib.service.ProductService;
 import com.fox.fib.service.UserService;
+import com.fox.fib.service.User_couponService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -38,6 +41,7 @@ public class Member_paymentRestController {
 	UserService userService;
 	ProductService productService;
 	CartService cartService;
+	User_couponService  userCouponService;
 	
 	// 회원정보 배송지 가져오기
 	@PostMapping("userAddress")
@@ -45,10 +49,10 @@ public class Member_paymentRestController {
 		return userService.selectList();
 	}
 
-	//주문정보, 주문상세 등록 및 회원포인트 수정	
+	//주문정보, 주문상세 등록 및 회원포인트, 회원쿠폰 수정
 	@SuppressWarnings("unchecked")
 	@PostMapping("memberpaymentinsert")
-	public ResponseEntity<?> memberpaymentinsert(@RequestBody HashMap<String, Object> payment_formData, Member_payment entity) throws IOException {
+	public ResponseEntity<?> memberpaymentinsert(@RequestBody HashMap<String, Object> payment_formData, Member_payment entity, User_couponId dto) throws IOException {
 
 		Gson gson = new Gson();
 		
@@ -116,6 +120,13 @@ public class Member_paymentRestController {
 				// 장바구니 내역 삭제
 				cartService.deleteCartAfterOrder(userId, product_code);
 			}
+			
+			// 쿠폰 사용
+			dto.setCoupon_code(Integer.parseInt((String)payment_formData.get("coupon_code")));
+			dto.setId((String)payment_formData.get("id"));
+			
+			User_coupon userCouponOne = userCouponService.selectOne(dto);
+			userCouponOne.setUse_check(true);
 
 			// 회원포인트 적립 & 사용한 포인트 차감
 			User userOne =  userService.selectOne((String)payment_formData.get("id"));

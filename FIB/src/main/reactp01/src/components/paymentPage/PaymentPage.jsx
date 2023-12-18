@@ -380,7 +380,7 @@ function PaymentPage() {
                                     }
                                 </td>
                                 <td>
-                                    <PaymentPageModal setCoupon_selected={setCoupon_selected} />
+                                    <PaymentPageModal loginID={loginID} setCoupon_selected={setCoupon_selected} />
                                 </td>
                             </tr>
                             <tr>
