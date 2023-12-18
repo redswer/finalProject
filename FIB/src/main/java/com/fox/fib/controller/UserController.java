@@ -2,10 +2,9 @@ package com.fox.fib.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -113,7 +112,6 @@ public class UserController {
 		
 		if (passwordEncoder.matches(password, service.selectOne(user.getId()).getPassword())) {				
 			try {
-				user.setPoint(service.selectOne(user.getId()).getPoint());
 				service.register(user);
 				return new ResponseEntity<> (service.selectOne(user.getId()), HttpStatus.OK);
 			} catch (Exception e) {
@@ -126,30 +124,18 @@ public class UserController {
 	
 //	-----------------------
 	// ** 쿠폰 리스트 출력
-//	@PostMapping("/userCouponList")
-//	public ResponseEntity<List<Coupon>> userCouopnList(@RequestBody String id) {
-//		System.out.println(id);
-//		for (Coupon result: service.userCouponList(id)) {
-//			System.out.println(result);
-//		}
-//		return new ResponseEntity<List<Coupon>> (service.userCouponList(id), HttpStatus.OK);
-//	}
-	
 	@PostMapping("/userCouponList")
-	public ResponseEntity<List<Coupon>> userCouponList(@RequestBody String id) {
-	    System.out.println("Received user ID: " + id);
-
-	    List<Coupon> coupons = service.userCouponList(id);
-
-	    System.out.println("Number of coupons retrieved: " + coupons.size());
-
-	    for (Coupon result : coupons) {
-	        System.out.println(result);
-	    }
-
-	    return new ResponseEntity<>(coupons, HttpStatus.OK);
+	public ResponseEntity<List<Coupon>> userCouponList(@RequestBody User request) {
+		List<Integer> codes = service.userCouponCodeList(request.getId());		
+		List<Coupon> userCoupon = new ArrayList<>();
+		
+		for (int i: codes) {
+			Coupon coupon = service.userCoupon(i);
+			userCoupon.add(coupon);
+		}	
+		return new ResponseEntity<> (userCoupon, HttpStatus.OK);
 	}
-	
+
 //	-----------------------
 	// ** 아이디 찾기
 	@PostMapping("/findId")

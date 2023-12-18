@@ -1,11 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import './UserCoupon.css';
 
 function UserCoupon() {
-    const navigate = useNavigate;
-
     const [id, setId] = useState(JSON.parse(sessionStorage.user).id);
     const [couponList, setCouponList] = useState([]);
 
@@ -14,11 +11,12 @@ function UserCoupon() {
             url: "/user/userCouponList",
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
-            data: JSON.stringify(id)
+            data: {
+                id: id
+            }
 
         }).then((res) => {
             setCouponList(res.data);
-            console.log(couponList);
         }).catch((err) => {
 
         });
