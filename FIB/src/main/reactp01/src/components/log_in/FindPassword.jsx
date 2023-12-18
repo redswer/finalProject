@@ -72,6 +72,12 @@ function FindPassword() {
             ? setFindPasswordButton(false) : setFindPasswordButton(true);
     }
 
+    // ==================================
+    // ** 취소 버튼 클릭 시 로그인 페이지로
+    function pageToLogin() {
+        navigate('/LogIn');
+    }
+
     // ===================================
     // ** 데이터 전송
 
@@ -149,7 +155,7 @@ function FindPassword() {
                     <div className='find_password_button_container'>
                         <button className='find_password_submit_btn' type='button'
                             disabled={findPasswordButton} onClick={findPassword}>확인</button>
-                        <button type='reset'>취소</button>
+                        <button onClick={pageToLogin}>취소</button>
                     </div>
                 </fieldset>
             </form>
