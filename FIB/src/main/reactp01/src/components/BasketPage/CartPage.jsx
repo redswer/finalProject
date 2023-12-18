@@ -158,15 +158,19 @@ const CartPage = () => {
   console.log(`isAllChecked[Page](151) : `, isAllChecked);
   console.log(`======Page 분단======Page 분단======Page 분단======Page 분단======Page 분단======`);
 
+  const firstSelectWarning = () => {
+    alert(`구매하실 상품을 먼저 선택해주세요 ^~^`);
+  }
+
 
   //=====================================================================================================================
   return (
     <div className='CartPageContainer'>
-      <span className='CartPageTitle'>장바구니 페이지</span>
+      <span className='CartPageTitle'>장바구니 페이지</span>&nbsp;&nbsp;
       <span className='CartPageSubtitle'>구매하실 상품목록들을 확인하실 수 있는 페이지입니다.</span>
 
-      <div>
-        <button onClick={handleDeleteSelected}>선택목록 삭제</button>&nbsp;&nbsp;&nbsp;
+      <div className='deleteSelectedItemsButtonDiv'>
+        <button onClick={handleDeleteSelected} className='deleteSelectedItemsButton'>선택목록 삭제</button>&nbsp;&nbsp;&nbsp;
       </div>
 
       {/* 카트페이지 =========================================================================== */}
@@ -259,15 +263,18 @@ const CartPage = () => {
 
           <Link to='/'><button className='CartPageToHome'>계속 쇼핑하기</button></Link>
 
-          <div className='CartPageToPayment'>
-            <Link to={`/PaymentPage`}
+          <div className='CartPageToPayment'>{selectedItems.length > 0 ? (<Link to={`/PaymentPage`}
+            state={{ order_data: selectedItems }}>
+            바로구매
+          </Link>)
+            :
+            (<Link to={`/CartPage`}
               state={{ order_data: selectedItems }}
-              className='buynowletsgo'>
+              onClick={firstSelectWarning}>
               바로구매
-            </Link>
+            </Link>)}
+
           </div>
-
-
         </div>
 
       </div>

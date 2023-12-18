@@ -8,6 +8,28 @@
   font-weight: bold;
 }
 
+.CartPageSubtitle {
+  font-size: 11px;
+}
+
+.deleteSelectedItemsButtonDiv {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.deleteSelectedItemsButton {
+  display: inline-block;
+  /* border: 1px solid rgb(60, 118, 212); */
+  /* background-color: rgb(60, 118, 212); */
+  border: 1px solid black;
+  background-color: black;
+
+  border-radius: 4px;
+  color: white;
+  width: 100px;
+  height: 25px;
+}
+
 .CartPageTable {
   width: 100%;
   border-collapse: collapse;
