@@ -125,16 +125,7 @@ function PaymentPage() {
 
     // -----------------------------------------------------
     // 배송지 선택
-    const [addressSelected, setAddressSelected] = useState([]
-        // {
-        //     address_code: address_code,
-        //     address_as: address_as,
-        //     address_zip: address_zip,
-        //     address: address,
-        //     address_detail: address_detail,
-        //     name: addressName
-        // }
-    );
+    const [addressSelected, setAddressSelected] = useState({});
 
     //------------------------------------------------------
     // 현재 날짜 생성
@@ -165,32 +156,48 @@ function PaymentPage() {
         //     console.log(value);
         // }
 
-        axios.post(
-            `/restmemberpayment/memberpaymentinsert`,
-            payment_formData,
-            {
-                headers: { 'content-Type': 'application/json' }
-            }
-        ).then((response) => {
-            console.log(response.data);
-            window.location.href = `/OrderListPage`;
-        }).catch((error) => {
-            if (error.response) {
-                // 서버가 응답을 반환한 경우
-                console.error("Server responded with data:", error.response.data);
-                console.error("Status code:", error.response.status);
-                console.error("Headers:", error.response.headers);
+        if (document.getElementById('order_addr_recipient').value === '' ||
+            document.getElementById('order_addr_address_zip').value === '' ||
+            document.getElementById('order_addr_address').value === '' ||
+            document.getElementById('order_addr_address_detail').value === '' ||
+            document.getElementById('order_addr_phone_number').value === '') {
+            alert('배송지 정보를 입력해주세요.');
+        } else if ((!document.getElementById('payment_naverpay').checked &&
+            !document.getElementById('payment_kakaopay').checked &&
+            !document.getElementById('payment_kbcard').checked &&
+            !document.getElementById('payment_shinhancard').checked &&
+            !document.getElementById('payment_wooricard').checked) &&
+            (!document.getElementById('payment_cash').checked &&
+                !document.getElementById('payment_phone').checked)) {
+            alert('결제방법을 선택해주세요.');
+        } else {
+            axios.post(
+                `/restmemberpayment/memberpaymentinsert`,
+                payment_formData,
+                {
+                    headers: { 'content-Type': 'application/json' }
+                }
+            ).then((response) => {
+                console.log(response.data);
+                window.location.href = `/OrderListPage`;
+            }).catch((error) => {
+                if (error.response) {
+                    // 서버가 응답을 반환한 경우
+                    console.error("Server responded with data:", error.response.data);
+                    console.error("Status code:", error.response.status);
+                    console.error("Headers:", error.response.headers);
 
-            } else if (error.request) {
-                // 서버에 요청이 전송되었지만 응답이 없는 경우
-                console.error("Login error - No response received:", error.request);
+                } else if (error.request) {
+                    // 서버에 요청이 전송되었지만 응답이 없는 경우
+                    console.error("Login error - No response received:", error.request);
 
-            } else {
-                // 요청을 보내기 전에 오류가 발생한 경우
-                console.error("Login error - Request setup error:", error.message);
+                } else {
+                    // 요청을 보내기 전에 오류가 발생한 경우
+                    console.error("Login error - Request setup error:", error.message);
 
-            }
-        });
+                }
+            });
+        }
     }
 
     return (
@@ -289,7 +296,7 @@ function PaymentPage() {
                                         <label htmlFor="order_addr_recipient">이름</label>
                                     </th>
                                     <td>
-                                        <input type="text" name="recipient" className="order_addr_userName ip_hi" id="order_addr_recipient" />
+                                        <input type="text" name="recipient" value={addressSelected.name} className="order_addr_userName ip_hi" id="order_addr_recipient" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -297,18 +304,18 @@ function PaymentPage() {
                                         <label htmlFor="order_addr_address_zip">주소</label>
                                     </th>
                                     <td>
-                                        <input type="text" name="address_zip" className="order_addr_01 ip_hi" id="order_addr_address_zip"
+                                        <input type="text" name="address_zip" value={addressSelected.address_zip} className="order_addr_01 ip_hi" id="order_addr_address_zip"
                                             placeholder="우편번호" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" name="address" id="order_addr_address" className="order_addr_02 ip_hi" placeholder="주소" />
+                                        <input type="text" name="address" value={addressSelected.address} id="order_addr_address" className="order_addr_02 ip_hi" placeholder="주소" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" name="address_detail" id="order_addr_address_detail" className="order_addr_03 ip_hi" placeholder="상세주소" />
+                                        <input type="text" name="address_detail" value={addressSelected.address_detail} id="order_addr_address_detail" className="order_addr_03 ip_hi" placeholder="상세주소" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -316,7 +323,7 @@ function PaymentPage() {
                                         <label htmlFor="order_addr_phone_number">휴대폰번호</label>
                                     </th>
                                     <td>
-                                        <input type="text" name="recipient_phone_number" className="order_callNumber ip_hi" id="order_addr_phone_number" placeholder="'-' 제외하고 입력" />
+                                        <input type="text" name="recipient_phone_number" value={addressSelected.phone_number} className="order_callNumber ip_hi" id="order_addr_phone_number" placeholder="(-) 제외하고 입력" />
                                     </td>
                                 </tr>
                                 <tr>
