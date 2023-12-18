@@ -95,9 +95,27 @@ function FindPassword() {
         }).then((res) => {
             alert(res.data);
             navigate('/LogIn');
-        }).catch((error) => {
-            alert(error.response.data);
+        }).catch(() => {
+            alert('입력한 정보가 일치하지 않습니다.');
         });
+    }
+
+    // =================================
+    // ** 엔터 키 설정
+    const handleEnterKey = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+
+            if (e.target.id === 'find_pw_id') {
+                document.getElementById('find_pw_name').focus();
+            } else if (e.target.id === 'find_pw_name') {
+                document.getElementById('find_pw_birthday').focus();
+            } else if (e.target.id === 'find_pw_birthday') {
+                document.getElementById('find_pw_phone_number').focus();
+            } else if (e.target.id === 'find_pw_phone_number') {
+                findPassword(e);
+            }
+        }
     }
 
     return (
@@ -107,8 +125,9 @@ function FindPassword() {
                     <div className='find_password_input_container'>
                         <div>아이디</div>
                         <input type="text" placeholder='아이디(이메일)를 입력해 주세요.'
-                            name='name' autoComplete='off'
+                            name='name' autoComplete='off' id='find_pw_id'
                             onKeyUp={changeButton}
+                            onKeyDown={handleEnterKey}
                             onChange={(e) => {
                                 setId(e.target.value);
                                 setIdError('');
@@ -119,8 +138,9 @@ function FindPassword() {
                     <div className='find_password_input_container'>
                         <div>이름</div>
                         <input type="text" placeholder='이름을 입력해 주세요.'
-                            name='name' autoComplete='off'
+                            name='name' autoComplete='off' id='find_pw_name'
                             onKeyUp={changeButton}
+                            onKeyDown={handleEnterKey}
                             onChange={(e) => {
                                 setName(e.target.value);
                                 setNameError('');
@@ -131,8 +151,9 @@ function FindPassword() {
                     <div className='find_password_input_container'>
                         <div>생년월일</div>
                         <input type="text" placeholder='생년월일 8자리를 입력해 주세요.'
-                            name='birthday' autoComplete='off'
+                            name='birthday' autoComplete='off' id='find_pw_birthday'
                             onKeyUp={changeButton}
+                            onKeyDown={handleEnterKey}
                             onChange={(e) => {
                                 setBirthday(e.target.value);
                                 setBirthdayError('');
@@ -143,8 +164,9 @@ function FindPassword() {
                     <div className='find_password_input_container'>
                         <div>전화번호</div>
                         <input type="text" placeholder='(-)없이 숫자만 입력해주세요.'
-                            name='phone_number' autoComplete='off'
+                            name='phone_number' autoComplete='off' id='find_pw_phone_number'
                             onKeyUp={changeButton}
+                            onKeyDown={handleEnterKey}
                             onChange={(e) => {
                                 setPhone_number(e.target.value);
                                 setPhone_numberError('');
