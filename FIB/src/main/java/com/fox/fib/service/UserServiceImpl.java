@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.fox.fib.entity.Coupon;
 import com.fox.fib.entity.User;
+import com.fox.fib.repository.CouponRepository;
 import com.fox.fib.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 	private final UserRepository repository;
+	private final CouponRepository cRepository;
 	
 	// ** 회원가입/ 회원정보 수정
 	@Override
@@ -36,8 +38,21 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	// ** 쿠폰 리스트 출력
-	public List<Coupon> userCouponList(String id) {
-		return repository.userCouponList(id);
+	public List<Integer> userCouponCodeList(String id) {
+		return repository.userCouponCodeList(id);
+	}
+	
+	public Coupon userCoupon(int code) {
+		Coupon coupon = cRepository.userCoupon(code);
+		return coupon;
+	}
+	
+	public String endDate(int code, String id) {
+		return repository.endDate(code, id);
+	}
+	
+	public Boolean useCheck(int code, String id) {
+		return repository.useCheck(code, id);
 	}
 	
 	// ** 아이디 찾기

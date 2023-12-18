@@ -18,5 +18,8 @@ public interface UserService {
 	public User updateUserPoint(int pointParam, String userId);
 	public String findId(String name, String birthday, String phone_number);
 	public int passwordUpdate(String password, String id);
-	public List<Coupon> userCouponList(String id);
+	public List<Integer> userCouponCodeList(String id);
+	public Coupon userCoupon(int code);
+	public String endDate(int code, String id);
+	public Boolean useCheck(int code, String id);
 }

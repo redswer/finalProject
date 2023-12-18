@@ -78,7 +78,7 @@ body {
 /* 관리자페이지 메인상태에서 보여지는 컨텐츠 */
 .dailyOrderSummaryItem {
 	display: inline-block;
-    width: 130px; /* 너비 설정 */
+    width: 120px; /* 너비 설정 */
     height: 100px; /* 높이 설정 */
     margin: 10px; /* 바깥쪽 여백 설정 */
     padding: 10px; /* 안쪽 여백 설정 */
@@ -87,10 +87,19 @@ body {
     list-style: none;
 }
 
-/* 답변안된 1:1문의글 최대 5개 보이기 */
+/* 답변안된 1:1문의글 최대 5개 보이기 
+   내용이 길어져서 줄바꿈을하더라도 UnAnsweredInquiriesItem의
+   수직정렬이 흐트러지지않기위해 display: flex; flex-wrap: wrap; 사용*/
+.dailyOrderSummary {
+	display: flex;
+	flex-wrap: wrap;
+}
+
 .UnAnsweredInquiriesContainer {
+	display: flex;
+	flex-wrap: wrap;
 	width: 100%;
-	height: 250px;
+	height: 200px;
 }
 
 .UnAnsweredInquiriesContainer h4 {
@@ -100,12 +109,11 @@ body {
 .UnAnsweredInquiriesItem {
 	display: inline-block;
     width: 200px; /* 너비 설정 */
-    height: 200px; /* 높이 설정 */
+    height: 150px; /* 높이 설정 */
     margin: 10px; /* 바깥쪽 여백 설정 */
     padding: 10px; /* 안쪽 여백 설정 */
     border: 1px solid #ddd; /* 테두리 스타일 및 색상 설정 */
     box-sizing: border-box; /* 테두리 포함한 크기로 설정 */
-    list-style: none;
 }
 
 /* UnAnsweredInquiriesTitle에 적용할 스타일 */
@@ -119,7 +127,6 @@ body {
     font-size: 14px; /* 글씨 크기 설정 */
     overflow: hidden; /* 내용이 넘칠 경우 감추기 */
     text-overflow: ellipsis; /* 넘치는 내용에 ... 표시 */
-    white-space: nowrap; /* 줄 바꿈 방지 */
 }
 
 .notice_register_search,

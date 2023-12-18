@@ -12,15 +12,24 @@ function UserUpdate() {
 
     const [id, setId] = useState(JSON.parse(sessionStorage.user).id);
     const [name, setName] = useState(JSON.parse(sessionStorage.user).name);
-    const [nickname, setNickname] = useState(JSON.parse(sessionStorage.user).nickname != null ? JSON.parse(sessionStorage.user).nickname : '');
     const [phone_number, setPhoneNumber] = useState(JSON.parse(sessionStorage.user).phone_number);
+    const [birthday, setBirtyday] = useState(JSON.parse(sessionStorage.user).birthday);
     const [address_zip, setAddress_zip] = useState(JSON.parse(sessionStorage.user).address_zip != 'null' ? JSON.parse(sessionStorage.user).address_zip : '');
     const [address, setAddress] = useState(JSON.parse(sessionStorage.user).address != 'null' ? JSON.parse(sessionStorage.user).address : '');
     const [address_detail, setAddress_detail] = useState(JSON.parse(sessionStorage.user).address_detail != 'null' ? JSON.parse(sessionStorage.user).address_detail : '');
+    const [nickname, setNickname] = useState(JSON.parse(sessionStorage.user).nickname != null ? JSON.parse(sessionStorage.user).nickname : '');
+    const [ad_check_email, setAd_check_email] = useState(JSON.parse(sessionStorage.user).ad_check_email);
+    const [ad_check_sms, setAd_check_sms] = useState(JSON.parse(sessionStorage.user).ad_check_sms);
+    const [point, setPoint] = useState(JSON.parse(sessionStorage.user).point);
+    const [join_date, setJoin_date] = useState(JSON.parse(sessionStorage.user).join_date);
 
     const [nameError, setNameError] = useState('');
     const [phoneNumberError, setPhoneNumberError] = useState('');
     const [nicknameError, setNicknameError] = useState('');
+
+    const [idError, setIdError] = useState('');
+    const [addressError, setAddressError] = useState('');
+    const [pointError, setPointError] = useState('');
 
     const nameRegex = /^[가-힣a-zA-Z]*$/;
 
@@ -46,18 +55,29 @@ function UserUpdate() {
         }
     }
 
-    const [isEmailChecked, setEmailChecked] = useState(JSON.parse(sessionStorage.user).ad_check_email);
-    const [isSmsChecked, setSmsChecked] = useState(JSON.parse(sessionStorage.user).ad_check_sms);
+    // 수정 불가능 항목 안내
+    const validateId = () => {
+        setIdError('아이디는 수정 불가능합니다.');
+        setTimeout(() => setIdError(''), 5000);
+    };
+    const validateAddress = () => {
+        setAddressError('주소 관리 메뉴에서 수정해주세요.');
+        setTimeout(() => setAddressError(''), 5000);
+    };
+    const validatePoint = () => {
+        setPointError('포인트는 수정 불가능합니다.');
+        setTimeout(() => setPointError(''), 5000);
+    };
 
     // 이메일 수신 여부 라디오 버튼 상태 변경 함수
     const handleEmailChange = () => {
-        setEmailChecked(!isEmailChecked);
+        setAd_check_email(!ad_check_email);
         changeButton();
     };
 
     // SMS 수신 여부 라디오 버튼 상태 변경 함수
     const handleSmsChange = () => {
-        setSmsChecked(!isSmsChecked);
+        setAd_check_sms(!ad_check_sms);
         changeButton();
     };
 
@@ -135,13 +155,14 @@ function UserUpdate() {
         formData.append('password', popupPassword);
         formData.append('name', name);
         formData.append('phone_number', phone_number);
-        formData.append('birthday', JSON.parse(sessionStorage.user).birthday);
+        formData.append('birthday', birthday);
         formData.append('address_zip', address_zip);
         formData.append('address', address);
         formData.append('address_detail', address_detail);
         formData.append('nickname', nickname);
-        formData.append('ad_check_email', isEmailChecked);
-        formData.append('ad_check_sms', isSmsChecked);
+        formData.append('ad_check_email', ad_check_email);
+        formData.append('ad_check_sms', ad_check_sms);
+        formData.append('point', point);
 
         axios({
             url: "/user/update",
@@ -202,7 +223,10 @@ function UserUpdate() {
                                 <input id='id' name='id'
                                     className='userUpdate_input' type="text" size={30}
                                     value={id} readOnly
+                                    onFocus={validateId}
+                                    onBlur={() => { setIdError('') }}
                                 />
+                                <div className='error-message'>{idError}</div>
                             </td>
                         </tr>
                         <tr className='d-flex'>
@@ -259,17 +283,34 @@ function UserUpdate() {
                                 <div className='userUpdate_address'>
                                     <div>
                                         <input type="text" className='userUpdate_input' id='userUpdate_address_zip'
-                                            value={address_zip} readOnly />
+                                            value={address_zip} readOnly
+                                            onFocus={validateAddress}
+                                            onBlur={() => { setAddressError('') }} />
                                     </div>
                                     <div>
                                         <input type="text" className='userUpdate_input'
-                                            value={address} readOnly />
+                                            value={address} readOnly
+                                            onFocus={validateAddress}
+                                            onBlur={() => { setAddressError('') }} />
                                     </div>
                                     <div>
                                         <input type="text" className='userUpdate_input'
-                                            value={address_detail} readOnly />
+                                            value={address_detail} readOnly
+                                            onFocus={validateAddress}
+                                            onBlur={() => { setAddressError('') }} />
                                     </div>
                                 </div>
+                                <div className='error-message'>{addressError}</div>
+                            </td>
+                        </tr>
+                        <tr className='d-flex'>
+                            <th>포인트</th>
+                            <td>
+                                <input type="text" className='userUpdate_input'
+                                    value={point} readOnly
+                                    onFocus={validatePoint}
+                                    onBlur={() => { setPointError('') }} />
+                                <div className='error-message'>{pointError}</div>
                             </td>
                         </tr>
                         <tr className='d-flex'>
@@ -285,7 +326,7 @@ function UserUpdate() {
                                         className='userUpdate_input'
                                         type="radio"
                                         value={true}
-                                        checked={isEmailChecked}
+                                        checked={ad_check_email}
                                         onChange={handleEmailChange}
                                         required />
                                     <label htmlFor="user_update_email_recieve">수신함</label>
@@ -295,7 +336,7 @@ function UserUpdate() {
                                         className='userUpdate_input'
                                         type="radio"
                                         value={false}
-                                        checked={!isEmailChecked}
+                                        checked={!ad_check_email}
                                         onChange={handleEmailChange} />
                                     <label htmlFor="user_update_email_reject">수신안함</label>
                                 </span>
@@ -314,7 +355,7 @@ function UserUpdate() {
                                         className='userUpdate_input'
                                         type="radio"
                                         value={true}
-                                        checked={isSmsChecked}
+                                        checked={ad_check_sms}
                                         onChange={handleSmsChange}
                                         required />
                                     <label htmlFor="user_update_sms_recieve">수신함</label>
@@ -324,7 +365,7 @@ function UserUpdate() {
                                         className='userUpdate_input'
                                         type="radio"
                                         value={false}
-                                        checked={!isSmsChecked}
+                                        checked={!ad_check_sms}
                                         onChange={handleSmsChange} />
                                     <label htmlFor="user_update_sms_reject">수신안함</label>
                                 </div>

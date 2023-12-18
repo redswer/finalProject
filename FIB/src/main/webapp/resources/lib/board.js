@@ -228,6 +228,7 @@ function faqManagement() {
 
 // FAQ 페이지네이션
 function faqManagementPage(pageNumber) {
+	pageNumber = pageNumber || 0;
     let url = "board/faqListAdmin?page=" + pageNumber;
     
     // 현재 선택된 카테고리 값 저장
@@ -351,12 +352,12 @@ function faqDelete(faq_code) {
 }
 
 // FAQ 분류에 따른 정렬
-function faqSortSelectOptions() {
-
+function faqSortSelectOptions(pageNumber) {
+	pageNumber = pageNumber || 0;
 	let categorySelect = document.getElementById("category");
 	let selectedCategory = categorySelect.value;
 	
-	let url="board/pageFaqListAdmin?category= " + selectedCategory;
+	let url=`board/pageFaqListAdmin?category=${selectedCategory}&page=${pageNumber}`;
 	
 	axios.get(url
 	).then(response => {
@@ -395,28 +396,6 @@ function faqSortSelectOptions() {
 	document.getElementById("managementArea").innerHTML="";
 }
 
-
-
-/*function faqSortSelectOptions() {
-
-	let table = document.getElementById("faqTable");
-	let rows = table.getElementsByTagName("tr");
-
-	// 선택된 카테고리 가져오기
-	let categorySelect = document.getElementById("category");
-	let selectedCategory = categorySelect.value;
-
-	for (let i = 1; i < rows.length; i++) {
-		let cells = rows[i].getElementsByTagName("td");
-		let categoryValue = cells[1].innerText; // 분류 열의 데이터
-
-	if (selectedCategory === "전체" || categoryValue === selectedCategory) {
-		rows[i].style.display = ""; // 해당 조건을 만족하는 경우 보이기
-	} else {
-		rows[i].style.display = "none"; // 기타는 숨기기
-    }
-  }
-}*/
 //=====================================================================================
 // 1:1문의 리스트
 function inquiryManagement() {
@@ -459,6 +438,7 @@ function inquiryManagement() {
 
 // 1:1문의 페이지네이션
 function inquiryManagementPage(pageNumber) {
+	pageNumber = pageNumber || 0;
     let url = "board/inquiryListAdmin?page=" + pageNumber;
 
     axios.get(url
@@ -536,27 +516,22 @@ function inquiryAnswerFinish() {
 
 // 1:1문의 답변여부 체크박스 클릭시 정렬방법
 function toggleAnswerSort() {
-	let table = document.getElementById("inquiryTable");
-	let rows = table.getElementsByTagName("tr");
 	let checkbox = document.getElementById("inquiry_answer_toggle");
 	let showOnlyAnswered = checkbox.checked;
-
-	// 선택된 카테고리 가져오기
-	let categorySelect = document.getElementById("category");
-	let selectedCategory = categorySelect.value;
-
+	
 	for (let i = 1; i < rows.length; i++) {
-		let cells = rows[i].getElementsByTagName("td");
-		let answerStatus = cells[7].innerText; // 답변여부 열의 데이터
-		let categoryValue = cells[2].innerText; // 분류 열의 데이터
-
-	if ((showOnlyAnswered && answerStatus === "x" && (selectedCategory === "전체" || categoryValue === selectedCategory)) ||
-		(!showOnlyAnswered && (selectedCategory === "전체" || categoryValue === selectedCategory))) {
-		rows[i].style.display = ""; // 해당 조건을 만족하는 경우 보이기
-	} else {
-		rows[i].style.display = "none"; // 기타는 숨기기
-    }
-  }
+			let cells = rows[i].getElementsByTagName("td");
+			let answerStatus = cells[7].innerText; // 답변여부 열의 데이터
+			let categoryValue = cells[2].innerText; // 분류 열의 데이터
+	
+		if ((showOnlyAnswered && answerStatus === "x" && (selectedCategory === "전체" || categoryValue === selectedCategory)) ||
+			(!showOnlyAnswered && (selectedCategory === "전체" || categoryValue === selectedCategory))) {
+			rows[i].style.display = ""; // 해당 조건을 만족하는 경우 보이기
+		} else {
+			rows[i].style.display = "none"; // 기타는 숨기기
+	    }
+	}	
+	document.getElementById("managementArea").innerHTML="";
 }
 
 // 1:1문의분류에 따른 정렬

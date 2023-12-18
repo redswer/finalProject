@@ -13,17 +13,25 @@ import org.springframework.data.repository.query.Param;
 import com.fox.fib.entity.Inquiry;
 
 public interface InquiryRepository extends JpaRepository<Inquiry, Integer> {
-	
+
+	// 내 문의내역(페이지네이션) 사용자
 	@Transactional
 	@Query("select i from Inquiry i where i.id = :id ")
-	List<Inquiry> getInquiryList(@Param("id") String id);
+	Page<Inquiry> getInquiryList(@Param("id") String id, Pageable pageable);
 	
+	// 모든 문의내역(페이지네이션) 관리자
 	@Transactional
 	@Query("select i from Inquiry i ORDER BY i.inquiry_code DESC")
-	Page<Inquiry> getInquiryList(Pageable pageable);
-
+	Page<Inquiry> getPageInquiryList(Pageable pageable);
+	
+	// 홈 화면(페이지네이션) 관리자
 	@Transactional
-	@Query("select i from Inquiry i where answer_check=0 ORDER BY i.inquiry_code DESC")
-	List<Inquiry> getUnanswerInquiryList(Boolean answer_check);
+	@Query("select i from Inquiry i where i.answer_check=:answer_check ORDER BY i.inquiry_code DESC")
+	List<Inquiry> getInquiryList(@Param("answer_check") boolean answer_check);
+
+	// 답변안된 문의내역(페이지네이션) 관리자
+	@Transactional
+	@Query("select i from Inquiry i where i.answer_check=:answer_check ORDER BY i.inquiry_code DESC")
+	Page<Inquiry> getUnanswerInquiryList(@Param("answer_check") boolean answer_check, Pageable pageable);
 }
 
