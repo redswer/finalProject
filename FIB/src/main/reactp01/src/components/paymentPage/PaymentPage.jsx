@@ -1,6 +1,7 @@
 import './PaymentPage.css';
 import PaymentPageOrderProductAdd from './PaymentPageOrderProductAdd/PaymentPageOrderProductAdd';
 import PaymentPageModal from './paymentPageModal/PaymentPageModal';
+import DeliveryAddressModal from './paymentPageModal/DeliveryAddressModal';
 import SideButton from '../SideButton';
 import { ReactComponent as Icon } from './order_name_icon.svg';
 import { useLocation } from 'react-router-dom';
@@ -68,15 +69,25 @@ function PaymentPage() {
 
     //------------------------------------------------------
     // 선택한 쿠폰 데이터
-    // const [coupon_selected, setCoupon_selected] = useState(
-    //     {
-    //         coupon_code: 0,
-    //         coupon_title: '',
-    //         discount_rate: null,
-    //         max: 0
-    //     }
-    // );
-    const [coupon_selected, setCoupon_selected] = useState(0);
+    const [coupon_selected, setCoupon_selected] = useState(
+        {
+            coupon_code: 0,
+            coupon_title: '',
+            discount_rate: null,
+            max: 0
+        }
+    );
+
+    // 쿠폰 할인 금액
+    const [finalCoupon, setFinalCoupon] = useState(0);
+
+    useEffect(() => {
+        if (coupon_selected.discount_rate == 0) {
+            setFinalCoupon(coupon_selected.max);
+        } else {
+            setFinalCoupon((coupon_selected.discount_rate / 100) * total_sum);
+        }
+    }, [coupon_selected]);
 
     //------------------------------------------------------
     // 포인트
@@ -104,13 +115,26 @@ function PaymentPage() {
                 alert('보유한 포인트를 초과하여 사용할 수 없습니다.');
                 setUsePoint(0);
             } else {
-                if (usePoint > (total_sum - coupon_selected + delivery_price)) {
+                if (usePoint > (total_sum - finalCoupon + delivery_price)) {
                     alert('결제금액 보다 큰 금액을 입력할 수 없습니다.');
-                    setUsePoint(total_sum - coupon_selected + delivery_price);
+                    setUsePoint(total_sum - finalCoupon + delivery_price);
                 }
             }
         }
     }
+
+    // -----------------------------------------------------
+    // 배송지 선택
+    const [addressSelected, setAddressSelected] = useState([]
+        // {
+        //     address_code: address_code,
+        //     address_as: address_as,
+        //     address_zip: address_zip,
+        //     address: address,
+        //     address_detail: address_detail,
+        //     name: addressName
+        // }
+    );
 
     //------------------------------------------------------
     // 현재 날짜 생성
@@ -184,6 +208,15 @@ function PaymentPage() {
                 {/* 배송예정일 */}
                 <input type="hidden" name="arrive_date" value={arrive_date} />
 
+
+                {/* 쿠폰코드 */}
+                <input type="hidden" name="coupon_code" value={coupon_selected.coupon_code} />
+                {/* 쿠폰 할인 금액 */}
+                <input type="hidden" name="discount_coupon" value={finalCoupon} />
+
+                {/* 포인트 할인 금액 */}
+                <input type="hidden" name="discount_point" value={usePoint} />
+
                 <div className="PaymentPageOrderProduct">
                     <div className="order_name_box">
                         <Icon className="order_name_icon" />
@@ -232,9 +265,7 @@ function PaymentPage() {
                                 <input type="radio" name="order_addr_select" id="addr_userData" onClick={addrUserData} />&nbsp;회원정보와 동일
                             </label>
                             &nbsp;&nbsp;&nbsp;
-                            <label>
-                                <input type="radio" name="order_addr_select" id="addr_selectData" />&nbsp;배송지 선택
-                            </label>
+                            <DeliveryAddressModal loginID={loginID} setAddressSelected={setAddressSelected} />
                             &nbsp;&nbsp;&nbsp;
                             <label>
                                 <input type="radio" name="order_addr_select" id="addr_reset" onClick={resetAddressInput} />&nbsp;새로입력
@@ -324,8 +355,23 @@ function PaymentPage() {
 
                             <tr>
                                 <td>쿠폰</td>
-                                <input type="hidden" name="coupon_code" value={coupon_selected} />
-                                <td>{coupon_selected.toLocaleString()} 원</td>
+                                <td>
+                                    {
+                                        coupon_selected.discount_rate == null ?
+                                            ''
+                                            :
+                                            coupon_selected.discount_rate == 0 ?
+                                                <span>
+                                                    <span className='coupon_selected_title'>{coupon_selected.coupon_title}</span>
+                                                    <span className='coupon_selected_content'>{(coupon_selected.max).toLocaleString()}원 할인</span>
+                                                </span>
+                                                :
+                                                <span>
+                                                    <span className='coupon_selected_title'>{coupon_selected.coupon_title}</span>
+                                                    <span className='coupon_selected_content'>{coupon_selected.discount_rate}% 할인</span>
+                                                </span>
+                                    }
+                                </td>
                                 <td>
                                     <PaymentPageModal setCoupon_selected={setCoupon_selected} />
                                 </td>
@@ -333,14 +379,14 @@ function PaymentPage() {
                             <tr>
                                 <td>포인트 (보유 : {point.toLocaleString()} 원)</td>
                                 <td>
-                                    {/* <input
+                                    <input
                                         type="text"
                                         name="discount_point"
                                         value={Number(usePoint).toLocaleString()}
                                         className="orderPointInput"
                                         onChange={pointChange}
                                         onBlur={pointBlur}
-                                    /> 원 */}
+                                    /> 원
                                 </td>
                                 <td>
                                     <button type="button" className="point_btn" disabled>전액 사용</button>
@@ -356,8 +402,8 @@ function PaymentPage() {
                                 <span className="order_name_design"> 결제금액</span>
                             </span>
                             <span className="order_sum order_name_design">
-                                <input type="hidden" name="final_price" value={total_sum - coupon_selected - usePoint + delivery_price} />
-                                {(total_sum - coupon_selected - usePoint + delivery_price).toLocaleString()}원
+                                <input type="hidden" name="final_price" value={total_sum - finalCoupon - usePoint + delivery_price} />
+                                {(total_sum - finalCoupon - usePoint + delivery_price).toLocaleString()}원
                             </span>
                         </div>
 
@@ -371,7 +417,7 @@ function PaymentPage() {
                             </tr>
                             <tr>
                                 <td>쿠폰 할인</td>
-                                <td>{coupon_selected.toLocaleString()}원</td>
+                                <td>{finalCoupon.toLocaleString()}원</td>
                             </tr>
                             <tr>
                                 <td>포인트 할인</td>

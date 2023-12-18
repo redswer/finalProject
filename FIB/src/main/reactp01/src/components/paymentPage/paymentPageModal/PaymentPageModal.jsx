@@ -68,14 +68,15 @@ const PaymentPageModal = ({ setCoupon_selected }) => {
 
     // =================================================================
     // 선택한 쿠폰 데이터
-    // const coupon_put = (coupon_code, coupon_title, discount_rate, max) => (e) => {
-    //     setCoupon_selected((prevState) => {
-
-    //     });
-    // }
-    const coupon_put = (coupon_code) => {
-        setCoupon_selected(coupon_code);
-    }
+    const coupon_put = (coupon_code, coupon_title, discount_rate, max) => {
+        setCoupon_selected((prevState) => ({
+            ...prevState,
+            coupon_code: coupon_code,
+            coupon_title: coupon_title,
+            discount_rate: discount_rate,
+            max: max
+        }));
+    };
 
     return (
         <div>
@@ -100,16 +101,14 @@ const PaymentPageModal = ({ setCoupon_selected }) => {
                     <div className="payment_modal_list d-flex">
                         {
                             couponArray.map(index => (
-                                <>
+                                <div key={ImageBitmapRenderingContext} className='modal_coupon_map'>
                                     <input
-                                        key={index.coupon_code}
                                         type="radio"
                                         name="payment_coupon"
                                         value={index.discount_rate == 0 ? index.max : index.discount_rate}
                                         className='modal_coupon_input'
                                         id={`coupon_input_label_${index.coupon_code}`}
-                                        // onClick={coupon_put(index.coupon_code, index.title, index.discount_rate, index.max)}
-                                        onClick={coupon_put(index.coupon_code)}
+                                        onClick={() => coupon_put(index.coupon_code, index.title, index.discount_rate, index.max)}
                                     />
                                     <label id="modal_coupon_label" htmlFor={`coupon_input_label_${index.coupon_code}`}>
 
@@ -120,7 +119,7 @@ const PaymentPageModal = ({ setCoupon_selected }) => {
                                         </div>
 
                                     </label>
-                                </>
+                                </div>
                             ))
                         }
                     </div>
