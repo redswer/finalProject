@@ -21,8 +21,13 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Integer> {
 	
 	// 모든 문의내역(페이지네이션) 관리자
 	@Transactional
+	@Query("select i from Inquiry i ORDER BY i.inquiry_code DESC")
+	Page<Inquiry> getPageInquiryList(Pageable pageable);
+	
+	// 홈 화면(페이지네이션) 관리자
+	@Transactional
 	@Query("select i from Inquiry i where i.answer_check=:answer_check ORDER BY i.inquiry_code DESC")
-	List<Inquiry> getInquiryList(boolean answer_check);
+	List<Inquiry> getInquiryList(@Param("answer_check") boolean answer_check);
 
 	// 답변안된 문의내역(페이지네이션) 관리자
 	@Transactional

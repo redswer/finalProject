@@ -47,7 +47,7 @@
 					<td>${s.discount_rate}%</td>
 					<td>${s.max}원</td>
 					<td>
-						<img alt="${s.title}" src="../../../../reactp01/public/img/${s.image}" width="120" height="80">
+						<img alt="${s.title}" src="${s.image_back}" width="120" height="80">
 					</td>
 					<td>${s.start}</td>
 					<td>${s.end}</td>

@@ -54,8 +54,8 @@ public class InquiryServiceImpl implements InquiryService {
 	
 	//  모든 문의내역 보기(페이지네이션 적용) 관리자
 	@Override
-	public List<Inquiry> getInquiryList(boolean answer_check) {
-	    return repository.getInquiryList(answer_check);
+	public Page<Inquiry> getPageInquiryList(Pageable pageable) {
+	    return repository.getPageInquiryList(pageable);
 	}
 
 //  내 문의내역 보기(페이지네이션 적용) 관리자
