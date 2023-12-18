@@ -46,12 +46,16 @@ public class Member_paymentRestController {
 	}
 
 	//주문정보, 주문상세 등록 및 회원포인트 수정	
+	@SuppressWarnings("unchecked")
 	@PostMapping("memberpaymentinsert")
 	public ResponseEntity<?> memberpaymentinsert(@RequestBody HashMap<String, Object> payment_formData, Member_payment entity) throws IOException {
 
 		Gson gson = new Gson();
-        Type listType = new TypeToken<List<Map<String, Object>>>() {}.getType();
-        List<Map<String, Object>> paymentDetailList = gson.fromJson((String) payment_formData.get("paymentDetailData"), listType);
+		
+        Type listType1 = new TypeToken<List<Map<String, Object>>>() {}.getType();
+        List<Map<String, Object>> paymentDetailList = gson.fromJson((String) payment_formData.get("paymentDetailData"), listType1);
+        
+        log.info(payment_formData);
 		
 		try {
 			entity.setId((String)payment_formData.get("id"));
@@ -61,6 +65,8 @@ public class Member_paymentRestController {
 			entity.setProduct_amount(Integer.parseInt((String)payment_formData.get("product_amount")));
 			entity.setOrigin_price(Integer.parseInt((String)payment_formData.get("origin_price")));
 			entity.setCoupon_code(Long.parseLong((String)payment_formData.get("coupon_code")));
+			entity.setDiscount_coupon(Integer.parseInt((String)payment_formData.get("discount_coupon")));
+			entity.setDiscount_point(Integer.parseInt((String)((List<Object>) payment_formData.get("discount_point")).get(0)));
 			entity.setFinal_price(Integer.parseInt((String)payment_formData.get("final_price")));
 			entity.setRecipient((String)payment_formData.get("recipient"));
 			entity.setRecipient_phone_number((String)payment_formData.get("recipient_phone_number"));
@@ -111,14 +117,19 @@ public class Member_paymentRestController {
 				cartService.deleteCartAfterOrder(userId, product_code);
 			}
 
-			// 회원포인트 증가
+			// 회원포인트 적립 & 사용한 포인트 차감
 			User userOne =  userService.selectOne((String)payment_formData.get("id"));
 
-			int pointUpdate = (int) (userOne.getPoint() + (Integer.parseInt((String)payment_formData.get("origin_price"))) * 0.05);
+			int pointUpdate = (int) (userOne.getPoint() + 
+					(Integer.parseInt((String)payment_formData.get("origin_price"))) * 0.05) -
+					Integer.parseInt((String)((List<Object>) payment_formData.get("discount_point")).get(0));
 			
 			userOne.setPoint(pointUpdate);
 
 			userService.register(userOne);
+			
+			// 사용한 회원포인트 차감
+			
 
 			return ResponseEntity.ok("주문정보 등록 성공");
 		} catch (Exception e) {

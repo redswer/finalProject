@@ -1,5 +1,7 @@
 .UserAddress {
     margin-bottom: 200px;
+    width: 80%;
+    margin: auto;
 }
 
 .insert_address_button {
@@ -44,7 +46,7 @@
 
 .user_address_column {
     display: grid;
-    grid-template-columns: 1fr 2fr 7fr 3fr 2fr 1fr;
+    grid-template-columns: 1fr 2fr 7fr 3fr 2fr;
     text-align: center;
     align-items: center;
     padding: 15px;
