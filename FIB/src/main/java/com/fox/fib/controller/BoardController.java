@@ -43,11 +43,7 @@ public class BoardController {
 	NoticeService notice_service;
 	FaqService faq_service;
 	InquiryService inquiry_service;
-	
-	// 내림차순 정렬을 위한 repository 선언
-	private NoticeRepository notice_repository;
-	private FaqRepository faq_repository;
-	private InquiryRepository inquiry_repository;
+
 	
 	// (관리자) 공지사항 리스트 + 페이지네이션, 내림차순 정렬
 	@GetMapping("/noticeListAdmin")
@@ -219,7 +215,7 @@ public class BoardController {
 	    Page<Faq> faqPageList;
 	    
 	    if(category.equals("all")) {
-	    	faqPageList = faq_service.getPageFaqList2(pageable);
+	    	faqPageList = faq_service.getPageFaqListAll(pageable);
 	    } else {
 	    	faqPageList = faq_service.getPageFaqList(category, pageable);
 	    }
@@ -239,7 +235,6 @@ public class BoardController {
 	}
 	
 	@GetMapping("/pageFaqListAdmin")
-//	@GetMapping("/pageFaqListAdmin")
 	public String pageFaqListAdmin(@RequestParam(name = "category") String category,
 	                        	   @RequestParam(name = "page", defaultValue = "0") int page,
 	                        	   @RequestParam(name = "size", defaultValue = "10") int size,
@@ -247,25 +242,18 @@ public class BoardController {
 		
 		log.info("파라미터Received request with category: " + category);
 	    Pageable pageable = PageRequest.of(page, size);
-	    Page<Faq> faqPageList;
+	    Page<Faq> faqPageList = faq_service.getPageFaqList(category, pageable);
    
-	    if(category.equals("all")) {
-	    	faqPageList = faq_service.getPageFaqList2(pageable);
-	    } else {
-	    	faqPageList = faq_service.getPageFaqList(category, pageable);
-	    }
-
-	    model.addAttribute("faqList", faqPageList.getContent());
 	    model.addAttribute("itemPage", faqPageList);
+	    model.addAttribute("faqList", faqPageList.getContent());
 	    model.addAttribute("currentPage", faqPageList.getNumber());
 	    model.addAttribute("totalPages", faqPageList.getTotalPages());
 	    model.addAttribute("totalItems", faqPageList.getTotalElements());
 	    
-
-	    log.info("faqPageList : " + faqPageList);
-		log.info("faqPageList.getContent() : " + faqPageList.getContent());
-		log.info("faqPageList.getNumber() : " + faqPageList.getNumber());
-		log.info("faqPageList.getTotalElements() : " + faqPageList.getTotalElements());
+	    log.info("파라미터itemPage : " + faqPageList);
+		log.info("파라미터faqPageList.getContent() : " + faqPageList.getContent());
+		log.info("파라미터faqPageList.getNumber() : " + faqPageList.getNumber());
+		log.info("파라미터faqPageList.getTotalElements() : " + faqPageList.getTotalElements());
 		
 		return "board/faqListAdmin";
 	}

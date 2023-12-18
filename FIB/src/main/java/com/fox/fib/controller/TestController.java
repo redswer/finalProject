@@ -118,8 +118,13 @@ public class TestController {
 	        	return ResponseEntity.ok("이미 발급 받은 쿠폰입니다.");
 	        }
 		} catch (Exception e) {
-			log.info("** 쿠폰 받기 실패 exception => "+e.toString());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("쿠폰 발급 중에 오류가 발생했습니다.");
+			if(entity.getId() == null) {
+				log.info("로그인이 필요한 서비스입니다.");
+				return ResponseEntity.ok("로그인 후 발급받을 수 있습니다.");
+	        }else {
+	        	log.info("** 쿠폰 받기 실패 exception => "+e.toString());
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("쿠폰 발급 중에 오류가 발생했습니다.");
+	        }	
 		}
 	}
 	

@@ -14,21 +14,8 @@ public interface FaqRepository extends JpaRepository<Faq, Integer> {
 
 //	@Query("SELECT f FROM Faq f ORDER BY f.faq_code DESC")
 //  List<Faq> orderByFaqCodeDesc();
-//	
-//	@Transactional
-//	@Query("select f from Faq f where f.category = :category ")
-//	List<Faq> getFaqList(@Param("category") String category);
-	
-//	@Transactional
-//	@Query("select f from Faq f ORDER BY f.faq_code DESC")
-//	Page<Faq> getFaqList(Pageable pageable);	
-	
-//	@Transactional
-//	@Query("select f from Faq f where ORDER BY f.faq_code DESC")
-//	Page<Faq> getFaqList(Pageable pageable);	
 	
 	@Transactional
-//	@Query("select f from Faq f where category=:category ORDER BY f.faq_code DESC")
 //    @Query("SELECT f FROM Faq f " +
 //            "WHERE (:category IS NULL OR :category = '' OR f.category = :category) " +
 //            "ORDER BY f.faq_code DESC")
@@ -37,6 +24,6 @@ public interface FaqRepository extends JpaRepository<Faq, Integer> {
 	
 	@Transactional
 	@Query("SELECT f FROM Faq f ORDER BY f.faq_code DESC")
-	Page<Faq> getPageFaqList2(Pageable pageable);
+	Page<Faq> getPageFaqListAll(Pageable pageable);
 }
 

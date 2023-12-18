@@ -228,6 +228,7 @@ function faqManagement() {
 
 // FAQ 페이지네이션
 function faqManagementPage(pageNumber) {
+	pageNumber = pageNumber || 0;
     let url = "board/faqListAdmin?page=" + pageNumber;
     
     // 현재 선택된 카테고리 값 저장
@@ -351,12 +352,12 @@ function faqDelete(faq_code) {
 }
 
 // FAQ 분류에 따른 정렬
-function faqSortSelectOptions() {
-
+function faqSortSelectOptions(pageNumber) {
+	pageNumber = pageNumber || 0;
 	let categorySelect = document.getElementById("category");
 	let selectedCategory = categorySelect.value;
 	
-	let url="board/pageFaqListAdmin?category= " + selectedCategory;
+	let url=`board/pageFaqListAdmin?category=${selectedCategory}&page=${pageNumber}`;
 	
 	axios.get(url
 	).then(response => {

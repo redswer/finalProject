@@ -53,7 +53,7 @@
 				<th>이미지</th>
 				<td>
 					<img src="" class="select_img"><br>
-					<input type="file" name="uploadfilef" id="uploadfilef" size="20"/>
+					<input type="file" name="uploadfilef" id="uploadfilef" size="20" />
 				</td>
 			</tr>
 			<script>
