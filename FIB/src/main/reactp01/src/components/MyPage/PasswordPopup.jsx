@@ -36,12 +36,10 @@ const PasswordPopup = ({ isOpen, onClose, onSubmit }) => {
         <div className="PasswordPopup">
             <div className="popup-content">
                 <h2>비밀번호 확인</h2>
-                <form>
-                    <input type="password" placeholder="비밀번호 입력"
-                        name='password' id='password' value={popupPassword}
-                        autoComplete='off' className='popup_input'
-                        onChange={handlePasswordChange} />
-                </form>
+                <input type="password" placeholder="비밀번호 입력"
+                    name='password' id='password' value={popupPassword}
+                    autoComplete='off' className='popup_input'
+                    onChange={handlePasswordChange} />
                 <div className='popup_button'>
                     <button onClick={() => onSubmit(popupPassword)}>확인</button>
                     <button onClick={onClose}>취소</button>

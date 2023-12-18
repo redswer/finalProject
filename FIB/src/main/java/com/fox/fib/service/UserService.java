@@ -20,6 +20,6 @@ public interface UserService {
 	public int passwordUpdate(String password, String id);
 	public List<Integer> userCouponCodeList(String id);
 	public Coupon userCoupon(int code);
-	public String endDate(int code);
-	public Boolean useCheck(int code);
+	public String endDate(int code, String id);
+	public Boolean useCheck(int code, String id);
 }

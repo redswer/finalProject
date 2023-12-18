@@ -65,6 +65,7 @@ function UserAddress() {
 
     const refresh = () => {
         loadAddressList();
+        setCheckedList([]);
     }
 
     // ========================================

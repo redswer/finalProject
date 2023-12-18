@@ -47,12 +47,12 @@ public class UserServiceImpl implements UserService {
 		return coupon;
 	}
 	
-	public String endDate(int code) {
-		return repository.endDate(code);
+	public String endDate(int code, String id) {
+		return repository.endDate(code, id);
 	}
 	
-	public Boolean useCheck(int code) {
-		return repository.useCheck(code);
+	public Boolean useCheck(int code, String id) {
+		return repository.useCheck(code, id);
 	}
 	
 	// ** 아이디 찾기

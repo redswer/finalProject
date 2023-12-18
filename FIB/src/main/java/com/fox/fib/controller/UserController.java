@@ -131,9 +131,9 @@ public class UserController {
 		
 		for (int i: codes) {
 			Coupon coupon = service.userCoupon(i);
-			coupon.setEnd(service.endDate(i));
+			coupon.setEnd(service.endDate(i, request.getId()));
 			
-			if (!service.useCheck(i)) {				
+			if (!service.useCheck(i, request.getId())) {				
 				userCoupon.add(coupon);
 			}
 		}	
@@ -146,7 +146,10 @@ public class UserController {
 	public ResponseEntity<String> findId(@RequestBody User request) {
 		String res = service.findId(request.getName(), request.getBirthday(), request.getPhone_number());
 		if (res != null) {
-			return new ResponseEntity<> ("아이디는 "+res+" 입니다.", HttpStatus.OK);
+			if (service.selectOne(res).getName() != request.getName()) {
+				
+			}
+			return new ResponseEntity<> (res, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<> ("회원정보 없음", HttpStatus.BAD_GATEWAY);
 		}

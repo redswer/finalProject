@@ -26,10 +26,10 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Query(nativeQuery = true, value = "select coupon_code from user_coupon where id =:id")
 	List<Integer> userCouponCodeList(@Param("id") String id);
 	
-	@Query(nativeQuery = true, value = "select end from user_coupon where coupon_code =:code")
-	String endDate(@Param("code") int code);
+	@Query(nativeQuery = true, value = "select end from user_coupon where coupon_code =:code and id =:id")
+	String endDate(@Param("code") int code, @Param("id") String id);
 	
-	@Query(nativeQuery = true, value = "select use_check from user_coupon where coupon_code =:code")
-	Boolean useCheck(@Param("code") int code);
+	@Query(nativeQuery = true, value = "select use_check from user_coupon where coupon_code =:code and id =:id")
+	Boolean useCheck(@Param("code") int code, @Param("id") String id);
 	
 }
