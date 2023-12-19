@@ -113,6 +113,7 @@ function CouponPageItem() {
                 {renderCouponCategory('첫구매', '신규회원/첫구매/웰컴백 쿠폰')}
                 {renderCouponCategory('월간', '매월 드리는 쿠폰!')}
                 {renderCouponCategory('이벤트', '이벤트 쿠폰')}
+                {renderCouponCategory('생일', '생일 쿠폰')}
             </div>
         </div>
     );

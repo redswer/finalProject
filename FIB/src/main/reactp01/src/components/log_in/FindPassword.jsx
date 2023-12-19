@@ -96,7 +96,7 @@ function FindPassword() {
             alert(res.data);
             navigate('/LogIn');
         }).catch(() => {
-            alert('입력한 정보가 일치하지 않습니다.');
+            alert('입력하신 정보가 일치하지 않습니다.');
         });
     }
 

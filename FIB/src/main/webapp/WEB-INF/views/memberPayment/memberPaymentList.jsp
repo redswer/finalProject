@@ -76,7 +76,15 @@
 					</td>
 					<td>
 						<c:if test="${memberPaymentVar.payment_cancel == 0}">
-							<button type="button" class="paymentCancelBtn" onclick="paymentCancel('${requestScope.orderParam}', '${String(memberPaymentVar.member_payment_code)}', '${memberPaymentVar.id}', ${memberPaymentVar.product_amount}, ${memberPaymentVar.origin_price})">취소</button>
+							<button type="button"
+									class="paymentCancelBtn" 
+									onclick="paymentCancel('${requestScope.orderParam}',
+									'${String(memberPaymentVar.member_payment_code)}',
+									'${memberPaymentVar.id}',
+									${memberPaymentVar.product_amount},
+									${memberPaymentVar.origin_price})">
+									취소
+							</button>
 						</c:if>
 					</td>
 				</tr>

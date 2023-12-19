@@ -54,11 +54,16 @@ const PaymentPageModal = ({ loginID, setCoupon_selected }) => {
     useEffect(() => {
         const array = [];
 
-        for (const userCouponOne of userCuponList) {
-            if (loginID == userCouponOne.id && !userCouponOne.use_check) {
-                for (const couponOne of couponList) {
-                    if (userCouponOne.coupon_code === couponOne.coupon_code) {
-                        array.push(couponOne);
+        for (let i = 0; i < userCuponList.length; i++) {
+            if (loginID == userCuponList[i].id && !userCuponList[i].use_check) {
+                for (let j = 0; j < couponList.length; j++) {
+                    if (userCuponList[i].coupon_code === couponList[j].coupon_code) {
+                        array.push(
+                            {
+                                userCouponOne: userCuponList[i],
+                                couponOne: couponList[j]
+                            }
+                        );
                     }
                 }
             }
@@ -103,21 +108,21 @@ const PaymentPageModal = ({ loginID, setCoupon_selected }) => {
                     <div className="payment_modal_list d-flex">
                         {
                             couponArray.map(index => (
-                                <div key={ImageBitmapRenderingContext} className='modal_coupon_map'>
+                                <div key={index} className='modal_coupon_map'>
                                     <input
                                         type="radio"
                                         name="payment_coupon"
-                                        value={index.discount_rate == 0 ? index.max : index.discount_rate}
+                                        id={`coupon_input_label_${index.couponOne.coupon_code}`}
+                                        value={index.couponOne.discount_rate == 0 ? index.couponOne.max : index.couponOne.discount_rate}
                                         className='modal_coupon_input'
-                                        id={`coupon_input_label_${index.coupon_code}`}
-                                        onClick={() => coupon_put(index.coupon_code, index.title, index.discount_rate, index.max)}
+                                        onClick={() => coupon_put(index.couponOne.coupon_code, index.couponOne.title, index.couponOne.discount_rate, index.couponOne.max)}
                                     />
-                                    <label id="modal_coupon_label" htmlFor={`coupon_input_label_${index.coupon_code}`}>
+                                    <label id="modal_coupon_label" htmlFor={`coupon_input_label_${index.couponOne.coupon_code}`}>
 
-                                        <img src={`../img/${index.image}`} />
+                                        <img src={`../img/${index.couponOne.image}`} />
                                         <div className="modal_coupon_content">
-                                            <div className="modal_coupon_title">{index.title}</div>
-                                            <div className="modal_coupon_date">~ {index.end} 까지</div>
+                                            <div className="modal_coupon_title">{index.couponOne.title}</div>
+                                            <div className="modal_coupon_date">~ {index.userCouponOne.end} 까지</div>
                                         </div>
 
                                     </label>
