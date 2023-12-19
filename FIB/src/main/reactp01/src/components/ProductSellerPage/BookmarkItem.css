@@ -1,169 +1,65 @@
-.basket_product_list {
+.bookmarkGridItemTopLevelContainer {
+  width: 230px;
+  height: 320px;
+  border: 1px solid rgb(251, 251, 251);
+  background-color: rgb(251, 251, 251);
+  border-radius: 5px;
+}
+
+.bookmarkItemImageCartDeleteDiv {
   display: flex;
-  margin: 0;
+  justify-content: space-between;
 }
 
-.col-product_amount_item button {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.col-proamount {
-  display: inline-block;
-  width: 35px;
-}
-
-
-
-.col-product_title_item img {
-  display: inline-block;
-  width: 50px;
-  height: 64px;
-  border: 1px solid gray;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 5px;
-  line-height: 64px;
-}
-
-.col-product_title_item {
-  width: 310px;
-  border: 1px solid black;
-  height: 80px;
-  display: flex;
-}
-
-.col-product_tfc {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* align-items: center; */
-}
-
-.basket__fc {
-  margin-top: 4px;
-}
-
-.cart_domestic {
-  display: inline-block;
-  text-align: center;
-  background-color: rgb(119, 175, 107);
-  color: white;
-  border-radius: 3px;
-  width: 70px;
-  height: 22px;
-  line-height: 22px;
-  font-size: 11px;
-  margin-right: 11px;
-}
-
-.cart_category {
-  display: inline-block;
-  text-align: center;
-  background-color: rgb(119, 175, 107);
-  color: white;
-  border-radius: 3px;
-  width: 80px;
-  height: 22px;
-  line-height: 22px;
-  font-size: 11px;
-}
-
-.col-product_price_item {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 200px;
-  border: 1px solid black;
-  text-align: center;
-  height: 80px;
-}
-
-.col-product_amount_item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 150px;
-  border: 1px solid black;
-  text-align: center;
-  height: 80px;
-}
-
-.col-product_del-info_item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 250px;
-  border: 1px solid black;
-  text-align: center;
-  height: 80px;
-  line-height: 30px;
-}
-
-.col-product_btn_item {
-  width: 180px;
-  border: 1px solid black;
-  height: 80px;
-  /* line-height: 30px; */
-}
-
-.col-product_price_origin {
-  font-size: 13px;
-}
-
-.col-product_price_saled {
-  font-size: 16px;
-}
-
-.col-product_price_saled_num {
-  font-size: 18px;
-  color: red;
-  font-weight: bold;
-}
-
-.divisionorder {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.divivi1 button {
-  border: none;
-  width: 70px;
-  border-radius: 4px;
-  background-color: antiquewhite;
+.bookmarkItemCartDeleteDiv {
   margin-top: 10px;
-  height: 27px;
-  margin-bottom: 10px;
-  color: rgb(79, 79, 79);
+  margin-right: 12px;
+}
+
+.bookmarkItemCart {
+  margin-bottom: 20px;
+}
+
+.bookmarkItemImageDiv {
+  width: 160px;
+  height: 220px;
+  border: 1px solid rgb(212, 212, 212);
+  border-radius: 5px;
+  margin-top: 11px;
+  margin-left: 13px;
+}
+
+.bookmarkItemImageDiv img {
+  width: 100%;
+  height: 100%;
+}
+
+/* ============ */
+.bookmarkItemCart {
+  color: rgb(84, 154, 89);
   font-weight: bold;
 }
 
-.divivi2 button {
-  border: none;
-  border-radius: 4px;
-  width: 70px;
-  background-color: red;
-  height: 27px;
-  margin-bottom: 10px;
+.bookmarkItemDelete {
+  color: rgb(255, 88, 88);
+}
+
+.bookmarkItemTitle {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 8px;
+  margin-left: 13px;
+}
+
+.bookmarkItemProtypeDomestic {
+  display: inline-block;
+  font-size: 11px;
+  width: 55px;
+  height: 20px;
+  line-height: 20px;
   color: white;
-  font-weight: bold;
-}
-
-.divivi1 button:hover {
-  background-color: rgb(255, 181, 84);
-}
-
-.divivi2 button:hover {
-  background-color: rgb(122, 0, 0);
-}
-
-.KeywordGenreStandard {
-  background-color: rgb(86, 109, 156);
-}
-
-.KeywordGenreDiv>button {
-  background-color: rgb(197, 208, 228);
+  text-align: center;
+  border-radius: 2px;
+  background-color: rgb(119, 175, 107);
 }

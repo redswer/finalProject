@@ -107,66 +107,49 @@ const BookmarkItem = (props) => {
   console.log(`isChecked[Item](${props.bookmark_code}) & ${isChecked} ======Item 절취선======Item 절취선======`);
   // console.log(`selectAllCartList[Item](102) : ` , selectAllCartList);
 
-
+  {/* <div className='cart_keywords'>
+        <span className='cart_domestic'> {props.domestic == 1 ? '국내도서' :
+          props.domestic == 2 ? '영미도서' :
+            props.domestic == 3 ? '프랑스도서' :
+              props.domestic == 4 ? '독일도서' : '기타도서'}</span>
+        <span className='cart_category'>{props.category == 'novel' ? '소설' :
+          props.category == 'poem' ? '시' :
+            props.category == 'essay' ? '에세이' :
+              props.category == 'magazine' ? '잡지' : '기타'}</span>
+      </div> */}
 
 
   //=====================================================================================================
   return (
-    <div className='basket_product_list'>
-      {/* 체크박스 부분 */}
-      <div >
-        {/* <input  style={{width:'50px', height:'50px'}} type="checkbox" checked={isChecked} onChange={handleCheckboxChange} /> */}
-      </div>
-      <div className='col-product_title_item'>
-        <img src={`../img/yeonsu.jpg`} alt="image" />
-        <div className='col-product_tfc'>
-
-          <div>
-            <span className='basket__title'>{` < ${props.title} > `}</span>
+    <div className="bookmarkGridItemTopLevelContainer">
+      <div className='bookmarkItemImageCartDeleteDiv'>
+        <div className='bookmarkItemImageDiv'>
+          <img src={`../img/yeonsu.jpg`} alt="" className='bookmarkItemImage' />
+        </div>
+        <div className='bookmarkItemCartDeleteDiv'>
+          <div className='bookmarkItemCart'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+            </svg>
           </div>
-
-          <div>
-            {/* <span className='basket__title'> {`[ ${props.bookmark_code} ]`}&nbsp;&nbsp;:&nbsp;&nbsp;</span> */}
-            {/* <span className='basket__title'>{props.product_code}</span> */}
-          </div>
-
-          <div className='cart_keywords'>
-            <span className='cart_domestic'> {props.domestic == 1 ? '국내도서' :
-              props.domestic == 2 ? '영미도서' :
-                props.domestic == 3 ? '프랑스도서' :
-                  props.domestic == 4 ? '독일도서' : '기타도서'}</span>
-            <span className='cart_category'>{props.category == 'novel' ? '소설' :
-              props.category == 'poem' ? '시' :
-                props.category == 'essay' ? '에세이' :
-                  props.category == 'magazine' ? '잡지' : '기타'}</span>
+          <div className='bookmarkItemDelete'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+            </svg>
           </div>
         </div>
-
+      </div>
+      <div className='bookmarkItemTitleProtypeDomesticPriceDiv'>
+        <span className='bookmarkItemTitle'>{props.title}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span className='bookmarkItemProtypeDomestic'>
+          {props.domestic == 1 ? '국내' :
+            props.domestic == 2 ? '영미' :
+              props.domestic == 3 ? '프랑스' :
+                props.domestic == 4 ? '독일' : '기타'}{props.protype == 1 ? '도서' : '도서제품'}</span>
+        <div>{props.price ? props.price.toLocaleString() : 0} 원</div>
       </div>
 
-      <div className='col-product_price_item'>
-        {/* <div className="col-product_price_origin">
-            <div>상품 가격 : {props.price.toLocaleString()} 원</div>
-          </div> */}
-        <div className="col-product_price_saled">
-          <span>상품 가격 : </span>
-          <span className='col-product_price_saled_num'>{props.price ? props.price.toLocaleString() : 'nonePrice'}</span>
-          <span>원</span>
-        </div>
-      </div>
 
-      <div className='col-product_btn_item'>
-        <div className="divisionorder">
-          <div className='divivi1'>
-            {/* <button type='submit' onClick={saveOnCart} className='seller_product_payment_btn' >장바구니{props.bookmark_code}</button> */}
-            <button type='submit' onClick={saveOnCart} className='seller_product_payment_btn' >장바구니</button>
-            &nbsp;&nbsp;&nbsp;
-            {/* <button type='submit' onClick={DeleteThisProduct} className='seller_product_payment_btn' >삭제{props.bookmark_code}</button> */}
-            <button type='submit' onClick={DeleteThisProduct} className='seller_product_payment_btn' >삭제</button>
-          </div>
-
-        </div>
-      </div>
     </div>
   );
 

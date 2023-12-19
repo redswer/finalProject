@@ -43,7 +43,6 @@ public class ProductController {
 		int pageNum = Integer.parseInt(page);
 		int sizeNum = Integer.parseInt(size);
 
-
 		PageRequestDTO requestDTO = PageRequestDTO.builder().page(pageNum).size(sizeNum).build();
 
 		PageResultDTO<Product> resultDTO = productservice.selectListPageNation(requestDTO);

@@ -140,82 +140,68 @@ const BookmarkPage = () => {
 
   //====================================================================================================================
 
-  // const bookmarkList = bookmarkData.map((d, i) => (
-  // <BookmarkItem
-  //   key={i}
-  //   bookmark_code={d.bookmark_code}
-  //   id={loginID}
-  //   product_code={d.product_code}
-  //   protype={d.protype}
-  //   domestic={d.domestic}
-  //   title={d.title}
-  //   image={d.image}
-  //   price={d.price}
-  //   onSelectItem={handleSelectItem}
-  //   // onUpdateCart={handleUpdateCart}
-  //   onDeleteSelected={handleDeleteSelected}
-  //   onSelectAllItems={handleAllSelectBookmarkLists}
-  //   isAllChecked={isAllChecked}
-  // />
-  // ));
+  // {bookmarkData.length === 0 ?
+  //   <tr className='cartDataIsVacant'>
+  //     <td colSpan='4'>찜목록에 추가한 상품이 없습니다.</td>
+  //   </tr>
+  //   :
+  // bookmarkData.map((d, i) => (
+  //   <BookmarkItem
+  //     key={i}
+  //     bookmark_code={d.bookmark_code}
+  //     id={loginID}
+  //     product_code={d.product_code}
+  //     protype={d.protype}
+  //     domestic={d.domestic}
+  //     title={d.title}
+  //     image={d.image}
+  //     price={d.price}
+  //     onSelectItem={handleSelectItem}
+  //     // onUpdateCart={handleUpdateCart}
+  //     onDeleteSelected={handleDeleteSelected}
+  //     onSelectAllItems={handleAllSelectBookmarkLists}
+  //     isAllChecked={isAllChecked}
+  //   />
+  // ))}
+
+  // <div className="grid-container">
+  //   {bookmarkData.map((item) => (
+  //     <div key={item} className="grid-item">
+  //       Item {item}
+  //     </div>
+  //   ))}
+  // </div>
 
 
 
   //=====================================================================================================================
   return (
-    <div className='basket_top_level_container'>
-      <span className='CartPageTitle'>나의 찜목록</span>&nbsp;&nbsp;
-      <span className='CartPageSubtitle'>마음에 드는 상품들을 담을 수 있는 페이지입니다.</span>
-
-      <div className='deleteSelectedItemsButtonDiv'>
-        <button onClick={handleDeleteSelected} className='deleteSelectedItemsButton'>선택목록 삭제</button>&nbsp;&nbsp;&nbsp;
+    <div className='BookmarkPageContainer'>
+      <div className='BookmarkPageTitleSubtitle'>
+        <span className='BookmarkPageTitle'>나의 찜목록</span>&nbsp;&nbsp;
+        <span className='BookmarkPageSubtitle'>마음에 드는 상품들을 담을 수 있는 페이지입니다.</span>
       </div>
 
-      {/* 카트페이지 =========================================================================== */}
-      <table className="CartPageTable">
-        <thead>
-          <tr>
-            <th style={{ width: '35%' }}>상품정보</th>
-            <th style={{ width: '10%' }}>가격</th>
-            <th style={{ width: '12%' }}>수량</th>
-            <th style={{ width: '15%' }}>총 가격</th>
-            <th style={{ width: '8%' }}>삭제</th>
-          </tr>
-        </thead>
 
-        <tbody>
-          {bookmarkData.length === 0 ?
-            <tr className='cartDataIsVacant'>
-              <td colSpan='4'>찜목록에 추가한 상품이 없습니다.</td>
-            </tr>
-            :
-            bookmarkData.map((d, i) => (
-              <BookmarkItem
-                key={i}
-                bookmark_code={d.bookmark_code}
-                id={loginID}
-                product_code={d.product_code}
-                protype={d.protype}
-                domestic={d.domestic}
-                title={d.title}
-                image={d.image}
-                price={d.price}
-                onSelectItem={handleSelectItem}
-                // onUpdateCart={handleUpdateCart}
-                onDeleteSelected={handleDeleteSelected}
-                onSelectAllItems={handleAllSelectBookmarkLists}
-                isAllChecked={isAllChecked}
-              />
-            ))}
-        </tbody>
-      </table>
+      <div className="BookmarkPageGridCover">
+        {bookmarkData.map((d, i) => (
+          <BookmarkItem
+            key={i}
+            bookmark_code={d.bookmark_code}
+            id={loginID}
+            product_code={d.product_code}
+            protype={d.protype}
+            domestic={d.domestic}
+            title={d.title}
+            image={d.image}
+            price={d.price}
+          />
+        ))}
+      </div>
+
+
 
       <div className='basket_total_sum_container'>
-        <div className='basket_figure_flex_box'>
-
-          {/* <CategoryMiniBox /> */}
-        </div>
-
         <div className='basket_final_product_order_btn_box'>
 
           <Link to='/'><button className='basket_final_product_order_btn_1'>계속 쇼핑하기</button></Link>
@@ -223,16 +209,9 @@ const BookmarkPage = () => {
           <div className='basket_final_product_order_btn_2'>
             <Link to={`/CartPage`}>장바구니바로가기</Link>
           </div>
-
-
         </div>
 
       </div>
-
-      <div>
-        {/* <BasketEtcBox /> */}
-      </div>
-
     </div>
   );
 };
