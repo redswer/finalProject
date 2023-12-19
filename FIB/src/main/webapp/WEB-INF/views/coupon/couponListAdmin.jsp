@@ -47,12 +47,14 @@
 					<td>${s.discount_rate}%</td>
 					<td>${s.max}원</td>
 					<td>
-						<img alt="${s.title}" src="${s.image_back}" width="120" height="80">
+						<img alt="${s.title}" src="${s.image}" width="120" height="80">
 					</td>
 					<td>${s.start}</td>
 					<td>${s.end}</td>
 					<td>${s.regdate}</td>
-					<td>${s.moddate}</td>	
+					<c:if test="${!empty s.moddate}">
+						<td>${s.moddate}</td>	
+					</c:if>
 					<td class="textlink" onclick="couponEditForm('${s.coupon_code}')">수정</td>					
 					<td class="couponDeleteClick" class="textlink" onclick="couponDelete('${s.coupon_code}')">삭제</td>					
 				</tr>
