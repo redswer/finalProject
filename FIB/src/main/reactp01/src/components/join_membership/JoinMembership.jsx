@@ -3,7 +3,7 @@ import SearchAddress from '../SearchAddress';
 import SideButton from '../SideButton';
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaCheckCircle } from "react-icons/fa";
+import { FaCheckCircle, FaAsterisk } from "react-icons/fa";
 import axios from 'axios';
 import Use from './terms_of_service/Use';
 import UseCommunity from './terms_of_service/UseCommunity';
@@ -363,6 +363,10 @@ function JoinMembership() {
                     <div className='d-flex'>
                         <div className='join_membership_section_1'>기본 정보 입력
                             <div className='join_membership_section_1_info'>(필수)</div>
+                            <div className='join_membership_section_1_explain d-flex'>
+                                <FaAsterisk className='join_membership_section_1_icon' />
+                                <span>회원정보 조회 및 관리에 이용되므로 정확히 입력해주세요</span>
+                            </div>
                         </div>
                         <div className='join_membership_section_2 d-flex'>
                             <div>
@@ -503,6 +507,7 @@ function JoinMembership() {
 
                     <div className='d-flex'>
                         <div className='join_membership_section_1'>부가 정보 입력
+                            <div className='join_membership_section_1_info'>(기본 주소)</div>
                         </div>
                         <div>
                             <div className='join_membership_section_2 d-flex'>

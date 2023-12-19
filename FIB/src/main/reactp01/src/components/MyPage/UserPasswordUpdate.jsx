@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { FaCheckCircle } from "react-icons/fa";
 import './UserPasswordUpdate.css';
 import { useNavigate } from 'react-router-dom';
+import { GoEye, GoEyeClosed } from "react-icons/go";
 
 function UserPasswordUpdate() {
     const navigate = useNavigate();
@@ -16,11 +17,18 @@ function UserPasswordUpdate() {
     const [newPasswordError, setNewPasswordError] = useState('');
     const [passwordCheckError, setPasswordCheckError] = useState('');
 
+    const [showPassword, setShowPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showNewPasswordCheck, setShowNewPasswordCheck] = useState(false);
+
     const passwordRegex = /[!@#$%^&*(),.?":{}|<>]/;
+    const languageRegex = /[ㄱ-ㅎ가-힣]/;
 
     const validatePassword = () => {
         if (password === '' || password === null) {
             setPasswordError(<span className='error-message'>비밀번호를 입력해주세요</span>);
+        } else if (languageRegex.test(password)) {
+            setPasswordError(<span className='error-message'>비밀번호에는 한글이 포함될 수 없습니다.</span>);
         } else {
             setPasswordError(<span className='passwordUpdate_check_circle'><FaCheckCircle /></span>);
         }
@@ -29,6 +37,8 @@ function UserPasswordUpdate() {
     const validateNewPassword = () => {
         if (password == newPassword) {
             setNewPasswordError(<span className='error-message'>기존 비밀번호와 같습니다.</span>);
+        } else if (languageRegex.test(newPassword)) {
+            setNewPasswordError(<span className='error-message'>비밀번호에는 한글이 포함될 수 없습니다.</span>);
         } else if (!passwordRegex.test(newPassword)) {
             setNewPasswordError(<span className='error-message'>특수문자가 반드시 하나 이상 들어가야 합니다.</span>);
         } else if (newPassword.length < 7 || newPassword.length > 15) {
@@ -41,6 +51,8 @@ function UserPasswordUpdate() {
     const validateNewPasswordCheck = () => {
         if (newPassword !== newPasswordCheck) {
             setPasswordCheckError(<span className='error-message'>비밀번호가 다릅니다.</span>);
+        } else if (languageRegex.test(newPasswordCheck)) {
+            setPasswordCheckError(<span className='error-message'>비밀번호에는 한글이 포함될 수 없습니다.</span>);
         } else if (newPasswordCheck === '' || newPasswordCheck === null) {
             setPasswordCheckError('');
         } else {
@@ -67,14 +79,29 @@ function UserPasswordUpdate() {
     const passwordRef = useRef(null);
 
     // =============================
-    // ** 엔터 키로 전송
-    const handleEnterKey = (e) => {
-        if (e.key === 'Enter') {
-            if (e.target.id === 'newPasswordCheck') {
-                changePasswordSubmit();
-            }
+    // ** 키 값 설정
+    const handleKey = (e) => {
+        switch (e.key) {
+            case 'Enter':
+                e.preventDefault();
+                if (e.target.id === 'password') {
+                    document.getElementById('newPassword').focus();
+                } else if (e.target.id === 'newPassword') {
+                    document.getElementById('newPasswordCheck').focus();
+                }
+                break;
+            case 'Tab':
+                e.preventDefault();
+                if (e.target.id === 'password') {
+                    document.getElementById('newPassword').focus();
+                } else if (e.target.id === 'newPassword') {
+                    document.getElementById('newPasswordCheck').focus();
+                }
+                break;
+            default:
+                break;
         }
-    }
+    };
 
     // ==============================
     // ** 데이터 전송
@@ -110,8 +137,9 @@ function UserPasswordUpdate() {
             <form className='passwordUpdate_input_container'>
                 <div>
                     <span className='passwordUpdate_option'>비밀번호</span>
-                    :<input type="password" placeholder='기존의 비밀번호를 입력해주세요'
-                        ref={passwordRef} autoComplete='off'
+                    :<input type={showPassword ? 'text' : 'password'}
+                        placeholder='기존의 비밀번호를 입력해주세요'
+                        ref={passwordRef} autoComplete='off' id='password'
                         onChange={(e) => {
                             setPassword(e.target.value);
                             setPasswordError('');
@@ -120,13 +148,21 @@ function UserPasswordUpdate() {
                             validatePassword();
                             validateNewPassword();
                         }}
-                        onKeyUp={changeButton} />
+                        onKeyUp={changeButton}
+                        onKeyDown={handleKey} />
+                    <button onClick={(e) => {
+                        (e).preventDefault();
+                        setShowPassword(!showPassword);
+                    }}>
+                        {!showPassword ? <GoEyeClosed className='change_password_icon' /> : <GoEye className='change_password_icon' />}
+                    </button>
                     {passwordError}
                 </div>
                 <div>
                     <span className='passwordUpdate_option'>새 비밀번호</span>
-                    :<input type="password" placeholder='변경할 비밀번호를 입력해주세요'
-                        autoComplete='off'
+                    :<input type={showNewPassword ? 'text' : 'password'}
+                        placeholder='변경할 비밀번호를 입력해주세요'
+                        autoComplete='off' id='newPassword'
                         onChange={(e) => {
                             setNewPassword(e.target.value);
                             setNewPasswordError('');
@@ -136,19 +172,33 @@ function UserPasswordUpdate() {
                             validateNewPassword();
                             validateNewPasswordCheck();
                         }}
-                        onKeyUp={changeButton} />
+                        onKeyUp={changeButton}
+                        onKeyDown={handleKey} />
+                    <button onClick={(e) => {
+                        (e).preventDefault();
+                        setShowNewPassword(!showNewPassword);
+                    }}>
+                        {!showNewPassword ? <GoEyeClosed className='change_password_icon' /> : <GoEye className='change_password_icon' />}
+                    </button>
                     {newPasswordError}
                 </div>
                 <div>
                     <span className='passwordUpdate_option'>새 비밀번호 확인</span>
-                    :<input type="password" id='newPasswordCheck' autoComplete='off'
+                    :<input type={showNewPasswordCheck ? 'text' : 'password'}
+                        id='newPasswordCheck' autoComplete='off'
                         onChange={(e) => {
                             setNewPasswordCheck(e.target.value);
                             setPasswordCheckError('');
                         }}
                         onBlur={validateNewPasswordCheck}
                         onKeyUp={changeButton}
-                        onKeyDown={handleEnterKey} />
+                        onKeyDown={handleKey} />
+                    <button onClick={(e) => {
+                        (e).preventDefault();
+                        setShowNewPasswordCheck(!showNewPasswordCheck);
+                    }}>
+                        {!showNewPasswordCheck ? <GoEyeClosed className='change_password_icon' /> : <GoEye className='change_password_icon' />}
+                    </button>
                     {passwordCheckError}
                 </div>
             </form>
