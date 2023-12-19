@@ -88,5 +88,7 @@
 
 /* 각 공지사항 내용 */
 .notice_content_detail {
+    text-align: left;
+    white-space: pre;
     padding-top: 10px;
 }

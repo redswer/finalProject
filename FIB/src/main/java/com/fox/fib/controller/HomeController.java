@@ -59,7 +59,6 @@ public class HomeController {
         
         List<OrderSummaryDTO> dailyOrderSummary = memberPaymentService.getDailyOrderSummary(startDateString, endDateString);      
         
-        
         List<String> dateRange = generateDateRange(startDateString, endDateString);
 
         // dateRange를 반복하며 dailyOrderSummary에 날짜가 없는 경우, 누락된 날짜에 대한 OrderSummaryDTO를 추가
@@ -70,12 +69,24 @@ public class HomeController {
         }
         dailyOrderSummary.sort(Comparator.comparing(s -> LocalDate.parse(s.getOrderDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
 
-        
+        // 가장 높은 가격의 주문 찾기
+        OrderSummaryDTO maxPriceOrder = findMaxPriceOrder(dailyOrderSummary);
+
         log.info("dailyOrderSummaryAdd : " + dailyOrderSummary);
+        log.info("maxPriceOrder : " + maxPriceOrder);
         // 일별데이터
         model.addAttribute("dailyOrderSummary", dailyOrderSummary);
         model.addAttribute("UnAnsweredInquiries", inquiryService.getMInquiryList(false));
+        model.addAttribute("maxPriceOrder", maxPriceOrder); // 최대 가격 주문을 모델에 추가
         return "home"; // adminHome은 관리자 페이지의 JSP 파일명입니다.
+    }
+    
+ // 최대 가격 주문을 찾는 메서드
+    private OrderSummaryDTO findMaxPriceOrder(List<OrderSummaryDTO> dailyOrderSummary) {
+        OrderSummaryDTO maxPriceOrder = dailyOrderSummary.stream()
+                .max(Comparator.comparing(OrderSummaryDTO::getDailyOrderAmount))
+                .orElse(null);
+        return maxPriceOrder;
     }
 
 }
