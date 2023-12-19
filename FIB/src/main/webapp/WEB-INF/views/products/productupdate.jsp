@@ -99,12 +99,14 @@
          <th bgcolor="deeppink">12. image</th>
          <td><img src="${requestScope.pcode.image}" class="select_img"><br>
 			<input type="file" name="uploadfilef" id="uploadfilef" size="40" border="1px solid green" ></td>
+			<input type="hidden" name="image" size="40" border="1px solid green" value="${requestScope.pcode.image}" ></td>
 			<td>대표 상품 표지</td>
     </tr>
     <tr>
          <th bgcolor="deeppink">13. intro_image</th>
          <td><img src="${requestScope.pcode.intro_image}" class="select_img"><br>
 			<input type="file" name="uploadfilef" id="uploadfilef" size="40" border="1px solid green" ></td>
+			<input type="hidden" name="intro_image" size="40" border="1px solid green" value="${requestScope.pcode.intro_image}" ></td>
          <td>상세페이지 사용 이미지</td>
     </tr>
     <tr>

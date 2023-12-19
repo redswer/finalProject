@@ -3,7 +3,7 @@ import OrderListDateSelect from './OrderListDateSelect';
 import OrderListDelProCau from './OrderListDelProCau';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function OrderListPage() {
 
@@ -59,6 +59,107 @@ function OrderListPage() {
 
     window.location.reload();
   };
+  //==========================================================================================================================
+  const groupedData = {};
+
+  detailData.forEach((d) => {
+    if (!groupedData[d.member_payment_code]) {
+      groupedData[d.member_payment_code] = [];
+    }
+    groupedData[d.member_payment_code].push(d);
+  });
+
+  const rows = [];
+
+  Object.values(groupedData).forEach((group) => {
+    group.forEach((d, rowIndex) => {
+      const isCancelled = d.payment_cancel === 1;
+
+      rows.push(
+        <tr key={rowIndex} className='orderDetailItem'>
+          {rowIndex == 0 && (
+            <>
+              <td className='orderDetailDataPmCodeTd' rowSpan={group.length}>
+                <div className='orderDetailData'>{d.payment_date}</div>
+                <div className='orderDetailPmCode'>{`[ ${d.member_payment_code} ]`}</div>
+              </td>
+            </>
+          )}
+          <td className='orderDetailItemInfomationTd'>
+            <div className='orderDetailImageTitleDomesticProtype'>
+              <div>
+                <img src={`../img/${d.image}`} className='orderListItemImg' alt='Product Image'></img>
+              </div>
+              <div>
+                <span className='orderDetailTitle'>{d.title}</span>
+                <span className='orderDetailDomesticProtype'>
+                  {d.domestic == 1 ? '국내' :
+                    d.domestic == 2 ? '영미' :
+                      d.domestic == 3 ? '프랑스' :
+                        d.domestic == 4 ? '독일' : '기타'}{d.protype == 1 ? '도서' : '제품'}
+                </span>
+
+                <div className='orderDetailToReviewPage'>
+                  <Link to={`/DetailPage/${d.product_code}`}>리뷰작성</Link>
+                </div>
+
+              </div>
+            </div>
+          </td>
+          <td className='orderDetailPriceProamountTd'>
+            {/* <span className='orderDetailPriceUnit'>&#8361;</span> */}
+            <span className='orderDetailPrice'>&#8361;</span>&nbsp;
+            <span className='orderDetailPrice'>{d.price ? d.price.toLocaleString() : 0}</span>
+
+            &nbsp;&nbsp;
+            <span>/</span>
+            &nbsp;&nbsp;
+
+            <span className='orderDetailProamountUnit'>수량 : </span>&nbsp;
+            <span className='orderDetailProamount'>{d.proamount}</span>
+            <div>
+              <span className='orderDetailEqualUnit'>=</span>&nbsp;&nbsp;
+              <span className='orderDetailMultiPlyPP'>
+                {d.price && d.proamount ? (d.price * d.proamount).toLocaleString() : 0}
+              </span>
+              <span className='orderDetailPriceUnit'>원</span>
+            </div>
+          </td>
+
+          {rowIndex == 0 && (
+            <>
+              <td className='orderDetailFinalPriceTd' rowSpan={group.length}>
+                <div>
+                  <span className='orderDetailFinalPrice'>{d.final_price ? d.final_price.toLocaleString() : 0}</span>&nbsp;
+                  <span className='orderDetailFinalPriceUnit'>원</span>
+                </div>
+              </td>
+            </>
+          )}
+
+          {rowIndex == 0 && (
+            <>
+              <td className='orderDetailItemStateTd' rowSpan={group.length}>
+                <span className='orderDetailItemState'>상품 준비중</span>
+              </td>
+            </>
+          )}
+
+          {rowIndex == 0 && (
+            <td className='orderDetailItemDeleteTd' rowSpan={group.length}>
+              <button
+                className={`orderDetailItemDeleteButton_${isCancelled ? 'canceledOrder' : ''}`}
+                onClick={() => isCancelled ? null : cancelOrder(d.member_payment_code)}
+                disabled={isCancelled}
+              >
+                주문 취소 {isCancelled && '완료'}
+              </button>
+            </td>
+          )}
+        </tr>
+      );
+    });
+  });
 
 
   //==========================================================================================================================
@@ -69,157 +170,7 @@ function OrderListPage() {
         <div className="orderdelivery-title">주문/배송조회</div>
         <div className='orderlist_sub_title'>고객님께서 구매하셨던 상품목록들을 확인하실 수 있는 페이지입니다.</div>
 
-        <div className="orderDetailSearchDateArea">
-          <div className="orderDetailForSelectingDateDirection">조회기간</div>
-          <div className="orderDetailSelectingDateBox">
-            <div className="orderDetailSelectingDate">
 
-              <select value={fromYear} onChange={(e) => setFromYear(e.target.value)}>
-                <option value="2015">2015</option>
-                <option value="2016">2016</option>
-                <option value="2017">2017</option>
-                <option value="2018">2018</option>
-                <option value="2019">2019</option>
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-              </select>
-
-              <span className="selectdate-detaildate-year">년</span>
-
-              <select value={fromMonth} onChange={(e) => setFromMonth(e.target.value)}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-              </select>
-
-              <span className="selectdate-detaildate-month">월</span>
-
-              <select value={fromDay} onChange={(e) => setFromDay(e.target.value)}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-                <option value="31">31</option>
-              </select>
-
-              <span className="selectdate-detaildate-day">일</span>
-
-              {/* ~~~~~~~~~~~~~~~~~~~from~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */}
-              <span className="selectdate-detaildate-margin"> ~ </span>
-              {/* ~~~~~~~~~~~~~~~~~~~to~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */}
-
-              <select value={toYear} onChange={(e) => setToYear(e.target.value)}>
-                <option value="2015">2015</option>
-                <option value="2016">2016</option>
-                <option value="2017">2017</option>
-                <option value="2018">2018</option>
-                <option value="2019">2019</option>
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-              </select>
-
-              <span className="selectdate-detaildate-year">년</span>
-
-              <select value={toMonth} onChange={(e) => setToMonth(e.target.value)}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-              </select>
-
-              <span className="selectdate-detaildate-month">월</span>
-
-              <select value={toDay} onChange={(e) => setToDay(e.target.value)}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-                <option value="31">31</option>
-              </select>
-
-              <span className="selectdate-detaildate-day">일</span>
-
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-              <button type='button' onClick={searchDataForDate} className='searchDataForDateButton'>검색하기</button>
-            </div>
-
-          </div>
-
-        </div>
       </div>
 
       {/* 주문상세 테이블 =========================================================================== */}
@@ -228,70 +179,18 @@ function OrderListPage() {
           <tr>
             <th style={{ width: '15%' }}>주문일자 / 주문번호</th>
             <th style={{ width: '37%' }}>상품정보</th>
-            <th style={{ width: '10%' }}>가격 / 수량</th>
-            <th style={{ width: '10%' }}>총 결제금액</th>
-            <th style={{ width: '15%' }}>배송상태</th>
-            <th style={{ width: '15%' }}>주문 취소</th>
+            <th style={{ width: '13%' }}>가격 / 수량</th>
+            <th style={{ width: '12%' }}>총 결제금액</th>
+            <th style={{ width: '10%' }}>배송상태</th>
+            <th style={{ width: '12%' }}>주문 취소</th>
           </tr>
         </thead>
         <tbody>
-          {detailData.length === 0 ?
+          {detailData.length === 0 ? (
             <tr className='orderDetailDataIsVacant'>
               <td colSpan='5'>아직 주문한 상품이 없습니다.</td>
             </tr>
-            :
-            detailData.map((d, i) => (
-
-              <tr key={i} className='orderDetailItem'>
-                <td className='orderDetailDataPmCodeTd'>
-                  <div className='orderDetailData'>{d.payment_date}</div>
-                  <div className='orderDetailPmCode'>{`[ ${d.member_payment_code} ]`}</div>
-                </td>
-
-                <td className='orderDetailItemInfomationTd'>
-                  <div className='orderDetailImageTitleDomesticProtype'>
-                    <div>
-                      <img src={`../img/yeonsu.jpg`} className='orderListItemImg'></img>
-                    </div>
-                    <div>
-                      <span className='orderDetailTitle'>{d.title}</span>
-                      <span className='orderDetailDomesticProtype'>
-                        {d.domestic == 1 ? '국내' :
-                          d.domestic == 2 ? '영미' :
-                            d.domestic == 3 ? '프랑스' :
-                              d.domestic == 4 ? '독일' : '기타'}{d.protype == 1 ? '도서' : '제품'}</span>
-                    </div>
-                  </div>
-                </td>
-
-                <td className='orderDetailPriceProamountTd'>
-                  <span className='orderDetailPrice'>{d.price ? d.price.toLocaleString() : 0}</span>
-                  <span className='orderDetailPriceUnit'>원</span>
-                  <div>
-                    <span className='orderDetailProamountUnit'>수량 : </span>
-                    <span className='orderDetailProamount'>{d.proamount}</span>
-                  </div>
-                </td>
-
-                <td className='orderDetailFinalPriceTd'>
-                  <div>
-                    <span className='orderDetailFinalPrice'>{d.final_price ? d.final_price.toLocaleString() : 0}</span>&nbsp;
-                    <span className='orderDetailFinalPriceUnit'>원</span>
-                  </div>
-                </td>
-
-                <td className='orderDetailItemStateTd'>
-                  <span className='orderDetailItemState'>상품 준비중</span>
-                  <div>
-                    <span>paymentCancel check : {d.payment_cancel}</span>
-                  </div>
-                </td>
-
-                <td className='orderDetailItemDeleteTd'>
-                  <button className='orderDetailItemDeleteButton' onClick={() => cancelOrder(d.member_payment_code)}>주문 취소</button>
-                </td>
-              </tr>
-            ))}
+          ) : rows}
         </tbody>
       </table>
 

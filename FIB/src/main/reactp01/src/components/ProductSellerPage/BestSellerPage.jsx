@@ -122,7 +122,7 @@ const BestSellerPage = () => {
           {viewedList.map((d, i) => (
             <BestSellerItem
               key={i}
-              rank={i + 1}
+              rank={indexOfFirstItem + i + 1}
               product_code={d.product_code}
               domestic={d.domestic}
               protype={d.protype}

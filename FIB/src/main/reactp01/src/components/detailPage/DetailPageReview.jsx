@@ -90,34 +90,34 @@ function DetailPageReview({ oneProductWriterJoin }) {
 
     const review_insert = () => {
 
-        if (reviewCheck) {
-            alert('이미 등록된 리뷰가 있습니다.');
+        // if (reviewCheck) {
+        //     alert('이미 등록된 리뷰가 있습니다.');
+        // } else {
+        if (click_count >= 6) {
+            alert('별점을 선택해 주세요~');
         } else {
-            if (click_count >= 6) {
-                alert('별점을 선택해 주세요~');
+            if (!review_content) {
+                review_ref.current.focus();
+                alert('리뷰 내용을 작성해 주세요~');
             } else {
-                if (!review_content) {
-                    review_ref.current.focus();
-                    alert('리뷰 내용을 작성해 주세요~');
-                } else {
-                    const review_formData = new FormData(document.getElementById('review_form'));
+                const review_formData = new FormData(document.getElementById('review_form'));
 
-                    axios.post(
-                        '/restreview/reviewinsert',
-                        review_formData,
-                        {
-                            headers: { 'Content-Type': 'multipart/form-data' }
-                        }
-                    ).then((response) => {
-                        alert('리뷰가 등록되었습니다.');
-                        window.location.href = `/DetailPage/${product_code}`;
-                    }).catch((err) => {
-                        alert(`리뷰 등록에 실패했습니다. (${err.message})`);
-                    });
-                }
+                axios.post(
+                    '/restreview/reviewinsert',
+                    review_formData,
+                    {
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    }
+                ).then((response) => {
+                    alert('리뷰가 등록되었습니다.');
+                    window.location.href = `/DetailPage/${product_code}`;
+                }).catch((err) => {
+                    alert(`리뷰 등록에 실패했습니다. (${err.message})`);
+                });
             }
         }
     }
+    // }
 
     // 리뷰 수정 버튼 클릭
     // const onClick_review_update = (num) => {

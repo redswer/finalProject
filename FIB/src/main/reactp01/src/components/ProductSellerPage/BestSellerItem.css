@@ -27,6 +27,18 @@
   /* border: 3px solid green; */
 }
 
+.BestSellerItemRank {
+  text-align: center;
+  display: inline-block;
+  font-size: 26px;
+  width: 38px;
+  height: 38px;
+  line-height: 38px;
+  background-color: rgb(168, 168, 168);
+  color: white;
+  font-weight: bold;
+}
+
 .BestSellerItemTitle {
   display: inline-block;
   font-size: 27px;

@@ -111,7 +111,7 @@ const CartItem = (props) => {
 
       <td className='CartItemInfomationTd'>
         <div className='CartItemImage'>
-          <img src={`../img/yeonsu.jpg`} alt="image" />
+          <img src={`../img/${props.image}`} alt="image" />
         </div>
         <div className='CartItemTitleDomesticProtype'>
           <div className='CartItemTitle'>{props.title}</div>
