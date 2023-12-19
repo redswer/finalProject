@@ -85,10 +85,32 @@ function DetailPageReview({ oneProductWriterJoin }) {
         }
     }, [review]);
 
+    // 선택한 리뷰 이미지 미리보기
+    const handleImageChange = (e) => {
+        // 선택한 파일 가져오기
+        const selectedFile = e.target.files[0];
+
+        // 파일이 선택되었는지 확인하고 미리보기를 보여주기
+        if (selectedFile) {
+            // FileReader 객체 생성
+            const reader = new FileReader();
+
+            // 이미지 읽기가 완료되면 실행될 콜백 함수
+            reader.onloadend = () => {
+                // 미리보기 이미지 상태 업데이트
+                document.getElementById('imgSelected').src = reader.result;
+            };
+
+            // FileReader를 사용하여 선택된 이미지 읽기 시작
+            reader.readAsDataURL(selectedFile);
+        }
+    };
+
     const review_insert = () => {
 
-
-        if (orderCheck == 0) {
+        if (orderCheck !== 0) {
+            alert('구매한 상품에 대해서만 리뷰 등록이 가능합니다.');
+        } else {
             if (reviewCheck) {
                 alert('이미 등록된 리뷰가 있습니다.');
             } else {
@@ -116,8 +138,6 @@ function DetailPageReview({ oneProductWriterJoin }) {
                     }
                 }
             }
-        } else {
-            alert('구매한 상품에 대해서만 리뷰 등록이 가능합니다.');
         }
     }
 
@@ -182,10 +202,15 @@ function DetailPageReview({ oneProductWriterJoin }) {
                                 />
                             </div>
                             <div className="review_image_cover">
-                                <img src="../img/review_basic_image.png" />
+                                <img src="../img/review_basic_image.png" id="imgSelected" />
                                 {/* accept : 입력된 확장자가 아닐 경우에 업로드를 하지 못하게 해줌. */}
                                 <label htmlFor="reviewImageUploadfile">사진첨부</label>
-                                <input type="file" name="reviewImageUploadfile" id="reviewImageUploadfile" accept='.jpg, .png' />
+                                <input type="file"
+                                    name="reviewImageUploadfile"
+                                    id="reviewImageUploadfile"
+                                    accept='.jpg, .png'
+                                    onChange={handleImageChange}
+                                />
                             </div>
                             <div className="review_btn_cover">
                                 {
