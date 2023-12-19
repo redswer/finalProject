@@ -135,50 +135,57 @@ function SlideAllItem() {
     );
 }
 
+
+
 // 도서용품
 function BookItem() {
-    const book_item_data = useContext(book_list_context);
-    const book_item_filter = book_item_data.filter((item) => {
-        return item.type == 'item';
-    })
+    const [productList, setProductList] = useState([]);
 
-    const Slide_item = ({ image, title, price, salePer, id }) => {
+    useEffect(() => {
+        axios
+            .get('/product/selectAllList')
+            .then((response) => {
+                setProductList(response.data);
+                console.log(`서버연결 성공 =>`, response.data);
+            })
+            .catch((err) => {
+                alert(`서버연결 실패 => ${err.message}`);
+            });
+    }, []);
+
+    const Book_item = ({ product_code, product_protype, image, title, price }) => {
         return (
-            <div className='slide_list_container'>
-                <ul className="index_slide_table01_list_size">
-                    <li>
-                        <div className="item_info">
-                            <span>
-                                <Link to={`/DetailPage/${id}`}>
-                                    <img className="item_info_img" src={image} alt={title} />
-                                </Link>
-                            </span>
-                            <span className="item_info_box">
-                                <div className="item_info_box_name">
-                                    <Link to='/'>
-                                        <h3>{title}</h3>
-                                    </Link>
+            <>
+                {product_protype == 2 &&
+                    <div className='slide_list_container'>
+                        <ul className="index_slide_table01_list_size">
+                            <li>
+                                <div className="item_info">
+                                    <span>
+                                        <Link to={`/DetailPage/${product_code}`}>
+                                            <img className="item_info_img" src={`../img/${image}`} alt={title} />
+                                        </Link>
+                                    </span>
+                                    <span className="item_info_box">
+                                        <div className="item_info_box_name">
+                                            <Link to={{
+                                                pathname: `/DetailPage/${product_code}`,
+                                                key: product_code
+                                                // state: { productData: product_data }
+                                            }}>
+                                                <h3>{title}</h3>
+                                            </Link>
+                                        </div>
+                                        <p className="item_info_box_price">
+                                            {price ? `${price.toLocaleString("ko")}원` : ''}
+                                        </p>
+                                    </span>
                                 </div>
-                                <p className="item_info_box_price"
-                                    style={{ textDecoration: salePer ? 'line-through' : 'none' }}>
-                                    {/* salePer 유무에 따라 라인쓰루 여부 결정 */}
-                                    {price.toLocaleString("ko")}원
-                                </p>
-                                <p className="item_info_box_discount">{salePer ? `${salePer}% 할인` : ''}</p>
-                                {/* salePer 유무에 따라 할인율 노출 여부 결정 */}
-
-                                <p className="item_info_box_discount_price"
-                                    style={{ display: salePer ? 'block' : 'none' }}>
-                                    {/* salePer 유무에 따라 할인가격 노출 여부 결정 */}
-
-                                    {(price - (price * salePer) / 100).toLocaleString("ko")}원
-                                    {/* 할인율에 따른 가격변화를 위한 식 */}
-                                </p>
-                            </span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                            </li>
+                        </ul>
+                    </div>
+                }
+            </>
         )
     }
 
@@ -189,14 +196,14 @@ function BookItem() {
             </div>
             <hr className='book_item_title_hr' />
             <div className="slide_item">
-                {book_item_filter.map((book_item_data, index) => (
-                    <Slide_item
+                {productList.map((product_data, index) => (
+                    <Book_item
                         key={index}
-                        id={book_item_data.id}
-                        image={book_item_data.image}
-                        title={book_item_data.title}
-                        price={book_item_data.price}
-                        salePer={book_item_data.salePer}
+                        product_code={product_data.product_code}
+                        product_protype={product_data.protype}
+                        image={product_data.image}
+                        title={product_data.title}
+                        price={product_data.price}
                     />
                 ))}
             </div>
