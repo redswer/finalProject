@@ -10,6 +10,6 @@ public interface Delivery_addressService {
 	int deleteIdAddress(String id);
 	public List<Delivery_address> selectAddressList(String user_id);
 	Delivery_address dupCheck(String address_zip, String address, String address_detail);
-	Delivery_address basicSearch();
+	Delivery_address basicSearch(String id);
 	int basicUpdate();
 }

@@ -102,6 +102,12 @@ function LogIn() {
         });
     }
 
+    // =======================================
+    // ** 광고 및 제품 구역
+    const coupon = () => {
+        alert('로그인 후 이용해주세요');
+    }
+
     return (
         <div className='LogIn'>
             <div className="log_in_logo_container d-flex">
@@ -164,10 +170,18 @@ function LogIn() {
                         </div>
                     </div>
                     <div>
-                        <div className='log_in_ad'>
-                            <Link to="/EventPageItemContent/0">
-                                <img src="./img/log_in_ad_3.jpg" alt='#' />
+                        <div className='log_in_ad d-flex'>
+                            <Link to="/ItemPage">
+                                <img src="./img/log_in_ad_3.jpg" className='log_in_event' alt="#" />
                             </Link>
+                            <div className='log_in_product'>
+                                <Link onClick={coupon}>
+                                    <img src="./img/8peMax4000.png" alt='#' />
+                                </Link>
+                                <Link onClick={coupon}>
+                                    <img src="./img/2000.png" alt='#' />
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </fieldset>

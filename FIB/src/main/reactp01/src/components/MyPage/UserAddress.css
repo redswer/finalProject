@@ -44,6 +44,10 @@
     border-bottom: 1px solid #bbbaba;
 }
 
+.user_address_basic_tr {
+    background-color: honeydew;
+}
+
 .user_address_column {
     display: grid;
     grid-template-columns: 1fr 2fr 7fr 3fr 2fr;
@@ -53,7 +57,7 @@
 }
 
 .basic_address {
-    color: rgb(119, 175, 107);
+    color: green;
     font-weight: bold;
 }
 

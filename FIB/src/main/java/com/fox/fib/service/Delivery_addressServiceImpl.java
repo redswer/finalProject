@@ -25,8 +25,8 @@ public class Delivery_addressServiceImpl implements Delivery_addressService {
 	}
 	
 	@Override
-	public Delivery_address basicSearch() {
-		return repository.basicSearch();
+	public Delivery_address basicSearch(String id) {
+		return repository.basicSearch(id);
 	}
 	
 	@Override

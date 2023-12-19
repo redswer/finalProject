@@ -57,5 +57,10 @@ public class NoticeServiceImpl implements NoticeService {
 	    return repository.getNoticeList(pageable);
 	}
 	
+	@Override
+	public Page<Notice> getPageNoticeList(String category, Pageable pageable) {
+	    return repository.getPageNoticeList(category, pageable);
+	}
+	
 
 }

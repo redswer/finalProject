@@ -104,5 +104,20 @@
     font-size: 70%;
     margin-left: 45px;
     text-align: left;
+}
 
+.log_in_ad {
+    flex-direction: column;
+}
+
+.log_in_product {
+    margin-top: 10px;
+}
+
+.log_in_product img {
+    width: 170px;
+}
+
+.log_in_product a:first-child {
+    margin-right: 20px;
 }

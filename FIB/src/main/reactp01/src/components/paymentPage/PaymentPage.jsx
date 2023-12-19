@@ -84,7 +84,7 @@ function PaymentPage() {
     useEffect(() => {
         if (coupon_selected.discount_rate == 0) {
             setFinalCoupon(coupon_selected.max);
-        } else {
+        } else if (coupon_selected.discount_rate > 0) {
             setFinalCoupon((coupon_selected.discount_rate / 100) * total_sum);
         }
     }, [coupon_selected]);
@@ -369,13 +369,21 @@ function PaymentPage() {
                                             :
                                             coupon_selected.discount_rate == 0 ?
                                                 <span>
-                                                    <span className='coupon_selected_title'>{coupon_selected.coupon_title}</span>
-                                                    <span className='coupon_selected_content'>{(coupon_selected.max).toLocaleString()}원 할인</span>
+                                                    <span className='coupon_selected_title'>
+                                                        &#91;{coupon_selected.coupon_title}&#93;
+                                                    </span>
+                                                    <span className='coupon_selected_content'>
+                                                        {(coupon_selected.max).toLocaleString()}원 할인쿠폰
+                                                    </span>
                                                 </span>
                                                 :
                                                 <span>
-                                                    <span className='coupon_selected_title'>{coupon_selected.coupon_title}</span>
-                                                    <span className='coupon_selected_content'>{coupon_selected.discount_rate}% 할인</span>
+                                                    <span className='coupon_selected_title'>
+                                                        &#91;{coupon_selected.coupon_title}&#93;
+                                                    </span>
+                                                    <span className='coupon_selected_content'>
+                                                        {coupon_selected.discount_rate}% 할인쿠폰 &#40;최대 {(coupon_selected.max).toLocaleString()}원&#41;
+                                                    </span>
                                                 </span>
                                     }
                                 </td>

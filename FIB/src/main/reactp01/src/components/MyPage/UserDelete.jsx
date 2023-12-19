@@ -96,11 +96,13 @@ function UserDelete() {
                         onClick={openPasswordPopup}
                         disabled={!isChecked}>확인</button>
                 </div>
-                <PasswordPopup
-                    isOpen={isPasswordPopupOpen}
-                    onClose={closePasswordPopup}
-                    onSubmit={handlePasswordSubmit}
-                />
+                <form>
+                    <PasswordPopup
+                        isOpen={isPasswordPopupOpen}
+                        onClose={closePasswordPopup}
+                        onSubmit={handlePasswordSubmit}
+                    />
+                </form>
                 <div>
                     <button className='userDelete_cancel_button' type='button' onClick={cancel}>취소</button>
                 </div>

@@ -42,7 +42,7 @@ public class Delivery_addressController {
 				user.setAddress_detail(request.getAddress_detail());
 				uservice.register(user);
 				
-				if (service.basicSearch() != null) {
+				if (service.basicSearch(request.getUser_id()) != null) {
 					service.basicUpdate();
 				}
 			}

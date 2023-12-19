@@ -74,29 +74,8 @@ public class HomeController {
         log.info("dailyOrderSummaryAdd : " + dailyOrderSummary);
         // 일별데이터
         model.addAttribute("dailyOrderSummary", dailyOrderSummary);
-//        model.addAttribute("UnAnsweredInquiries", inquiryService.getInquiryList(false));
+        model.addAttribute("UnAnsweredInquiries", inquiryService.getMInquiryList(false));
         return "home"; // adminHome은 관리자 페이지의 JSP 파일명입니다.
     }
 
-
-//    @GetMapping("/dailyOrderSummary")
-//    public ResponseEntity<Map<String, Object>> dailyOrderSummary() {
-//        Map<String, Object> responseData = new HashMap<>();
-//
-//        // 기간 설정 (예: 최근 7일)
-//        LocalDate endDate = LocalDate.now();
-//        LocalDate startDate = endDate.minusDays(6);
-//
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        String endDateString = endDate.format(formatter);
-//        String startDateString = startDate.format(formatter);
-//
-//        // 일별 주문 통계 데이터 조회
-//        List<OrderSummaryDTO> dailyOrderSummary = memberPaymentService.getDailyOrderSummary(startDateString, endDateString);
-//
-//        // 다른 필요한 데이터들도 responseData에 추가 가능
-//
-//        responseData.put("dailyOrderSummary", dailyOrderSummary);
-//        return ResponseEntity.ok(responseData);
-//    }
 }

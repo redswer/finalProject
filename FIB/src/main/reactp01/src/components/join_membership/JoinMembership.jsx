@@ -126,7 +126,7 @@ function JoinMembership() {
     }
 
     // ============================================
-    // ** 체크박스 선택
+    // ** 이용약관 체크박스 선택
 
     const [isUseOpen, setUseOpen] = useState(false);
     const [isUseCommunityOpen, setUseCommunityOpen] = useState(false);
@@ -134,6 +134,8 @@ function JoinMembership() {
     const [isEMailOpen, setEMailOpen] = useState(false);
     const [isSMSOpen, setSMSOpen] = useState(false);
 
+
+    // ** 약관 자세히보기 팝업 
     const openUse = (id) => {
         setUseOpen(true);
     };

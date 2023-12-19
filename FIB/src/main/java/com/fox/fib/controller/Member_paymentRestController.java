@@ -58,7 +58,6 @@ public class Member_paymentRestController {
 		
         Type listType1 = new TypeToken<List<Map<String, Object>>>() {}.getType();
         List<Map<String, Object>> paymentDetailList = gson.fromJson((String) payment_formData.get("paymentDetailData"), listType1);
-        
         log.info(payment_formData);
 		
 		try {
@@ -79,7 +78,7 @@ public class Member_paymentRestController {
 			entity.setAddress_detail((String)payment_formData.get("address_detail"));
 			entity.setDelivery_state((String)payment_formData.get("delivery_state"));
 			entity.setArrive_date((String)payment_formData.get("arrive_date"));
-			
+			System.out.println("포인트확인333333333333 : " + payment_formData.get("discount_point"));
 			// 주문정보 등록
 			member_paymentService.save(entity);
 			
@@ -120,13 +119,15 @@ public class Member_paymentRestController {
 				// 장바구니 내역 삭제
 				cartService.deleteCartAfterOrder(userId, product_code);
 			}
-			
+
 			// 쿠폰 사용
+			if(Integer.parseInt((String)payment_formData.get("coupon_code")) > 0) {
 			dto.setCoupon_code(Integer.parseInt((String)payment_formData.get("coupon_code")));
 			dto.setId((String)payment_formData.get("id"));
 			
 			User_coupon userCouponOne = userCouponService.selectOne(dto);
 			userCouponOne.setUse_check(true);
+			}
 
 			// 회원포인트 적립 & 사용한 포인트 차감
 			User userOne =  userService.selectOne((String)payment_formData.get("id"));
@@ -139,6 +140,7 @@ public class Member_paymentRestController {
 
 			userService.register(userOne);
 
+			System.out.println("333333333333333333333");
 			return ResponseEntity.ok("주문정보 등록 성공");
 		} catch (Exception e) {
 			System.out.println("주문정보 등록 실패 : " + e.toString());

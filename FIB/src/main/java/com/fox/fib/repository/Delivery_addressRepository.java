@@ -18,8 +18,8 @@ public interface Delivery_addressRepository extends JpaRepository<Delivery_addre
 	@Query(nativeQuery = true, value="select * from delivery_address where address_zip =:address_zip and address =:address and address_detail =:address_detail")
 	Delivery_address dupCheck(@Param("address_zip") String address_zip, @Param("address") String address, @Param("address_detail") String address_detail);
 	
-	@Query(nativeQuery = true, value="select * from delivery_address where basic_address = true")
-	Delivery_address basicSearch();
+	@Query(nativeQuery = true, value="select * from delivery_address where basic_address = true and user_id =:id")
+	Delivery_address basicSearch(@Param("id") String id);
 	
 	@Modifying
 	@Transactional

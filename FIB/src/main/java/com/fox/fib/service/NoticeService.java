@@ -29,4 +29,6 @@ public interface NoticeService {
 	int delete(int notice_code);
 
 	Page<Notice> getNoticeList(Pageable pageable);
+	
+	Page<Notice> getPageNoticeList(String category, Pageable pageable);
 }

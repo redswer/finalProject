@@ -9,7 +9,7 @@ function CustomerServiceMailInquiresMyList() {
     const navigate = useNavigate();
 
     // 페이지네이션
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(7);
     const [page, setPage] = useState(1);
     const offset = (page - 1) * limit; // 데이터 시작 번호
 
@@ -19,12 +19,12 @@ function CustomerServiceMailInquiresMyList() {
 
         if (id) {
             axios
-                .get(`/test/inquiryList/${id}`)
+                .get(`/test/inquiryList?id=${id}`)
                 .then((response) => {
-                    setMyInquiryList(response.data);  // 검색결과를 꺼내기위한 엄마데이터리스트
+                    setMyInquiryList(response.data.content);
 
                     // 최근 문의내역이 위로오도록 내림차순 정렬
-                    response.data.sort((a, b) => b.inquiry_code - a.inquiry_code);
+                    myInquiryList.sort((a, b) => b.inquiry_code - a.inquiry_code);
 
                     console.log(`1:1문의 리스트 받아오기 성공 : `, response.data);
                 }).catch((err) => {
