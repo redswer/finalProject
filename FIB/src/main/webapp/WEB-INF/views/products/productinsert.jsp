@@ -68,6 +68,7 @@
     			<option value="poem">poem(시)</option>
     			<option value="essay">essay(수필)</option>
     			<option value="magazine">magazine(잡지)</option>
+    			<option value="0">카테고리없음</option>
 			</select>
 		</td>
          <td>카테고리. null 가능</td>
@@ -79,6 +80,7 @@
     			<option value="melo">melo(멜로)</option>
     			<option value="detective">detective(추리)</option>
     			<option value="sf">sf(공상과학)</option>
+    			<option value="0">장르없음</option>
 			</select>
 		</td>
          <td>장르. null 가능 </td>

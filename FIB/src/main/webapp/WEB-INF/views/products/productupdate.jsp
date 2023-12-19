@@ -140,7 +140,7 @@
     </tr>
     <tr>
          <th bgcolor="Greenyellow">20. regdate</th>
-         <td><input type="date" name="regdate" id="regdate"  size="40" value="${requestScope.pcode.regdate}"></td>
+         <td><input type="date" name="regdate" id="regdate"  size="40" value="${requestScope.pcode.regdate}" readonly></td>
          <td>독자들에 의해 업데이트 되는 항목. 관리자가 입력하지 않음.</td>
     </tr>
     <tr>

@@ -42,7 +42,7 @@ const BookmarkItem = (props) => {
       .then((response) => {
         console.log(`장바구니 담기  : `, response.data);
         console.log('========================================');
-        alert(`북마크지우기 `, response.data);
+        alert(`나의 찜목록에서 자동으로 삭제해요. `, response.data);
 
       }).catch((err) => {
         alert(`카트목록 삭제 실패!! ${err.message}`);
@@ -145,8 +145,11 @@ const BookmarkItem = (props) => {
           {props.domestic == 1 ? '국내' :
             props.domestic == 2 ? '영미' :
               props.domestic == 3 ? '프랑스' :
-                props.domestic == 4 ? '독일' : '기타'}{props.protype == 1 ? '도서' : '도서제품'}</span>
-        <div>{props.price ? props.price.toLocaleString() : 0} 원</div>
+                props.domestic == 4 ? '독일' : '기타'}{props.protype == 1 ? '도서' : '제품'}</span>
+        <div className='bookmarkItemPriceDiv'>
+          <span className='bookmarkItemPrice'>{props.price ? props.price.toLocaleString() : 0}</span>&nbsp;
+          <span className='bookmarkItemPriceUnit'>원</span>
+        </div>
       </div>
 
 

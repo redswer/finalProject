@@ -45,6 +45,12 @@ function OrderListPage() {
         alert(`서치데이터를 실패햇넹 : `, error.messege);
       })
   };
+  //==========================================================================================================================
+  const cancelOrder = () => {
+    axios
+      .get(`/mpdetail/cancelOrder?paycode={}`)
+  }
+
 
   //==========================================================================================================================
 
@@ -212,8 +218,9 @@ function OrderListPage() {
         <thead>
           <tr>
             <th style={{ width: '15%' }}>주문일자 / 주문번호</th>
-            <th style={{ width: '45%' }}>상품정보</th>
-            <th style={{ width: '10%' }}>가격&수량</th>
+            <th style={{ width: '37%' }}>상품정보</th>
+            <th style={{ width: '10%' }}>가격 / 수량</th>
+            <th style={{ width: '10%' }}>총 결제금액</th>
             <th style={{ width: '15%' }}>배송상태</th>
             <th style={{ width: '15%' }}>주문 취소</th>
           </tr>
@@ -227,25 +234,53 @@ function OrderListPage() {
             detailData.map((d, i) => (
 
               <tr key={i} className='orderDetailItem'>
-                <td className='orderDetailDataPmCode'>
+                <td className='orderDetailDataPmCodeTd'>
                   <div className='orderDetailData'>{d.payment_date}</div>
                   <div className='orderDetailPmCode'>{`[ ${d.member_payment_code} ]`}</div>
                 </td>
 
-                <td className='orderDetailItemInfomation'>
-                  <img src={`../img/yeonsu.jpg`} className='orderListItemImg'></img>
-                  <div>
-                    <span>{d.title}제목</span>
-                    <span>{d.domestic}</span>
-                    <span>{d.protype}</span>
-                    <div></div>
-                    <div></div>
+                <td className='orderDetailItemInfomationTd'>
+                  <div className='orderDetailImageTitleDomesticProtype'>
+                    <div>
+                      <img src={`../img/yeonsu.jpg`} className='orderListItemImg'></img>
+                    </div>
+                    <div>
+                      <span className='orderDetailTitle'>{d.title}</span>
+                      <span className='orderDetailDomesticProtype'>
+                        {d.domestic == 1 ? '국내' :
+                          d.domestic == 2 ? '영미' :
+                            d.domestic == 3 ? '프랑스' :
+                              d.domestic == 4 ? '독일' : '기타'}{d.protype == 1 ? '도서' : '제품'}</span>
+                    </div>
                   </div>
                 </td>
 
-                <td>{`${d.proamount} ${d.price}`}</td>
-                <td>상품준비중</td>
-                <td><button >주문 취소</button></td>
+                <td className='orderDetailPriceProamountTd'>
+                  <span className='orderDetailPrice'>{d.price ? d.price.toLocaleString() : 0}</span>
+                  <span className='orderDetailPriceUnit'>원</span>
+                  <div>
+                    <span className='orderDetailProamountUnit'>수량 : </span>
+                    <span className='orderDetailProamount'>{d.proamount}</span>
+                  </div>
+                </td>
+
+                <td className='orderDetailFinalPriceTd'>
+                  <div>
+                    <span className='orderDetailFinalPrice'>{d.final_price ? d.final_price.toLocaleString() : 0}</span>&nbsp;
+                    <span className='orderDetailFinalPriceUnit'>원</span>
+                  </div>
+                </td>
+
+                <td className='orderDetailItemStateTd'>
+                  <span className='orderDetailItemState'>상품 준비중</span>
+                  <div>
+                    <button className='orderDetailItemDeliveryStateButton'>배송조회</button>
+                  </div>
+                </td>
+
+                <td className='orderDetailItemDeleteTd'>
+                  <button className='orderDetailItemDeleteButton' onClick={() => cancelOrder(d.member_payment_code)}>주문 취소</button>
+                </td>
               </tr>
             ))}
         </tbody>
