@@ -476,7 +476,7 @@ function inquiryManagement() {
 			}
 		}
 	}).catch(err => {
-		alert("response 실패 => 바보" + err.message);
+		/*alert("response 실패 => 바보" + err.message);*/
 	});
 	document.getElementById("managementArea").innerHTML="";
 }

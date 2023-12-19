@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import './CouponPageItem.css';
 
 function CouponPageItem() {
     const [couponList, setCouponList] = useState([]);
     const [resultMessage, setResultMessage] = useState('');
+    const navigate = useNavigate();
 
     const loginInfo = JSON.parse(sessionStorage.getItem('user'));
     const userId = loginInfo ? loginInfo.id : null;
@@ -54,7 +55,6 @@ function CouponPageItem() {
 
         const handleButtonClick = () => {
             // setPopupOpen(true);
-
             const data = {
                 coupon_code: couponCode,
                 id: userId
