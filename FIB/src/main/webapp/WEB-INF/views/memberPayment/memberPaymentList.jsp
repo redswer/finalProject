@@ -50,8 +50,9 @@
 			<th>결제금액</th>
 			<th>배송상태</th>
 			<th>배송예정일</th>
-			<th>취소여부</th>
-			<th>주문취소</th>
+			<c:if test="${requestScope.orderParam ne 'order'}">
+				<th>취소요청</th>
+			</c:if>
 		</tr>
 
 		<c:if test="${not empty requestScope.memberPaymentData}">
@@ -69,24 +70,21 @@
 					</td>
 					<td>${memberPaymentVar.delivery_state}</td>
 					<td>${memberPaymentVar.arrive_date}</td>
-					<td>
-						<c:if test="${memberPaymentVar.payment_cancel == 1}">
-							취소
-						</c:if>
-					</td>
-					<td>
-						<c:if test="${memberPaymentVar.payment_cancel == 0}">
-							<button type="button"
-									class="paymentCancelBtn" 
-									onclick="paymentCancel('${requestScope.orderParam}',
-									'${String(memberPaymentVar.member_payment_code)}',
-									'${memberPaymentVar.id}',
-									${memberPaymentVar.product_amount},
-									${memberPaymentVar.origin_price})">
-									취소
-							</button>
-						</c:if>
-					</td>
+					<c:if test="${requestScope.orderParam ne 'order'}">
+						<td>
+							<c:if test="${memberPaymentVar.payment_cancel == 1}">
+								<button type="button"
+										class="paymentCancelBtn" 
+										onclick="paymentCancel('${requestScope.orderParam}',
+										'${String(memberPaymentVar.member_payment_code)}',
+										'${memberPaymentVar.id}',
+										${memberPaymentVar.product_amount},
+										${memberPaymentVar.origin_price})">
+										취소
+								</button>
+							</c:if>
+						</td>
+					</c:if>
 				</tr>
 			</c:forEach>
 		</c:if>
