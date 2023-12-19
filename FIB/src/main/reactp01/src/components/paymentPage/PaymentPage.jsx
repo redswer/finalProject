@@ -85,7 +85,11 @@ function PaymentPage() {
         if (coupon_selected.discount_rate == 0) {
             setFinalCoupon(coupon_selected.max);
         } else if (coupon_selected.discount_rate > 0) {
-            setFinalCoupon((coupon_selected.discount_rate / 100) * total_sum);
+            if (((coupon_selected.discount_rate / 100) * total_sum) > coupon_selected.max) {
+                setFinalCoupon(coupon_selected.max);
+            } else {
+                setFinalCoupon((coupon_selected.discount_rate / 100) * total_sum);
+            }
         }
     }, [coupon_selected]);
 
