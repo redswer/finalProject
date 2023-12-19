@@ -14,11 +14,10 @@ function UserCoupon() {
             data: {
                 id: id
             }
-
         }).then((res) => {
             setCouponList(res.data);
-        }).catch((err) => {
-
+        }).catch(() => {
+            alert('쿠폰 데이터 없음');
         });
     }
 

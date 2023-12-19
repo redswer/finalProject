@@ -80,21 +80,22 @@ function UserAddress() {
         }).then(() => {
             alert('삭제 완료');
             refresh();
-        }).catch((error) => {
-            if (error.response) {
-                // 서버가 응답을 반환한 경우
-                console.error("Login error - Server responded with data:", error.response.data);
-                console.error("Status code:", error.response.status);
-                console.error("Headers:", error.response.headers);
+        }).catch(() => {
+            // if (error.response) {
+            //     // 서버가 응답을 반환한 경우
+            //     console.error("Login error - Server responded with data:", error.response.data);
+            //     console.error("Status code:", error.response.status);
+            //     console.error("Headers:", error.response.headers);
 
-            } else if (error.request) {
-                // 서버에 요청이 전송되었지만 응답이 없는 경우
-                console.error("Login error - No response received:", error.request);
+            // } else if (error.request) {
+            //     // 서버에 요청이 전송되었지만 응답이 없는 경우
+            //     console.error("Login error - No response received:", error.request);
 
-            } else {
-                // 요청을 보내기 전에 오류가 발생한 경우
-                console.error("Login error - Request setup error:", error.message);
-            }
+            // } else {
+            //     // 요청을 보내기 전에 오류가 발생한 경우
+            //     console.error("Login error - Request setup error:", error.message);
+            // }
+            alert('삭제 과정에서 오류 발생');
         });
     }
 
