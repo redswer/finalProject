@@ -43,6 +43,7 @@ function UserCoupon() {
                     <thead>
                         <tr className="user_coupon_column">
                             <td></td>
+                            <td></td>
                             <td>쿠폰명</td>
                             <td>할인율</td>
                             <td>최대할인금액</td>
@@ -52,6 +53,7 @@ function UserCoupon() {
                     <tbody>
                         {couponList.map((couponData, index) => (
                             <tr key={index} className="user_coupon_column user_coupon_column_item">
+                                <td>{index + 1}</td>
                                 <td>
                                     <img src={`../img/${couponData.image}`} alt="coupon_image" />
                                 </td>

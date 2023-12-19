@@ -102,6 +102,11 @@ function LogIn() {
         });
     }
 
+    const log_in_ad = (e) => {
+        e.preventDefault();
+        alert('이벤트 페이지는 추후에 연결할 예정입니다.');
+    }
+
     return (
         <div className='LogIn'>
             <div className="log_in_logo_container d-flex">
@@ -165,7 +170,7 @@ function LogIn() {
                     </div>
                     <div>
                         <div className='log_in_ad'>
-                            <Link to="/EventPageItemContent/0">
+                            <Link to="#" onClick={log_in_ad}>
                                 <img src="./img/log_in_ad_3.jpg" alt='#' />
                             </Link>
                         </div>

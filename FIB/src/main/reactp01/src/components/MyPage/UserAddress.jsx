@@ -127,7 +127,7 @@ function UserAddress() {
                     </thead>
                     <tbody>
                         {addressList.map((addressData, index) => (
-                            <tr key={index} className="user_address_column">
+                            <tr key={index} className={addressData.basic_address ? "user_address_basic_tr user_address_column" : "user_address_column"}>
                                 <td>
                                     <input type="hidden" value={addressData.address_code} />
                                     <input type="checkbox"
