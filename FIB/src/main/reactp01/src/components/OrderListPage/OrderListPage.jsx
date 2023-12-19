@@ -8,6 +8,7 @@ import axios from 'axios';
 function OrderListPage() {
 
   const loginID = sessionStorage.getItem("loginID");
+
   const [detailData, setDetailData] = useState([]);
   const [fromYear, setFromYear] = useState('');
   const [fromMonth, setFromMonth] = useState('');
@@ -46,10 +47,18 @@ function OrderListPage() {
       })
   };
   //==========================================================================================================================
-  const cancelOrder = () => {
+  const cancelOrder = (member_payment_code) => {
     axios
-      .get(`/mpdetail/cancelOrder?paycode={}`)
-  }
+      .get(`/mpdetail/cancelOrder?paycode=${member_payment_code}&id=${loginID}`)
+      .then((response) => {
+        console.log(response.data);
+        alert(`주문취소요청이 완료되었습니다.`);
+      }).catch((e) => {
+        console.log(e.messege);
+      })
+
+    window.location.reload();
+  };
 
 
   //==========================================================================================================================
@@ -274,7 +283,7 @@ function OrderListPage() {
                 <td className='orderDetailItemStateTd'>
                   <span className='orderDetailItemState'>상품 준비중</span>
                   <div>
-                    <button className='orderDetailItemDeliveryStateButton'>배송조회</button>
+                    <span>paymentCancel check : {d.payment_cancel}</span>
                   </div>
                 </td>
 
