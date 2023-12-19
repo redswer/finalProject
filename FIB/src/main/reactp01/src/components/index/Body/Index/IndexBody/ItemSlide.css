@@ -24,6 +24,7 @@
 
 .slide_item {
     display: flex;
+    flex-wrap: wrap;
     overflow: hidden;
     padding-top: 20px;
     padding-bottom: 10px;

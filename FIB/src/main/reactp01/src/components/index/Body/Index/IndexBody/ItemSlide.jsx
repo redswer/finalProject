@@ -28,7 +28,7 @@ function SlideItemBestSeller() {
                         <div className="item_info">
                             <span>
                                 <Link to={`/DetailPage/${product_code}`}>
-                                    <img className="item_info_img" src={image} alt={title} />
+                                    <img className="item_info_img" src={`../img/${image}`} alt={title} />
                                 </Link>
                             </span>
                             <span className="item_info_box">
@@ -94,7 +94,7 @@ function SlideAllItem() {
                         <div className="item_info">
                             <span>
                                 <Link to={`/DetailPage/${product_code}`}>
-                                    <img className="item_info_img" src={image} alt={title} />
+                                    <img className="item_info_img" src={`../img/${image}`} alt={title} />
                                 </Link>
                             </span>
                             <span className="item_info_box">

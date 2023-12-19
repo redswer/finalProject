@@ -45,7 +45,6 @@ public class BoardController {
 	FaqService faq_service;
 	InquiryService inquiry_service;
 
-	
 	// (관리자) 공지사항 리스트 + 페이지네이션, 내림차순 정렬
 	@GetMapping("/noticeListAdmin")
 	public void noticeListAdmin(@RequestParam(name = "category", defaultValue = "") String category,
@@ -60,6 +59,23 @@ public class BoardController {
 	    model.addAttribute("currentPage", noticePageList.getNumber());
 	    model.addAttribute("totalPages", noticePageList.getTotalPages());
 	    model.addAttribute("totalItems", noticePageList.getTotalElements());
+	}
+	
+	@GetMapping("/pageNoticeListAdmin")
+	public String pageNoticeListAdmin(@RequestParam(name = "category", defaultValue = "") String category,
+					                 @RequestParam(name = "page", defaultValue = "0") int page,
+					                 @RequestParam(name = "size", defaultValue = "10") int size,
+					                 Model model) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Notice> noticePageList = notice_service.getPageNoticeList(category, pageable);
+		
+		model.addAttribute("noticeList", noticePageList.getContent());
+	    model.addAttribute("itemPage", noticePageList);
+	    model.addAttribute("currentPage", noticePageList.getNumber());
+	    model.addAttribute("totalPages", noticePageList.getTotalPages());
+	    model.addAttribute("totalItems", noticePageList.getTotalElements());
+	    
+	    return "board/noticeListAdmin";
 	}
 
 	// notice 등록하기 get
@@ -249,7 +265,7 @@ public class BoardController {
 	    Pageable pageable = PageRequest.of(page, size);
 	    Page<Faq> faqPageList = faq_service.getPageFaqList(category, pageable);
    
-	    model.addAttribute("itemPage", faqPageList);
+	    model.addAttribute("itemPage", faqPageList);	
 	    model.addAttribute("faqList", faqPageList.getContent());
 	    model.addAttribute("currentPage", faqPageList.getNumber());
 	    model.addAttribute("totalPages", faqPageList.getTotalPages());
@@ -319,9 +335,9 @@ public class BoardController {
 	
 	// (관리자) 1:1문의 리스트 + 페이지네이션, 내림차순 정렬
 	@GetMapping("/inquiryListAdmin")
-	public void inquiryListAdmin(@RequestParam(name = "page", defaultValue = "0") int page,
-					             @RequestParam(name = "size", defaultValue = "10") int size,
-					             Model model) {
+	public String inquiryListAdmin(@RequestParam(name = "page", defaultValue = "0") int page,
+					               @RequestParam(name = "size", defaultValue = "10") int size,
+					               Model model) {
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Inquiry> inquiryPageList = inquiry_service.getPageInquiryList(pageable);
 		
@@ -330,21 +346,30 @@ public class BoardController {
 	    model.addAttribute("currentPage", inquiryPageList.getNumber());
 	    model.addAttribute("totalPages", inquiryPageList.getTotalPages());
 	    model.addAttribute("totalItems", inquiryPageList.getTotalElements());
+	    
+	    return "board/inquiryListAdmin";
 	}
 	
 	@GetMapping("/pageInquiryListAdmin")
-	public void pageInquiryListAdmin(@RequestParam(name = "answer_check") boolean answer_check,
-								 	 @RequestParam(name = "page", defaultValue = "0") int page,
-								 	 @RequestParam(name = "size", defaultValue = "10") int size,
-								 	 Model model) {
+	public String pageInquiryListAdmin(@RequestParam(name = "answer_check") boolean answer_check,
+								 	  @RequestParam(name = "page", defaultValue = "0") int page,
+								 	  @RequestParam(name = "size", defaultValue = "10") int size,
+								 	  Model model) {
+		
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Inquiry> inquiryPageList = inquiry_service.getUnanswerInquiryList(answer_check, pageable);
 		
+		model.addAttribute("itemPage", inquiryPageList);
 		model.addAttribute("inquiryList", inquiryPageList.getContent());
-	    model.addAttribute("itemPage", inquiryPageList);
 	    model.addAttribute("currentPage", inquiryPageList.getNumber());
 	    model.addAttribute("totalPages", inquiryPageList.getTotalPages());
 	    model.addAttribute("totalItems", inquiryPageList.getTotalElements());
+	    log.info("파라미터itemPage : " + inquiryPageList);
+		log.info("파라미터inquiryPageList.getContent() : " + inquiryPageList.getContent());
+		log.info("파라미터inquiryPageList.getNumber() : " + inquiryPageList.getNumber());
+		log.info("파라미터inquiryPageList.getTotalElements() : " + inquiryPageList.getTotalElements());
+		
+		return "board/inquiryListAdmin";
 	}
 	
 	// 1:1문의 답변달기 get

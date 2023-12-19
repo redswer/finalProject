@@ -42,7 +42,7 @@ public class ReviewRestController {
 	@PostMapping("/reviewinsert")
 	public ResponseEntity<?> reviewinsert(Review entity) throws IOException {
 
-		String realPath = "C:\\MyTest_git\\Project\\FIB\\FIB\\src\\main\\webapp\\resources\\uploadImages\\";
+		String realPath = "C:\\MyTest_git\\Project\\finalProject\\FIB\\src\\main\\reactp01\\public\\img";
 		String StorageTable = "";
 
 		MultipartFile reviewImageFile = entity.getReviewImageUploadfile();

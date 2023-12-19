@@ -68,7 +68,6 @@ function CouponPageItem() {
                     // 서버로부터 받은 결과를 알림창으로 띄워준다.
                     // 쿠폰발급 성공 or 이미 발급받은 쿠폰
                     alert(response.data);
-                    alert("잠시 후 로그인 화면으로 이동합니다");
                     // 일정 시간 후에 로그인 페이지로 이동
                     if (data.id == null) {
                         setTimeout(() => {
@@ -114,6 +113,7 @@ function CouponPageItem() {
                 {renderCouponCategory('첫구매', '신규회원/첫구매/웰컴백 쿠폰')}
                 {renderCouponCategory('월간', '매월 드리는 쿠폰!')}
                 {renderCouponCategory('이벤트', '이벤트 쿠폰')}
+                {renderCouponCategory('생일', '생일 쿠폰')}
             </div>
         </div>
     );
