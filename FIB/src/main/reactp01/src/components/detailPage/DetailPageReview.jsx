@@ -61,21 +61,18 @@ function DetailPageReview({ oneProductWriterJoin }) {
     const review_ref = useRef();
 
     // 상품 구매 여부
-    // const [orderCheck, setOrderCheck] = useState(0);
+    const [orderCheck, setOrderCheck] = useState(0);
 
-    // useEffect(() => {
-    //     axios.post(
-    //         '/mpdetail/mpordercheck',
-    //         {
-    //             id: loginID,
-    //             product_code: product_code
-    //         }
-    //     ).then((response) => {
-    //         setOrderCheck(response.data);
-    //     }).catch((err) => {
-    //         alert(`상품 구매 여부를 확인하지 못했습니다. (${err.message})`);
-    //     });
-    // }, [review]);
+    useEffect(() => {
+        if (product_code !== undefined) {
+            axios.get(`/mpdetail/mpordercheck?id=${loginID}&product_code=${product_code}`
+            ).then((response) => {
+                setOrderCheck(response.data);
+            }).catch((err) => {
+                alert(`상품 구매 여부를 확인하지 못했습니다. (${err.message})`);
+            });
+        }
+    }, [product_code]);
 
     //  리뷰 등록한 아이디 존재 여부
     const [reviewCheck, setReviewCheck] = useState(false);
@@ -90,34 +87,39 @@ function DetailPageReview({ oneProductWriterJoin }) {
 
     const review_insert = () => {
 
-        // if (reviewCheck) {
-        //     alert('이미 등록된 리뷰가 있습니다.');
-        // } else {
-        if (click_count >= 6) {
-            alert('별점을 선택해 주세요~');
-        } else {
-            if (!review_content) {
-                review_ref.current.focus();
-                alert('리뷰 내용을 작성해 주세요~');
-            } else {
-                const review_formData = new FormData(document.getElementById('review_form'));
 
-                axios.post(
-                    '/restreview/reviewinsert',
-                    review_formData,
-                    {
-                        headers: { 'Content-Type': 'multipart/form-data' }
+        if (orderCheck == 0) {
+            if (reviewCheck) {
+                alert('이미 등록된 리뷰가 있습니다.');
+            } else {
+                if (click_count >= 6) {
+                    alert('별점을 선택해 주세요~');
+                } else {
+                    if (!review_content) {
+                        review_ref.current.focus();
+                        alert('리뷰 내용을 작성해 주세요~');
+                    } else {
+                        const review_formData = new FormData(document.getElementById('review_form'));
+
+                        axios.post(
+                            '/restreview/reviewinsert',
+                            review_formData,
+                            {
+                                headers: { 'Content-Type': 'multipart/form-data' }
+                            }
+                        ).then((response) => {
+                            alert('리뷰가 등록되었습니다.');
+                            window.location.href = `/DetailPage/${product_code}`;
+                        }).catch((err) => {
+                            alert(`리뷰 등록에 실패했습니다. (${err.message})`);
+                        });
                     }
-                ).then((response) => {
-                    alert('리뷰가 등록되었습니다.');
-                    window.location.href = `/DetailPage/${product_code}`;
-                }).catch((err) => {
-                    alert(`리뷰 등록에 실패했습니다. (${err.message})`);
-                });
+                }
             }
+        } else {
+            alert('구매한 상품에 대해서만 리뷰 등록이 가능합니다.');
         }
     }
-    // }
 
     // 리뷰 수정 버튼 클릭
     // const onClick_review_update = (num) => {

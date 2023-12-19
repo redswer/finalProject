@@ -6,7 +6,12 @@ function DetailPageInt({ oneProductWriterJoin }) {
     const { protype, intro_image, content, writer, introduction } = oneProductWriterJoin;
 
     useEffect(() => {
-        document.getElementById('int_contents_R').innerHTML = content;
+        if (content !== '') {
+            document.getElementById('int_contents_R').innerHTML = content;
+        } else {
+            document.getElementById('int_contents_R').innerHTML = '목차 없는 상품입니다.';
+        }
+
     }, [oneProductWriterJoin]);
 
 
