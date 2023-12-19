@@ -148,7 +148,7 @@ public class UserController {
 		if (res != null) {
 			return new ResponseEntity<> (res, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<> ("입력한 정보가 일치하지 않습니다.", HttpStatus.BAD_GATEWAY);
+			return new ResponseEntity<> ("입력하신 정보가 일치하지 않습니다.", HttpStatus.BAD_GATEWAY);
 		}
 	}
 	
