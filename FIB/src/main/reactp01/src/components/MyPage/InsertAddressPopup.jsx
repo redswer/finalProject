@@ -49,9 +49,7 @@ function InsertAddressPopup({ isOpen, onClose }) {
     };
 
     function changeButton() {
-        const detail_length = address_detail.length
-
-        address_zip && address && address_detail
+        address_zip && address && address_detail && address_detail.length <= 100
             ? setInsertAddressButton(false) : setInsertAddressButton(true);
     }
 
@@ -121,7 +119,7 @@ function InsertAddressPopup({ isOpen, onClose }) {
                             type="text"
                             id="sample6_detailAddress"
                             name='address_detail'
-                            placeholder="상세주소 (50자 이하)"
+                            placeholder="상세주소 (100자 이하)"
                             autoComplete='off'
                             value={address_detail}
                             onKeyUp={changeButton}
@@ -133,7 +131,7 @@ function InsertAddressPopup({ isOpen, onClose }) {
                     <div className='insert_address_option'>
                         <div>
                             <span>주소명 :&nbsp;</span>
-                            <input type="text" placeholder='10자 이하'
+                            <input type="text" placeholder='20자 이하'
                                 onChange={(e) => setAddressName(e.target.value)}
                                 value={isChecked ? '기본 배송지' : addressName} />
                         </div>

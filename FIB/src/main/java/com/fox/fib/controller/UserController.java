@@ -148,7 +148,7 @@ public class UserController {
 		if (res != null) {
 			return new ResponseEntity<> (res, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<> ("회원정보가 없습니다.", HttpStatus.BAD_GATEWAY);
+			return new ResponseEntity<> ("입력하신 정보가 일치하지 않습니다.", HttpStatus.BAD_GATEWAY);
 		}
 	}
 	
@@ -181,7 +181,7 @@ public class UserController {
 
 	        return new ResponseEntity<>("아이디(메일)로 임시 비밀번호가 발급되었습니다.", HttpStatus.OK);
 		} else {			
-	        return new ResponseEntity<>("입력하신 정보가 일치하지 않습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	    
 	}
