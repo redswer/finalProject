@@ -38,7 +38,7 @@ function OrderListPage() {
       .get(`/mpdetail/searchDate?fromDate=${fromYear}-${fromMonth}-${fromDay}&toDate=${toYear}-${toMonth}-${toDay}`)
       .then((response) => {
         console.log(`서치성공 : `, response.data);
-        alert(`서치데이타 석세스 : `, response.data);
+        alert(`서치데이타 success : `, response.data);
         setDetailData(response.data);
       }).catch((error) => {
         console.log(`서치데이터 문제 발생 : `, error.messege);
