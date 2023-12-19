@@ -23,16 +23,19 @@ public class Member_payment_detail {
 	private String id;
 	private int product_code;
 	private int proamount;
-	
+
 	private String payment_date;
 	private int origin_price;
 	private int final_price;
 	private String delivery_state;
 	private String arrive_date;
-	
+
 	private String protype;
 	private String domestic;
 	private String title;
 	private String image;
 	private int price;
+
+	private int payment_cancel;
+	private int orderstate;
 }

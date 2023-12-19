@@ -38,4 +38,12 @@ public interface Member_payment_detailRepository extends JpaRepository<Member_pa
 		@Param("arrive_date") String arrive_date, @Param("protype") String protype, @Param("domestic") String domestic,
 		@Param("title") String title, @Param("image") String image, @Param("price") int price);
 
+
+
+	// ============caslte dragon===========================================
+	@Transactional
+	@Modifying
+	@Query(nativeQuery = true, value = "update member_payment_detail set payment_cancel = 1 where member_payment_code = :paycode")
+	int updatePaymentCancel(@Param("paycode") Long payment_code);
+
 }

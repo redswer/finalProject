@@ -48,6 +48,19 @@
     color: gray;
 }
 
+.join_membership_section_1_explain {
+    font-size: 13px;
+    word-break: keep-all;
+    margin-top: 10px;
+    color: red;
+    line-height: 20px;
+}
+
+.join_membership_section_1_icon {
+    margin-right: 5px;
+    margin-top: 2px;
+}
+
 .join_membership_section_2 {
     flex-flow: column;
     margin-left: 20px;
