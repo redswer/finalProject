@@ -20,8 +20,11 @@ function DetailPageInt({ oneProductWriterJoin }) {
                 </div>
             </div>
 
-            <div className="int_contents" style={{ display: protype === 1 ? 'flex' : 'none' }}>
+            <div className="int_contents" style={{ display: protype == 1 ? 'block' : 'none' }}>
                 <hr className='DetailPage_line' />
+            </div>
+
+            <div className="int_contents" style={{ display: protype == 1 ? 'flex' : 'none' }}>
 
                 <div className="int_contents_L">목차</div>
                 <div className="int_contents_R" id="int_contents_R"></div>
