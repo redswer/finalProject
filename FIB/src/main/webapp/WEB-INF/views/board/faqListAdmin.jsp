@@ -20,15 +20,6 @@
 				<c:forEach var="category" items="${fn:split('전체,일반,로그인/회원가입,제품,주문/결제,배송,반품/환불/취소,이벤트,쿠폰', ',')}">
                		<option value="${category}" ${param.category == category ? "selected" : ""}>${category}</option>
            		</c:forEach>
-<!--            <option value="전체">전체</option>
-				<option value="일반">일반</option>
-				<option value="로그인/회원가입">로그인/회원가입</option>
-				<option value="제품">제품</option>
-				<option value="주문/결제">주문/결제</option>
-				<option value="배송">배송</option>
-				<option value="반품/환불/취소">반품/환불/취소</option>
-				<option value="이벤트">이벤트</option>
-				<option value="쿠폰">쿠폰</option> -->
 			</select> 
 			<input class="faq_search_input" type="text"></input>
 			<button class="searchBtn" type="button">검색</button>
@@ -63,7 +54,7 @@
 	</table>
     <c:if test="${not empty requestScope.itemPage}">
    		<div class="pagination_wrap">
-	        <c:forEach var="pageNumber" begin="0" end="${requestScope.totalPages -1}">
+	        <c:forEach var="pageNumber" begin="0" end="${requestScope.totalPages == 0 ? requestScope.totalPages : requestScope.totalPages - 1}">
 	     	<span onclick="faqManagementPage(`${pageNumber}`)"
 	                class="${pageNumber == requestScope.itemPage.number ? 'currentPage' : ''}">
 	              ${pageNumber + 1}

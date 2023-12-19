@@ -15,7 +15,7 @@
 	<div class="notice_register_search">
 		<span class="notice_register" onclick="noticeRegister()"> 등록하기</span>
 		<div class="notice_search">
-			<select class="notice_category" name="category" id="category" onchange="noticeSortSelectOptions(this.value)">
+			<select class="notice_category" name="category" id="category" onchange="noticeSortSelectOptions()">
 				<option value="전체">전체</option>
 				<option value="일반">일반</option>
 				<option value="주문/결제">주문/결제</option>
@@ -47,8 +47,11 @@
 					<td>${s.category}</td>
 					<td>${s.title}</td>
 					<td>${s.content}</td>
-					<td><img alt="${s.title}" src="${s.image}" width="120"
-						height="50"></td>
+					<td>
+						<c:if test="${!empty s.image}">
+							<img alt="${s.title}" src="${s.image}" width="120" height="50">
+						</c:if>
+					</td>
 					<td>${s.regdate}</td>
 					<td>${s.view}</td>
 					<td>${s.moddate}</td>
@@ -59,13 +62,13 @@
 		</c:if>
 		<c:if test="${empty requestScope.noticeList}">
 			<tr>
-				<td colspan="7">출력할 데이터 없음</td>
+				<td colspan="10">출력할 데이터 없음</td>
 			</tr>
 		</c:if>
 	</table>
 	<div class="pagination_wrap">
 	    <c:if test="${not empty requestScope.itemPage}">
-	        <c:forEach var="pageNumber" begin="0" end="${requestScope.totalPages - 1}">
+	        <c:forEach var="pageNumber" begin="0" end="${requestScope.totalPages == 0 ? requestScope.totalPages : requestScope.totalPages - 1}">
 	     	<span onclick="noticeManagementPage(${pageNumber})"
 	                class="${pageNumber == requestScope.itemPage.number ? 'currentPage' : ''}">
 	              ${pageNumber + 1}

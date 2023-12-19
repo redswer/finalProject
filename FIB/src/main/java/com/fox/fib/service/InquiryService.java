@@ -25,7 +25,10 @@ public interface InquiryService {
 	// 내 문의내역 확인하는 service
 	Page<Inquiry> getInquiryList(String id, Pageable pageable);
 	
-	// 내 문의내역 확인하는 service
+	// 관리자 홈화면에서 보여지게
+	List<Inquiry> getMInquiryList(boolean answer_check);
+	
+	// 전체문의내역 확인
 	Page<Inquiry> getPageInquiryList(Pageable pageable);
 	
 	Page<Inquiry> getUnanswerInquiryList(Boolean answer_check, Pageable pageable);

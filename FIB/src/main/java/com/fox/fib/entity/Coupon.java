@@ -38,7 +38,7 @@ public class Coupon extends BaseEntity{
 	private int max;
 	
 	private String image;
-	
+		
 	private String start;
 	
 	private String end;

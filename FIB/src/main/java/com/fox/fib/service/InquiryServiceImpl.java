@@ -52,6 +52,12 @@ public class InquiryServiceImpl implements InquiryService {
     	return repository.getInquiryList(id, pageable);
     }
 	
+	// 관리자페이지 홈화면에서 보이는
+	@Override
+    public List<Inquiry> getMInquiryList(boolean answer_check) {
+    	return repository.getMInquiryList(answer_check);
+    }
+	
 	//  모든 문의내역 보기(페이지네이션 적용) 관리자
 	@Override
 	public Page<Inquiry> getPageInquiryList(Pageable pageable) {

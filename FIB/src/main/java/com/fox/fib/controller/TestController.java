@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -198,18 +201,20 @@ public class TestController {
 //	}
 
 	// 유저 1:1문의 내역 보기위한 React에서 서버로 id 전달
-	@GetMapping("/inquiryList/{id}")
-	public ResponseEntity<Page<Inquiry>> inquiryList(@PathVariable("id") String id, Inquiry inquiry, Model model)  throws IOException {
+	@GetMapping("/inquiryList")
+	public ResponseEntity<Page<Inquiry>> getInquiryList(@RequestParam(name = "id") String id,
+													 	@RequestParam(name = "page", defaultValue = "0") int page,
+													 	@RequestParam(name = "size", defaultValue = "10") int size,
+													 	Model model)  throws IOException {
 			// 리액트에서 넘어온 notice_code 정보 확인
 			log.info(id);
+			Pageable pageable = PageRequest.of(page, size);
+			Page<Inquiry> getInquiryList = inquiryService.getInquiryList(id, pageable);
 		try {
-			// 쿼리문의 return값들의 리스트에 
-			Page<Inquiry> getInquiryList = inquiryService.getInquiryList(id, null);
-			
-	        // 요청받은 정보에서 현재 조회수를 조회
-			log.info("현재 아이디의 문의코드 : " + inquiry.getInquiry_code());
-			log.info("현재 아이디의 문의 아이디 : " + inquiry.getId());
-			log.info("현재 아이디의 문의 제목 : " + inquiry.getTitle());
+
+			log.info("getInquiryList.getNumber : " + getInquiryList.getNumber());
+			log.info("getInquiryList.getTotalPages() : " + getInquiryList.getTotalPages());
+			log.info("getInquiryList.getTotalElements() : " + getInquiryList.getTotalElements());
 			return ResponseEntity.ok(getInquiryList);
 
 		} catch (Exception e) {
@@ -218,34 +223,6 @@ public class TestController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
-	// 리액트 페이지네이션관련 트라이
-//	@GetMapping("/inquiryList/{id}")
-//	public ResponseEntity<Page<Inquiry>> inquiryList(@PathVariable("id") String id) {
-//			
-//		// 페이지 네이션을 위한 변수선언
-//		int page = 0; // 시작 페이지번호
-//		int size = 10; // 페이지당 보여지는 컨텐츠 갯수
-//		
-//		Pageable pageable = PageRequest.of(page, size);
-//				
-//		// 리액트에서 넘어온 notice_code 정보 확인
-//		log.info(id);
-//		try {
-//			// 쿼리문의 return값들의 리스트에 
-//			Page<Inquiry> getInquiryList = inquiryService.getInquiryList(pageable);
-//			
-//			Page<Inquiry> filteredList = new PageImpl<>(getInquiryList.getContent().stream()
-//		            .filter(faq -> faq.getCategory() != null)
-//		            .collect(Collectors.toList()), pageable, getInquiryList.getTotalElements());
-//			
-//	        // 요청받은 정보에서 현재 조회수를 조회
-//			return ResponseEntity.ok(filteredList);
-//
-//		} catch (Exception e) {
-//			log.error("회원 문의내역 조회 중 오류 발생: " + e.getMessage(), e);
-//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//		}
-//	}
 	
 	// 유저가 1:1문의 등록
 	@PostMapping("/userInquiryRegister")
