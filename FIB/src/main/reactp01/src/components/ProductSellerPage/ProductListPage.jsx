@@ -151,6 +151,8 @@ const ProductListPage = () => {
 
       generateTitleWord();
 
+      alert(`제목순으로 검색합니다 ^~^`);
+
     } else {
       requestToServer
         (`/product/productSelectedList2?domestic=${nowParams.get('domestic')}&category=${nowParams.get('category')}&genre=${nowParams.get('genre')}`)
@@ -175,6 +177,8 @@ const ProductListPage = () => {
 
       generateTitleWord();
 
+      alert(`최저가순으로 검색합니다 ^~^`);
+
     } else {
       requestToServer
         (`/product/productAscendingList?domestic=${urlParams.get('domestic')}&category=${urlParams.get('category')}&genre=${urlParams.get('genre')}`)
@@ -197,6 +201,8 @@ const ProductListPage = () => {
         (`/ProductListPage?domestic=${selectedOptions.domestic}&category=${selectedOptions.category}&genre=${selectedOptions.genre}`);
 
       generateTitleWord();
+
+      alert(`최고가순으로 검색합니다 ^~^`);
 
     } else {
       requestToServer

@@ -99,7 +99,7 @@
    <hr>
    
    <div>
-   <a href="/products/productlists?page=${requestScope.adminProductList.page}&size=3">기본사이즈 보기</a>&nbsp;&nbsp;&nbsp;&nbsp;
+   <a href="/products/productlists?page=${requestScope.adminProductList.page}&size=1000">전체보기</a>&nbsp;&nbsp;&nbsp;&nbsp;
    <a href="/products/productlists?page=${requestScope.adminProductList.page}&size=5">5개씩 보기</a>&nbsp;&nbsp;&nbsp;&nbsp;
    <a href="/products/productlists?page=${requestScope.adminProductList.page}&size=7">7개씩 보기</a>&nbsp;&nbsp;&nbsp;&nbsp;
    <a href="/products/productlists?page=${requestScope.adminProductList.page}&size=10">10개씩 보기</a>&nbsp;&nbsp;&nbsp;&nbsp;

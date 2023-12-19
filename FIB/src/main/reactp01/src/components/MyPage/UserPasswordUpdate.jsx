@@ -107,11 +107,11 @@ function UserPasswordUpdate() {
     return (
         <div className="UserPasswordUpdate">
             <div className="index_text"><h1>비밀번호 변경</h1></div>
-            <div className='passwordUpdate_input_container'>
+            <form className='passwordUpdate_input_container'>
                 <div>
                     <span className='passwordUpdate_option'>비밀번호</span>
                     :<input type="password" placeholder='기존의 비밀번호를 입력해주세요'
-                        ref={passwordRef}
+                        ref={passwordRef} autoComplete='off'
                         onChange={(e) => {
                             setPassword(e.target.value);
                             setPasswordError('');
@@ -126,6 +126,7 @@ function UserPasswordUpdate() {
                 <div>
                     <span className='passwordUpdate_option'>새 비밀번호</span>
                     :<input type="password" placeholder='변경할 비밀번호를 입력해주세요'
+                        autoComplete='off'
                         onChange={(e) => {
                             setNewPassword(e.target.value);
                             setNewPasswordError('');
@@ -140,7 +141,7 @@ function UserPasswordUpdate() {
                 </div>
                 <div>
                     <span className='passwordUpdate_option'>새 비밀번호 확인</span>
-                    :<input type="password" id='newPasswordCheck'
+                    :<input type="password" id='newPasswordCheck' autoComplete='off'
                         onChange={(e) => {
                             setNewPasswordCheck(e.target.value);
                             setPasswordCheckError('');
@@ -150,7 +151,7 @@ function UserPasswordUpdate() {
                         onKeyDown={handleEnterKey} />
                     {passwordCheckError}
                 </div>
-            </div>
+            </form>
             <div className='passwordUpdate_button_container'>
                 <button disabled={changePasswordButton}
                     onClick={changePasswordSubmit}>변경하기</button>

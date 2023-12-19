@@ -39,10 +39,9 @@ public class ProductController {
 	// ==========================================================================================
 
 	@GetMapping("/productlists")
-	public void productlists(Model model, @RequestParam(defaultValue = "1") String page, @RequestParam(defaultValue = "3") String size) {
+	public void productlists(Model model, @RequestParam(defaultValue = "1") String page, @RequestParam(defaultValue = "20") String size) {
 		int pageNum = Integer.parseInt(page);
 		int sizeNum = Integer.parseInt(size);
-
 
 		PageRequestDTO requestDTO = PageRequestDTO.builder().page(pageNum).size(sizeNum).build();
 

@@ -22,13 +22,22 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE Product p SET p.gradeavg = (SELECT AVG(r.star_count) FROM Review r WHERE r.product_code = :pcode) WHERE p.product_code = :pcode")
+	@Query(value = "UPDATE Product p SET p.gradeavg = COALESCE((SELECT AVG(r.star_count) FROM Review r WHERE r.product_code = :pcode), 0) WHERE p.product_code = :pcode")
 	void calculateAvg(@Param("pcode") int product_code);
+
+//	@Transactional
+//	@Modifying
+//	@Query(value = "UPDATE Product p SET p.gradeavg = (SELECT AVG(r.star_count) FROM Review r WHERE r.product_code = :pcode) WHERE p.product_code = :pcode")
+//	void calculateAvg(@Param("pcode") int product_code);
 
 
 	@Transactional
-	@Query(value = "SELECT COUNT(r) FROM Review r WHERE r.product_code = :pcode")
+	@Query(value = "SELECT COALESCE(COUNT(r), 0) FROM Review r WHERE r.product_code = :pcode")
 	int calculateViewCount(@Param("pcode") int product_code);
+
+//	@Transactional
+//	@Query(value = "SELECT COUNT(r) FROM Review r WHERE r.product_code = :pcode")
+//	int calculateViewCount(@Param("pcode") int product_code);
 
 	@Transactional
 	@Modifying
