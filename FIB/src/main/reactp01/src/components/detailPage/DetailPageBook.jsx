@@ -6,7 +6,7 @@ import axios from 'axios';
 
 function DetailPageBook({ oneProductWriterJoin }) {
 
-    const { product_code, title, translator, publisher, image, price, writer } = oneProductWriterJoin;
+    const { product_code, protype, title, translator, publisher, image, price, writer } = oneProductWriterJoin;
 
     // 로그인 아이디
     const loginID = sessionStorage.getItem("loginID");
@@ -74,7 +74,12 @@ function DetailPageBook({ oneProductWriterJoin }) {
                 <div className="book_name_box">
                     <strong className="book_name">{title}</strong>
 
-                    <strong className='book_author'>{writer} (지은이),</strong>
+                    {
+                        protype == 1 ?
+                            <strong className='book_author'>{writer} (지은이),</strong>
+                            :
+                            ''
+                    }
 
                     {
                         translator !== '' ?
@@ -84,7 +89,7 @@ function DetailPageBook({ oneProductWriterJoin }) {
                     }
 
                     {
-                        publisher !== '주식회사 여우' ?
+                        protype == 1 ?
                             <strong className='book_publishingHouse'>{publisher} (출판사)</strong>
                             :
                             ''

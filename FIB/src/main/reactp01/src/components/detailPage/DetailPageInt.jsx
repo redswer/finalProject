@@ -3,7 +3,7 @@ import './DetailPageInt.css';
 
 function DetailPageInt({ oneProductWriterJoin }) {
 
-    const { intro_image, content, writer, introduction } = oneProductWriterJoin;
+    const { protype, intro_image, content, writer, introduction } = oneProductWriterJoin;
 
     useEffect(() => {
         document.getElementById('int_contents_R').innerHTML = content;
@@ -20,9 +20,12 @@ function DetailPageInt({ oneProductWriterJoin }) {
                 </div>
             </div>
 
-            <hr className='DetailPage_line' />
+            <div className="int_contents" style={{ display: protype == 1 ? 'block' : 'none' }}>
+                <hr className='DetailPage_line' />
+            </div>
 
-            <div className="int_contents" style={{ display: content ? 'flex' : 'none' }}>
+            <div className="int_contents" style={{ display: protype == 1 ? 'flex' : 'none' }}>
+
                 <div className="int_contents_L">목차</div>
                 <div className="int_contents_R" id="int_contents_R"></div>
             </div>

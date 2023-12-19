@@ -22,6 +22,7 @@ public interface Member_paymentRepository extends JpaRepository<Member_payment, 
 	@Modifying
 	@Query(nativeQuery = true ,value = "update member_payment set payment_cancel = 1 where member_payment_code = :member_payment_code")
 	int updateOne(@Param("member_payment_code") Long member_payment_code);
+
 	// 관리자 페이지용 양세현=========================================================================
     @Query("SELECT new com.fox.fib.domain.OrderSummaryDTO(m.payment_date, COUNT(m), SUM(m.final_price)) " +
             "FROM Member_payment m WHERE m.payment_date BETWEEN :startDate AND :endDate GROUP BY m.payment_date")
