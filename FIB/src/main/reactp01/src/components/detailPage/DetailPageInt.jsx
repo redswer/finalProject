@@ -1,27 +1,15 @@
+import { useEffect } from 'react';
 import './DetailPageInt.css';
 
 function DetailPageInt({ oneProductWriterJoin }) {
 
     const { intro_image, content, writer, introduction } = oneProductWriterJoin;
 
-    /*
-        - const contentSplit = content.split(',');
-            → 에러 : Cannot read properties of undefined (reading 'split')
-            → 아래 코드로 변경
-    */
-    // const contentSplit = (content || '').split(',');
+    useEffect(() => {
+        document.getElementById('int_contents_R').innerHTML = content;
+    }, [oneProductWriterJoin]);
 
-    // window.addEventListener("load", function () {
-    //     let result = '';
 
-    //     for (let i = 0; i < contentSplit.length; i++) {
-    //         if (contentSplit[i] != null) {
-    //             result += contentSplit[i];
-    //             console.log(contentSplit[i]);
-    //         }
-    //     }
-    //     document.getElementById('int_contents_R').innerText = result;
-    // });
 
     return (
         <div className="int">
@@ -36,9 +24,7 @@ function DetailPageInt({ oneProductWriterJoin }) {
 
             <div className="int_contents" style={{ display: content ? 'flex' : 'none' }}>
                 <div className="int_contents_L">목차</div>
-                <div className="int_contents_R" id="int_contents_R">
-                    {content}
-                </div>
+                <div className="int_contents_R" id="int_contents_R"></div>
             </div>
         </div>
     );
