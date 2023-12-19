@@ -85,7 +85,8 @@ public class Member_paymentController {
 		}
 
 		// 취소
-		member_paymentService.updateOne(Long.parseLong(dto.getMember_payment_code()));
+		member_paymentService.deleteById(Long.parseLong(dto.getMember_payment_code()));
+		member_payment_detailService.deleteList(Long.parseLong(dto.getMember_payment_code()));
 
 		// 회원포인트 감소
 		User userOne = userService.selectOne(dto.getId());

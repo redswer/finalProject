@@ -24,7 +24,7 @@
 				<label for="order">주문내역</label>
 				
 				<input type="radio" name="selectMenu" id="cancel" ${requestScope.orderParam eq 'cancel' ? 'checked' : ''} onclick="memberPaymentList('cancel')" />
-				<label for="cancel">취소내역</label>
+				<label for="cancel">취소요청</label>
 			</sapn>
 			
 			<span>
@@ -48,7 +48,6 @@
 			<th>제품 가짓수</th>
 			<th>총금액</th>
 			<th>결제금액</th>
-			<th>배송상태</th>
 			<th>배송예정일</th>
 			<c:if test="${requestScope.orderParam ne 'order'}">
 				<th>취소요청</th>
@@ -68,7 +67,6 @@
 					<td>
 						<fmt:formatNumber value="${memberPaymentVar.final_price}" pattern="#,###,###" />원
 					</td>
-					<td>${memberPaymentVar.delivery_state}</td>
 					<td>${memberPaymentVar.arrive_date}</td>
 					<c:if test="${requestScope.orderParam ne 'order'}">
 						<td>

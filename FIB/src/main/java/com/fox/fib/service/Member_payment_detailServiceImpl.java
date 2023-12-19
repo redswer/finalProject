@@ -53,6 +53,12 @@ public class Member_payment_detailServiceImpl implements Member_payment_detailSe
 	public int updatePaymentCancel(Long payment_code) {
 		return repository.updatePaymentCancel(payment_code);
 	}
+	
+	// 주문상세 취소( 인스턴스 삭제 )
+	@Override
+	public void deleteList(Long member_payment_code) {
+		repository.deleteList(member_payment_code);
+	}
 
 	// 주문상세 수정
 //	@Override

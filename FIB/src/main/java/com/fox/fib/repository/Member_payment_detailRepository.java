@@ -38,7 +38,11 @@ public interface Member_payment_detailRepository extends JpaRepository<Member_pa
 		@Param("arrive_date") String arrive_date, @Param("protype") String protype, @Param("domestic") String domestic,
 		@Param("title") String title, @Param("image") String image, @Param("price") int price);
 
-
+	// 주문상세 삭제( 인스턴스 삭제 )
+	@Transactional
+	@Modifying
+	@Query(nativeQuery = true, value="delete from member_payment_detail where member_payment_code = :member_payment_code")
+	void deleteList(@Param("member_payment_code") Long member_payment_code);
 
 	// ============caslte dragon===========================================
 	@Transactional
