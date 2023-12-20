@@ -255,10 +255,8 @@ function JoinMembership() {
     const [joinMembershipButton, setJoinMembershipButton] = useState(true);
 
     function changeButton() {
-        emailDomain.includes('.') && passwordRegex.test(password) && password.length >= 7 &&
-            password.length <= 15 && name.length >= 2 && emailName != '' &&
-            nameRegex.test(name) && password === passwordCheck &&
-            phone_number.length >= 10 && phone_number.length <= 11 &&
+        emailValid && passwordValid && nameValid && password === passwordCheck &&
+            phone_numberValid &&
             checkbox.includes('join_membership_agree_use') &&
             checkbox.includes('join_membership_agree_community') &&
             checkbox.includes('join_membership_agree_privacy')
@@ -267,7 +265,7 @@ function JoinMembership() {
 
     useEffect(() => {
         changeButton();
-    }, [checkbox]);
+    }, [checkbox, emailValid, passwordValid, nameValid, phone_numberValid]);
 
     // =============================================================
     // ** 엔터 키 누름
