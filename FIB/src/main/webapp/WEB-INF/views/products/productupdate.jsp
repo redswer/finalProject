@@ -131,23 +131,23 @@
          <td>현재 상품 누적 판매량. not null.독자들에 의해 업데이트 되는 항목. 관리자가 입력하지 않음.</td>
     </tr>
     <tr>
-         <th bgcolor="Greenyellow">18. gradeavg</th>
-         <td><input type="number" name="gradeavg" id="gradeavg"  size="40" value="${requestScope.pcode.gradeavg}"></td>
+         <th bgcolor="deeppink">18. gradeavg</th>
+         <td><input type="number" name="gradeavg" id="gradeavg"  size="40" value="${requestScope.pcode.gradeavg}" readonly></td>
          <td>독자들에 의해 업데이트 되는 항목. 관리자가 입력하지 않음.</td>
     </tr>
     <tr>
-         <th bgcolor="Greenyellow">19. viewcount</th>
-         <td><input type="number" name="viewcount" id="viewcount"  size="40" value="${requestScope.pcode.viewcount}"></td>
+         <th bgcolor="deeppink">19. viewcount</th>
+         <td><input type="number" name="viewcount" id="viewcount"  size="40" value="${requestScope.pcode.viewcount}" readonly></td>
          <td>독자들에 의해 업데이트 되는 항목. 관리자가 입력하지 않음.</td>
     </tr>
     <tr>
-         <th bgcolor="Greenyellow">20. regdate</th>
+         <th bgcolor="deeppink">20. regdate</th>
          <td><input type="date" name="regdate" id="regdate"  size="40" value="${requestScope.pcode.regdate}" readonly></td>
          <td>독자들에 의해 업데이트 되는 항목. 관리자가 입력하지 않음.</td>
     </tr>
     <tr>
-         <th bgcolor="Greenyellow">21. moddate</th>
-         <td><input type="date" name="moddate" id="moddate"  size="40" value="${requestScope.pcode.moddate}"></td>
+         <th bgcolor="deeppink">21. moddate</th>
+         <td><input type="date" name="moddate" id="moddate"  size="40" value="${requestScope.pcode.moddate}" readonly></td>
          <td>독자들에 의해 업데이트 되는 항목. 관리자가 입력하지 않음.</td>
     </tr>
     

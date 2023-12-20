@@ -41,7 +41,8 @@
          <th>상품정보수정</th>
          <th>삭제하기^-^</th>
       </tr>
- 		<c:forEach var="s" items="${requestScope.adminProductList.entityList}">
+ 		<%-- <c:forEach var="s" items="${requestScope.adminProductList.entityList}"> --%>
+ 		<c:forEach var="s" items="${requestScope.adminProductList}">
         	<tr>
                <td>${s.product_code}</td>
                <td>${s.protype}</td>
