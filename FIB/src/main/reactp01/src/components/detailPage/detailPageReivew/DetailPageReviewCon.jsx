@@ -1,4 +1,5 @@
 import './DetailPageReviewCon.css';
+import ReviewImgModal from './ReviewImgModal';
 import { ReactComponent as Star } from './review_star.svg';
 
 function DetailPageReviewCon({ review_code, product_code, id, star_count, regdate, content, image, onClick_review_delete }) {
@@ -44,7 +45,8 @@ function DetailPageReviewCon({ review_code, product_code, id, star_count, regdat
                         <span>
                             {
                                 image !== '' ?
-                                    <img className="review_con_img" src={`../img/${image}`} />
+                                    // <img className="review_con_img" src={`../img/${image}`} />
+                                    <ReviewImgModal image={image} />
                                     :
                                     ''
                             }

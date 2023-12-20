@@ -61,21 +61,18 @@ function DetailPageReview({ oneProductWriterJoin }) {
     const review_ref = useRef();
 
     // 상품 구매 여부
-    // const [orderCheck, setOrderCheck] = useState(0);
+    const [orderCheck, setOrderCheck] = useState(0);
 
-    // useEffect(() => {
-    //     axios.post(
-    //         '/mpdetail/mpordercheck',
-    //         {
-    //             id: loginID,
-    //             product_code: product_code
-    //         }
-    //     ).then((response) => {
-    //         setOrderCheck(response.data);
-    //     }).catch((err) => {
-    //         alert(`상품 구매 여부를 확인하지 못했습니다. (${err.message})`);
-    //     });
-    // }, [review]);
+    useEffect(() => {
+        if (product_code !== undefined) {
+            axios.get(`/mpdetail/mpordercheck?id=${loginID}&product_code=${product_code}`
+            ).then((response) => {
+                setOrderCheck(response.data);
+            }).catch((err) => {
+                alert(`상품 구매 여부를 확인하지 못했습니다. (${err.message})`);
+            });
+        }
+    }, [product_code]);
 
     //  리뷰 등록한 아이디 존재 여부
     const [reviewCheck, setReviewCheck] = useState(false);
@@ -88,36 +85,61 @@ function DetailPageReview({ oneProductWriterJoin }) {
         }
     }, [review]);
 
+    // 선택한 리뷰 이미지 미리보기
+    const handleImageChange = (e) => {
+        // 선택한 파일 가져오기
+        const selectedFile = e.target.files[0];
+
+        // 파일이 선택되었는지 확인하고 미리보기를 보여주기
+        if (selectedFile) {
+            // FileReader 객체 생성
+            const reader = new FileReader();
+
+            // 이미지 읽기가 완료되면 실행될 콜백 함수
+            reader.onloadend = () => {
+                // 미리보기 이미지 상태 업데이트
+                document.getElementById('imgSelected').src = reader.result;
+            };
+
+            // FileReader를 사용하여 선택된 이미지 읽기 시작
+            reader.readAsDataURL(selectedFile);
+        }
+    };
+
     const review_insert = () => {
 
-        // if (reviewCheck) {
-        //     alert('이미 등록된 리뷰가 있습니다.');
-        // } else {
-        if (click_count >= 6) {
-            alert('별점을 선택해 주세요~');
+        if (orderCheck !== 0) {
+            alert('구매한 상품에 대해서만 리뷰 등록이 가능합니다.');
         } else {
-            if (!review_content) {
-                review_ref.current.focus();
-                alert('리뷰 내용을 작성해 주세요~');
+            if (reviewCheck) {
+                alert('이미 등록된 리뷰가 있습니다.');
             } else {
-                const review_formData = new FormData(document.getElementById('review_form'));
+                if (click_count >= 6) {
+                    alert('별점을 선택해 주세요~');
+                } else {
+                    if (!review_content) {
+                        review_ref.current.focus();
+                        alert('리뷰 내용을 작성해 주세요~');
+                    } else {
+                        const review_formData = new FormData(document.getElementById('review_form'));
 
-                axios.post(
-                    '/restreview/reviewinsert',
-                    review_formData,
-                    {
-                        headers: { 'Content-Type': 'multipart/form-data' }
+                        axios.post(
+                            '/restreview/reviewinsert',
+                            review_formData,
+                            {
+                                headers: { 'Content-Type': 'multipart/form-data' }
+                            }
+                        ).then((response) => {
+                            alert('리뷰가 등록되었습니다.');
+                            window.location.href = `/DetailPage/${product_code}`;
+                        }).catch((err) => {
+                            alert(`리뷰 등록에 실패했습니다. (${err.message})`);
+                        });
                     }
-                ).then((response) => {
-                    alert('리뷰가 등록되었습니다.');
-                    window.location.href = `/DetailPage/${product_code}`;
-                }).catch((err) => {
-                    alert(`리뷰 등록에 실패했습니다. (${err.message})`);
-                });
+                }
             }
         }
     }
-    // }
 
     // 리뷰 수정 버튼 클릭
     // const onClick_review_update = (num) => {
@@ -180,10 +202,15 @@ function DetailPageReview({ oneProductWriterJoin }) {
                                 />
                             </div>
                             <div className="review_image_cover">
-                                <img src="../img/review_basic_image.png" />
+                                <img src="../img/review_basic_image.png" id="imgSelected" />
                                 {/* accept : 입력된 확장자가 아닐 경우에 업로드를 하지 못하게 해줌. */}
                                 <label htmlFor="reviewImageUploadfile">사진첨부</label>
-                                <input type="file" name="reviewImageUploadfile" id="reviewImageUploadfile" accept='.jpg, .png' />
+                                <input type="file"
+                                    name="reviewImageUploadfile"
+                                    id="reviewImageUploadfile"
+                                    accept='.jpg, .png'
+                                    onChange={handleImageChange}
+                                />
                             </div>
                             <div className="review_btn_cover">
                                 {
