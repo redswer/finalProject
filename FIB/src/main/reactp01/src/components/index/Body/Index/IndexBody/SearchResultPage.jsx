@@ -134,7 +134,7 @@ function SearchResultPage() {
         <div className="search_result_page">
             <h2> "{searchKeyword}" 검색 결과 : {filteredProduct.length}개</h2>
             <hr />
-            {searchResults.length === 0 ? (
+            {filteredProduct.length === 0 ? (
                 <p className="not_found_search">"검색 결과를 찾을 수 없습니다"</p>
             ) : (
                 <ul className="search_result_list">
