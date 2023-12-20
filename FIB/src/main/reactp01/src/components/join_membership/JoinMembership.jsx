@@ -50,12 +50,11 @@ function JoinMembership() {
     };
 
     const validateEmail = () => {
+        setEmailValid(false);
         if (!emailDomain.includes('.') || emailName === '') {
             setEmailError('유효한 이메일 형식이 아닙니다.');
-            setEmailValid(false);
         } else {
-            setEmailError('');
-            setEmailValid(true);
+            setEmailError('아이디 중복을 체크해주세요');
         }
     }
     const validatePassword = () => {
@@ -256,10 +255,8 @@ function JoinMembership() {
     const [joinMembershipButton, setJoinMembershipButton] = useState(true);
 
     function changeButton() {
-        emailDomain.includes('.') && passwordRegex.test(password) && password.length >= 7 &&
-            password.length <= 15 && name.length >= 2 && emailName != '' &&
-            nameRegex.test(name) && password === passwordCheck &&
-            phone_number.length >= 10 && phone_number.length <= 11 &&
+        emailValid && passwordValid && nameValid && password === passwordCheck &&
+            phone_numberValid &&
             checkbox.includes('join_membership_agree_use') &&
             checkbox.includes('join_membership_agree_community') &&
             checkbox.includes('join_membership_agree_privacy')
@@ -268,7 +265,7 @@ function JoinMembership() {
 
     useEffect(() => {
         changeButton();
-    }, [checkbox]);
+    }, [checkbox, emailValid, passwordValid, nameValid, phone_numberValid]);
 
     // =============================================================
     // ** 엔터 키 누름
@@ -315,6 +312,30 @@ function JoinMembership() {
 
     function pageToLogin() {
         navigate('/LogIn');
+    }
+
+    // ** 아이디 중복 체크
+    const idDupCheck = (e) => {
+        e.preventDefault();
+
+        if (document.getElementById('email_name').value !== '' && document.getElementById('email_domain').value !== '') {
+            axios({
+                url: "/user/idDupCheck",
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                data: {
+                    id: id
+                }
+            }).then((res) => {
+                setEmailError(res.data);
+                setEmailValid(true);
+            }).catch((err) => {
+                setEmailValid(false);
+                setEmailError(err.response.data);
+            });
+        } else {
+            setEmailError('유효한 이메일 형식이 아닙니다.');
+        }
     }
 
     function submitButton() {
@@ -399,7 +420,8 @@ function JoinMembership() {
                                         <option value="hanmail.com">hanmail.com</option>
                                         <option value="yahoo.co.kr">yahoo.co.kr</option>
                                     </select>
-                                    {emailError && <div className="join_error-message">{emailError}</div>}
+                                    <button onClick={idDupCheck} className='join_dupCheck_button'>중복 체크</button>
+                                    {emailError && <div className={emailValid ? "join_dup-message" : "join_error-message"}>{emailError}</div>}
                                 </span>
                             </div>
                             <div>

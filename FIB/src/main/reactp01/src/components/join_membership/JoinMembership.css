@@ -61,6 +61,15 @@
     margin-top: 2px;
 }
 
+.join_dupCheck_button {
+    margin-left: 20px;
+    line-height: 38px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(119, 175, 107);
+}
+
 .join_membership_section_2 {
     flex-flow: column;
     margin-left: 20px;
@@ -144,6 +153,13 @@
 
 .join_error-message {
     color: red;
+    font-size: 70%;
+    margin-left: 200px;
+    margin-top: 10px;
+}
+
+.join_dup-message {
+    color: green;
     font-size: 70%;
     margin-left: 200px;
     margin-top: 10px;

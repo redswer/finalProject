@@ -85,6 +85,19 @@ public class UserController {
 			return new ResponseEntity<>("이미 존재하는 아이디입니다.", HttpStatus.UNAUTHORIZED);
 		}
 	}
+	
+	// ** 아이디 중복 체크
+	@PostMapping("/idDupCheck")
+	public ResponseEntity<String> idDupCheck(@RequestBody User request) {
+		User check = service.selectOne(request.getId());
+		
+		if (check != null) {
+			return new ResponseEntity<> ("중복 아이디입니다.", HttpStatus.BAD_GATEWAY);
+		} else {
+			return new ResponseEntity<> ("사용 가능한 아이디입니다.", HttpStatus.OK);
+		}
+	}
+	
 //	---------------------------------
 	// ** 회원정보 수정
 	
