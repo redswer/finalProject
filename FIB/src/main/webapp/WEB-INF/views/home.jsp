@@ -54,10 +54,7 @@
                 <div id="managementArea">
                     <h2>관리자 페이지입니다</h2>
                     <div id="calendar"></div>
-					<script th:inline="javascript">
-							
-					    console.log("calendarEvents: ", calendarEvents);
-		
+					<!-- <script th:inline="javascript">
 					 	// 데이터 형식 변환
 					    let formattedEvents = calendarEvents.map(function(day) {
 					        return day.map(function(event) {
@@ -77,9 +74,11 @@
 					                left: 'prev,next today',
 					                center: 'title',
 					                right: 'month,agendaWeek,agendaDay'
-					            })
+					            }),
+					            {(
+					            	
 					        });
-					</script>
+					</script> -->
                     <%-- <!-- 일별 데이터 -->
                      <c:if test="${not empty requestScope.dailyOrderSummary}">
                         <h4>일별 주문건수, 주문금액</h4>
