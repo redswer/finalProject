@@ -50,12 +50,11 @@ function JoinMembership() {
     };
 
     const validateEmail = () => {
+        setEmailValid(false);
         if (!emailDomain.includes('.') || emailName === '') {
             setEmailError('유효한 이메일 형식이 아닙니다.');
-            setEmailValid(false);
         } else {
-            setEmailError('');
-            setEmailValid(true);
+            setEmailError('아이디 중복을 체크해주세요');
         }
     }
     const validatePassword = () => {
@@ -317,6 +316,30 @@ function JoinMembership() {
         navigate('/LogIn');
     }
 
+    // ** 아이디 중복 체크
+    const idDupCheck = (e) => {
+        e.preventDefault();
+
+        if (document.getElementById('email_name').value !== '' && document.getElementById('email_domain').value !== '') {
+            axios({
+                url: "/user/idDupCheck",
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                data: {
+                    id: id
+                }
+            }).then((res) => {
+                setEmailError(res.data);
+                setEmailValid(true);
+            }).catch((err) => {
+                setEmailValid(false);
+                setEmailError(err.response.data);
+            });
+        } else {
+            setEmailError('유효한 이메일 형식이 아닙니다.');
+        }
+    }
+
     function submitButton() {
         const selectedYear = yearRef.current.value;
         const selectedMonth = monthRef.current.value;
@@ -399,7 +422,8 @@ function JoinMembership() {
                                         <option value="hanmail.com">hanmail.com</option>
                                         <option value="yahoo.co.kr">yahoo.co.kr</option>
                                     </select>
-                                    {emailError && <div className="join_error-message">{emailError}</div>}
+                                    <button onClick={idDupCheck} className='join_dupCheck_button'>중복 체크</button>
+                                    {emailError && <div className={emailValid ? "join_dup-message" : "join_error-message"}>{emailError}</div>}
                                 </span>
                             </div>
                             <div>
