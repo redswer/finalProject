@@ -14,3 +14,10 @@ public interface RecentViewService {
 	public int checkDuplicated(String id, int product_code);
 
 }
+
+
+
+
+
+
+
