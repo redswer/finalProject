@@ -111,7 +111,7 @@ const BestSellerItem = (props) => {
       <div className="BestSellerItemContainer">
         {/* ======================productItemImage=================================================== */}
         <div className='BestSellerItemImage'>
-          <Link to={`/DetailPage/${props.product_code}`}><img src={`../img/yeonsu.jpg`} alt="이미지" /></Link>
+          <Link to={`/DetailPage/${props.product_code}`}><img src={`../img/${props.image}`} alt="이미지" /></Link>
         </div>
         {/* ======================productItemImage=================================================== */}
 
@@ -119,6 +119,7 @@ const BestSellerItem = (props) => {
 
         {/* ======================productItemInfomation=================================================== */}
         <div className="BestSellerItemInfomation">
+          <span className='BestSellerItemRank'>{props.rank}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Link to={`/DetailPage/${props.product_code}`}><span className="BestSellerItemTitle">{props.title}</span></Link>
           <div className='BestSellerItemKeywordWrap'>
             <div className="BestSellerItemDomestic">

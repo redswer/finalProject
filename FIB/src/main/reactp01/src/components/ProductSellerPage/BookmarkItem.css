@@ -1,6 +1,6 @@
 .bookmarkGridItemTopLevelContainer {
   width: 230px;
-  height: 320px;
+  height: 330px;
   border: 1px solid rgb(251, 251, 251);
   background-color: rgb(251, 251, 251);
   border-radius: 5px;
@@ -50,6 +50,11 @@
   font-weight: bold;
   margin-top: 8px;
   margin-left: 13px;
+}
+
+.bookmarkItemProtypeDomesticDiv {
+  margin-left: 14px;
+  margin-bottom: 3px;
 }
 
 .bookmarkItemProtypeDomestic {

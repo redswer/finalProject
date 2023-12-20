@@ -111,7 +111,7 @@ function DetailPageBook({ oneProductWriterJoin }) {
 
                     <div className="book_info_02 d-flex">
                         <div className="book_info_02_L">적립 포인트</div>
-                        <div className="book_info_02_R">{((price * 0.05) || '').toLocaleString()}원</div>
+                        <div className="book_info_02_R">5%</div>
                     </div>
 
                     {

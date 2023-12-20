@@ -124,7 +124,7 @@ const BookmarkItem = (props) => {
     <div className="bookmarkGridItemTopLevelContainer">
       <div className='bookmarkItemImageCartDeleteDiv'>
         <div className='bookmarkItemImageDiv'>
-          <img src={`../img/yeonsu.jpg`} alt="" className='bookmarkItemImage' />
+          <img src={`../img/${props.image}`} alt="" className='bookmarkItemImage' />
         </div>
         <div className='bookmarkItemCartDeleteDiv'>
           <div className='bookmarkItemCart' onClick={saveOnCart}>
@@ -141,11 +141,13 @@ const BookmarkItem = (props) => {
       </div>
       <div className='bookmarkItemTitleProtypeDomesticPriceDiv'>
         <span className='bookmarkItemTitle'>{props.title}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        <span className='bookmarkItemProtypeDomestic'>
-          {props.domestic == 1 ? '국내' :
-            props.domestic == 2 ? '영미' :
-              props.domestic == 3 ? '프랑스' :
-                props.domestic == 4 ? '독일' : '기타'}{props.protype == 1 ? '도서' : '제품'}</span>
+        <div className='bookmarkItemProtypeDomesticDiv'>
+          <span className='bookmarkItemProtypeDomestic'>
+            {props.domestic == 1 ? '국내' :
+              props.domestic == 2 ? '영미' :
+                props.domestic == 3 ? '프랑스' :
+                  props.domestic == 4 ? '독일' : '기타'}{props.protype == 1 ? '도서' : '제품'}</span>
+        </div>
         <div className='bookmarkItemPriceDiv'>
           <span className='bookmarkItemPrice'>{props.price ? props.price.toLocaleString() : 0}</span>&nbsp;
           <span className='bookmarkItemPriceUnit'>원</span>

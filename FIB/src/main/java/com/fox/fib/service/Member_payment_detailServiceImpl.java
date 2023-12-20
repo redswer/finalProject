@@ -5,10 +5,12 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.fox.fib.controller.Member_payment_detailController;
 import com.fox.fib.entity.Member_payment_detail;
 import com.fox.fib.repository.Member_payment_detailRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
@@ -58,6 +60,18 @@ public class Member_payment_detailServiceImpl implements Member_payment_detailSe
 	@Override
 	public void deleteList(Long member_payment_code) {
 		repository.deleteList(member_payment_code);
+	}
+
+	// 리뷰 등록 시 상품 구매 확인
+	@Override
+	public int selectOne(String id, int product_code) {
+		Optional<Member_payment_detail> result = repository.selectOne(id, product_code);
+
+		if (result.isPresent()) {
+			return 0;
+		} else {
+			return 1;
+		}
 	}
 
 	// 주문상세 수정

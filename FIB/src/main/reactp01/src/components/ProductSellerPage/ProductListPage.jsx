@@ -467,7 +467,7 @@ const ProductListPage = () => {
               product_code={d.product_code}
               domestic={d.domestic}
               protype={d.protype}
-              writer={d.writer_code}
+              writer={d.writer}
               title={d.title}
               translator={d.translator}
               publisher={d.publisher}

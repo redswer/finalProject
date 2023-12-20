@@ -77,7 +77,8 @@
 										'${String(memberPaymentVar.member_payment_code)}',
 										'${memberPaymentVar.id}',
 										${memberPaymentVar.product_amount},
-										${memberPaymentVar.origin_price})">
+										${memberPaymentVar.origin_price},
+										${memberPaymentVar.coupon_code})">
 										취소
 								</button>
 							</c:if>

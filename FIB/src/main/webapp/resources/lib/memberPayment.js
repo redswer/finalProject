@@ -14,7 +14,7 @@ function memberPaymentList(orderParam) {
 }
 
 // 주문정보 취소
-function paymentCancel(orderParam, member_payment_code, id, product_amount, origin_price) {
+function paymentCancel(orderParam, member_payment_code, id, product_amount, origin_price, coupon_code) {
 
 	if (confirm('주문내역을 취소하시겠습니까?')) {
 
@@ -24,7 +24,8 @@ function paymentCancel(orderParam, member_payment_code, id, product_amount, orig
 				member_payment_code: member_payment_code,
 				id: id,
 				product_amount: product_amount,
-				origin_price: origin_price
+				origin_price: origin_price,
+				coupon_code: coupon_code
 			}
 		).then(response => {
 			alert(response.data);

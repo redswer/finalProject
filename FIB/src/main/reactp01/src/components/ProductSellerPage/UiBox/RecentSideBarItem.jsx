@@ -8,7 +8,7 @@ const RecentSideBarItem = (props) => {
         <div className='RecentSideBarItemContainer'>
             <div>
                 <Link to={`/DetailPage/${props.pcode}`}>
-                    <img src={`../../img/yeonsu.jpg`} alt="image" className='RecentSideBarItemImage' />
+                    <img src={`../img/${props.image}`} alt="image" className='RecentSideBarItemImage' />
                 </Link>
 
             </div>

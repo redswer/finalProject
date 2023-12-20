@@ -120,7 +120,7 @@ const ProductListItem = (props) => {
           </div>
           {/* ======================productItemImage=================================================== */}
           <div className='productItemImage'>
-            <Link to={`/DetailPage/${props.product_code}`}><img src={`../img/yeonsu.jpg`} alt="이미지" /></Link>
+            <Link to={`/DetailPage/${props.product_code}`}><img src={`../img/${props.image}`} alt="이미지" /></Link>
           </div>
           {/* ======================productItemImage=================================================== */}
 
@@ -254,7 +254,7 @@ const ProductListItem = (props) => {
         (<div className="productItemContainer">
           {/* ======================productItemImage=================================================== */}
           <div className='productItemImage'>
-            <Link to={`/DetailPage/${props.product_code}`}><img src={`../img/yeonsu.jpg`} alt="이미지" /></Link>
+            <Link to={`/DetailPage/${props.product_code}`}><img src={`../img/${props.image}`} alt="이미지" /></Link>
           </div>
           {/* ======================productItemImage=================================================== */}
 
@@ -288,11 +288,11 @@ const ProductListItem = (props) => {
             </div>
 
             <div className='productItemWriterTranslatorPublisher'>
-              <span className='productItemWriter'>{props.writer}작가명</span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <span className='productItemWriter'>{props.writer}</span>&nbsp;
 
-              <span className='productItemWriterTranslatorPublisherhr'>/</span>&nbsp;&nbsp;&nbsp;&nbsp;
+              {/* <span className='productItemWriterTranslatorPublisherhr'>/</span>&nbsp;&nbsp;&nbsp;&nbsp; */}
 
-              <span className="productItemTranslator">{props.translator}역식자</span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <span className="productItemTranslator">{props.translator ? ` / ${props.translator}` : ''}</span >&nbsp;&nbsp;&nbsp;
 
               <span className='productItemWriterTranslatorPublisherhr'>|</span>&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -302,15 +302,15 @@ const ProductListItem = (props) => {
 
               <span className="productItemPublishDate">{props.publish_date}</span>&nbsp;&nbsp;&nbsp;&nbsp;
 
-              <span className='productItemWriterTranslatorPublisherhr'>|</span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <div className='productItemStarGradeAvgReviewViewCountDiv'>
+                <span><Star className='productItemStar' />&nbsp;</span>
 
-              <span><Star className='productItemStar' />&nbsp;</span>
+                <span className='productItemGradeAvg'>{props.gradeavg.toFixed(1)}</span>&nbsp;&nbsp;&nbsp;&nbsp;
 
-              <span className='productItemGradeAvg'>{props.gradeavg.toFixed(1)}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-
-              <span className='productItemForReview'>리뷰 : </span>
-              <span className='productItemViewCount'>{props.viewcount} </span>
-              <span>건</span>
+                <span className='productItemForReview'>리뷰 : </span>
+                <span className='productItemViewCount'>{props.viewcount} </span>
+                <span>건</span>
+              </div>
             </div>
 
 
@@ -347,7 +347,6 @@ const ProductListItem = (props) => {
 
             <div className='productItemSellCountDiv'>
               <span className='productItemSellCountLabel'>누적 판매량 : </span>
-              {/* <span className='product_sales_rate_1'> : </span> */}
               <span className='productItemSellCount'>{props.sellcount}</span>
               <span className='productItemSellCountLabelUnit'> 권</span>
             </div>
