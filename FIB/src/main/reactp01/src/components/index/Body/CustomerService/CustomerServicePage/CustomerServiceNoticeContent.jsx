@@ -47,9 +47,6 @@ function CustomerServiceNoticeContent({ search }) {
 
         // 일치하는 내용들만 저장
         setFilteredNotices(filtered);
-
-
-
         console.log(`검색결과를 받았습니다 search : ${search}`);
 
         if (filtered.length === 0) {

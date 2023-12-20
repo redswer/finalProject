@@ -4,7 +4,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,35 +61,49 @@ public class HomeController {
         log.info("일별 결과물 : " + memberPaymentService.getDailyOrderSummary(startDateString, endDateString));
         
         List<OrderSummaryDTO> dailyOrderSummary = memberPaymentService.getDailyOrderSummary(startDateString, endDateString);      
+//        List<String> dateRange = generateDateRange(startDateString, endDateString);
         
-        List<String> dateRange = generateDateRange(startDateString, endDateString);
+        // 날짜 포맷 변경 (FullCalendar에서 인식할 수 있는 형태로 변환) 및 이벤트 리스트 생성
+        List<Map<String, Object>> calendarEvents = dailyOrderSummary.stream()
+                .map(orderSummary -> {
+                    String formattedDate = LocalDate.parse(orderSummary.getOrderDate()).toString();
 
+                    Map<String, Object> event = new HashMap<>();
+                    event.put("count", "주문 수: " + orderSummary.getDailyOrderCount());  // 총 주문건수
+                    event.put("amount", "매출금액: " + orderSummary.getDailyOrderAmount());  // 총가격
+                    event.put("date", "날짜: " + orderSummary.getOrderDate());  // 날짜
+                    event.put("start", formattedDate);  // 이벤트 시작 날짜
+                    return event;
+                })
+                .collect(Collectors.toList());
         // dateRange를 반복하며 dailyOrderSummary에 날짜가 없는 경우, 누락된 날짜에 대한 OrderSummaryDTO를 추가
-        for (String date : dateRange) {
-            if (dailyOrderSummary.stream().noneMatch(summary -> summary.getOrderDate().equals(date))) {
-                dailyOrderSummary.add(new OrderSummaryDTO(date, 0, 0)); // null 대신에 적절한 기본값 사용
-            }
-        }
-        dailyOrderSummary.sort(Comparator.comparing(s -> LocalDate.parse(s.getOrderDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+//        for (String date : dateRange) {
+//            if (dailyOrderSummary.stream().noneMatch(summary -> summary.getOrderDate().equals(date))) {
+//                dailyOrderSummary.add(new OrderSummaryDTO(date, 0, 0)); // null 대신에 적절한 기본값 사용
+//            }
+//        }
+//        dailyOrderSummary.sort(Comparator.comparing(s -> LocalDate.parse(s.getOrderDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
 
         // 가장 높은 가격의 주문 찾기
         OrderSummaryDTO maxPriceOrder = findMaxPriceOrder(dailyOrderSummary);
 
         log.info("dailyOrderSummaryAdd : " + dailyOrderSummary);
         log.info("maxPriceOrder : " + maxPriceOrder);
+        log.info("calendarEvents : " + calendarEvents);
         // 일별데이터
+        model.addAttribute("calendarEvents", calendarEvents);
         model.addAttribute("dailyOrderSummary", dailyOrderSummary);
         model.addAttribute("UnAnsweredInquiries", inquiryService.getMInquiryList(false));
         model.addAttribute("maxPriceOrder", maxPriceOrder); // 최대 가격 주문을 모델에 추가
         return "home"; // adminHome은 관리자 페이지의 JSP 파일명입니다.
     }
-    
- // 최대 가격 주문을 찾는 메서드
+   
+
+    // 최대 가격 주문을 찾는 메서드
     private OrderSummaryDTO findMaxPriceOrder(List<OrderSummaryDTO> dailyOrderSummary) {
         OrderSummaryDTO maxPriceOrder = dailyOrderSummary.stream()
                 .max(Comparator.comparing(OrderSummaryDTO::getDailyOrderAmount))
                 .orElse(null);
         return maxPriceOrder;
     }
-
 }
