@@ -66,6 +66,7 @@ public class BoardController {
 					                 @RequestParam(name = "page", defaultValue = "0") int page,
 					                 @RequestParam(name = "size", defaultValue = "10") int size,
 					                 Model model) {
+		
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Notice> noticePageList = notice_service.getPageNoticeList(category, pageable);
 		

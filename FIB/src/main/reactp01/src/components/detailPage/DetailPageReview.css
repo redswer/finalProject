@@ -78,9 +78,10 @@
 .review_image_cover img {
     background-color: rgb(243, 243, 243);
     display: block;
-    width: 100%;
-    height: 75%;
+    width: 77px;
+    height: 77px;
     text-align: center;
+    object-fit: cover;
 }
 
 .review_image_cover label {

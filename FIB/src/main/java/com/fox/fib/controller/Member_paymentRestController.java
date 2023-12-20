@@ -78,7 +78,7 @@ public class Member_paymentRestController {
 			entity.setAddress_detail((String)payment_formData.get("address_detail"));
 			entity.setDelivery_state((String)payment_formData.get("delivery_state"));
 			entity.setArrive_date((String)payment_formData.get("arrive_date"));
-			System.out.println("포인트확인333333333333 : " + payment_formData.get("discount_point"));
+
 			// 주문정보 등록
 			member_paymentService.save(entity);
 			

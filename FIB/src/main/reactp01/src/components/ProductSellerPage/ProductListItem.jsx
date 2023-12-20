@@ -288,11 +288,11 @@ const ProductListItem = (props) => {
             </div>
 
             <div className='productItemWriterTranslatorPublisher'>
-              <span className='productItemWriter'>{props.writer}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <span className='productItemWriter'>{props.writer}</span>&nbsp;
 
               {/* <span className='productItemWriterTranslatorPublisherhr'>/</span>&nbsp;&nbsp;&nbsp;&nbsp; */}
 
-              <span className="productItemTranslator">{props.translator ? ` / ${props.translator}` : ''}</span >
+              <span className="productItemTranslator">{props.translator ? ` / ${props.translator}` : ''}</span >&nbsp;&nbsp;&nbsp;
 
               <span className='productItemWriterTranslatorPublisherhr'>|</span>&nbsp;&nbsp;&nbsp;&nbsp;
 

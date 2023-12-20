@@ -11,12 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fox.fib.domain.PageRequestDTO;
-import com.fox.fib.domain.PageResultDTO;
 import com.fox.fib.entity.Product;
 import com.fox.fib.service.ProductService;
 
@@ -31,27 +28,27 @@ public class ProductController {
 
 	ProductService productservice;
 
-	// @GetMapping("/productlists")
-	// public void productlists(Model model) {
-	// model.addAttribute("adminProductList", productservice.selectList());
-	// }
+	@GetMapping("/productlists")
+	public void productlists(Model model) {
+		model.addAttribute("adminProductList", productservice.selectAllList());
+	}
 
 	// ==========================================================================================
 
-	@GetMapping("/productlists")
-	public void productlists(Model model, @RequestParam(defaultValue = "1") String page, @RequestParam(defaultValue = "20") String size) {
-		int pageNum = Integer.parseInt(page);
-		int sizeNum = Integer.parseInt(size);
-
-		PageRequestDTO requestDTO = PageRequestDTO.builder().page(pageNum).size(sizeNum).build();
-
-		PageResultDTO<Product> resultDTO = productservice.selectListPageNation(requestDTO);
-
-		System.out.println("[46]리스트" + resultDTO.getEntityList());
-
-		model.addAttribute("adminProductList", resultDTO);
-
-	}
+//	@GetMapping("/productlists")
+//	public void productlists(Model model, @RequestParam(defaultValue = "1") String page, @RequestParam(defaultValue = "20") String size) {
+//		int pageNum = Integer.parseInt(page);
+//		int sizeNum = Integer.parseInt(size);
+//
+//		PageRequestDTO requestDTO = PageRequestDTO.builder().page(pageNum).size(sizeNum).build();
+//
+//		PageResultDTO<Product> resultDTO = productservice.selectListPageNation(requestDTO);
+//
+//		System.out.println("[46]리스트" + resultDTO.getEntityList());
+//
+//		model.addAttribute("adminProductList", resultDTO);
+//
+//	}
 
 	// ==========================================================================================
 

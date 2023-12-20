@@ -2,7 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<html>
+<!-- <html> -->
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" type="text/css" href="/resources/lib/style.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -15,6 +16,11 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+	<!-- FullCalendar JavaScript dependencies -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.js"></script>
 </head>
 </head>
 <body>
@@ -47,7 +53,34 @@
             <div class="resultArea">
                 <div id="managementArea">
                     <h2>관리자 페이지입니다</h2>
-                    <!-- 일별 데이터 -->
+                    <div id="calendar"></div>
+					<script th:inline="javascript">
+							
+					    console.log("calendarEvents: ", calendarEvents);
+		
+					 	// 데이터 형식 변환
+					    let formattedEvents = calendarEvents.map(function(day) {
+					        return day.map(function(event) {
+					            return {
+					                title: event.count,
+					                start: event.start,
+					                description: event.amount + '<br>' + event.date
+					            };
+					        });
+					    });
+					    console.log("formattedEvents : " + formattedEvents);
+					    
+					    $(document).ready(function() {
+					        // FullCalendar 설정
+					        $('#calendar').fullCalendar({
+					            header: {
+					                left: 'prev,next today',
+					                center: 'title',
+					                right: 'month,agendaWeek,agendaDay'
+					            })
+					        });
+					</script>
+                    <%-- <!-- 일별 데이터 -->
                      <c:if test="${not empty requestScope.dailyOrderSummary}">
                         <h4>일별 주문건수, 주문금액</h4>
                             <div class="dailyOrderSummary">
@@ -68,7 +101,7 @@
                                 </c:if>
                             </c:forEach>
                         </div>
-                    </c:if>
+                    </c:if> --%>
                     <br />
                     <!-- 최근 미답변 게시글을 동적으로 생성 -->
                     <c:if test="${not empty requestScope.UnAnsweredInquiries}">

@@ -16,5 +16,6 @@ public class Payment_cancelDTO {
 	private String id;
 	private int product_amount;
 	private int origin_price;
+	private int coupon_code;
 
 }
