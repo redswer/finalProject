@@ -15,12 +15,12 @@
     <h2>1:1문의 관리</h2>
     <div class="inquiry_register_search">
 		<div class="inquiry_search">
-			<button type="checkbox" class="inquiry_answer_toggle" id="inquiry_answer_toggle" onclick="toggleAnswerSort()">답변여부</button>
-<%-- 			<select class="inquiry_category" name="category" id="category" onchange="inquirySortSelectOptions()"> 
-				<c:forEach var="category" items="${fn:split('전체,일반,제품,주문/결제,반품/환불/취소,이벤트/쿠폰', ',')}">
-               		<option value="${category}" ${param.category == category ? "selected" : ""}>${category}</option>
-           		</c:forEach>
-			</select> --%>
+			<button class="inquiry_search_all" onclick="inquiryManagementPage()">전체보기</button>
+			<span class="inquiry_search_answer">
+				<input type="checkbox" class="inquiry_answer_toggle" id="inquiry_answer_toggle" onclick="toggleAnswerSort()" />
+				<label for="inquiry_answer_toggle">답변여부</label>
+			</select>
+			</span>
 		</div>
 	</div>
 	<div class="underline"></div>

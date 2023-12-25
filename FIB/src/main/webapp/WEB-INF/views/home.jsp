@@ -41,9 +41,9 @@
                            <li class="listGroupItem" onclick="userManagement()">회원</li>
                            <li class="listGroupItem" onclick="productManagement()">제품</li>
                            <li class="listGroupItem" onclick="memberPaymentList('all')">주문내역</li>
-                           <li class="listGroupItem" onclick="noticeManagement()">공지사항</li>
-                           <li class="listGroupItem" onclick="faqManagement()">FAQ</li>
-                           <li class="listGroupItem" onclick="inquiryManagement()">1:1 문의</li>
+                           <li class="listGroupItem" onclick="noticeManagementPage()">공지사항</li>
+                           <li class="listGroupItem" onclick="faqManagementPage()">FAQ</li>
+                           <li class="listGroupItem" onclick="inquiryManagementPage()">1:1 문의</li>
                            <li class="listGroupItem" onclick="eventManagement()">이벤트</li>
                            <li class="listGroupItem" onclick="couponManagement()">쿠폰</li>
                         </ul>

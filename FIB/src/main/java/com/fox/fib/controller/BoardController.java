@@ -61,21 +61,30 @@ public class BoardController {
 	    model.addAttribute("totalItems", noticePageList.getTotalElements());
 	}
 	
+	// (관리자) 분류에 따른 공지사항 리스트 + 페이지네이션, 내림차순 정렬
 	@GetMapping("/pageNoticeListAdmin")
 	public String pageNoticeListAdmin(@RequestParam(name = "category", defaultValue = "") String category,
 					                 @RequestParam(name = "page", defaultValue = "0") int page,
 					                 @RequestParam(name = "size", defaultValue = "10") int size,
 					                 Model model) {
-		
 		Pageable pageable = PageRequest.of(page, size);
-		Page<Notice> noticePageList = notice_service.getPageNoticeList(category, pageable);
 		
-		model.addAttribute("noticeList", noticePageList.getContent());
-	    model.addAttribute("itemPage", noticePageList);
-	    model.addAttribute("currentPage", noticePageList.getNumber());
-	    model.addAttribute("totalPages", noticePageList.getTotalPages());
-	    model.addAttribute("totalItems", noticePageList.getTotalElements());
-	    
+		if("전체".equals(category)) {
+			Page<Notice> noticePageList = notice_service.getNoticeList(pageable);
+			model.addAttribute("noticeList", noticePageList.getContent());
+		    model.addAttribute("itemPage", noticePageList);
+		    model.addAttribute("currentPage", noticePageList.getNumber());
+		    model.addAttribute("totalPages", noticePageList.getTotalPages());
+		    model.addAttribute("totalItems", noticePageList.getTotalElements());
+		} else {
+			Page<Notice> noticePageList = notice_service.getPageNoticeList(category, pageable);			
+			model.addAttribute("noticeList", noticePageList.getContent());
+			model.addAttribute("itemPage", noticePageList);
+			model.addAttribute("currentPage", noticePageList.getNumber());
+			model.addAttribute("totalPages", noticePageList.getTotalPages());
+			model.addAttribute("totalItems", noticePageList.getTotalElements());
+		}
+    
 	    return "board/noticeListAdmin";
 	}
 
@@ -127,7 +136,6 @@ public class BoardController {
 	public String noticeEditForm(HttpSession session, Notice entity, Model model) throws IOException {
 		// 수정 성공 -> noticeList를 받아와야함 (selectList()) -> 그후 출력 요청해야함
 		model.addAttribute("noticeList", notice_service.selectList());
-//		model.addAttribute("list", entity);
 		String uri="board/noticeListAdmin";
 			
 		MultipartFile uploadfilef = entity.getUploadfilef(); 
@@ -166,81 +174,16 @@ public class BoardController {
 		}
 	}
 
-	// ==================================================================================================================
+// ==================================================================================================================
 	// FAQ
-	
-	// faqList
-//	@GetMapping("/faqListAdmin")
-//	public void faqListAdmin(Model model) {
-//		model.addAttribute("faqList", faq_service.selectList());
-//	}
-	
-//	@GetMapping("/faqListAdmin")
-//	public void faqListAdmin(@RequestParam(name = "category", defaultValue = "") String category, Model model) {
-//		// 페이지 네이션을 위한 변수선언
-//		int page = 0; // 시작 페이지번호
-//		int size = 2; // 페이지당 보여지는 컨텐츠 갯수
-//		
-//		Pageable pageable = PageRequest.of(page, size);
-//		Page<Faq> faqPageList = faq_service.getFaqList(category, pageable);		
-//		
-//		model.addAttribute("faqList", faqPageList.getContent());
-//		// 페이지 관련 정보를 모델에 추가
-//		model.addAttribute("itemPage", faqPageList);
-//		model.addAttribute("currentPage", faqPageList.getNumber());
-//		model.addAttribute("totalPages", faqPageList.getTotalPages());
-//		model.addAttribute("totalItems", faqPageList.getTotalElements());
-//		
-//		log.info("faq_service.selectList() : " + faq_service.selectList());
-//		log.info("faq_service.getFaqList(category, pageable) : " + faq_service.getFaqList(category, pageable));
-//		log.info("faqPageList.getContent() : " + faqPageList.getContent());
-//		log.info("faqPageList : " + faqPageList);
-//		log.info("faqPageList.getNumber() : " + faqPageList.getNumber());
-//		log.info("faqPageList.getTotalElements() : " + faqPageList.getTotalElements());
-//	}
-//	
 	// (관리자) FAQ 리스트 + 페이지네이션, 내림차순 정렬
-//	@GetMapping("/faqListAdmin")
-//	public void faqListAdmin(@RequestParam(name = "category", defaultValue = "") String category,
-//	                         @RequestParam(name = "page", defaultValue = "0") int page,
-//	                         @RequestParam(name = "size", defaultValue = "10") int size,
-//	                         Model model) {
-//		log.info("Received request with category: " + category);
-//		
-//	    Pageable pageable = PageRequest.of(page, size);
-//	    Page<Faq> faqPageList = faq_service.getFaqList(pageable);
-//
-//	    model.addAttribute("faqList", faqPageList.getContent());
-//	    model.addAttribute("itemPage", faqPageList);
-//	    model.addAttribute("currentPage", faqPageList.getNumber());
-//	    model.addAttribute("totalPages", faqPageList.getTotalPages());
-//	    model.addAttribute("totalItems", faqPageList.getTotalElements());
-//	    
-//		log.info("faq_service.getFaqList(category, pageable) : " + faq_service.getFaqList(pageable));
-//		log.info("faqPageList.getContent() : " + faqPageList.getContent());
-//		log.info("faqPageList : " + faqPageList);
-//		log.info("faqPageList.getNumber() : " + faqPageList.getNumber());
-//		log.info("faqPageList.getTotalElements() : " + faqPageList.getTotalElements());
-//	}
 	@GetMapping("/faqListAdmin")
 	public String faqListAdmin(@RequestParam(name = "category", defaultValue = "all") String category,
 							   @RequestParam(name = "page", defaultValue = "0") int page,
-	                           @RequestParam(name = "size", defaultValue = "5") int size,
-	                           Model model) {
-		log.info("Received request with category: " + category);
-		
-		if(category == "all") {
-			category = "";
-		}
+	                           @RequestParam(name = "size", defaultValue = "10") int size,
+	                           Model model) {	
 	    Pageable pageable = PageRequest.of(page, size);
-	    
-	    Page<Faq> faqPageList;
-	    
-	    if(category.equals("all")) {
-	    	faqPageList = faq_service.getPageFaqListAll(pageable);
-	    } else {
-	    	faqPageList = faq_service.getPageFaqList(category, pageable);
-	    }
+	    Page<Faq> faqPageList = faq_service.getPageFaqListAll(pageable);
 
 	    model.addAttribute("faqList", faqPageList.getContent());
 	    model.addAttribute("itemPage", faqPageList);
@@ -256,27 +199,39 @@ public class BoardController {
 		return "board/faqListAdmin";
 	}
 	
+	// (관리자) 분류에 따른 FAQ 리스트 + 페이지네이션, 내림차순 정렬
 	@GetMapping("/pageFaqListAdmin")
 	public String pageFaqListAdmin(@RequestParam(name = "category") String category,
 	                        	   @RequestParam(name = "page", defaultValue = "0") int page,
 	                        	   @RequestParam(name = "size", defaultValue = "10") int size,
 	                        	   Model model) {
-		
-		log.info("파라미터Received request with category: " + category);
 	    Pageable pageable = PageRequest.of(page, size);
-	    Page<Faq> faqPageList = faq_service.getPageFaqList(category, pageable);
-   
-	    model.addAttribute("itemPage", faqPageList);	
-	    model.addAttribute("faqList", faqPageList.getContent());
-	    model.addAttribute("currentPage", faqPageList.getNumber());
-	    model.addAttribute("totalPages", faqPageList.getTotalPages());
-	    model.addAttribute("totalItems", faqPageList.getTotalElements());
-	    
-	    log.info("파라미터itemPage : " + faqPageList);
-		log.info("파라미터faqPageList.getContent() : " + faqPageList.getContent());
-		log.info("파라미터faqPageList.getNumber() : " + faqPageList.getNumber());
-		log.info("파라미터faqPageList.getTotalElements() : " + faqPageList.getTotalElements());
-		
+	    if("전체".equals(category)) {
+	    	Page<Faq> faqPageList = faq_service.getPageFaqListAll(pageable);
+	    	model.addAttribute("faqList", faqPageList.getContent());
+	 	    model.addAttribute("itemPage", faqPageList);
+	 	    model.addAttribute("currentPage", faqPageList.getNumber());
+	 	    model.addAttribute("totalPages", faqPageList.getTotalPages());
+	 	    model.addAttribute("totalItems", faqPageList.getTotalElements());
+	 	    
+		    log.info("faqPageList : " + faqPageList);
+			log.info("faqPageList.getContent() : " + faqPageList.getContent());
+			log.info("faqPageList.getNumber() : " + faqPageList.getNumber());
+			log.info("faqPageList.getTotalElements() : " + faqPageList.getTotalElements());
+			
+	    } else {
+	    	Page<Faq> faqPageList = faq_service.getPageFaqList(category, pageable);
+		    model.addAttribute("itemPage", faqPageList);	
+		    model.addAttribute("faqList", faqPageList.getContent());
+		    model.addAttribute("currentPage", faqPageList.getNumber());
+		    model.addAttribute("totalPages", faqPageList.getTotalPages());
+		    model.addAttribute("totalItems", faqPageList.getTotalElements());
+		    
+		    log.info("파라미터itemPage : " + faqPageList);
+			log.info("파라미터faqPageList.getContent() : " + faqPageList.getContent());
+			log.info("파라미터faqPageList.getNumber() : " + faqPageList.getNumber());
+			log.info("파라미터faqPageList.getTotalElements() : " + faqPageList.getTotalElements());
+	    }	
 		return "board/faqListAdmin";
 	}
 	
@@ -351,13 +306,15 @@ public class BoardController {
 	    return "board/inquiryListAdmin";
 	}
 	
+	// (관리자) 답변여부에 따른 1:1문의 리스트 + 페이지네이션, 내림차순 정렬
 	@GetMapping("/pageInquiryListAdmin")
 	public String pageInquiryListAdmin(@RequestParam(name = "answer_check") boolean answer_check,
-								 	  @RequestParam(name = "page", defaultValue = "0") int page,
-								 	  @RequestParam(name = "size", defaultValue = "10") int size,
-								 	  Model model) {
+								 	   @RequestParam(name = "page", defaultValue = "0") int page,
+								 	   @RequestParam(name = "size", defaultValue = "10") int size,
+								 	   Model model) {
 		
 		Pageable pageable = PageRequest.of(page, size);
+
 		Page<Inquiry> inquiryPageList = inquiry_service.getUnanswerInquiryList(answer_check, pageable);
 		
 		model.addAttribute("itemPage", inquiryPageList);
