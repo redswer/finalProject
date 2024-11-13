@@ -37,11 +37,11 @@ Spring Boot + React 도서 소개 / 구매 사이트
  - ID 찾기, PW 찾기 (새로운 PW 메일로 전송)
  - 로그인 시 쿠키 및 세션 생성
  - ajax / axios 이용하여 유효성 검사
-#### 회원가입 - <a href="">상세보기(WIKI)</a>
+#### 회원가입 - <a href="https://github.com/redswer/finalProject/wiki/Join_Membership">상세보기(WIKI)</a>
  - 카카오 주소 API 연동
  - 유효성 검사
  - ID 중복체크
-#### 마이 페이지 - <a href="">상세보기(WIKI)</a>
+#### 마이 페이지 - <a >상세보기(WIKI)</a>
  - 회원정보 변경
  - 회원탈퇴
 
