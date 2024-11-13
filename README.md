@@ -32,7 +32,7 @@ Spring Boot + React 도서 소개 / 구매 사이트
  - 네비게이션 메뉴
  - 검색
 
-#### 로그인 - <a href="">상세보기(WIKI)</a>
+#### 로그인 - <a href="https://github.com/redswer/finalProject/wiki/Login">상세보기(WIKI)</a>
  - DB 의 정보와 비교
  - ID 찾기, PW 찾기 (새로운 PW 메일로 전송)
  - 로그인 시 쿠키 및 세션 생성
