@@ -1,5 +1,5 @@
 # FIB (Fox In Books)
-Spring Boot + React 도서 소개 / 구매 사이트
+Spring Boot + React 図書紹介 / 購買サイト
 
 
 ## 🖥️ 프로젝트 소개
