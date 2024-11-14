@@ -32,12 +32,12 @@ Spring Boot + React 図書紹介 / 購買サイト。
  - ナビゲーション·メニュー
  - 検索
 
-#### ログイン - <a href="https://github.com/redswer/finalProject/wiki/Login">詳細(WIKI)</a>
+#### ログイン - <a href="https://github.com/redswer/finalProject/wiki/Login_japanese">詳細(WIKI)</a>
  - DBの情報と比較
  - ID検索、PW検索 (新しいPWをメールで配信)
  - ログイン時にクッキー(cookie)とセッション(session)を作成
  - ajax / axiosを利用して有効性検査
-#### 会員加入 - <a href="https://github.com/redswer/finalProject/wiki/Join_Membership">詳細(WIKI)</a>
+#### 会員加入 - <a href="https://github.com/redswer/finalProject/wiki/Join_Membership_japanese">詳細(WIKI)</a>
  - カカオアドレスAPI連動
  - 有効性検査
  - ID重複チェック
